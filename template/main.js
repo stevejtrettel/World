@@ -21,7 +21,7 @@ function main() {
     world.addGlobalParams( globals.params );
 
     //3. Set the environment
-    world.addEnvironment( environment ) ;
+    world.setEnvironment( environment ) ;
 
     //4. Fill this world with objects
     world.addObjects( objects );

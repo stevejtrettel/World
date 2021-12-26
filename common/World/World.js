@@ -1,11 +1,17 @@
+import { UI } from "./Ui.js";
+import { Loop } from "./Loop.js";
+import { Resizer } from "./Resizer.js";
+import { Environment } from "./Environment.js";
+
 import { createCamera } from "./components/createCamera.js";
 import { createScene } from "./components/createScene.js";
 import { createStats } from "./components/createStats.js";
 import { createControls } from "./components/createControls.js";
-import { UI } from "./Ui.js";
-import { Loop } from "./Loop.js";
-import { Resizer } from "./Resizer.js";
+
 import {BoxNoLights} from "../backgrounds/BoxNoLights.js";
+
+
+
 
 class World {
 
@@ -21,6 +27,9 @@ class World {
         this.scene = new BoxNoLights( options.color );
             //createScene( options.color );
         this.loop = new Loop( this.camera, this.scene, this.renderer);
+
+        //set up the environment;
+        this.environment = null;
 
         //set up the controls
         this.controls = createControls( this.camera, this.renderer.domElement);
@@ -45,24 +54,23 @@ class World {
 
 
     addObjects ( objects ) {
-        //take in a list of objects and add them to the world
-        let name,obj;
-
-
         for( const [name, obj] of Object.entries(objects) ) {
             obj.setName(`${name}`);
             obj.addToScene(this.scene);
             obj.addToUI(this.ui);
 
             //if the object has a nonempty tick() method, add to loop
-            if(obj.tick()){
+            if(obj.tick){
                 this.loop.add(obj);
             }
         }
     }
 
-    addEnvironment ( environment ) {
-        //take in an environment (bkg/envmap) and set it for the scene
+    setEnvironment ( env ) {
+        //set world.environment
+        //add the environment to the loop and ui
+        this.environment = new Environment( env );
+        this.environment.setScene( this.scene );
 
     }
 
@@ -78,11 +86,10 @@ class World {
 
     render() {
         //render a single frame of World
-
+        this.renderer.render( this.scene, this.camera );
     }
 
     start() {
-
         //start an animation cycle
         this.loop.start( this.stats );
     }
