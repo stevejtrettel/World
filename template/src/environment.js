@@ -1,0 +1,8 @@
+
+
+const environment = {
+
+};
+
+
+export { environment };

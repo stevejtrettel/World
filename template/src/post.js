@@ -1,0 +1,7 @@
+
+
+const post = {
+
+};
+
+export { post };

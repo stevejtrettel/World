@@ -30,6 +30,14 @@ class World {
 
     //---methods------
 
+
+    addGlobalParams () {
+        //takes in a list of global parameters to add to UI
+
+    }
+
+
+
     addObjects ( objects ) {
         //take in a list of objects and add them to the world
         let name,obj;
