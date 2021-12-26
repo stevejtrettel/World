@@ -1,10 +1,8 @@
-import {Object3D} from "../../3party/three/build/three.module.js";
 
 
-class baseObject extends Object3D {
+class baseObject {
 
     constructor () {
-        super();
 
         this.name = null;
 
@@ -16,16 +14,16 @@ class baseObject extends Object3D {
     }
 
     addToScene( scene ) {
-        scene.add(this);
+        //however you add this object to a threejs scene:
     }
 
     addToUI ( ui ) {
-
+        //whatever you do to add this object to a dat.gui object
 
     }
 
     tick () {
-
+        //code run at each time step for this object in an animation
 
     }
 

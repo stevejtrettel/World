@@ -1,16 +1,29 @@
-
+import {createCamera} from "../components/createCamera.js";
+import {createScene} from "../components/createScene.js";
+import {createRenderer} from "../components/createRenderer.js";
+import {createStats} from "../components/createStats.js";
+import {UI} from "./Ui.js";
+import {Loop} from "./Loop.js";
+import {Resizer} from "./Resizer.js";
 
 
 class World {
 
     constructor( container, renderer, options ) {
-        this.camera = null;
-        this.scene = null;
-        this.renderer = null;
-        this.stats = null;
-        this.ui = null;
-        this.loop = null;
-        this.resizer = null;
+
+        this.container = container;
+        this.renderer = renderer;
+        //the renderer creates a canvas element: append it to the html
+        this.container.append(this.renderer.domElement);
+
+
+        this.camera = createCamera();
+        this.scene = createScene(options.color);
+        this.loop = new Loop( this.camera, this.scene, this.renderer);
+
+        this.stats = createStats();
+        this.ui = new UI();
+        this.resizer = new Resizer(this.container, this.camera, this.renderer );
 
     }
 

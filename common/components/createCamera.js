@@ -1,0 +1,9 @@
+
+
+
+function createCamera () {
+
+}
+
+
+export { createCamera };
