@@ -5,6 +5,7 @@ import { createControls } from "./components/createControls.js";
 import { UI } from "./Ui.js";
 import { Loop } from "./Loop.js";
 import { Resizer } from "./Resizer.js";
+import {BoxNoLights} from "../backgrounds/BoxNoLights.js";
 
 class World {
 
@@ -17,7 +18,8 @@ class World {
 
 
         this.camera = createCamera();
-        this.scene = createScene( options.color );
+        this.scene = new BoxNoLights( options.color );
+            //createScene( options.color );
         this.loop = new Loop( this.camera, this.scene, this.renderer);
 
         //set up the controls
