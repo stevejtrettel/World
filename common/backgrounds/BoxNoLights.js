@@ -18,10 +18,12 @@ class BoxNoLights extends Scene {
         geometry.deleteAttribute( 'uv' );
         const parameters = {
             metalness: 0,
-            color: color,
             side: BackSide
         };
+
         const roomMaterial = new MeshStandardMaterial( parameters );
+        roomMaterial.color.set(color);
+
         const room = new Mesh( geometry, roomMaterial );
         room.scale.setScalar( 10 );
         this.add( room );

@@ -5,19 +5,23 @@ import { environment } from "./src/environment.js";
 import { lights } from "./src/lights.js";
 import { post } from "./src/post.js"
 
+
+
+
 function main() {
 
-    // Get a reference to the container element
+    // Get a reference to the container element, set options
     const container = document.querySelector('#World');
+    const options = {color: 0x2f508a};
 
     // 1. Create an instance of the World class
-    const world = new World( container, globals.renderer );
+    const world = new World( container, globals.renderer, options );
 
     //2. Introduce any global variables:
     world.addGlobalParams( globals.params );
 
     //3. Set the environment
-    world.addEnvironment( environment) ;
+    world.addEnvironment( environment ) ;
 
     //4. Fill this world with objects
     world.addObjects( objects );

@@ -1,11 +1,10 @@
-import {createCamera} from "../components/createCamera.js";
-import {createScene} from "../components/createScene.js";
-import {createRenderer} from "../components/createRenderer.js";
-import {createStats} from "../components/createStats.js";
-import {UI} from "./Ui.js";
-import {Loop} from "./Loop.js";
-import {Resizer} from "./Resizer.js";
-
+import { createCamera } from "./components/createCamera.js";
+import { createScene } from "./components/createScene.js";
+import { createStats } from "./components/createStats.js";
+import { createControls } from "./components/createControls.js";
+import { UI } from "./Ui.js";
+import { Loop } from "./Loop.js";
+import { Resizer } from "./Resizer.js";
 
 class World {
 
@@ -14,16 +13,21 @@ class World {
         this.container = container;
         this.renderer = renderer;
         //the renderer creates a canvas element: append it to the html
-        this.container.append(this.renderer.domElement);
+        this.container.append( this.renderer.domElement );
 
 
         this.camera = createCamera();
-        this.scene = createScene(options.color);
+        this.scene = createScene( options.color );
         this.loop = new Loop( this.camera, this.scene, this.renderer);
+
+        //set up the controls
+        this.controls = createControls( this.camera, this.renderer.domElement);
+        this.loop.add( this.controls );
+
 
         this.stats = createStats();
         this.ui = new UI();
-        this.resizer = new Resizer(this.container, this.camera, this.renderer );
+        this.resizer = new Resizer( this.container, this.camera, this.renderer );
 
     }
 
@@ -76,12 +80,14 @@ class World {
     }
 
     start() {
-        //start an animation cycle
 
+        //start an animation cycle
+        this.loop.start( this.stats );
     }
 
     stop() {
         //end an animation cycle
+        this.loop.end();
     }
 
 }

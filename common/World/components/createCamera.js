@@ -1,7 +1,7 @@
 import {
     PerspectiveCamera,
     DirectionalLight,
-} from "../../3party/three/build/three.module.js";
+} from "../../../3party/three/build/three.module.js";
 
 
 function createCamera() {

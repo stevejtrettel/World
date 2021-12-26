@@ -3,7 +3,7 @@ import {
     sRGBEncoding,
     CineonToneMapping,
     ACESFilmicToneMapping,
-} from "../../3party/three/build/three.module.js";
+} from "../../../3party/three/build/three.module.js";
 
 
 function createRenderer ( ) {
