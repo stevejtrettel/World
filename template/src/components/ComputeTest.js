@@ -1,5 +1,6 @@
 import { ComputeShader } from "../../../common/gpgpu/ComputeShader.js";
-import { CsQuad } from "../../../common/gpgpu/displays/CsQuad.js";
+import { ComputeSystem } from "../../../common/gpgpu/ComputeSystem.js";
+import { CsQuad, CsysQuad } from "../../../common/gpgpu/displays/CsQuad.js";
 import { CsParticles } from "../../../common/gpgpu/displays/CsParticles.js";
 
 import { randomFns } from "../../../common/shaders/math/random.js";

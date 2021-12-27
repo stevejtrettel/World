@@ -18,37 +18,32 @@ class ComputeShader {
         //save the renderer
         this.renderer=renderer;
 
-
+        this.uniforms = {};
 
         //the initial condition computations
-        this.iniUniforms = {
+        this.uniforms.initialization = {
             res: {value: resVector},
             ...uniforms.initialization,
         };
-        let iniMat = new ShaderMaterial(
-            {
-                fragmentShader: shaders.initialization,
-                uniforms: this.iniUniforms,
-            }
-        );
 
-        this.ini = new FullScreenQuad( iniMat );
-
+        this.initialization = new FullScreenQuad( {
+            fragmentShader:  shaders.initialization,
+            uniforms: this.uniforms.initialization
+        });
 
         //the simulation computations
-        this.simUniforms = {
+        this.uniforms.simulation = {
             res: {value: resVector},
             frameNumber: {value: 0},
             data: {value: null },
             ...uniforms.simulation
         };
-        let simMat = new ShaderMaterial(
-            {
-                fragmentShader: shaders.simulation,
-                uniforms: this.simUniforms,
-            }
-        );
-        this.sim = new FullScreenQuad( simMat );
+
+        this.simulation = new FullScreenQuad({
+            fragmentShader: shaders.simulation,
+            uniforms: this.uniforms.simulation
+        });
+
 
 
         //the render targets
@@ -63,13 +58,13 @@ class ComputeShader {
 
     updateUniforms() {
         //whatever we need to do here
-        this.simUniforms.frameNumber.value +=1;
+        this.uniforms.simulation.frameNumber.value +=1;
     }
 
 
     setData( dat ) {
         this.data=dat;
-        this.simUniforms.data.value = dat;
+        this.uniforms.simulation.data.value = dat;
     }
 
     getData(){
@@ -78,14 +73,14 @@ class ComputeShader {
 
     run() {
         //do one cycle of the integration
-        this.rts.render( this.sim, this.renderer );
+        this.rts.render( this.simulation, this.renderer );
         this.setData(this.rts.getResult());
         this.updateUniforms();
     }
 
     initialize() {
         //run the initial condition shader
-       this.rts.render( this.ini, this.renderer );
+       this.rts.render( this.initialization, this.renderer );
        this.setData(this.rts.getResult());
     }
 

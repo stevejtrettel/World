@@ -12,6 +12,8 @@ import { FlowLineField } from "../../common/objects/FlowLineField.js";
 
 import {displayQuad, particleSys } from "./components/ComputeTest.js";
 
+import { CSys, ComputeSysDisplay } from "./components/ComputeSysTest.js";
+
 class Sph extends Mesh {
     constructor() {
         super();
@@ -114,10 +116,12 @@ let flowLines = new FlowLineField( diffEq,100, 0.2);
 
 const objects = {
    // sph: new Sph(),
-     flow: integralCurve,
-     field: flowLines,
-    display: displayQuad,
-    partSys: particleSys,
+     //flow: integralCurve,
+    // field: flowLines,
+   //display: displayQuad,
+    //partSys: particleSys,
+    Csys: CSys,
+    CsysD: ComputeSysDisplay,
 };
 
 export { objects };

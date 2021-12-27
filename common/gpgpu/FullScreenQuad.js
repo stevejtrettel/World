@@ -3,7 +3,7 @@ import{
     BufferGeometry,
     Float32BufferAttribute,
     Mesh,
-
+    ShaderMaterial,
 } from "../../3party/three/build/three.module.js";
 
 
@@ -17,9 +17,10 @@ _geometry.setAttribute( 'uv', new Float32BufferAttribute( [ 0, 2, 0, 0, 2, 0 ], 
 
 class FullScreenQuad {
 
-    constructor( material ) {
+    constructor( parameters) {
+        //parameters are an objedt of the form { fragmentShader: x, uniforms: y}
+        let material = new ShaderMaterial( parameters );
         this._mesh = new Mesh( _geometry, material );
-
     }
 
     dispose() {
