@@ -63,7 +63,7 @@ const simCodeUniforms = `
           uniform float f;
           
           //set the temporal resolution of the simulation
-          float dt=0.02;
+          float dt=0.01;
 `;
 
 
@@ -121,22 +121,38 @@ void main()
 
 const iniCode = iniCodeUniforms+randomFns+iniCodeMain;
 
-const initialCondition = {
-    shader: iniCode,
-    uniforms: {},
-};
-
 
 const simCode = simCodeUniforms+randomFns+vecField+rk4+simCodeMain;
 
-const simulation = {
-    shader: simCode,
-    uniforms: {},
+
+
+const uniforms = {
+    initialization : iniCodeUniforms,
+    simulation : simCodeUniforms,
 };
 
 
+const shaders = {
+    initialization: iniCode,
+    simulation : simCode,
+};
+
+//
+// const initialCondition = {
+//     shader: iniCode,
+//     uniforms: {},
+// };
+//
+//
+
+// const simulation = {
+//     shader: simCode,
+//     uniforms: {},
+// };
+//
+
 //make the compute shader
-const CS = new ComputeShader( res, simulation, initialCondition, globals.renderer);
+const CS = new ComputeShader( shaders, uniforms, res, globals.renderer);
 
 
 const particleSys = new CsParticles( CS );

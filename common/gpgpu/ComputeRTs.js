@@ -21,6 +21,10 @@ const rtSettings = {
 };
 
 
+
+// a pair of render targets that take in FullScreenQuads and render them, swap targets, and read out result
+//a compute system can be built of multiple FullScreenQuads and use this as the rendering device for all of them
+
 class ComputeRenderTargets {
 
     constructor( res ){

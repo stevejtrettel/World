@@ -9,7 +9,7 @@ import {ComputeRenderTargets} from "./ComputeRTs.js";
 
 class ComputeShader {
 
-    constructor( resolution, simulation, initialCondition, renderer ){
+    constructor( shaders, uniforms, resolution, renderer ){
 
         //the resolution of the simulation
         this.res = resolution;
@@ -19,14 +19,15 @@ class ComputeShader {
         this.renderer=renderer;
 
 
+
         //the initial condition computations
         this.iniUniforms = {
             res: {value: resVector},
-            ...initialCondition.uniforms,
+            ...uniforms.initialization,
         };
         let iniMat = new ShaderMaterial(
             {
-                fragmentShader: initialCondition.shader,
+                fragmentShader: shaders.initialization,
                 uniforms: this.iniUniforms,
             }
         );
@@ -39,11 +40,11 @@ class ComputeShader {
             res: {value: resVector},
             frameNumber: {value: 0},
             data: {value: null },
-            ...simulation.uniforms
+            ...uniforms.simulation
         };
         let simMat = new ShaderMaterial(
             {
-                fragmentShader: simulation.shader,
+                fragmentShader: shaders.simulation,
                 uniforms: this.simUniforms,
             }
         );
@@ -76,7 +77,7 @@ class ComputeShader {
     }
 
     run() {
-        //do one cycle of the computation
+        //do one cycle of the integration
         this.rts.render( this.sim, this.renderer );
         this.setData(this.rts.getResult());
         this.updateUniforms();

@@ -6,7 +6,7 @@ import {
 } from "../../3party/three/build/three.module.js";
 
 
-import { RungeKutta } from "../../common/computation/RungeKutta.js";
+import { RungeKutta } from "../../common/integration/RungeKutta.js";
 import { FlowLine } from "../../common/objects/FlowLine.js";
 import { FlowLineField } from "../../common/objects/FlowLineField.js";
 
@@ -45,7 +45,7 @@ class Sph extends Mesh {
 
 
 
-const ep = 0.04;
+const ep = 0.01;
 
 const derive = ( state ) => {
     const x = state.x;
@@ -72,7 +72,7 @@ let iniState = new Vector3(1,1,1);
 
 let integralCurve = new FlowLine( diffEq, iniState, 10 );
 
-let flowLines = new FlowLineField( diffEq,30, 0.2);
+let flowLines = new FlowLineField( diffEq,100, 0.2);
 
 
 
@@ -114,8 +114,8 @@ let flowLines = new FlowLineField( diffEq,30, 0.2);
 
 const objects = {
    // sph: new Sph(),
-   //  flow: integralCurve,
-   //  field: flowLines,
+     flow: integralCurve,
+     field: flowLines,
     display: displayQuad,
     partSys: particleSys,
 };

@@ -25,6 +25,7 @@ class World {
 
         this.camera = createCamera();
         this.scene = new BoxNoLights( options.color );
+            //new BoxNoLights( options.color );
             //createScene( options.color );
         this.loop = new Loop( this.camera, this.scene, this.renderer);
 
@@ -55,7 +56,7 @@ class World {
 
     addObjects ( objects ) {
         for( const [name, obj] of Object.entries(objects) ) {
-            obj.setName(`${name}`);
+            //obj.setName(`${name}`);
             obj.addToScene(this.scene);
             obj.addToUI(this.ui);
 
@@ -69,8 +70,8 @@ class World {
     setEnvironment ( env ) {
         //set world.environment
         //add the environment to the loop and ui
-        this.environment = new Environment( env );
-        this.environment.setScene( this.scene );
+        // this.environment = new Environment( env );
+        // this.environment.setScene( this.scene );
 
     }
 

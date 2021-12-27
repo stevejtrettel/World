@@ -41,7 +41,7 @@ class CsQuad {
 
     tick() {
         //the compute system has been independently added to the scene, and is running
-        this.compute.run();
+        //this.compute.run();
         this.display.material.map = this.compute.getData();
     }
 
