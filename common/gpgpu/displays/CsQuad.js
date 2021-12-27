@@ -3,11 +3,11 @@ import {
     DoubleSide,
     MeshStandardMaterial,
     PlaneBufferGeometry,
-} from "../../3party/three/build/three.module.js"
+} from "../../../3party/three/build/three.module.js"
 
 
 
-class ComputeDisplay {
+class CsQuad {
 
     constructor( computeShader ) {
 
@@ -40,6 +40,7 @@ class ComputeDisplay {
     }
 
     tick() {
+        //the compute system has been independently added to the scene, and is running
         this.compute.run();
         this.display.material.map = this.compute.getData();
     }
@@ -47,4 +48,4 @@ class ComputeDisplay {
 }
 
 
-export { ComputeDisplay };
+export { CsQuad };

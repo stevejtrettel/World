@@ -88,6 +88,26 @@ class ComputeShader {
        this.setData(this.rts.getResult());
     }
 
+
+
+
+    setName( name ){
+        this.name = name;
+    }
+
+    addToUI( ui ){
+
+    }
+
+    addToScene( scene ) {
+
+    }
+
+    tick(){
+        //if you add the compute shader to the scene it'll run
+        this.run();
+    }
+
 }
 
 

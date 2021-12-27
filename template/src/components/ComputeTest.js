@@ -1,6 +1,6 @@
 import { ComputeShader } from "../../../common/gpgpu/ComputeShader.js";
-import { ComputeDisplay } from "../../../common/gpgpu/ComputeDisplay.js";
-import { ParticleSystem } from "../../../common/objects/ParticleSystem.js";
+import { CsQuad } from "../../../common/gpgpu/displays/CsQuad.js";
+import { CsParticles } from "../../../common/gpgpu/displays/CsParticles.js";
 
 import { randomFns } from "../../../common/shaders/math/random.js";
 import {rk4_vec3 as rk4 } from "../../../common/shaders/odes/rk4.js";
@@ -139,8 +139,7 @@ const simulation = {
 const CS = new ComputeShader( res, simulation, initialCondition, globals.renderer);
 
 
-const particleSys = new ParticleSystem( CS );
-
-const displayQuad = new ComputeDisplay( CS );
+const particleSys = new CsParticles( CS );
+const displayQuad = new CsQuad( CS );
 
 export {displayQuad, particleSys};

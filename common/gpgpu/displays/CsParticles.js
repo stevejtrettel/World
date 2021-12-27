@@ -5,7 +5,7 @@ import {
     AdditiveBlending,
     BufferGeometry,
     BufferAttribute,
-} from "../../3party/three/build/three.module.js";
+} from "../../../3party/three/build/three.module.js";
 
 
 let rendV = `
@@ -61,14 +61,13 @@ function createParticleMesh(width,height){
 
 
 
-class ParticleSystem extends Points {
+class CsParticles extends Points {
 
     constructor( computeShader ) {
         super();
 
         this.simulation = computeShader;
         this.simulation.initialize();
-
 
 
         //create the particle mesh by adding vertices at points in a (0,1)x(0,1) square
@@ -78,7 +77,6 @@ class ParticleSystem extends Points {
         //which then get manipulated by the shaderMaterial
         const renderGeo = new BufferGeometry();
         renderGeo.setAttribute('position', new BufferAttribute(vertices,3));
-
 
 
 
@@ -124,13 +122,15 @@ class ParticleSystem extends Points {
     }
 
     tick(){
-       // this.simulation.run();
+       //the simulation has been separately added to the scene and run on its own:
+        this.simulation.run();
         this.material.uniforms.data.value=this.simulation.getData();
-        // this.updateUniforms();
+        this.updateUniforms();
+
     }
 
 
 }
 
 
-export { ParticleSystem };
+export { CsParticles };
