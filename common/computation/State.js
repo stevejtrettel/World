@@ -13,17 +13,23 @@ class State {
         return  new State(this.pos.clone(), this.vel.clone());
     }
 
-    flow(ep){
-        this.pos.add(this.vel.clone().multiplyScalar(ep));
-        return this;
+
+    add( state ) {
+        this.vel.add(state.vel);
     }
 
-    //move a state by a velocity and acceleration
-    //this does not flow by the velocity in the initial state:
-    //it ONLY moves using the dState
-    nudge(dState, ep){
-        this.pos.add(dState.vel.clone().multiplyScalar(ep));
-        this.vel.add(dState.acc.clone().multiplyScalar(ep));
+    sub( state ){
+        this.vel.sub(state.vel);
+    }
+
+    multiplyScalar( k ) {
+        this.vel.multiplyScalar(k);
+    }
+
+
+    //a new possibility not inherited from vec
+    flow(ep){
+        this.pos.add(this.vel.clone().multiplyScalar(ep));
         return this;
     }
 
@@ -40,9 +46,9 @@ class dState {
         return  new dState(this.vel.clone(),this.acc.clone());
     }
 
-    scale(ep) {
-        this.vel.multiplyScalar(ep);
-        this.acc.multiplyScalar(ep);
+    multiplyScalar ( k ) {
+        this.vel.multiplyScalar( k );
+        this.acc.multiplyScalar( k );
         return this;
     }
 
@@ -50,6 +56,11 @@ class dState {
         this.vel.add(dState.vel);
         this.acc.add(dState.acc);
         return this;
+    }
+
+    sub( dState ) {
+        this.vel.sub( dState.vel );
+        this.acc.sub( dState.acc );
     }
 
 }

@@ -6,7 +6,7 @@ import {
 } from "../../3party/three/build/three.module.js";
 
 
-import { RungeKuttaVec3 as RungeKutta } from "../../common/computation/RungeKutta.js";
+import { RungeKutta } from "../../common/computation/RungeKutta.js";
 import { FlowLine } from "../../common/objects/FlowLine.js";
 import { FlowLineField } from "../../common/objects/FlowLineField.js";
 
@@ -68,15 +68,15 @@ const derive = ( state ) => {
 const diffEq = new RungeKutta( derive, ep);
 let iniState = new Vector3(1,1,1);
 
-let integralCurve = new FlowLine( diffEq, iniState, 500 );
+let integralCurve = new FlowLine( diffEq, iniState, 10 );
 
-let flowLines = new FlowLineField( derive, ep,100, 0.2);
+let flowLines = new FlowLineField( diffEq,30, 0.2);
 
 
 const objects = {
    // sph: new Sph(),
     flow: integralCurve,
-   // field: flowLines,
+    field: flowLines,
 };
 
 export { objects };
