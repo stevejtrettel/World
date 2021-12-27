@@ -10,6 +10,8 @@ import { RungeKutta } from "../../common/computation/RungeKutta.js";
 import { FlowLine } from "../../common/objects/FlowLine.js";
 import { FlowLineField } from "../../common/objects/FlowLineField.js";
 
+import {displayQuad } from "./components/ComputeTest.js";
+
 class Sph extends Mesh {
     constructor() {
         super();
@@ -73,10 +75,48 @@ let integralCurve = new FlowLine( diffEq, iniState, 10 );
 let flowLines = new FlowLineField( diffEq,30, 0.2);
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const objects = {
    // sph: new Sph(),
-    flow: integralCurve,
-    field: flowLines,
+   //  flow: integralCurve,
+   //  field: flowLines,
+    display: displayQuad,
 };
 
 export { objects };

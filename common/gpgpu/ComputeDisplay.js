@@ -3,7 +3,7 @@ import {
     DoubleSide,
     MeshStandardMaterial,
     PlaneBufferGeometry,
-} from "../../3party/three/build/three.js"
+} from "../../3party/three/build/three.module.js"
 
 
 
@@ -24,7 +24,7 @@ class ComputeDisplay {
         this.display.position.set(0,0,-3);
 
         this.name = null;
-        
+
     }
 
     setName(name){

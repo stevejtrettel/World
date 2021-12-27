@@ -4,7 +4,7 @@ import {
     FloatType,
     NearestFilter,
     RGBAFormat
-} from "../../3party/three/build/three.module";
+} from "../../3party/three/build/three.module.js";
 
 
 
@@ -27,6 +27,7 @@ class ComputeRenderTargets {
 
         this.a = new WebGLRenderTarget(res[0], res[1], rtSettings);
         this.b = new WebGLRenderTarget(res[0], res[1], rtSettings);
+       // this.data = null;
 
     }
 
@@ -41,14 +42,16 @@ class ComputeRenderTargets {
     //save result in this.data;
     render( fsq, renderer ){
         renderer.setRenderTarget(this.a);
-        renderer.render(fsq);
+        fsq.render(renderer);
         this.swap();
-        //now the result is stored in the b texture:
+        renderer.setRenderTarget(null);
     }
 
-    get data(){
+    getResult(){
+        //we always read from b and write to a
         return this.b.texture;
     }
+
 
 }
 

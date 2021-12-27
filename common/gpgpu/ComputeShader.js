@@ -1,12 +1,10 @@
 import {
-    MeshStandardMaterial,
-    PlaneBufferGeometry,
     ShaderMaterial,
     Vector2,
 } from "../../3party/three/build/three.module.js";
 
-import {FullScreenQuad} from "./FullScreenQuad";
-import {ComputeRenderTargets} from "./ComputeRTs";
+import {FullScreenQuad} from "./FullScreenQuad.js";
+import {ComputeRenderTargets} from "./ComputeRTs.js";
 
 
 class ComputeShader {
@@ -32,6 +30,7 @@ class ComputeShader {
                 uniforms: this.iniUniforms,
             }
         );
+
         this.ini = new FullScreenQuad( iniMat );
 
 
@@ -49,7 +48,6 @@ class ComputeShader {
             }
         );
         this.sim = new FullScreenQuad( simMat );
-
 
 
         //the render targets
@@ -70,6 +68,7 @@ class ComputeShader {
 
     setData( dat ) {
         this.data=dat;
+        this.simUniforms.data.value = dat;
     }
 
     getData(){
@@ -79,31 +78,15 @@ class ComputeShader {
     run() {
         //do one cycle of the computation
         this.rts.render( this.sim, this.renderer );
-        this.data = this.rts.data;
+        this.setData(this.rts.getResult());
         this.updateUniforms();
     }
 
     initialize() {
-        this.rts.render( this.ini, this.renderer );
-        this.data = this.rts.data;
+        //run the initial condition shader
+       this.rts.render( this.ini, this.renderer );
+       this.setData(this.rts.getResult());
     }
-
-    // getDebugQuad(){
-    //
-    //     const geometry = new PlaneBufferGeometry(2,2);
-    //     const material = new MeshStandardMaterial({side:DoubleSide} );
-    //     material.map = this.getData();
-    //     const mesh = new Mesh(geometry, material);
-    //     mesh.position.set(0,0,-3);
-    //
-    //     //patch in the necessary functions:
-    //     mesh.setName = ()=>{};
-    //     mesh.addToScene = (scene) => scene.add(mesh);
-    //     mesh.addToUI = ()=>{};
-    //
-    //     //send it
-    //     return mesh;
-    // }
 
 }
 

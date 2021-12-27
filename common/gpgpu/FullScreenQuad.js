@@ -4,7 +4,7 @@ import{
     Float32BufferAttribute,
     Mesh,
 
-} from "../../3party/three/build/three.module";
+} from "../../3party/three/build/three.module.js";
 
 
 const _camera = new OrthographicCamera( - 1, 1, 1, - 1, 0, 1 );
@@ -18,7 +18,6 @@ _geometry.setAttribute( 'uv', new Float32BufferAttribute( [ 0, 2, 0, 0, 2, 0 ], 
 class FullScreenQuad {
 
     constructor( material ) {
-
         this._mesh = new Mesh( _geometry, material );
 
     }
