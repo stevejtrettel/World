@@ -10,7 +10,7 @@ import { RungeKutta } from "../../common/computation/RungeKutta.js";
 import { FlowLine } from "../../common/objects/FlowLine.js";
 import { FlowLineField } from "../../common/objects/FlowLineField.js";
 
-import {displayQuad } from "./components/ComputeTest.js";
+import {displayQuad, particleSys } from "./components/ComputeTest.js";
 
 class Sph extends Mesh {
     constructor() {
@@ -117,6 +117,7 @@ const objects = {
    //  flow: integralCurve,
    //  field: flowLines,
     display: displayQuad,
+    partSys: particleSys,
 };
 
 export { objects };
