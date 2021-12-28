@@ -1,5 +1,5 @@
 
-import { ComputeShader } from "../gpgpu/ComputeShader";
+import { ComputeShader } from "../gpgpu/components/ComputeShader";
 
 
 //takes in a ComputeSystem to do computations, puts results in a collection of textures.

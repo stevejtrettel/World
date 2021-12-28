@@ -4,7 +4,7 @@ import{
     Float32BufferAttribute,
     Mesh,
     ShaderMaterial,
-} from "../../3party/three/build/three.module.js";
+} from "../../../3party/three/build/three.module.js";
 
 
 const _camera = new OrthographicCamera( - 1, 1, 1, - 1, 0, 1 );

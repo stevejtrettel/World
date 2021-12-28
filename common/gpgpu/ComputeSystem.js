@@ -2,10 +2,7 @@
 // (position,velocity,etc) that all work together
 
 import { Vector2 } from "../../3party/three/build/three.module.js";
-
-import { FullScreenQuad } from "./FullScreenQuad.js";
-import { ComputeRenderTargets } from "./ComputeRTs.js";
-
+import { ComputeShader } from "./components/ComputeShader.js";
 
 //shaders will come in the form of an object like
 //{
@@ -15,8 +12,7 @@ import { ComputeRenderTargets } from "./ComputeRTs.js";
 
 //uniforms will come in the form of an object like
 //{
-// initialization: x,
-// simulation: y,
+// name : {value, x}, name2: {value: y}, ...
 //}
 
 
@@ -30,77 +26,51 @@ class ComputeSystem {
         this.renderer = renderer;
         this.uniforms = uniforms;
 
-
-        //add to these uniforms ones that are explicit to simulation:
-
-        this.uniforms.res = {value : new Vector2(res[0], res[1])};
-        this.uniforms.frameNumber = {value : 0.};
-
-
         //get the names of each shader:
         this.names = Object.keys(shaders);
+        this.default = null;
+
+        //add to these uniforms ones that are explicit to simulation:
+        this.uniforms.res = {value : new Vector2(res[0], res[1])};
+        this.uniforms.frameNumber = {value : 0.};
+        for (let name of this.names) {
+            //add a uniform to the simulation with this name: this is the data texture
+            this.uniforms[name] = {value: null};
+        }
 
 
         //build an object to store all computing materials: FUllScreenQuads, and resulting textures:
         //each objects is of the form {pos: QUAD, vel: QUAD, }...etc
-        this.initialization = {};
-        this.simulation = {};
+        this.compute={};
         this.data={};
-
-
-        let iniFSQ, simFSQ;
 
         for (let name of this.names) {
 
-            //add a uniform to the simulation with this name: this is the data texture
-            this.uniforms[name]={value: null};
+            //build a compute system:
+            this.compute[name] = new ComputeShader(shaders[name], this.uniforms, this.res, this.renderer);
 
-
-            //make initialization full screen quad
-            iniFSQ = new FullScreenQuad({
-                fragmentShader:shaders[name].initialization,
-                uniforms: this.uniforms,
-            });
-
-            this.initialization[name] = iniFSQ;
-
-            //make simulation full screen quad
-            simFSQ = new FullScreenQuad({
-                fragmentShader: shaders[name].simulation,
-                uniforms: this.uniforms,
-            });
-
-            this.simulation[name] = simFSQ;
-
+            //make a spot to store it's data
             this.data[name] = null;
 
         }
 
 
-        //the render targets
-        this.rts = new ComputeRenderTargets( this.res );
+    }
 
-
-
-
-
+    setDefault(name){
+        this.default = name;
     }
 
 
     updateUniforms() {
 
         //increase frame number
-        this.uniforms.frameNumber += 1.;
+        this.uniforms.frameNumber.value += 1.;
 
-        //update all the data textures
+        // //update all the data textures
         for( let name of this.names ){
             this.uniforms[name].value = this.data[name];
         }
-
-    }
-
-
-    setData( data ) {
 
     }
 
@@ -108,11 +78,15 @@ class ComputeSystem {
         return this.data;
     }
 
+    getDefault(){
+        return this.data[this.default];
+    }
+
     run() {
         for( let name of this.names ){
             //do one cycle of the integration
-            this.rts.render( this.simulation[name], this.renderer );
-            this.data[name] = this.rts.getResult();
+            this.compute[name].run();
+            this.data[name]=this.compute[name].getData();
         }
 
         this.updateUniforms();
@@ -123,8 +97,8 @@ class ComputeSystem {
 
         for( let name of this.names ){
             //run the initial condition shader
-            this.rts.render( this.initialization[name], this.renderer );
-            this.data[name] = this.rts.getResult();
+            this.compute[name].initialize();
+            this.data[name]=this.compute[name].getData();
         }
 
         this.updateUniforms();
@@ -151,6 +125,7 @@ class ComputeSystem {
 
 
 }
+
 
 
 export { ComputeSystem };

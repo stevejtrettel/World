@@ -61,30 +61,30 @@ function createParticleMesh(width,height){
 
 
 
-class CsParticles extends Points {
+class CSParticle extends Points {
 
-    constructor( computeShader ) {
+    constructor( computeSystem, defaultName ) {
         super();
 
-        this.simulation = computeShader;
+        this.simulation = computeSystem;
+        this.simulation.setDefault(defaultName);
         this.simulation.initialize();
 
 
         //create the particle mesh by adding vertices at points in a (0,1)x(0,1) square
         let vertices = createParticleMesh(this.simulation.res[0], this.simulation.res[1]);
 
-        //set up the material whose purpose is just to store the vertices listed above
+        //set up the geometry whose purpose is just to store the vertices listed above
         //which then get manipulated by the shaderMaterial
-        const renderGeo = new BufferGeometry();
-        renderGeo.setAttribute('position', new BufferAttribute(vertices,3));
-
+        this.geometry = new BufferGeometry();
+        this.geometry.setAttribute('position', new BufferAttribute(vertices,3));
 
 
         //the material which will be used for the Points() object:
         //its vertex shader tells the points where to go by reading the simulation texture
-        const renderMat = new ShaderMaterial( {
+        this.material = new ShaderMaterial( {
             uniforms: {
-                data: { value: this.simulation.data },
+                data: { value: this.simulation.getDefault() },
                 pointSize: { value: 2 },
                 res: { value: new Vector2(this.simulation.res[0], this.simulation.res[1])},
             },
@@ -94,11 +94,7 @@ class CsParticles extends Points {
             blending:AdditiveBlending,
         } );
 
-
-        //add the geometry and material to the Points extension
-        this.material = renderMat;
-        this.geometry = renderGeo;
-
+        //name to the particle system
         this.name = null;
 
     }
@@ -123,8 +119,8 @@ class CsParticles extends Points {
 
     tick(){
        //the simulation has been separately added to the scene and run on its own:
-        this.simulation.run();
-        this.material.uniforms.data.value=this.simulation.getData();
+       // this.simulation.run();
+        this.material.uniforms.data.value = this.simulation.getDefault();
         this.updateUniforms();
 
     }
@@ -133,4 +129,4 @@ class CsParticles extends Points {
 }
 
 
-export { CsParticles };
+export { CSParticle };

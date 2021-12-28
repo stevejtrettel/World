@@ -4,7 +4,7 @@ import {
     FloatType,
     NearestFilter,
     RGBAFormat
-} from "../../3party/three/build/three.module.js";
+} from "../../../3party/three/build/three.module.js";
 
 
 
@@ -48,7 +48,7 @@ class ComputeRenderTargets {
         renderer.setRenderTarget(this.a);
         fsq.render(renderer);
         this.swap();
-        renderer.setRenderTarget(null);
+        //renderer.setRenderTarget(null);
     }
 
     getResult(){

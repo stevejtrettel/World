@@ -5,7 +5,7 @@ import { Environment } from "./Environment.js";
 
 import { createCamera } from "./components/createCamera.js";
 import { createScene } from "./components/createScene.js";
-import { createStats } from "./components/createStats.js";
+import { createStats, placeStats } from "./components/createStats.js";
 import { createControls } from "./components/createControls.js";
 
 import {BoxNoLights} from "../backgrounds/BoxNoLights.js";
@@ -38,6 +38,8 @@ class World {
 
 
         this.stats = createStats();
+        placeStats( this.stats );
+
         this.ui = new UI();
         this.resizer = new Resizer( this.container, this.camera, this.renderer );
 

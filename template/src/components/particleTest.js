@@ -1,7 +1,6 @@
-import { ComputeShader } from "../../../common/gpgpu/ComputeShader.js";
+
 import { ComputeSystem } from "../../../common/gpgpu/ComputeSystem.js";
-import { CsQuad, CsysQuad } from "../../../common/gpgpu/displays/CsQuad.js";
-import { CsParticles } from "../../../common/gpgpu/displays/CsParticles.js";
+import { CSParticle } from "../../../common/gpgpu/displays/CSParticle.js";
 
 import { randomFns } from "../../../common/shaders/math/random.js";
 import {rk4_vec3 as rk4 } from "../../../common/shaders/odes/rk4.js";
@@ -15,10 +14,15 @@ const res = [width,height];
 
 
 
+const codeUniforms = `
+          uniform float frameNumber;
+          uniform vec2 res;
+          uniform sampler2D data;
 
-const iniCodeUniforms = `
-    uniform vec2 res;
+          //set the temporal resolution of the simulation
+          float dt=0.01;
 `;
+
 
 
 const iniCodeMain = `
@@ -50,22 +54,6 @@ const iniCodeMain = `
 
 
 
-
-const simCodeUniforms = `
-          uniform float frameNumber;
-          uniform vec2 res;
-          uniform sampler2D data;
-          uniform int choice;
-          uniform float a;
-          uniform float b;
-          uniform float c;
-          uniform float d;
-          uniform float e;
-          uniform float f;
-          
-          //set the temporal resolution of the simulation
-          float dt=0.01;
-`;
 
 
 
@@ -120,43 +108,28 @@ void main()
 
 
 
-const iniCode = iniCodeUniforms+randomFns+iniCodeMain;
+const iniCode = codeUniforms+randomFns+iniCodeMain;
+
+const simCode = codeUniforms+randomFns+vecField+rk4+simCodeMain;
 
 
-const simCode = simCodeUniforms+randomFns+vecField+rk4+simCodeMain;
 
 
 
-const uniforms = {
-    initialization : iniCodeUniforms,
-    simulation : simCodeUniforms,
-};
 
 
-const shaders = {
-    initialization: iniCode,
-    simulation : simCode,
-};
+const uniforms = {};
 
-//
-// const initialCondition = {
-//     shader: iniCode,
-//     uniforms: {},
-// };
-//
-//
+const shaders={
+        initialization: iniCode,
+        simulation: simCode,
+    };
 
-// const simulation = {
-//     shader: simCode,
-//     uniforms: {},
-// };
-//
 
 //make the compute shader
-const CS = new ComputeShader( shaders, uniforms, res, globals.renderer);
+const computeParticles = new ComputeSystem({position: shaders}, uniforms, res, globals.renderer);
+
+const pS = new CSParticle( computeParticles, 'position' );
 
 
-const particleSys = new CsParticles( CS );
-const displayQuad = new CsQuad( CS );
-
-export {displayQuad, particleSys};
+export {computeParticles,pS};

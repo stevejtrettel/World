@@ -1,34 +1,37 @@
 import { ComputeSystem } from "../../../common/gpgpu/ComputeSystem.js";
-import { CsysQuad } from "../../../common/gpgpu/displays/CsQuad.js";
+import { CSQuad } from "../../../common/gpgpu/displays/CSQuad.js";
 import{ globals } from "../globals.js";
-
-
+import {CSParticle} from "../../../common/gpgpu/displays/CSParticle.js";
 
 
 let shaderUniforms = `
     uniform vec2 res;
-    uniform float numFrame;
+    uniform float frameNumber;
     uniform sampler2D pos;
     uniform sampler2D vel;
 `;
 
 let posIniShader =`
          void main() {
-            gl_FragColor=vec4(0,1,0,1);
+            vec2 uv = gl_FragCoord.xy / res;
+            float h = sin(10.*uv.x);
+            gl_FragColor=vec4(uv,h,1);
             }
 `;
 
 let posSimShader = `
         void main(){
             vec2 uv = gl_FragCoord.xy/res;
-            vec3 col = vec3 (uv,uv.x*uv.y);
-            gl_FragColor = vec4(1,1,1,1.);
+            vec3 p = texture2D(pos,uv).xyz;
+            float h = p.z;
+            vec3 col = vec3 (uv,0.02*sin(frameNumber/20.)+0.011*h);
+            gl_FragColor = vec4(col,1.);
         }
 `;
 
 let velIniShader = `
          void main() {
-            gl_FragColor=vec4(1,0,0,1);
+            gl_FragColor=vec4(0,0,0,1);
             }
 `;
 
@@ -53,8 +56,10 @@ let res = [512,512];
 let CSys = new ComputeSystem(shaders, uniforms, res, globals.renderer);
 
 //set up its display:
-let ComputeSysDisplay = new CsysQuad(CSys);
+let ComputeSysDisplay = new CSQuad(CSys);
+
+//set up a particle system:
+const particleSys = new CSParticle( CSys, 'pos' );
 
 
-
-export {CSys, ComputeSysDisplay };
+export {CSys, ComputeSysDisplay, particleSys };

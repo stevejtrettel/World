@@ -10,40 +10,40 @@ import { RungeKutta } from "../../common/integration/RungeKutta.js";
 import { FlowLine } from "../../common/objects/FlowLine.js";
 import { FlowLineField } from "../../common/objects/FlowLineField.js";
 
-import {displayQuad, particleSys } from "./components/ComputeTest.js";
 
-import { CSys, ComputeSysDisplay } from "./components/ComputeSysTest.js";
+import { CSys, ComputeSysDisplay, particleSys } from "./components/compSysTest.js";
+import {computeParticles, pS} from "./components/particleTest.js";
 
-class Sph extends Mesh {
-    constructor() {
-        super();
-        this.geometry = new SphereBufferGeometry(1, 32, 16);
-        this.material = new MeshNormalMaterial();
-        this.name = null;
-    }
-
-    setName( name ){
-        this.name=name;
-    }
-
-    addToScene( scene ) {
-        scene.add(this);
-    }
-
-    addToUI( ui ){
-        let Folder = ui.addFolder('Sphere');
-
-        Folder.close();
-    }
-
-    tick(time,dt){
-        this.position.set(Math.sin(time),Math.cos(time),2*Math.sin(time/2));
-    }
-}
-
-
-
-
+// class Sph extends Mesh {
+//     constructor() {
+//         super();
+//         this.geometry = new SphereBufferGeometry(1, 32, 16);
+//         this.material = new MeshNormalMaterial();
+//         this.name = null;
+//     }
+//
+//     setName( name ){
+//         this.name=name;
+//     }
+//
+//     addToScene( scene ) {
+//         scene.add(this);
+//     }
+//
+//     addToUI( ui ){
+//         let Folder = ui.addFolder('Sphere');
+//
+//         Folder.close();
+//     }
+//
+//     tick(time,dt){
+//         this.position.set(Math.sin(time),Math.cos(time),2*Math.sin(time/2));
+//     }
+// }
+//
+//
+//
+//
 
 
 
@@ -81,47 +81,15 @@ let flowLines = new FlowLineField( diffEq,100, 0.2);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const objects = {
    // sph: new Sph(),
      //flow: integralCurve,
     // field: flowLines,
-   //display: displayQuad,
-    //partSys: particleSys,
-    Csys: CSys,
-    CsysD: ComputeSysDisplay,
+     CS: CSys,
+     CSDisp: ComputeSysDisplay,
+     CSPart: particleSys,
+    //computeParticles: computeParticles,
+   // pS:pS,
 };
 
 export { objects };
