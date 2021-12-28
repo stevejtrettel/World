@@ -1,9 +1,9 @@
-import{
+import {
     OrthographicCamera,
     BufferGeometry,
     Float32BufferAttribute,
     Mesh,
-    ShaderMaterial,
+    ShaderMaterial, DataTexture, RGBAFormat, FloatType,
 } from "../../../3party/three/build/three.module.js";
 
 
@@ -18,16 +18,11 @@ _geometry.setAttribute( 'uv', new Float32BufferAttribute( [ 0, 2, 0, 0, 2, 0 ], 
 class FullScreenQuad {
 
     constructor( parameters) {
-        //parameters are an objedt of the form { fragmentShader: x, uniforms: y}
+        //parameters are an object of the form { fragmentShader: x, uniforms: y}
         let material = new ShaderMaterial( parameters );
         this._mesh = new Mesh( _geometry, material );
     }
 
-    dispose() {
-
-        this._mesh.geometry.dispose();
-
-    }
 
     render( renderer ) {
 

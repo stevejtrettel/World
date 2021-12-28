@@ -28,7 +28,7 @@ class ComputeSystem {
 
         //get the names of each shader:
         this.names = Object.keys(shaders);
-        this.default = null;
+        this.default = this.names[0];
 
         //add to these uniforms ones that are explicit to simulation:
         this.uniforms.res = {value : new Vector2(res[0], res[1])};
@@ -74,19 +74,22 @@ class ComputeSystem {
 
     }
 
-    getData(){
-        return this.data;
+
+
+    getData( name ){
+        return this.data[name];
     }
 
     getDefault(){
-        return this.data[this.default];
+        return this.data[ this.default ];
     }
 
     run() {
+
         for( let name of this.names ){
             //do one cycle of the integration
             this.compute[name].run();
-            this.data[name]=this.compute[name].getData();
+            this.data[name] = this.compute[name].getData();
         }
 
         this.updateUniforms();
@@ -98,7 +101,7 @@ class ComputeSystem {
         for( let name of this.names ){
             //run the initial condition shader
             this.compute[name].initialize();
-            this.data[name]=this.compute[name].getData();
+            this.data[name] = this.compute[name].getData();
         }
 
         this.updateUniforms();

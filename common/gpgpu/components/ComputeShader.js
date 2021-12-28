@@ -2,6 +2,7 @@ import {FullScreenQuad} from "./FullScreenQuad.js";
 import {ComputeRenderTargets} from "./ComputeRTs.js";
 
 
+
 class ComputeShader {
 
     constructor( shaders, uniforms, resolution, renderer ){
@@ -51,6 +52,7 @@ class ComputeShader {
         //run the initial condition shader
        this.rts.render( this.initialization, this.renderer );
        this.setData(this.rts.getResult());
+
     }
 
 

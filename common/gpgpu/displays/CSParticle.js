@@ -7,6 +7,7 @@ import {
     BufferAttribute,
 } from "../../../3party/three/build/three.module.js";
 
+import { CSDisplay } from "./CSDisplay.js";
 
 let rendV = `
 uniform sampler2D data;//RenderTarget containing the transformed positions
@@ -61,68 +62,49 @@ function createParticleMesh(width,height){
 
 
 
-class CSParticle extends Points {
+class CSParticle extends CSDisplay {
 
-    constructor( computeSystem, defaultName ) {
-        super();
+    constructor( computeSystem ) {
 
-        this.simulation = computeSystem;
-        this.simulation.setDefault(defaultName);
-        this.simulation.initialize();
+        super( computeSystem );
 
+
+
+        //just need to create this.display:
+
+        //helpful to store this.uniforms as wewll
+        this.uniforms =  {
+            data: { value: this.compute.getDefault() },
+            pointSize: { value: 2 },
+            res: { value: new Vector2(this.compute.res[0], this.compute.res[1])},
+        }
 
         //create the particle mesh by adding vertices at points in a (0,1)x(0,1) square
-        let vertices = createParticleMesh(this.simulation.res[0], this.simulation.res[1]);
-
-        //set up the geometry whose purpose is just to store the vertices listed above
-        //which then get manipulated by the shaderMaterial
-        this.geometry = new BufferGeometry();
-        this.geometry.setAttribute('position', new BufferAttribute(vertices,3));
-
+        let vertices = createParticleMesh(this.compute.res[0], this.compute.res[1]);
+        let geometry = new BufferGeometry();
+        geometry.setAttribute('position', new BufferAttribute(vertices,3));
 
         //the material which will be used for the Points() object:
-        //its vertex shader tells the points where to go by reading the simulation texture
-        this.material = new ShaderMaterial( {
-            uniforms: {
-                data: { value: this.simulation.getDefault() },
-                pointSize: { value: 2 },
-                res: { value: new Vector2(this.simulation.res[0], this.simulation.res[1])},
-            },
+        //its vertex shader tells the points where to go by reading the compute texture
+        let material = new ShaderMaterial( {
+            uniforms: this.uniforms,
             vertexShader: rendV,
             fragmentShader: rendF,
             transparent: true,
             blending:AdditiveBlending,
         } );
 
-        //name to the particle system
-        this.name = null;
+
+        //adding the this.display object
+        this.display = new Points( geometry, material );
 
     }
 
-
-    setName( name ){
-        this.name = name;
-    }
-
-    addToScene( scene ){
-        //it extends Points so can just use 'add'
-        scene.add(this);
-    }
-
-    addToUI( ui ){
-
-    }
-
-    updateUniforms() {
-
-    }
 
     tick(){
        //the simulation has been separately added to the scene and run on its own:
-       // this.simulation.run();
-        this.material.uniforms.data.value = this.simulation.getDefault();
-        this.updateUniforms();
-
+       // this.compute.run();
+        this.uniforms.data.value = this.compute.getData(this.selectedDisplay());
     }
 
 

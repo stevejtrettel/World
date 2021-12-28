@@ -48,8 +48,10 @@ class ComputeRenderTargets {
         renderer.setRenderTarget(this.a);
         fsq.render(renderer);
         this.swap();
-        //renderer.setRenderTarget(null);
+        renderer.setRenderTarget(null);
     }
+
+
 
     getResult(){
         //we always read from b and write to a

@@ -13,16 +13,14 @@ const height = 1024;
 const res = [width,height];
 
 
-
 const codeUniforms = `
           uniform float frameNumber;
           uniform vec2 res;
-          uniform sampler2D data;
-
+          uniform sampler2D pos;
+          
           //set the temporal resolution of the simulation
-          float dt=0.01;
+          float dt=0.02;
 `;
-
 
 
 const iniCodeMain = `
@@ -93,7 +91,7 @@ void main()
             seed = randomSeed(gl_FragCoord.xy, frameNumber);
             
             //get data from the last frame
-            vec3 p = texture2D( data, uv ).xyz;
+            vec3 p = texture2D( pos, uv ).xyz;
          
             //update via RK, using the provided vecField
             vec3 q = rk4(p, dt);
@@ -116,8 +114,6 @@ const simCode = codeUniforms+randomFns+vecField+rk4+simCodeMain;
 
 
 
-
-
 const uniforms = {};
 
 const shaders={
@@ -127,9 +123,16 @@ const shaders={
 
 
 //make the compute shader
-const computeParticles = new ComputeSystem({position: shaders}, uniforms, res, globals.renderer);
+const attractorIntegrator = new ComputeSystem({pos: shaders}, uniforms, res, globals.renderer);
 
-const pS = new CSParticle( computeParticles, 'position' );
+const attractorParticles = new CSParticle( attractorIntegrator, 'position' );
 
 
-export {computeParticles,pS};
+const attractor = {
+    integrator: attractorIntegrator,
+    particles: attractorParticles,
+}
+
+
+
+export { attractor };
