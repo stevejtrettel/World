@@ -110,22 +110,15 @@ let vertHead = `
 
 vec2 setUV(vec3 params) {
 
-//params arrive in (-0.5,0.5)^2: need to rescale
-    params+=vec3(0.5,0.5,0.);
-    //now live in (0,1)^2
-
-    float u=PI*params.x;
-    float v=2.*PI*params.y;
-    
-    return vec2(u,v);
-
+//params arrive in (0,1)^2: so we are good
+    return params.xy;
 }
 
 vec3 displace(vec3 params){
 
     vec2 uv = setUV(params);
-    float s =uv.x;
-    float t = uv.y;
+    float s =2.*PI*uv.x;
+    float t = PI*uv.y;
     
     vec3 q = vec3( cos(s)*sin(t), sin(s)*sin(t),cos(t));
 
@@ -177,7 +170,8 @@ let fragHead = `
 
 
 let fragMain = `
-vec4 newColor = vec4(vUv,0.5, 1.0);
+vec3 col = texture2D(pos, vUv).xyz;
+vec4 newColor = vec4(col, 1.0);
 `;
 
 
