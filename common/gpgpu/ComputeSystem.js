@@ -4,13 +4,15 @@
 import { Vector2 } from "../../3party/three/build/three.module.js";
 import { ComputeShader } from "./components/ComputeShader.js";
 
-//shaders will come in the form of an object like
-//{
-// position: {simulation: x, initialization: y},
-//  velocity: {simulation: x, initialization: y},
-// }
+//names come in an ordered array
+//[position, velocity]
 
-//uniforms will come in the form of an object like
+//shaders will come in the form of an object
+// { position: {simulation: x, initialization: y},
+//   velocity :{simulation: z, initialization: w}...}
+
+//uniforms will come in the form of an object like follows
+//uniforms are common to all shaders right now
 //{
 // name : {value, x}, name2: {value: y}, ...
 //}
@@ -19,23 +21,23 @@ import { ComputeShader } from "./components/ComputeShader.js";
 
 class ComputeSystem {
 
-    //same inputs as ComputeShader
-    constructor( shaders, uniforms, res, renderer ) {
+    constructor( variables, shaders, uniforms, res, renderer ) {
 
+        //copy the passed data
         this.res = res;
         this.renderer = renderer;
         this.uniforms = uniforms;
 
-        //get the names of each shader:
-        this.names = Object.keys(shaders);
-        this.default = this.names[0];
+        //names are in the order we wish to execute the shaders
+        //this is our iterable object
+        this.variables = variables;
 
         //add to these uniforms ones that are explicit to simulation:
         this.uniforms.res = {value : new Vector2(res[0], res[1])};
         this.uniforms.frameNumber = {value : 0.};
-        for (let name of this.names) {
+        for (let variable of this.variables) {
             //add a uniform to the simulation with this name: this is the data texture
-            this.uniforms[name] = {value: null};
+            this.uniforms[variable] = {value: null};
         }
 
 
@@ -44,23 +46,22 @@ class ComputeSystem {
         this.compute={};
         this.data={};
 
-        for (let name of this.names) {
+        for (let variable of this.variables) {
 
             //build a compute system:
-            this.compute[name] = new ComputeShader(shaders[name], this.uniforms, this.res, this.renderer);
+            this.compute[variable] = new ComputeShader( shaders[variable], this.uniforms, this.res, this.renderer );
 
             //make a spot to store it's data
-            this.data[name] = null;
+            this.data[variable] = null;
 
         }
 
 
-    }
+        //option to name the ComputeSystem
+        this.name=null;
 
-    setDefault(name){
-        this.default = name;
-    }
 
+    }
 
     updateUniforms() {
 
@@ -68,28 +69,22 @@ class ComputeSystem {
         this.uniforms.frameNumber.value += 1.;
 
         // //update all the data textures
-        for( let name of this.names ){
-            this.uniforms[name].value = this.data[name];
+        for( let variable of this.variables ){
+            this.uniforms[variable].value = this.data[variable];
         }
 
     }
 
-
-
-    getData( name ){
-        return this.data[name];
-    }
-
-    getDefault(){
-        return this.data[ this.default ];
+    getData( variable ){
+        return this.data[variable];
     }
 
     run() {
 
-        for( let name of this.names ){
+        for( let variable of this.variables ){
             //do one cycle of the integration
-            this.compute[name].run();
-            this.data[name] = this.compute[name].getData();
+            this.compute[variable].run();
+            this.data[variable] = this.compute[variable].getData();
         }
 
         this.updateUniforms();
@@ -98,10 +93,10 @@ class ComputeSystem {
 
     initialize() {
 
-        for( let name of this.names ){
+        for( let variable of this.variables ){
             //run the initial condition shader
-            this.compute[name].initialize();
-            this.data[name] = this.compute[name].getData();
+            this.compute[variable].initialize();
+            this.data[variable] = this.compute[variable].getData();
         }
 
         this.updateUniforms();

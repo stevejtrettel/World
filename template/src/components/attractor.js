@@ -116,21 +116,29 @@ const simCode = codeUniforms+randomFns+vecField+rk4+simCodeMain;
 
 const uniforms = {};
 
-const shaders={
+const shaders= {
+    pos: {
         initialization: iniCode,
         simulation: simCode,
-    };
+    }
+};
 
 
 //make the compute shader
-const attractorIntegrator = new ComputeSystem({pos: shaders}, uniforms, res, globals.renderer);
+const attractorIntegrator = new ComputeSystem(
+    ['pos'],
+    shaders,
+    uniforms,
+    res,
+    globals.renderer
+);
 
-const attractorParticles = new CSParticle( attractorIntegrator, 'position' );
+const attractorParticles = new CSParticle( attractorIntegrator );
 
 
 const attractor = {
-    integrator: attractorIntegrator,
-    particles: attractorParticles,
+    att_integrator: attractorIntegrator,
+    att_particles: attractorParticles,
 }
 
 

@@ -2,7 +2,7 @@ import {FullScreenQuad} from "./FullScreenQuad.js";
 import {ComputeRenderTargets} from "./ComputeRTs.js";
 
 
-
+//shaders is either 1) a single shader or 2) a pair {initialization:x, simulation:y}
 class ComputeShader {
 
     constructor( shaders, uniforms, resolution, renderer ){
@@ -14,20 +14,34 @@ class ComputeShader {
         this.renderer=renderer;
 
 
-        // unpack the simulation materials
-
+        // store the simulation uniforms
         this.uniforms = uniforms;
 
-        this.initialization = new FullScreenQuad( {
-            fragmentShader:  shaders.initialization,
-            uniforms: this.uniforms
-        });
 
-        this.simulation = new FullScreenQuad({
-            fragmentShader: shaders.simulation,
-            uniforms: this.uniforms
-        });
+        //the main simulation:
 
+
+        //what was passed as shaders?
+        // can either pass a single shader, or an object {initialization: x, simulation: y}
+        if (typeof shaders === 'string' || shaders instanceof String){
+            //if we were passed a single shader, do the same for both of them
+            this.simulation = new FullScreenQuad({
+                fragmentShader: shaders,
+                uniforms: this.uniforms
+            });
+            this.initialization = this.simulation;
+        }
+        else{
+            //otherwise we were passed two shaders!
+            this.simulation = new FullScreenQuad({
+                fragmentShader: shaders.simulation,
+                uniforms: this.uniforms
+            });
+            this.initialization = new FullScreenQuad( {
+                fragmentShader:  shaders.initialization,
+                uniforms: this.uniforms
+            });
+        }
 
         //where the result is stored
         this.data = null;

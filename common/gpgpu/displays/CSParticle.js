@@ -74,7 +74,7 @@ class CSParticle extends CSDisplay {
 
         //helpful to store this.uniforms as wewll
         this.uniforms =  {
-            data: { value: this.compute.getDefault() },
+            data: { value: this.compute.getData(this.compute.variables[0]) },
             pointSize: { value: 2 },
             res: { value: new Vector2(this.compute.res[0], this.compute.res[1])},
         }
