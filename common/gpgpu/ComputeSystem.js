@@ -3,6 +3,7 @@
 
 import { Vector2 } from "../../3party/three/build/three.module.js";
 import { ComputeShader } from "./components/ComputeShader.js";
+import {FullScreenQuad} from "./components/FullScreenQuad.js";
 
 //names come in an ordered array
 //[position, velocity]
@@ -26,20 +27,27 @@ class ComputeSystem {
         //copy the passed data
         this.res = res;
         this.renderer = renderer;
-        this.uniforms = uniforms;
 
         //names are in the order we wish to execute the shaders
         //this is our iterable object
         this.variables = variables;
 
         //add to these uniforms ones that are explicit to simulation:
-        this.uniforms.res = {value : new Vector2(res[0], res[1])};
-        this.uniforms.frameNumber = {value : 0.};
-        for (let variable of this.variables) {
-            //add a uniform to the simulation with this name: this is the data texture
-            this.uniforms[variable] = {value: null};
-        }
+        this.uniforms = uniforms;
+        this.uniformString = ``;
 
+        // this.uniforms.res = {value : new Vector2(res[0], res[1])};
+        // this.uniforms.frameNumber = {value : 0.};
+        // for (let variable of this.variables) {
+        //     //add a uniform to the simulation with this name: this is the data texture
+        //     this.uniforms[variable] = {value: null};
+        // }
+
+        this.createUniform('frameNumber' ,'float', 0);
+        this.createUniform('res', 'vec2', new Vector2(this.res[0], this.res[1]));
+        for( let variable of this.variables ){
+            this.createUniform(`${variable}`, 'sampler2D', null);
+        }
 
         //build an object to store all computing materials: FUllScreenQuads, and resulting textures:
         //each objects is of the form {pos: QUAD, vel: QUAD, }...etc
@@ -49,7 +57,9 @@ class ComputeSystem {
         for (let variable of this.variables) {
 
             //build a compute system:
-            this.compute[variable] = new ComputeShader( shaders[variable], this.uniforms, this.res, this.renderer );
+            //add the uniforms after, not during creation, as they are not in the shaders
+            this.compute[variable] = new ComputeShader( shaders[variable], {}, this.res, this.renderer );
+            this.compute[variable].addUniforms(this.uniforms, this.uniformString);
 
             //make a spot to store it's data
             this.data[variable] = null;
@@ -62,6 +72,14 @@ class ComputeSystem {
 
 
     }
+
+    //only to be used during constructor!
+    //maybe can define as a function inside there?
+    createUniform(variable, type, value) {
+        this.uniforms[ variable ] = {value: value };
+        this.uniformString += `uniform ${type} ${variable}; \n`;
+    }
+
 
     updateUniforms() {
 

@@ -34,19 +34,26 @@ class ComputeMaterial {
         //store reference to the compute system
         this.compute = computeSystem;
 
+
         //make uniforms for the display shaders
+        //start with assumption there are no new special ones just for the display
+        //need to update this in the future (want sliders for hue, opacity, etc)
         this.uniformString = ``;
         this.uniforms = {};
 
-        this.addUniform('frameNumber' ,'float', 0);
-        this.addUniform('res', 'vec2', new Vector2(this.compute.res[0], this.compute.res[1]));
+        //uniforms relevant to the compute system:
+        //add in the res, frameNumber, and the compute system's textures:
+        this.createUniform('frameNumber' ,'float', 0);
+        this.createUniform('res', 'vec2', new Vector2(this.compute.res[0], this.compute.res[1]));
         for( let variable of this.compute.variables ){
-           this.addUniform(`${variable}`, 'sampler2D', this.compute.getData( variable ));
+            this.createUniform(`${variable}`, 'sampler2D', this.compute.getData( variable ));
         }
 
+
         //build shaders from our inputs
-        this.vertex = createVertexCSM( this.uniformString, vertex.aux, vertex.displace);
-        this.fragment = createFragmentCSM( this.uniformString, fragment.aux, fragment.fragColor);
+        this.vertex = createVertexCSM( this.uniformString, vertex.aux, vertex.displace );
+        this.fragment = createFragmentCSM( this.uniformString, fragment.aux, fragment.fragColor );
+
 
 
         //create the mesh by adding vertices at points in a (0,1)x(0,1) square
@@ -87,7 +94,7 @@ class ComputeMaterial {
     }
 
     //only to be used during construction:
-    addUniform(variable, type, value) {
+    createUniform(variable, type, value) {
         this.uniforms[ variable ] = {value: value };
         this.uniformString += `uniform ${type} ${variable}; \n`;
     }

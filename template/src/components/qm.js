@@ -6,12 +6,8 @@ import { CSParticle } from "../../../common/gpgpu/displays/CSParticle.js";
 import { ComputeMaterial } from "../../../common/materials/ComputeMaterial.js";
 
 
-let shaderUniforms = `
-    uniform vec2 res;
-    uniform float frameNumber;
-    uniform sampler2D pos;
-    uniform sampler2D vel;
-`;
+let shaderUniforms = ``;
+
 
 let posIniShader =`
          void main() {
@@ -88,11 +84,13 @@ const QMParticlesMag = new CSParticle( QMSolver );
 
 
 
+let vertAux = ``;
 
+//need  a function vec3 displace(vec3 origV)
 let displace = `
-vec3 displace(vec3 params){
+vec3 displace(vec3 origV){
 
-    vec2 uv = params.xy;
+    vec2 uv = origV.xy;
     float s =2.*PI*uv.x;
     float t = PI*uv.y;
     
@@ -104,26 +102,15 @@ vec3 displace(vec3 params){
 
 
 
+let fragAux = ``;
+
+//need to make a function vec3 fragColor();
 let fragColor = `
 vec3 fragColor(){
     return texture2D(pos, vUv).xyz;
 }
 `;
 
-
-
-// let vert = {
-//     defines: vertDefines,
-//     header: vertHead,
-//     main: vertMain
-// }
-//
-//
-// let frag = {
-//     defines: fragDefines,
-//     header: fragHead,
-//     main: fragMain,
-// }
 
 
 let options = {
@@ -134,12 +121,12 @@ let options = {
 
 
 let vert = {
-    aux: ``,
+    aux: vertAux,
     displace: displace,
 }
 
 let frag = {
-    aux: ``,
+    aux: fragAux,
     fragColor: fragColor,
 }
 
@@ -156,7 +143,7 @@ let QMSurface = new ComputeMaterial(QMSolver, vert, frag, options);
 
 const qm = {
     qm_solver: QMSolver,
-    // qm_display: QMDisplay,
+     qm_display: QMDisplay,
     // qm_particles: QMParticlesMag,
     qm_surf: QMSurface,
 };

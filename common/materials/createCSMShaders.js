@@ -11,6 +11,7 @@ const constants = ` float PI = 3.14159; \n`
 const varyings = `
     varying vec2 vUv;
     varying vec3 vPosition;
+    //for some reason varying vNormal is already defined for us
 `;
 
 const newPos = `
@@ -53,7 +54,7 @@ const newColor = `
 
 function createVertexCSM(uniforms, vertAuxFns, displace) {
 
-    const defines = constants + uniforms + varyings;
+    const defines = constants + varyings + uniforms;
     const header = vertAuxFns + displace;
     const main = newPos + newNormal + varyingValues;
 
@@ -67,7 +68,7 @@ function createVertexCSM(uniforms, vertAuxFns, displace) {
 
 function createFragmentCSM(uniforms, fragAuxFns, fragColor) {
 
-    const defines = constants + uniforms + varyings;
+    const defines = constants + varyings + uniforms;
     const header = fragAuxFns + fragColor;
     const main = newColor;
 

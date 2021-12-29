@@ -1,0 +1,9 @@
+
+
+
+const glslLaplacian = `
+
+`;
+
+
+export { glslLaplacian };

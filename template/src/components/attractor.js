@@ -14,10 +14,6 @@ const res = [width,height];
 
 
 const codeUniforms = `
-          uniform float frameNumber;
-          uniform vec2 res;
-          uniform sampler2D pos;
-          
           //set the temporal resolution of the simulation
           float dt=0.02;
 `;

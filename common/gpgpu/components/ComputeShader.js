@@ -24,12 +24,16 @@ class ComputeShader {
         //what was passed as shaders?
         // can either pass a single shader, or an object {initialization: x, simulation: y}
         if (typeof shaders === 'string' || shaders instanceof String){
+
             //if we were passed a single shader, do the same for both of them
             this.simulation = new FullScreenQuad({
                 fragmentShader: shaders,
                 uniforms: this.uniforms
             });
-            this.initialization = this.simulation;
+            this.initialization = new FullScreenQuad({
+                fragmentShader: shaders,
+                uniforms: this.uniforms
+            });
         }
         else{
             //otherwise we were passed two shaders!
@@ -46,6 +50,12 @@ class ComputeShader {
         //where the result is stored
         this.data = null;
 
+    }
+
+    //add to each FSQ
+    addUniforms(uniformObject,uniformString) {
+        this.simulation.addUniforms(uniformObject, uniformString);
+        this.initialization.addUniforms(uniformObject, uniformString);
     }
 
     setData( dat ) {

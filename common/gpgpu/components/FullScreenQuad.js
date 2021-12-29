@@ -19,8 +19,15 @@ class FullScreenQuad {
 
     constructor( parameters) {
         //parameters are an object of the form { fragmentShader: x, uniforms: y}
-        let material = new ShaderMaterial( parameters );
-        this._mesh = new Mesh( _geometry, material );
+        this.material = new ShaderMaterial( parameters );
+        this._mesh = new Mesh( _geometry, this.material );
+    }
+
+
+    //add new uniforms to the shader
+    addUniforms(uniformObject, uniformString ){
+        this.material.fragmentShader = uniformString + this.material.fragmentShader;
+        this.material.uniforms = {...uniformObject,...this.material.uniforms};
     }
 
 
@@ -30,17 +37,15 @@ class FullScreenQuad {
 
     }
 
-    get material() {
+    // get material() {
+    //
+    //     return this._mesh.material;
+    //
+    // }
 
-        return this._mesh.material;
-
-    }
-
-    set material( value ) {
-
-        this._mesh.material = value;
-
-    }
+    // set material( value ) {
+    //     this._mesh.material = value;
+    // }
 
 }
 
