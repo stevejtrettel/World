@@ -89,34 +89,10 @@ const QMParticlesMag = new CSParticle( QMSolver );
 
 
 
-
-let matUniforms = `
-    uniform sampler2D pos;
-    uniform sampler2D vel;
-    uniform vec2 res;
-`;
-
-
-
-
-let vertDefines = matUniforms+`
-    float PI = 3.14159;
-    varying vec3 vPosition;
-    varying vec2 vUv;
-    `;
-
-
-let vertHead = `
-
-vec2 setUV(vec3 params) {
-
-//params arrive in (0,1)^2: so we are good
-    return params.xy;
-}
-
+let displace = `
 vec3 displace(vec3 params){
 
-    vec2 uv = setUV(params);
+    vec2 uv = params.xy;
     float s =2.*PI*uv.x;
     float t = PI*uv.y;
     
@@ -124,70 +100,30 @@ vec3 displace(vec3 params){
 
     return q;
 }
-
-
-
-`;
-
-
-let vertMain = `
-//requires a function vec3 displace(vec3) from vertHead
-//the required vectors to be defined here are newPos and newNormal
-
-vec3 newPos = displace(position);
-vUv = setUV(position);
-vPosition = newPos;
-
-float offset = 0.001;
-vec3 tangent = vec3(1,0,0);
-vec3 bitangent = vec3(0,1,0);
-vec3 neighbour1 = position + tangent * offset;
-vec3 neighbour2 = position + bitangent * offset;
-
-vec3 displacedNeighbour1 = displace(neighbour1);
-vec3 displacedNeighbour2 = displace(neighbour2);
-
-vec3 displacedTangent = displacedNeighbour1 - newPos;
-vec3 displacedBitangent = displacedNeighbour2 - newPos;
-
-vec3 newNormal = normalize(cross(displacedTangent, displacedBitangent));
 `;
 
 
 
-
-
-
-
-
-let fragDefines = matUniforms;
-
-
-let fragHead = `
-    varying vec3 vPosition;
-    varying vec2 vUv;
-    `;
-
-
-let fragMain = `
-vec3 col = texture2D(pos, vUv).xyz;
-vec4 newColor = vec4(col, 1.0);
-`;
-
-
-
-let vert = {
-    defines: vertDefines,
-    header: vertHead,
-    main: vertMain
+let fragColor = `
+vec3 fragColor(){
+    return texture2D(pos, vUv).xyz;
 }
+`;
 
 
-let frag = {
-    defines: fragDefines,
-    header: fragHead,
-    main: fragMain,
-}
+
+// let vert = {
+//     defines: vertDefines,
+//     header: vertHead,
+//     main: vertMain
+// }
+//
+//
+// let frag = {
+//     defines: fragDefines,
+//     header: fragHead,
+//     main: fragMain,
+// }
 
 
 let options = {
@@ -195,6 +131,18 @@ let options = {
     metalness:0.2,
     roughness:0.1,
 }
+
+
+let vert = {
+    aux: ``,
+    displace: displace,
+}
+
+let frag = {
+    aux: ``,
+    fragColor: fragColor,
+}
+
 
 let QMSurface = new ComputeMaterial(QMSolver, vert, frag, options);
 

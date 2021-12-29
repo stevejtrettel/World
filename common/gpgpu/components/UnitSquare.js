@@ -44,10 +44,10 @@ class UnitSquare extends BufferGeometry {
 
                 vertices.push( x, - y, 0 );
 
-                normals.push( 0, 0, 1 );
+               normals.push( 0, 0, 1 );
 
                 uvs.push( ix / gridX );
-                uvs.push( 1 - ( iy / gridY ) );
+               uvs.push( 1 - ( iy / gridY ) );
 
             }
 
