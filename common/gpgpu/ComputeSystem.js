@@ -13,11 +13,8 @@ import {FullScreenQuad} from "./components/FullScreenQuad.js";
 //   velocity :{simulation: z, initialization: w}...}
 
 //uniforms will come in the form of an object like follows
+//{name: {type: x, value: y, range:z,}}
 //uniforms are common to all shaders right now
-//{
-// name : {value, x}, name2: {value: y}, ...
-//}
-
 
 
 class ComputeSystem {
@@ -32,16 +29,19 @@ class ComputeSystem {
         //this is our iterable object
         this.variables = variables;
 
-        //add to these uniforms ones that are explicit to simulation:
-        this.uniforms = uniforms;
+        //for each of the input uniforms, add it to the shader
+        //ADD THESE TO THE UI AS WELL:
+        this.uniforms = {};
         this.uniformString = ``;
 
-        // this.uniforms.res = {value : new Vector2(res[0], res[1])};
-        // this.uniforms.frameNumber = {value : 0.};
-        // for (let variable of this.variables) {
-        //     //add a uniform to the simulation with this name: this is the data texture
-        //     this.uniforms[variable] = {value: null};
-        // }
+        //package the uniforms for the UI in a useful way:
+        this.uiUniforms = {};
+        this.uiUniformProperties = uniforms;
+
+        for( let uniform of Object.keys(this.uiUniformProperties)){
+            this.uiUniforms[uniform] = this.uiUniformProperties[uniform].value;
+            this.createUniform(uniform, this.uiUniformProperties[uniform].type, this.uiUniformProperties[uniform].value);
+        }
 
         this.createUniform('frameNumber' ,'float', 0);
         this.createUniform('res', 'vec2', new Vector2(this.res[0], this.res[1]));
@@ -83,6 +83,9 @@ class ComputeSystem {
 
     updateUniforms() {
 
+        //the uiUniforms are automatically updated by the UI
+        //do nothing about these
+
         //increase frame number
         this.uniforms.frameNumber.value += 1.;
 
@@ -90,7 +93,6 @@ class ComputeSystem {
         for( let variable of this.variables ){
             this.uniforms[variable].value = this.data[variable];
         }
-
     }
 
     getData( variable ){
@@ -126,7 +128,12 @@ class ComputeSystem {
     }
 
     addToUI( ui ){
-
+        //make a folder for this compute system:
+        let Folder = ui.addFolder(`${this.name}`);
+        for( let variable of Object.keys(this.uiUniformProperties)){
+            //add uniform to folder. update the uniforms on change
+            Folder.add(this.uiUniforms, variable, ...this.uiUniformProperties[variable].range).onChange(val => this.uniforms[variable].value = val);
+        }
     }
 
     addToScene( scene ) {

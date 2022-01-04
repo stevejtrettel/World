@@ -13,10 +13,8 @@ const height = 1024;
 const res = [width,height];
 
 
-const codeUniforms = `
-          //set the temporal resolution of the simulation
-          float dt=0.02;
-`;
+const codeUniforms = ``;
+
 
 
 const iniCodeMain = `
@@ -102,15 +100,26 @@ void main()
 
 
 
-const iniCode = codeUniforms+randomFns+iniCodeMain;
+const iniCode = randomFns+iniCodeMain;
 
-const simCode = codeUniforms+randomFns+vecField+rk4+simCodeMain;
+const simCode = randomFns+vecField+rk4+simCodeMain;
+
+let uniforms = {
+    dt:
+        {
+            type:'float',
+            value: 0.01,
+            range:[0,0.2,0.005]
+        },
+    size:
+        {
+            type:'float',
+            value: 0.01,
+            range:[0,0.5,0.005]
+        },
+};
 
 
-
-
-
-const uniforms = {};
 
 const shaders= {
     pos: {
@@ -128,6 +137,7 @@ const attractorIntegrator = new ComputeSystem(
     res,
     globals.renderer
 );
+attractorIntegrator.name = 'Attractor';
 
 const attractorParticles = new CSParticle( attractorIntegrator );
 

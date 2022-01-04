@@ -31,8 +31,8 @@ import { qm } from "./components/qm.js";
 
 
 const objects = {
-    ...qm,
-    //...attractor,
+    //...qm,
+    ...attractor,
    // ...flows,
 };
 
