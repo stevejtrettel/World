@@ -1,7 +1,7 @@
-import { attractor } from "./components/attractor.js";
 import { flows } from "./components/flows.js";
 import { qm } from "./components/qm.js";
-import { symFlow } from "./components/SymplecticFlow.js";
+import { strangeAttractors } from "./components/strangeAttractors.js";
+
 
 // class Sph extends Mesh {
 //     constructor() {
@@ -34,9 +34,8 @@ import { symFlow } from "./components/SymplecticFlow.js";
 
 const objects = {
     //...qm,
-    //...attractor,
+    ...strangeAttractors,
    // ...flows,
-    ...symFlow,
 };
 
 export { objects };

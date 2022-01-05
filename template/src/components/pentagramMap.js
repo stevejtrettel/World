@@ -1,35 +1,33 @@
-
 import { ComputeSystem } from "../../../common/gpgpu/ComputeSystem.js";
-import { CSParticle } from "../../../common/gpgpu/displays/CSParticle.js";
-
-import { randomFns } from "../../../common/shaders/math/random.js";
-import {rk4_vec3 as rk4 } from "../../../common/shaders/odes/rk4.js";
+import { ParticleSystem} from "../../../common/materials/ParticleSystem.js";
 
 import { globals } from "../globals.js";
+import {randomFns} from "../../../common/shaders/math/random.js";
+import {rk4_vec3 as rk4} from "../../../common/shaders/odes/rk4.js";
+import {CSParticle} from "../../../common/gpgpu/displays/CSParticle.js";
 
 
-const width =1024;
-const height = 1024;
-const res = [width,height];
+
+
+//Build the compute system
+
+const res = [512,512];
+
+
+const computeVariables = ['pos'];
 
 
 //can use these in either shader
-let uniforms = {
+let computeUniforms = {
     dt:
         {
             type:'float',
             value: 0.01,
             range:[0,0.2,0.005]
         },
-    size:
-        {
-            type:'float',
-            value: 0.01,
-            range:[0,0.5,0.005]
-        },
 };
 
-const iniCodeMain = `
+const ini = `
         void main() {
                 //normalized coords in (0,1)
                 vec2 uv = gl_FragCoord.xy/res;
@@ -77,7 +75,7 @@ const vecField = `
 `;
 
 
-const simCodeMain = `
+const sim = `
 void main()
         //takes in gl_FragCoord, outputs gl_FragColor
         {   
@@ -100,37 +98,112 @@ void main()
 
 
 
-const iniCode = randomFns+iniCodeMain;
+const posIni = randomFns+ini;
 
-const simCode = randomFns+vecField+rk4+simCodeMain;
+const posSim = randomFns+vecField+rk4+sim;
 
 
-
-const shaders= {
+const computeShaders= {
     pos: {
-        initialization: iniCode,
-        simulation: simCode,
+        initialization: posIni,
+        simulation: posSim,
     }
 };
 
 
-//make the compute shader
-const attractorIntegrator = new ComputeSystem(
-    ['pos'],
-    shaders,
-    uniforms,
+
+const computePos = new ComputeSystem(
+    computeVariables,
+    computeShaders,
+    computeUniforms,
     res,
     globals.renderer
 );
-attractorIntegrator.name = 'Attractor';
-
-const attractorParticles = new CSParticle( attractorIntegrator );
+computePos.setName( 'Integrator' );
 
 
-const attractor = {
-    att_integrator: attractorIntegrator,
-    att_particles: attractorParticles,
+
+const testParticles = new CSParticle( computePos );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Build the particle simulation
+
+
+//the usable uniforms are those of the compute system:
+//pos - the position shader
+//frameNumber - time parameter
+
+//also a new one, measuring dot size:
+//size
+
+const particleUniforms = {
+    size:
+        {
+            type:'float',
+            value: 1.,
+            range:[1.,2.,0.01]
+        },
 };
 
+const particleVertex = `
+void main() {
+    //the mesh is a square so the uvs = the xy positions of the vertices
+    vec3 particlePosition = texture2D( pos, position.xy ).xyz;
+    //pos now contains a 3D position in space, we can use it as a regular vertex
+    //we also export it to the fragment shader
+ 
+    //regular projection of our position
+    gl_Position = projectionMatrix * modelViewMatrix * vec4( particlePosition, 1.0 );
+ 
+    //sets the point size
+    gl_PointSize = size;
+}`;
 
-export { attractor };
+
+const particleFragment = `
+uniform sampler2D data;//RenderTarget containing the transformed positions
+
+void main()
+{
+    gl_FragColor = vec4( vec3(1.), .15 );
+}`;
+
+const options = {};
+
+
+const particleDisplay = new ParticleSystem(
+    computePos,
+    particleUniforms,
+    particleVertex,
+    particleFragment,
+    options
+);
+particleDisplay.setName('Particles');
+
+
+
+
+
+const pentagramMap = {
+    compute: computePos,
+    display: particleDisplay,
+}
+
+
+export{ pentagramMap };

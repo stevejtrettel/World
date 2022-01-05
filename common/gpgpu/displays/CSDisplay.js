@@ -8,7 +8,7 @@ class CSDisplay {
          this.compute = computeSystem;
          this.compute.initialize();
 
-         this.name = null;
+         this.name = this.compute.name + ' Display';
 
          this.ui = {chooseDisplay: this.compute.variables[0]};
 
@@ -22,8 +22,16 @@ class CSDisplay {
     }
 
     addToUI( ui ){
-        //need a real way of doing this!
-        ui.add(this.ui, 'chooseDisplay',{'pos' : `${this.compute.variables[0]}`, 'vel' : `${this.compute.variables[1]}`});
+         //make a UI folder for this:
+         let Folder = ui.addFolder(this.name);
+
+
+        //list out the possible displays in a ui-friendly way
+        let displayChoices = {};
+        for( let displayVar of this.compute.variables ){
+            displayChoices[displayVar]=displayVar;
+        }
+        Folder.add(this.ui, 'chooseDisplay',displayChoices);
     }
 
     selectedDisplay(){

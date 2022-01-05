@@ -25,9 +25,39 @@ let computeUniforms = {
             value: 0.01,
             range:[0,0.2,0.005]
         },
+    a:{
+        type: 'float',
+        value: 0,
+        range: [-1,1,0.01],
+    },
+    b:{
+        type: 'float',
+        value: 0,
+        range: [-1,1,0.01],
+    },
+    c:{
+        type: 'float',
+        value: 0,
+        range: [-1,1,0.01],
+    },
+    d:{
+        type: 'float',
+        value: 0,
+        range: [-1,1,0.01],
+    },
+    e:{
+        type: 'float',
+        value: 0,
+        range: [-1,1,0.01],
+    },
+    f:{
+        type: 'float',
+        value: 0,
+        range: [-1,1,0.01],
+    },
 };
 
-const iniCodeMain = `
+const ini = `
         void main() {
                 //normalized coords in (0,1)
                 vec2 uv = gl_FragCoord.xy/res;
@@ -55,12 +85,12 @@ const vecField = `
     //choose the vector field based on a uniform: choice
     
     vec3 vecField( vec3 p ) {
-        float A = 0.95;
-        float B = 0.7;
-        float C = 0.6;
-        float D = 3.5;
-        float E = 0.25;
-        float F = 0.1;
+        float A = 0.95+a;
+        float B = 0.7+b;
+        float C = 0.6+c;
+        float D = 3.5+d;
+        float E = 0.25+e;
+        float F = 0.1+f;
                 
         float x = p.x;
         float y = p.y;
@@ -75,7 +105,7 @@ const vecField = `
 `;
 
 
-const simCodeMain = `
+const sim = `
 void main()
         //takes in gl_FragCoord, outputs gl_FragColor
         {   
@@ -98,32 +128,32 @@ void main()
 
 
 
-const iniCode = randomFns+iniCodeMain;
+const posIni = randomFns+ini;
 
-const simCode = randomFns+vecField+rk4+simCodeMain;
+const posSim = randomFns+vecField+rk4+sim;
 
 
 const computeShaders= {
     pos: {
-        initialization: iniCode,
-        simulation: simCode,
+        initialization: posIni,
+        simulation: posSim,
     }
 };
 
 
 
-const computeSystem = new ComputeSystem(
+const computePos = new ComputeSystem(
     computeVariables,
     computeShaders,
     computeUniforms,
     res,
     globals.renderer
 );
-computeSystem.setName( 'Integrator' );
+computePos.setName( 'Integrator' );
 
 
 
-const testParticles = new CSParticle( computeSystem );
+const testParticles = new CSParticle( computePos );
 
 
 
@@ -145,19 +175,26 @@ const testParticles = new CSParticle( computeSystem );
 //Build the particle simulation
 
 
+//the usable uniforms are those of the compute system:
+//pos - the position shader
+//frameNumber - time parameter
+
+//also a new one, measuring dot size:
+//size
+
 const particleUniforms = {
     size:
         {
             type:'float',
-            value: 0.02,
-            range:[0,2.,0.01]
+            value: 1.,
+            range:[1.,2.,0.01]
         },
 };
 
 const particleVertex = `
 void main() {
     //the mesh is a square so the uvs = the xy positions of the vertices
-       vec3 particlePosition = texture2D( pos, position.xy ).xyz;
+    vec3 particlePosition = texture2D( pos, position.xy ).xyz;
     //pos now contains a 3D position in space, we can use it as a regular vertex
     //we also export it to the fragment shader
  
@@ -181,7 +218,7 @@ const options = {};
 
 
 const particleDisplay = new ParticleSystem(
-    computeSystem,
+    computePos,
     particleUniforms,
     particleVertex,
     particleFragment,
@@ -193,10 +230,10 @@ particleDisplay.setName('Particles');
 
 
 
-const symFlow = {
-    compute: computeSystem,
+const strangeAttractors = {
+    compute: computePos,
     display: particleDisplay,
 }
 
 
-export{ symFlow };
+export{ strangeAttractors };
