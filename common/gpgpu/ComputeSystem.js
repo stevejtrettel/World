@@ -35,18 +35,18 @@ class ComputeSystem {
         this.uniformString = ``;
 
         //package the uniforms for the UI in a useful way:
-        this.uiUniforms = {};
-        this.uiUniformProperties = uniforms;
+        this.parameters = {};
+        this.paramProperties = uniforms;
 
-        for( let uniform of Object.keys(this.uiUniformProperties)){
-            this.uiUniforms[uniform] = this.uiUniformProperties[uniform].value;
-            this.createUniform(uniform, this.uiUniformProperties[uniform].type, this.uiUniformProperties[uniform].value);
+        for( let uniform of Object.keys(this.paramProperties)){
+            this.parameters[uniform] = this.paramProperties[uniform].value;
+            this.createUniform(uniform, this.paramProperties[uniform].type, this.paramProperties[uniform].value);
         }
 
         this.createUniform('frameNumber' ,'float', 0);
         this.createUniform('res', 'vec2', new Vector2(this.res[0], this.res[1]));
         for( let variable of this.variables ){
-            this.createUniform(`${variable}`, 'sampler2D', null);
+            this.createUniform(variable, 'sampler2D', null);
         }
 
         //build an object to store all computing materials: FUllScreenQuads, and resulting textures:
@@ -130,9 +130,9 @@ class ComputeSystem {
     addToUI( ui ){
         //make a folder for this compute system:
         let Folder = ui.addFolder(`${this.name}`);
-        for( let variable of Object.keys(this.uiUniformProperties)){
+        for( let variable of Object.keys(this.paramProperties)){
             //add uniform to folder. update the uniforms on change
-            Folder.add(this.uiUniforms, variable, ...this.uiUniformProperties[variable].range).onChange(val => this.uniforms[variable].value = val);
+            Folder.add(this.parameters, variable, ...this.paramProperties[variable].range).onChange(val => this.uniforms[variable].value = val);
         }
     }
 

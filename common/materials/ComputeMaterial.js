@@ -46,7 +46,7 @@ class ComputeMaterial {
         this.createUniform('frameNumber' ,'float', 0);
         this.createUniform('res', 'vec2', new Vector2(this.compute.res[0], this.compute.res[1]));
         for( let variable of this.compute.variables ){
-            this.createUniform(`${variable}`, 'sampler2D', this.compute.getData( variable ));
+            this.createUniform(variable, 'sampler2D', this.compute.getData( variable ));
         }
 
 

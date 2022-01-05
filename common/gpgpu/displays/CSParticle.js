@@ -7,7 +7,16 @@ import {
     BufferAttribute,
 } from "../../../3party/three/build/three.module.js";
 
+import { createParticleMesh } from "../components/createParticleMesh.js";
+
 import { CSDisplay } from "./CSDisplay.js";
+
+
+
+
+
+
+
 
 let rendV = `
 uniform sampler2D data;//RenderTarget containing the transformed positions
@@ -41,25 +50,6 @@ void main()
 
 
 
-function createParticleMesh(width,height){
-
-    const size = width * height;
-
-    // //Set up the vertices of our mesh:
-    let vertices = new Float32Array( size * 3 );
-
-    //no idea what this is doing yet?
-    for ( let i = 0; i < size; i++ ) {
-        let i3 = i * 3;
-        vertices[ i3 ] = ( i % width ) / width ;
-        vertices[ i3 + 1 ] = ( i / width ) / height;
-    }
-
-    return vertices;
-
-}
-
-
 
 
 class CSParticle extends CSDisplay {
@@ -72,7 +62,7 @@ class CSParticle extends CSDisplay {
 
         //just need to create this.display:
 
-        //helpful to store this.uniforms as wewll
+        //helpful to store this.uniforms as well
         this.uniforms =  {
             data: { value: this.compute.getData(this.compute.variables[0]) },
             pointSize: { value: 2 },
