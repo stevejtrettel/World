@@ -53,12 +53,17 @@ let uniforms = {};
 
 let res = [512,512];
 
+let computeOptions = {
+    res: res,
+    resetSwitch: true,
+}
+
 //build the compute system
 let QMSolver = new ComputeSystem(
     ['pos','vel'],
     shaders,
     uniforms,
-    res,
+    computeOptions,
     globals.renderer
 );
 

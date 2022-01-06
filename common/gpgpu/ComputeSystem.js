@@ -19,10 +19,10 @@ import {FullScreenQuad} from "./components/FullScreenQuad.js";
 
 class ComputeSystem {
 
-    constructor( variables, shaders, uniforms, res, renderer ) {
+    constructor( variables, shaders, uniforms, options, renderer ) {
 
         //copy the passed data
-        this.res = res;
+        this.res = options.res;
         this.renderer = renderer;
 
         //names are in the order we wish to execute the shaders
@@ -68,9 +68,14 @@ class ComputeSystem {
 
 
         //option to name the ComputeSystem
-        this.name=null;
+        this.name = null;
 
 
+        //if we need a reset switch, add one:
+        if(options.resetSwitch){
+            //set the resetSwitch to a function, so when it is clicked we run 'initialize'
+            this.parameters.reset = ()=>this.initialize();
+        }
     }
 
     //only to be used during constructor!
@@ -130,6 +135,13 @@ class ComputeSystem {
     addToUI( ui ){
         //make a folder for this compute system:
         let Folder = ui.addFolder(`${this.name}`);
+
+        //add the reset switch:
+        if(this.parameters.reset){
+            Folder.add(this.parameters,'reset').name('Reset');
+        }
+
+        //add the parameter variables:
         for( let variable of Object.keys(this.paramProperties)){
             //add uniform to folder. update the uniforms on change
             Folder.add(this.parameters, variable, ...this.paramProperties[variable].range).onChange(val => this.uniforms[variable].value = val);

@@ -39,8 +39,7 @@ const randomFns = `
                 return a+(b-a)*randomFloat();
             }
             
-            
-            
+           
             
             //random unit vector at origin
             //this is thanks to archimedes sphere and the cylinder
@@ -52,6 +51,17 @@ const randomFns = `
                 float x = r * cos(a);
                 float y = r * sin(a);
                 return vec3(x, y, z);
+            }
+            
+            //gaussian random variable with mean 0 and stdev 1
+            float gaussian(){
+                float u = randomFloat(0.,1.);
+                float r = sqrt(-2.*log(u));
+                
+                float theta = randomFloat(0.,6.29);
+                
+                float x = r*cos(theta);
+                return x;
             }
 `;
 

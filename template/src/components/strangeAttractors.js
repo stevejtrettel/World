@@ -14,10 +14,12 @@ import {CSParticle} from "../../../common/gpgpu/displays/CSParticle.js";
 
 const res = [1024, 1024];
 
-
 const computeVariables = ['pos'];
 
-
+const computeOptions = {
+    res: res,
+    resetSwitch: true,
+}
 
 //can use these in either shader
 let computeUniforms = {
@@ -84,11 +86,12 @@ const ini = `
                 
                 //make a random point in the ball instead:
                 float x = randomFloat();
-                float rad = pow(x,1.333);
+               // float rad = pow(x,1.333);
+                float rad = gaussian();
                 vec3 ball = sph*rad;
                 
                 //make the initial position
-                vec3 iniPos = 1.*sph + vec3(0.,0.,2.);
+                vec3 iniPos = 1.*ball + vec3(0.,0.,2.);
            
                 //send result to data texture
                 gl_FragColor = vec4(iniPos,1.0);
@@ -158,8 +161,8 @@ const computePos = new ComputeSystem(
     computeVariables,
     computeShaders,
     computeUniforms,
-    res,
-    globals.renderer
+    computeOptions,
+    globals.renderer,
 );
 computePos.setName( 'Integrator' );
 
