@@ -1,5 +1,5 @@
 import { ComputeSystem } from "../../../common/gpgpu/ComputeSystem.js";
-import { ParticleSystem} from "../../../common/materials/ParticleSystem.js";
+import { ComputeParticles} from "../../../common/materials/ComputeParticles.js";
 
 import { globals } from "../globals.js";
 import { randomFns } from "../../../common/shaders/math/random.js";
@@ -135,9 +135,12 @@ void main()
          
             //update via RK, using the provided vecField
             vec3 q = rk4(p, dt);
+            
+            //get the speed at this point:
+            float speed = length(vecField(q));
 
             // Output to data texture
-            gl_FragColor = vec4(q, 1.0);
+            gl_FragColor = vec4(q, speed);
         }
 `;
 
@@ -207,11 +210,19 @@ const particleUniforms = {
 };
 
 const particleVertex = `
+
+varying vec3 particlePosition;
+varying float particleSpeed;
+
 void main() {
+
     //the mesh is a square so the uvs = the xy positions of the vertices
-    vec3 particlePosition = texture2D( pos, position.xy ).xyz;
-    //pos now contains a 3D position in space, we can use it as a regular vertex
-    //we also export it to the fragment shader
+    //get the output of the compute shader
+    vec4 computePos = texture2D(pos, position.xy);
+    
+    //set the particlePosition and speed from this:
+    particlePosition = computePos.xyz;
+    particleSpeed = computePos.w;
  
     //regular projection of our position
     gl_Position = projectionMatrix * modelViewMatrix * vec4( particlePosition, 1.0 );
@@ -223,6 +234,9 @@ void main() {
 
 
 const particleFragment = `
+varying vec3 particlePosition;
+varying float particleSpeed;
+
 void main() {
 
     //need to learn how the key word "discard" works!
@@ -234,8 +248,11 @@ void main() {
     
     //set the opacity of the point:
     float opacity =0.15;
+    
+    //figure out the color of the point:
+    vec3 col = particlePosition;
       
-    gl_FragColor = vec4( vec3(1.), opacity );
+    gl_FragColor = vec4( particleSpeed*particlePosition, opacity );
 }`;
 
 
@@ -243,7 +260,7 @@ void main() {
 const options = {};
 
 
-const particleDisplay = new ParticleSystem(
+const particleDisplay = new ComputeParticles(
     computePos,
     particleUniforms,
     particleVertex,

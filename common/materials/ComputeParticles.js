@@ -10,7 +10,7 @@ import {
 import { createParticleMesh } from "../gpgpu/components/createParticleMesh.js";
 
 
-class ParticleSystem {
+class ComputeParticles {
     constructor( computeSystem, uniforms, vertex, fragment, options = {} ) {
 
 
@@ -113,4 +113,4 @@ class ParticleSystem {
 
 
 
-export { ParticleSystem };
+export { ComputeParticles };

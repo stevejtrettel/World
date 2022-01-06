@@ -1,6 +1,8 @@
 import { flows } from "./components/flows.js";
 import { qm } from "./components/qm.js";
 import { strangeAttractors } from "./components/strangeAttractors.js";
+import { hopfTori } from "./components/hopfTori.js";
+import { knotComplement } from "./components/knotComplements.js";
 
 
 // class Sph extends Mesh {
@@ -34,8 +36,10 @@ import { strangeAttractors } from "./components/strangeAttractors.js";
 
 const objects = {
     //...qm,
-    ...strangeAttractors,
+   // ...strangeAttractors,
    // ...flows,
+   // ...hopfTori,
+    ...knotComplement
 };
 
 export { objects };

@@ -51,11 +51,11 @@ class Loop {
 
         //get time since last frame
         const time = this.clock.elapsedTime;
-        const dt = this.clock.getDelta();
+        const dtime = this.clock.getDelta();
 
         //use this to update each object one tick forwards
         for( const object of this.updatables ) {
-            object.tick(time, dt);
+            object.tick(time, dtime);
         }
     }
 

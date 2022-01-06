@@ -93,9 +93,8 @@ let vertAux = ``;
 
 //need  a function vec3 displace(vec3 origV)
 let displace = `
-vec3 displace(vec3 origV){
+vec3 displace( vec2 uv ){
 
-    vec2 uv = origV.xy;
     float s =2.*PI*uv.x;
     float t = PI*uv.y;
     

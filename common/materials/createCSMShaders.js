@@ -15,15 +15,16 @@ const varyings = `
 `;
 
 const newPos = `
-    vec3 newPos = displace(position);
+    vec2 uv = position.xy;
+    vec3 newPos = displace( uv );
 `;
 
 const newNormal = `
     float offset = 0.001;
-    vec3 tangent = vec3(1,0,0);
-    vec3 bitangent = vec3(0,1,0);
-    vec3 neighbour1 = position + tangent * offset;
-    vec3 neighbour2 = position + bitangent * offset;
+    vec2 tangent = vec2(1,0);
+    vec2 bitangent = vec2(0,1);
+    vec2 neighbour1 = uv + tangent * offset;
+    vec2 neighbour2 = uv + bitangent * offset;
     
     vec3 displacedNeighbour1 = displace(neighbour1);
     vec3 displacedNeighbour2 = displace(neighbour2);
@@ -36,7 +37,7 @@ const newNormal = `
 
 
 const varyingValues = `
-    vUv = position.xy;
+    vUv = uv;
     vPosition = newPos;
     vNormal = newNormal;
 `;

@@ -36487,7 +36487,7 @@
 	exports.ParametricGeometry = ParametricGeometry;
 	exports.Particle = Particle;
 	exports.ParticleBasicMaterial = ParticleBasicMaterial;
-	exports.ParticleSystem = ParticleSystem;
+	exports.ComputeParticles = ParticleSystem;
 	exports.ParticleSystemMaterial = ParticleSystemMaterial;
 	exports.Path = Path;
 	exports.PerspectiveCamera = PerspectiveCamera;
