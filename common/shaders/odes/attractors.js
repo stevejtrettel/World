@@ -1,11 +1,11 @@
 
 const dadras = `
             vec3 dadras( vec3 p){
-                 float A = 3.0*a;
-                 float B = 2.7*b;
-                 float C = 1.7*c;
-                 float D = 2.0*d;
-                 float E = 9.0*e;
+                 float A = 3.0+a;
+                 float B = 2.7+b;
+                 float C = 1.7+c;
+                 float D = 2.0+d;
+                 float E = 9.0+e;
                 
                 float x = p.x;
                 float y = p.y;
@@ -25,9 +25,9 @@ const chen = `
             vec3 chen( vec3 p){
             
             
-                float A = 5.0*a;
-                float B = -10.0*b;
-                float D = -0.38*d;
+                float A = 5.0+a;
+                float B = -10.0+b;
+                float D = -0.38+d;
 
                 
                 float x = p.x;
@@ -46,12 +46,12 @@ const chen = `
 
 const aizawa = `
             vec3 aizawa( vec3 p){
-                float A = 0.95*a;
-                float B = 0.7*b;
-                float C = 0.6*c;
-                float D = 3.5*d;
-                float E = 0.25*e;
-                float F = 0.1*f;
+                float A = 0.95+a;
+                float B = 0.7+b;
+                float C = 0.6+c;
+                float D = 3.5+d;
+                float E = 0.25+e;
+                float F = 0.1+f;
                 
                 float x = p.x;
                 float y = p.y;
@@ -67,8 +67,8 @@ const aizawa = `
 
 const sprott = `
             vec3 sprott(vec3 p){
-                float A = 2.07*a;
-                float B = 1.79*b;
+                float A = 2.07+a;
+                float B = 1.79+b;
                 
                 float x = p.x;
                 float y = p.y;
@@ -85,7 +85,7 @@ const sprott = `
 
 const thomas = `
            vec3 thomas( vec3 p ) {
-                float B =0.208186*b;
+                float B =0.208186+b;
                 
                 float x = p.x;
                 float y = p.y;
@@ -102,9 +102,9 @@ const thomas = `
 
 const rossler = `
         vec3 rossler( vec3 p ) {
-            float A = 0.2*a;
-            float B = 0.2*b;
-            float C = 5.7*c;
+            float A = 0.2+a;
+            float B = 0.2+b;
+            float C = 5.7+c;
                 
                 float x = p.x;
                 float y = p.y;

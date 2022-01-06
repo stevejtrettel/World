@@ -1,4 +1,5 @@
 import {
+    BoxGeometry,
     Mesh,
     MeshLambertMaterial
 } from "../../3party/three/build/three.module.js";
@@ -20,6 +21,9 @@ class BoxWithLights extends BoxNoLights {
             emissive: 0xffffff,
             emissiveIntensity: 2
         };
+
+        const geometry = new BoxGeometry();
+        geometry.deleteAttribute( 'uv' );
 
         const lightMaterial = new MeshLambertMaterial( lightParameters );
 

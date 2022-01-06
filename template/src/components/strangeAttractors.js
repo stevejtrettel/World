@@ -2,7 +2,8 @@ import { ComputeSystem } from "../../../common/gpgpu/ComputeSystem.js";
 import { ParticleSystem} from "../../../common/materials/ParticleSystem.js";
 
 import { globals } from "../globals.js";
-import {randomFns} from "../../../common/shaders/math/random.js";
+import { randomFns } from "../../../common/shaders/math/random.js";
+import { allAttractors } from "../../../common/shaders/odes/attractors.js";
 import {rk4_vec3 as rk4} from "../../../common/shaders/odes/rk4.js";
 import {CSParticle} from "../../../common/gpgpu/displays/CSParticle.js";
 
@@ -11,20 +12,28 @@ import {CSParticle} from "../../../common/gpgpu/displays/CSParticle.js";
 
 //Build the compute system
 
-const res = [512,512];
+const res = [1024, 1024];
 
 
 const computeVariables = ['pos'];
 
 
+
 //can use these in either shader
 let computeUniforms = {
-    dt:
-        {
-            type:'float',
-            value: 0.01,
-            range:[0,0.2,0.005]
+    Attractor: {
+        type: 'int',
+        value: 0,
+        range: [{
+            'Aizawa':0,
+            'Chen':1,
+            'Dadras':2,
+            'Rossler':3,
+            'Sprott':4,
+            'Thomas':5,
+        }],
         },
+
     a:{
         type: 'float',
         value: 0,
@@ -55,6 +64,11 @@ let computeUniforms = {
         value: 0,
         range: [-1,1,0.01],
     },
+    dt: {
+        type:'float',
+        value: 0.01,
+        range:[0,0.2,0.005]
+    },
 };
 
 const ini = `
@@ -81,29 +95,27 @@ const ini = `
         }
 `;
 
-const vecField = `
-    //choose the vector field based on a uniform: choice
-    
-    vec3 vecField( vec3 p ) {
-        float A = 0.95+a;
-        float B = 0.7+b;
-        float C = 0.6+c;
-        float D = 3.5+d;
-        float E = 0.25+e;
-        float F = 0.1+f;
-                
-        float x = p.x;
-        float y = p.y;
-        float z = p.z;
-                    
-        float vx = (z-B) * x - D*y;
-        float vy = D*x + (z-B)*y;
-        float vz = C + A*z - z*z*z/3. - (x*x+y*y)*(1.+E*z) + F*z*x*x*x;
-                
-        return vec3(vx,vy,vz);
-    }
-`;
 
+const vecField = `
+    //choose the vector field based on a uniform: chooseAttractor
+    
+    vec3 vecField( vec3 pos ) {
+        switch (Attractor) {
+            case 0:
+                return aizawa(pos);
+            case 1:
+                return chen(pos);
+            case 2:
+                return dadras(pos);
+            case 3:
+                return rossler(pos);
+            case 4:
+                return sprott(pos);
+            case 5:
+                return thomas(pos);
+        }
+    }
+    `;
 
 const sim = `
 void main()
@@ -130,7 +142,7 @@ void main()
 
 const posIni = randomFns+ini;
 
-const posSim = randomFns+vecField+rk4+sim;
+const posSim = randomFns+allAttractors+vecField+rk4+sim;
 
 
 const computeShaders= {
@@ -206,13 +218,24 @@ void main() {
 }`;
 
 
-const particleFragment = `
-uniform sampler2D data;//RenderTarget containing the transformed positions
 
-void main()
-{
-    gl_FragColor = vec4( vec3(1.), .15 );
+const particleFragment = `
+void main() {
+
+    //need to learn how the key word "discard" works!
+    vec2 circCoord = 2.0 * gl_PointCoord - 1.0;
+      float d = dot(circCoord, circCoord);
+      if (d > 1.0) {
+          discard;
+      }
+    
+    //set the opacity of the point:
+    float opacity =0.15;
+      
+    gl_FragColor = vec4( vec3(1.), opacity );
 }`;
+
+
 
 const options = {};
 

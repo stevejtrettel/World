@@ -24,9 +24,7 @@ class World {
 
 
         this.camera = createCamera();
-        this.scene = new BoxNoLights( options.color );
-            //new BoxNoLights( options.color );
-            //createScene( options.color );
+        this.scene = createScene( options.color );
         this.loop = new Loop( this.camera, this.scene, this.renderer);
 
         //set up the environment;
@@ -70,11 +68,8 @@ class World {
     }
 
     setEnvironment ( env ) {
-        //set world.environment
-        //add the environment to the loop and ui
-        // this.environment = new Environment( env );
-        // this.environment.setScene( this.scene );
-
+        this.scene.background = env.background;
+        this.scene.environment = env.reflection;
     }
 
     addPostprocessor ( post ){

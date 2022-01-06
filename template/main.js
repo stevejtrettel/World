@@ -12,7 +12,7 @@ function main() {
 
     // Get a reference to the container element, set options
     const container = document.querySelector('#World');
-    const options = {color: 0x2f508a};
+    const options = {color: globals.color};
 
     // 1. Create an instance of the World class
     const world = new World( container, globals.renderer, options );
