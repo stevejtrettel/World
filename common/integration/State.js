@@ -14,16 +14,21 @@ class State {
     }
 
 
-    add( state ) {
-        this.vel.add(state.vel);
+    //add a dState to State:
+    add( dState ) {
+       this.pos.add(dState.vel);
+       this.vel.add(dState.acc);
+       return this;
     }
 
     sub( state ){
         this.vel.sub(state.vel);
+        return this;
     }
 
     multiplyScalar( k ) {
         this.vel.multiplyScalar(k);
+        return this;
     }
 
 
@@ -61,6 +66,7 @@ class dState {
     sub( dState ) {
         this.vel.sub( dState.vel );
         this.acc.sub( dState.acc );
+        return this;
     }
 
 }

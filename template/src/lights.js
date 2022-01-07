@@ -10,7 +10,7 @@ ambient.addToUI = ()=>{};
 
 
 
-const direction = new DirectionalLight(0xffffff,0.5);
+const direction = new DirectionalLight(0xffffff,1.5);
 direction.addToScene = (scene) => scene.add(direction);
 direction.setName = ()=>{};
 direction.tick = ()=>{};

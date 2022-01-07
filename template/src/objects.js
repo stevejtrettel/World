@@ -3,6 +3,11 @@ import { qm } from "./components/qm.js";
 import { strangeAttractors } from "./components/strangeAttractors.js";
 import { hopfTori } from "./components/hopfTori.js";
 import { knotComplement } from "./components/knotComplements.js";
+import {tubeTest } from "./components/tubeTest.js";
+import { tGeo } from "./components/torusGeodesic.js";
+
+import { geo } from "./components/Geodesic.js";
+
 
 
 // class Sph extends Mesh {
@@ -39,7 +44,10 @@ const objects = {
    // ...strangeAttractors,
    // ...flows,
    // ...hopfTori,
-    ...knotComplement
+    //...knotComplement,
+       // ...tubeTest,
+        ...tGeo,
+        //...geo
 };
 
 export { objects };

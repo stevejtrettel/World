@@ -7,8 +7,12 @@ import {
     PointLight,
 } from "../../3party/three/build/three.module.js";
 
+import { Background } from "./Background.js";
 
-class BoxNoLights extends Scene {
+
+
+
+class BoxNoLights extends Background {
 
     constructor ( color ) {
 
@@ -32,6 +36,7 @@ class BoxNoLights extends Scene {
         this.add( mainLight );
 
     }
+
 
 }
 

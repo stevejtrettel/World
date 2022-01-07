@@ -83,5 +83,35 @@ function createFragmentCSM(uniforms, fragAuxFns, fragColor) {
 
 
 
+const uvFromBuffer = `
+   
+`;
 
-export{ createFragmentCSM, createVertexCSM };
+const posFromBuffer = `
+    vec3 newPos = position;
+`;
+
+const normalFromBuffer = `
+    vec3 newNormal = normal;
+`;
+
+
+
+function createVertexTube( uniforms ) {
+
+    const defines = constants + varyings + uniforms;
+    const header =``;
+    const main = uvFromBuffer + posFromBuffer + normalFromBuffer + varyingValues;
+
+    return {
+        defines: defines,
+        header: header,
+        main: main
+    }
+}
+
+
+
+
+
+export{ createFragmentCSM, createVertexCSM, createVertexTube };

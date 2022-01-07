@@ -4,7 +4,7 @@ import {
     MathUtils,
 } from "../../3party/three/build/three.module.js";
 
-class SkySphere extends Scene {
+class SkySphere extends Background {
 
     constructor ( sunHeight ){
 

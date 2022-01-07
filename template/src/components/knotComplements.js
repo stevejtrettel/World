@@ -1,6 +1,6 @@
 import { rotateR4 } from "../../../common/shaders/geometry/rotateR4.js";
 import { projectR4 } from "../../../common/shaders/geometry/projectR4.js";
-import { hopfMapTools, hopfSurface } from "../../../common/shaders/geometry/hopfMap.js";
+
 import { parameterizedKnots } from "../../../common/shaders/geometry/parameterizedKnots.js";
 import { diffGeoS3 } from "../../../common/shaders/geometry/diffGeoS3.js";
 
@@ -155,7 +155,7 @@ let options = {
     roughness:0.1,
 }
 
-let knotComp = new ParametricMaterial([800,25], vert, frag, uniforms, options);
+let knotComp = new ParametricMaterial([2048,32], vert, frag, uniforms, options);
 knotComp.setName('KnotComplement');
 
 
