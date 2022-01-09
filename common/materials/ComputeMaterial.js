@@ -23,14 +23,9 @@ import { createVertexCSM, createFragmentCSM } from "./createCSMShaders.js";
 // as uniforms in the vertex and fragment shaders
 
 
-//REFACTORING GOAL:
-//input vertex is of the form {auxFns: x, displace: y}
-//input fragment is of the form {auxFns: x, fragColor: y}
-//then we use assembleVertexCSM and assembleFragmentCSM to build the shader
-
 class ComputeMaterial {
 
-    constructor( computeSystem, vertex, fragment, options = {} ) {
+    constructor( computeSystem, uniforms, vertex, fragment, options = {} ) {
 
         //store reference to the compute system
         this.compute = computeSystem;
@@ -50,7 +45,14 @@ class ComputeMaterial {
         for( let variable of this.compute.variables ){
             this.createUniform(variable, 'sampler2D', this.compute.getData( variable ));
         }
-
+        //now add the uniforms specific to this
+        //package the uniforms for the UI in a useful way:
+        this.parameters = {};
+        this.paramProperties = uniforms;
+        for( let uniform of Object.keys(this.paramProperties)){
+            this.parameters[uniform] = this.paramProperties[uniform].value;
+            this.createUniform(uniform, this.paramProperties[uniform].type, this.paramProperties[uniform].value);
+        }
 
         //build shaders from our inputs
         this.vertex = createVertexCSM( this.uniformString, vertex.aux, vertex.displace, vertex.nVec||'');
@@ -59,8 +61,8 @@ class ComputeMaterial {
 
 
         //create the mesh by adding vertices at points in a (0,1)x(0,1) square
-        //this.geometry = new UnitSquare(this.compute.res[0], this.compute.res[1]);
-        this.geometry = new PlaneBufferGeometry(1, 1, this.compute.res[0], this.compute.res[1]);
+        this.geometry = new UnitSquare(this.compute.res[0], this.compute.res[1]);
+        //this.geometry = new PlaneBufferGeometry(1, 1, this.compute.res[0], this.compute.res[1]);
 
         //get the desired material properties
         this.options = options;
@@ -109,12 +111,20 @@ class ComputeMaterial {
 
 
     addToScene( scene ){
+        this.mesh.rotateX(-3.14/2.);
         scene.add(this.mesh);
+
     }
 
     addToUI( ui ){
-
+        let Folder = ui.addFolder(this.name);
+        //add the parameter variables:
+        for( let variable of Object.keys(this.paramProperties)){
+            //add uniform to folder. update the uniforms on change
+            Folder.add(this.parameters, variable, ...this.paramProperties[variable].range).onChange(val => this.uniforms[variable].value = val);
+        }
     }
+
 
     updateUniforms() {
         //update all the textures!

@@ -47,12 +47,15 @@ class UnitSquare extends BufferGeometry {
 
                 const x = ix * segment_width;
 
-                vertices.push( x, - y, 0 );
+                //i do not know the need for the 1-y here and in the uv...
+                //orig was just -y but my new surface is not symmetric around origin
+                //and instead goes from 0 to 1...
+                vertices.push( x, 1.-y, 0 );
 
                 normals.push( 0, 0, 1 );
 
                 uvs.push( ix / gridX );
-                uvs.push( 1 - ( iy / gridY ) );
+                uvs.push( 1. - ( iy / gridY ) );
 
             }
 

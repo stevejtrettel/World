@@ -44,6 +44,9 @@ class ComputeSystem {
         }
 
         this.createUniform('frameNumber' ,'float', 0);
+        this.createUniform('time' ,'float', 0);
+        this.createUniform('dTime' ,'float', 0);
+
         this.createUniform('res', 'vec2', new Vector2(this.res[0], this.res[1]));
         for( let variable of this.variables ){
             this.createUniform(variable, 'sampler2D', null);
@@ -61,6 +64,8 @@ class ComputeSystem {
             this.compute[variable] = new ComputeShader( shaders[variable], {}, this.res, this.renderer );
             this.compute[variable].addUniforms(this.uniforms, this.uniformString);
 
+            //console.log(this.compute[variable].simulation.material.fragmentShader);
+
             //make a spot to store it's data
             this.data[variable] = null;
 
@@ -76,6 +81,7 @@ class ComputeSystem {
             //set the resetSwitch to a function, so when it is clicked we run 'initialize'
             this.parameters.reset = ()=>this.initialize();
         }
+
     }
 
     //only to be used during constructor!
@@ -98,6 +104,10 @@ class ComputeSystem {
         for( let variable of this.variables ){
             this.uniforms[variable].value = this.data[variable];
         }
+    }
+
+    recompile(variable){
+        this.compute[variable].recompile();
     }
 
     getData( variable ){
@@ -152,9 +162,11 @@ class ComputeSystem {
 
     }
 
-    tick(){
+    tick(time, dTime){
         //if you add the compute shader to the scene it'll run
         this.run();
+        this.uniforms.time.value = time;
+        this.uniforms.dTime.value = dTime;
     }
 
 

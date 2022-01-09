@@ -8,6 +8,20 @@ import { post } from "./src/post.js"
 
 
 
+
+function test(){
+    let variable =`sin(x)`;
+    let str = `My favorite function is ${variable}`;
+
+    let createStr = ()=>{
+        return `My favorite function is ${variable}`;
+    }
+    console.log(createStr());
+    variable = 'exp(x)';
+    console.log(createStr());
+}
+
+
 function main() {
 
     // Get a reference to the container element, set options

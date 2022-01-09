@@ -3,19 +3,22 @@ import {
     ClampToEdgeWrapping,
     FloatType,
     NearestFilter,
-    RGBAFormat
+    RGBAFormat, LinearFilter
 } from "../../../3party/three/build/three.module.js";
 
 
 
 
+//SHOULD SWITCH TO NEARESTFILTER IF WE WANT EXACT PIXEL
+//BUT THIS CAUSES PIXELATION WHEN WE TRY TO READ IT OFF AS A TEXTURE
+//INSTEAD: TRYING TO USE TEXELFETCH() AND LINEARFILTER
 const rtSettings = {
     format:  RGBAFormat,
     type:  FloatType,
     wrapS: ClampToEdgeWrapping,
     wrapT: ClampToEdgeWrapping,
-    minFilter: NearestFilter,
-    magFilter: NearestFilter,
+    minFilter: LinearFilter,
+    magFilter: LinearFilter,
     depthBuffer: false,
     stencilBuffer:  false,
 };

@@ -21,10 +21,26 @@ class ComputeShader {
 
         //the main simulation:
 
+        this.buildShaders = null;
 
         //what was passed as shaders?
+        //first instance: its a function meant to build the shader off some data!
+        if(typeof shaders === 'function'){
+            this.buildShaders = shaders;
+            //if we were passed a single shader, do the same for both of them
+            this.simulation = new FullScreenQuad({
+                fragmentShader: this.buildShaders(),
+                uniforms: this.uniforms
+            });
+            this.initialization = new FullScreenQuad({
+                fragmentShader:  this.buildShaders(),
+                uniforms: this.uniforms
+            });
+        }
+
+
         // can either pass a single shader, or an object {initialization: x, simulation: y}
-        if (typeof shaders === 'string' || shaders instanceof String){
+        else if (typeof shaders === 'string' || shaders instanceof String){
 
             //if we were passed a single shader, do the same for both of them
             this.simulation = new FullScreenQuad({
@@ -51,6 +67,11 @@ class ComputeShader {
         //where the result is stored
         this.data = null;
 
+    }
+
+    recompile(){
+        this.simulation.recompile(this.buildShaders);
+        this.initialization.recompile(this.buildShaders);
     }
 
     //add to each FSQ

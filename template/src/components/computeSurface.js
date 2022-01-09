@@ -7,16 +7,83 @@ import { colorConversion } from "../../../common/shaders/colors/colorConversion.
 
 
 
-const parameterization = `
-    vec3 parameterization( float u, float v ){
-         float x = (b+a*cos(v))*cos(u);
-         float y = (b+a*cos(v))*sin(u);
-         float z = a*sin(v);
 
-        return vec3(x,y,z);
-    }
-`;
 
+let equations = {
+    x: 'u',
+    y: 'v',
+    z: 'sin(a*u-time/3.)*sin(b*v+time/4.)*sin(time)',
+};
+
+let domain = {
+    u:[-6.3,6.3],
+    v:[-6.3,6.3],
+};
+
+
+
+//NOT CURRENTLY WORKING:
+//I need to figure out how to make .recompile() on the FullScreenQuad work!
+equations.addToUI = (ui)=>{
+    let Folder = ui.addFolder(`Equations`);
+    Folder.add(equations,'x').name('x(u,v)=').onChange(
+        ()=>{computer.recompile('point');
+             });
+    Folder.add(equations,'y').name('y(u,v)=').onChange(
+        ()=>{
+            computer.recompile('point')
+        });
+    Folder.add(equations,'z').name('z(u,v)=').onChange(
+        ()=>{computer.recompile('point')
+        });
+};
+
+equations.addToScene = ()=>{};
+
+
+
+
+let buildPointShader = ()=> {
+    return `
+            void main(){
+
+                 vec2 uv = gl_FragCoord.xy/res;
+                 
+                 float u = float(${domain.u[1]-domain.u[0]})*uv.x+float(${domain.u[0]});
+                 float v = float(${domain.u[1]-domain.u[0]})*uv.y+float(${domain.u[0]});
+                 
+                 float x = ${equations.x};
+                 float y = ${equations.y};
+                 float z = ${equations.z};
+                 
+                 vec3 pos = vec3(x,y,z);
+                 
+                 gl_FragColor = vec4(pos,1.);
+            }
+        `;
+}
+
+
+
+//
+// const pointShader = `
+//             void main(){
+//
+//                  vec2 uv = gl_FragCoord.xy/res;
+//
+//                  float u = float(${domain.u[1]-domain.u[0]})*uv.x+float(${domain.u[0]});
+//                  float v = float(${domain.u[1]-domain.u[0]})*uv.y+float(${domain.u[0]});
+//
+//                  float x = ${equations.x};
+//                  float y = ${equations.y};
+//                  float z = ${equations.z};
+//
+//                  vec3 pos = vec3(x,y,z);
+//
+//                  gl_FragColor = vec4(pos,1.);
+//             }
+//         `;
+//
 
 
 
@@ -50,6 +117,7 @@ const derivativeCalc = `
             }
                 
             vec3 texDerivativeRight(sampler2D tex, ivec2 ij, ivec2 dir){
+          
             
                 vec3 value0 = fetch( tex, ij  );
                 vec3 value1 = fetch( tex, ij + dir );
@@ -92,41 +160,8 @@ const derivativeCalc = `
             
 
             vec3 texDerivative( sampler2D tex, ivec2 ij, ivec2 dir ){
-            
                 //need to worry about edge cases: what happens at the boundary of the texture?
-                
-                ivec2 testRight = ij+dir;
-                ivec2 testLeft = ij-dir;
-                
-                
-                if(testLeft.x<1||testLeft.y<1){
-                    //only sample the current point and the one in front
-                    return texDerivativeRight(tex,ij,dir);
-                }
-                else if(testRight.x>int(res.x)-1||testRight.y>int(res.y)-1){
-                    //only sample the current point and the one behind
-                    return texDerivativeLeft(tex,ij,dir);
-                }
-                else{
-                    //the generic case, do the central difference
-                    return texDerivativeCentral(tex,ij,dir);
-                }
-            }
-        `;
-
-const pointShader = parameterization + `
-            void main(){
-
-                 vec2 uv = gl_FragCoord.xy/res;
-                 uv *= 6.29;
-                 
-                 float u = uv.x;
-                 float v = uv.y;
-                
-                 vec3 pos = parameterization( u, v );
-
-                 
-                 gl_FragColor = vec4(pos,1.);
+                return texDerivativeRight(tex,ij,dir);
             }
         `;
 
@@ -243,7 +278,7 @@ const curvatureShader = fetch + `
 const variables = ['point', 'tangentU', 'tangentV', 'normalVec', 'firstFF', 'secondFF', 'curvature' ];
 
 const shaders = {
-    point: pointShader,
+    point: buildPointShader,
     tangentU: tangentUShader,
     tangentV: tangentVShader,
     normalVec: normalVecShader,
@@ -278,7 +313,7 @@ let computer = new ComputeSystem(
     options,
     globals.renderer,
 );
-computer.setName('Surface');
+computer.setName('Parameters');
 
 
 //set up its display:
@@ -324,20 +359,28 @@ const  fragAux = colorConversion;
 const fragColor = `
             vec3 fragColor(){
             
-            //get gaussian curvature:
-                float curv = texture2D(curvature, vUv).x;
-                float k = tanh(3.*curv);
-                float sat = 0.8*abs(k);
+            //choose coloration scheme
+            float curv;
+            if( coloration == 0 ){
+                curv = texture(curvature, vUv).x;
+            }
+            if( coloration ==1 ){
+                 curv = -texture(curvature, vUv).y;
+            }
+            
+            
+                float k = 2./3.1415*atan(5.*curv);
+                float sat = saturation*abs(k);
                 
                 float hue;
                 if(curv<0.){
-                    hue = 0.6;
+                    hue = negativeHue;
                    }
                else{
-                    hue = 0.;
+                    hue = positiveHue;
                 }
                
-                vec3 col = hsb2rgb(vec3(hue, sat, 0.7));
+                vec3 col = hsb2rgb(vec3(hue, sat, 0.75*lightness));
                
                 return col;
             }
@@ -346,8 +389,8 @@ const fragColor = `
 
 
 let matOptions = {
-    clearcoat:0.1,
-    metalness:0.,
+    clearcoat:1.,
+    metalness:0.0,
     roughness:0.4,
 };
 
@@ -364,7 +407,43 @@ let frag = {
 };
 
 
-let surface = new ComputeMaterial(computer, vert, frag, matOptions);
+
+
+//these are all just for the fragColor shader:
+let matUniforms = {
+    coloration:{
+        type: 'int',
+        value: 0,
+        range: [{
+            'Gaussian Curvature': 0,
+            'Mean Curvature': 1,
+        }],
+    },
+    positiveHue:{
+        type: 'float',
+        value: 0,
+        range: [0,1,0.01],
+    },
+    negativeHue:{
+        type: 'float',
+        value:0.6,
+        range:[0,1,0.01],
+    },
+    saturation:{
+        type: 'float',
+        value: 0.75,
+        range: [0,1,0.01],
+    },
+    lightness:{
+        type: 'float',
+        value:0.5,
+        range:[0,1,0.01],
+    }
+}
+
+
+let surface = new ComputeMaterial(computer, matUniforms, vert, frag, matOptions);
+surface.setName('Coloration');
 
 
 
@@ -377,8 +456,9 @@ let surface = new ComputeMaterial(computer, vert, frag, matOptions);
 
 
 const computeSurface = {
+    eqn: equations,
     computer: computer,
-    display: surfaceDisplay,
+  //  display: surfaceDisplay,
     surface: surface
 };
 

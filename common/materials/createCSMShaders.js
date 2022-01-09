@@ -15,7 +15,7 @@ const varyings = `
 `;
 
 const newPos = `
-    vec2 uv = position.xy + vec2(0.5);
+    vec2 uv = position.xy;
     vec3 newPos = displace( uv );
 `;
 

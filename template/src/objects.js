@@ -1,11 +1,10 @@
-import { flows } from "./components/flows.js";
-import { qm } from "./components/qm.js";
-import { strangeAttractors } from "./components/strangeAttractors.js";
-import { hopfTori } from "./components/hopfTori.js";
-import { knotComplement } from "./components/knotComplements.js";
-import {tubeTest } from "./components/tubeTest.js";
-import {torus} from "./components/Torus.js";
-import { geo } from "./components/Geodesic.js";
+// import { flows } from "./components/flows.js";
+// import { strangeAttractors } from "./components/strangeAttractors.js";
+// import { hopfTori } from "./components/hopfTori.js";
+// import { knotComplement } from "./components/knotComplements.js";
+// import {tubeTest } from "./components/tubeTest.js";
+// import {torus} from "./components/Torus.js";
+// import { geo } from "./components/Geodesic.js";
 import { computeSurface } from "./components/computeSurface.js";
 
 
