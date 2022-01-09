@@ -18,7 +18,8 @@ function createRenderer ( ) {
     renderer.physicallyCorrectLights = true;
 
     //tone to screen
-    renderer.toneMapping = CineonToneMapping;
+    renderer.toneMapping = ACESFilmicToneMapping;
+      //  CineonToneMapping;
     //ACESFilmicToneMapping;
     renderer.outputEncoding = sRGBEncoding;
 

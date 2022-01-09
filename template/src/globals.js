@@ -12,11 +12,12 @@ pmremGen.compileCubemapShader();
 
 
 
-
 const globals = {
+    //parser: math.parser(),
     renderer: renderer,
     pmremGen: pmremGen,
     color: 0x2f508a,
+        //0x539165,
     params: globalParams,
 };
 

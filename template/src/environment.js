@@ -1,8 +1,8 @@
 import { globals } from "./globals.js";
 import { LightProbeGenerator } from "../../3party/three/examples/jsm/lights/LightProbeGenerator.js";
-import {BoxNoLights} from "../../common/backgrounds/BoxNoLights.js";
-import {BoxWithLights } from "../../common/backgrounds/BoxWithLights.js";
-import {CubeMap} from "../../common/backgrounds/CubeMap.js";
+import {BoxNoLights} from "../../common/components/backgrounds/BoxNoLights.js";
+import {BoxWithLights } from "../../common/components/backgrounds/BoxWithLights.js";
+import {CubeMap} from "../../common/components/backgrounds/CubeMap.js";
 
 
 //make the background texture:

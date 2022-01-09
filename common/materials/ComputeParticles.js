@@ -7,7 +7,7 @@ import {
     Vector2
 } from "../../3party/three/build/three.module.js";
 
-import { createParticleMesh } from "../gpgpu/components/createParticleMesh.js";
+import { createParticleMesh } from "../gpu/components/createParticleMesh.js";
 
 
 class ComputeParticles {

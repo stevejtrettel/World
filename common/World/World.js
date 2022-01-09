@@ -8,7 +8,7 @@ import { createScene } from "./components/createScene.js";
 import { createStats, placeStats } from "./components/createStats.js";
 import { createControls } from "./components/createControls.js";
 
-import {BoxNoLights} from "../backgrounds/BoxNoLights.js";
+import {BoxNoLights} from "../components/backgrounds/BoxNoLights.js";
 
 
 

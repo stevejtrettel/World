@@ -107,7 +107,7 @@ class ComputeSystem {
     run() {
 
         for( let variable of this.variables ){
-            //do one cycle of the integration
+            //do one cycle of the cpu
             this.compute[variable].run();
             this.data[variable] = this.compute[variable].getData();
         }

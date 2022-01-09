@@ -2,7 +2,7 @@ import {
     Scene,
     Vector3,
     MathUtils,
-} from "../../3party/three/build/three.module.js";
+} from "../../../3party/three/build/three.module.js";
 
 class SkySphere extends Background {
 

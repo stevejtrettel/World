@@ -3,6 +3,7 @@ import {ComputeRenderTargets} from "./ComputeRTs.js";
 
 
 //shaders is either 1) a single shader or 2) a pair {initialization:x, simulation:y}
+//theyve already been built, including their uniforms, and come here complete
 class ComputeShader {
 
     constructor( shaders, uniforms, resolution, renderer ){
@@ -67,7 +68,7 @@ class ComputeShader {
     }
 
     run() {
-        //do one cycle of the integration
+        //do one cycle of the cpu
         this.rts.render( this.simulation, this.renderer );
         this.setData(this.rts.getResult());
     }

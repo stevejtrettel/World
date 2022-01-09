@@ -15,11 +15,11 @@ const varyings = `
 `;
 
 const newPos = `
-    vec2 uv = position.xy;
+    vec2 uv = position.xy + vec2(0.5);
     vec3 newPos = displace( uv );
 `;
 
-const newNormal = `
+const newNormalFromDisplace = `
     float offset = 0.001;
     vec2 tangent = vec2(1,0);
     vec2 bitangent = vec2(0,1);
@@ -33,6 +33,10 @@ const newNormal = `
     vec3 displacedBitangent = displacedNeighbour2 - newPos;
     
     vec3 newNormal = normalize(cross(displacedTangent, displacedBitangent));
+`;
+
+const newNormal = `
+    vec3 newNormal = nVec( uv );
 `;
 
 
@@ -53,11 +57,17 @@ const newColor = `
 
 
 
-function createVertexCSM(uniforms, vertAuxFns, displace) {
+function createVertexCSM(uniforms, vertAuxFns, displace, nVec ='') {
 
     const defines = constants + varyings + uniforms;
-    const header = vertAuxFns + displace;
-    const main = newPos + newNormal + varyingValues;
+    const header = vertAuxFns + displace + nVec;
+    let main;
+    if(nVec){
+        main = newPos + newNormal + varyingValues;
+    }
+    else{
+        main = newPos + newNormalFromDisplace + varyingValues;
+    }
 
     return {
         defines: defines,
@@ -80,6 +90,26 @@ function createFragmentCSM(uniforms, fragAuxFns, fragColor) {
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

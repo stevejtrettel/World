@@ -2,7 +2,7 @@ import {
     BoxGeometry,
     Mesh,
     MeshLambertMaterial
-} from "../../3party/three/build/three.module.js";
+} from "../../../3party/three/build/three.module.js";
 
 import { BoxNoLights } from "./BoxNoLights.js";
 

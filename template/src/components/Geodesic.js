@@ -1,8 +1,8 @@
 import { Vector2, Vector3 } from "../../../3party/three/build/three.module.js";
 
 import { IntegralCurve } from "../../../common/objects/IntegralCurve.js";
-import { State, dState } from "../../../common/integration/State.js";
-import { RungeKutta } from "../../../common/integration/RungeKutta.js";
+import { State, dState } from "../../../common/cpu/components/State.js";
+import { RungeKutta } from "../../../common/cpu/RungeKutta.js";
 
 
 const accel = ( state ) => {

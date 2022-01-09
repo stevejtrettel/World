@@ -1,8 +1,8 @@
 import{ globals } from "../globals.js";
 
-import { ComputeSystem } from "../../../common/gpgpu/ComputeSystem.js";
-import { CSQuad } from "../../../common/gpgpu/displays/CSQuad.js";
-import { CSParticle } from "../../../common/gpgpu/displays/CSParticle.js";
+import { ComputeSystem } from "../../../common/gpu/ComputeSystem.js";
+import { CSQuad } from "../../../common/gpu/displays/CSQuad.js";
+import { CSParticle } from "../../../common/gpu/displays/CSParticle.js";
 import { ComputeMaterial } from "../../../common/materials/ComputeMaterial.js";
 
 

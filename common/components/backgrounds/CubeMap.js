@@ -4,7 +4,7 @@ import {
     CubeTextureLoader,
     sRGBEncoding,
     AmbientLight,
-} from "../../3party/three/build/three.module.js";
+} from "../../../3party/three/build/three.module.js";
 
 
 import {Background} from "./Background.js";

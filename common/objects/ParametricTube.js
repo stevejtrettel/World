@@ -12,7 +12,7 @@ import {
     createVertexTube
 } from "../materials/createCSMShaders.js";
 
-import {UnitSquare} from "../gpgpu/components/UnitSquare.js";
+import {UnitSquare} from "../gpu/components/UnitSquare.js";
 import {CustomShaderMaterial} from "../../3party/three-csm.m.js";
 
 

@@ -1,4 +1,4 @@
-import { Scene } from "../../3party/three/build/three.module.js";
+import { Scene } from "../../../3party/three/build/three.module.js";
 
 class Background extends Scene {
 

@@ -6,7 +6,7 @@ import {
 
 import {
     UnitSquare,
-} from "../gpgpu/components/UnitSquare.js";
+} from "../gpu/components/UnitSquare.js";
 
 import { CustomShaderMaterial} from "../../3party/three-csm.m.js";
 import { createVertexCSM, createFragmentCSM } from "./createCSMShaders.js";

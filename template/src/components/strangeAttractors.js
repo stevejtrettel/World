@@ -1,11 +1,11 @@
-import { ComputeSystem } from "../../../common/gpgpu/ComputeSystem.js";
+import { ComputeSystem } from "../../../common/gpu/ComputeSystem.js";
 import { ComputeParticles} from "../../../common/materials/ComputeParticles.js";
 
 import { globals } from "../globals.js";
 import { randomFns } from "../../../common/shaders/math/random.js";
 import { allAttractors } from "../../../common/shaders/odes/attractors.js";
 import {rk4_vec3 as rk4} from "../../../common/shaders/odes/rk4.js";
-import {CSParticle} from "../../../common/gpgpu/displays/CSParticle.js";
+import {CSParticle} from "../../../common/gpu/displays/CSParticle.js";
 
 
 
