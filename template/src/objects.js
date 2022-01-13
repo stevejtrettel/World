@@ -1,14 +1,14 @@
-// import { flows } from "./components/flows.js";
-// import { strangeAttractors } from "./components/strangeAttractors.js";
-// import { hopfTori } from "./components/hopfTori.js";
-// import { knotComplement } from "./components/knotComplements.js";
-// import {tubeTest } from "./components/tubeTest.js";
-// import {torus} from "./components/Torus.js";
-// import { geo } from "./components/Geodesic.js";
+ import { flows } from "./components/flows.js";
+ import { strangeAttractors } from "./components/strangeAttractors.js";
+import { hopfTori } from "./components/hopfTori.js";
+import { knotComplement } from "./components/knotComplements.js";
+import {tubeTest } from "./components/tubeTest.js";
+import {torus} from "./components/Torus.js";
+import { geo } from "./components/Geodesic.js";
 import { computeSurface } from "./components/computeSurface.js";
+import { pentagramMap } from "./components/pentagramMap.js";
 
-
-// class Sph extends Mesh {
+ // class Sph extends Mesh {
 //     constructor() {
 //         super();
 //         this.geometry = new SphereBufferGeometry(1, 32, 16);
@@ -38,11 +38,11 @@ import { computeSurface } from "./components/computeSurface.js";
 
 
 const objects = {
-    //...qm,
-   // ...strangeAttractors,
-   // ...flows,
+   // ...pentagramMap,
+    //...strangeAttractors,
+    //...flows,
    // ...hopfTori,
-    //...knotComplement,
+   // ...knotComplement,
        // ...tubeTest,
         //...geo
        // torus,

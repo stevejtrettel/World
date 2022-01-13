@@ -3,6 +3,7 @@ import { ComputeSystem } from "../../../common/gpu/ComputeSystem.js";
 import { CSQuad } from "../../../common/gpu/displays/CSQuad.js";
 import {ComputeMaterial} from "../../../common/materials/ComputeMaterial.js";
 import { colorConversion } from "../../../common/shaders/colors/colorConversion.js";
+import {LinearFilter, NearestFilter} from "../../../3party/three/build/three.module.js";
 
 
 
@@ -10,34 +11,51 @@ import { colorConversion } from "../../../common/shaders/colors/colorConversion.
 
 
 let equations = {
-    x: 'u',
-    y: 'v',
-    z: 'sin(a*u-time/3.)*sin(b*v+time/4.)*sin(time)',
+    x: '(b+a*cos(u))*cos(v)',
+    y: '(b+a*cos(u))*sin(v)',
+    z: 'a*sin(u)+0.5*cos(u)*sin(3.*v)*sin(time)',
 };
 
 let domain = {
-    u:[-6.3,6.3],
-    v:[-6.3,6.3],
+    uMin: -3.14,
+    uMax: 3.14,
+    vMin: -3.14,
+    vMax: 3.14,
 };
 
 
-
-//NOT CURRENTLY WORKING:
-//I need to figure out how to make .recompile() on the FullScreenQuad work!
+//BULD A BETTER WAY OF DOING THIS IN THE FUTURE!
 equations.addToUI = (ui)=>{
-    let Folder = ui.addFolder(`Equations`);
-    Folder.add(equations,'x').name('x(u,v)=').onChange(
+    let eqnFolder = ui.addFolder(`Equations`);
+    eqnFolder.add(equations,'x').name('x(u,v)=').onChange(
         ()=>{computer.recompile('point');
-             });
-    Folder.add(equations,'y').name('y(u,v)=').onChange(
+        });
+    eqnFolder.add(equations,'y').name('y(u,v)=').onChange(
         ()=>{
             computer.recompile('point')
         });
-    Folder.add(equations,'z').name('z(u,v)=').onChange(
+    eqnFolder.add(equations,'z').name('z(u,v)=').onChange(
         ()=>{computer.recompile('point')
         });
-};
 
+    let domFolder = ui.addFolder('Domain');
+    domFolder.add(domain,'uMin',-6.3,6.3,0.01).onChange(
+        ()=>{
+            computer.recompile('point')
+        });
+    domFolder.add(domain,'uMax',-6.3,6.3,0.01).onChange(
+        ()=>{
+            computer.recompile('point')
+        });
+    domFolder.add(domain,'vMin',-6.3,6.3,0.01).onChange(
+        ()=>{
+            computer.recompile('point')
+        });
+    domFolder.add(domain,'vMax',-6.3,6.3,0.01).onChange(
+        ()=>{
+            computer.recompile('point')
+        });
+};
 equations.addToScene = ()=>{};
 
 
@@ -49,8 +67,8 @@ let buildPointShader = ()=> {
 
                  vec2 uv = gl_FragCoord.xy/res;
                  
-                 float u = float(${domain.u[1]-domain.u[0]})*uv.x+float(${domain.u[0]});
-                 float v = float(${domain.u[1]-domain.u[0]})*uv.y+float(${domain.u[0]});
+                 float u = (float(${domain.uMax})-float(${domain.uMin}))/0.97*uv.x+float(${domain.uMin});
+                 float v = (float(${domain.vMax})-float(${domain.vMin}))/0.97*uv.y+float(${domain.vMin});
                  
                  float x = ${equations.x};
                  float y = ${equations.y};
@@ -297,11 +315,17 @@ const uniforms = {
         type: `float`,
         value: 2,
         range: [1, 3, 0.01],
+    },
+    c: {
+        type: `float`,
+        value: 0,
+        range: [-1, 1, 0.01],
     }
 };
 
 const options = {
-    res:[128,128],
+    res:[256,256],
+    filter:LinearFilter,
 };
 
 
@@ -359,28 +383,62 @@ const  fragAux = colorConversion;
 const fragColor = `
             vec3 fragColor(){
             
-            //choose coloration scheme
+            vec3 col;
             float curv;
+            
+            //first: if we are gaussian mor mean curvature:
+            if(coloration < 2) {
+            
             if( coloration == 0 ){
                 curv = texture(curvature, vUv).x;
             }
             if( coloration ==1 ){
-                 curv = -texture(curvature, vUv).y;
+                 curv = texture(curvature, vUv).y;
             }
+
+            float k = 2./3.1415*atan(2.*curv);
             
+            float hue = 1.-(1.+k)/2.-0.2;
+
+            float sat = 0.5;
+           // sat =0.25*abs(k)+0.25;
+           
+           //change lightness to get dark areas:
+           float mag=1.;
+           if(equipotentials){
+                mag = 0.15*(pow(abs(sin(20.*k)),30.))+0.9;
+           }
+
+            col = hsb2rgb(vec3(hue, sat, 0.5*mag));
             
-                float k = 2./3.1415*atan(5.*curv);
-                float sat = saturation*abs(k);
-                
-                float hue;
-                if(curv<0.){
-                    hue = negativeHue;
-                   }
-               else{
-                    hue = positiveHue;
-                }
+          }
+            
+         //otherwise, we are the gauss map:
+         //assign colors based on a sphere: white = north pole, black = south pole, hue = longitude   
+         else{
+         
+            vec3 nVec = texture(normalVec, vUv).xyz;
+            float phi = acos(nVec.z);
+            float theta = atan(nVec.y, nVec.x);
+            
+            float hue = theta/6.29;
+            float lightness = 0.5*phi/3.14+0.2;
+            float sat = 0.6*sin(phi);
+            
+           //equipotentials give spherical grid:
+           float mag=1.;
+           if(equipotentials){
+                float thetaLines = abs(sin(20.*theta));
+                float phiLines = abs(sin(20.*phi));
+                mag = 0.1*(pow(phiLines,30.))+0.1*(pow(thetaLines,30.))+0.9;
+           }
+           
+           
+            col = hsb2rgb(vec3(hue, sat,mag*lightness));
+             
+             }
                
-                vec3 col = hsb2rgb(vec3(hue, sat, 0.75*lightness));
+               
                
                 return col;
             }
@@ -391,7 +449,7 @@ const fragColor = `
 let matOptions = {
     clearcoat:1.,
     metalness:0.0,
-    roughness:0.4,
+    roughness:0.3,
 };
 
 
@@ -417,35 +475,39 @@ let matUniforms = {
         range: [{
             'Gaussian Curvature': 0,
             'Mean Curvature': 1,
+            'Gauss Map': 2,
         }],
     },
-    positiveHue:{
-        type: 'float',
-        value: 0,
-        range: [0,1,0.01],
-    },
-    negativeHue:{
-        type: 'float',
-        value:0.6,
-        range:[0,1,0.01],
-    },
-    saturation:{
-        type: 'float',
-        value: 0.75,
-        range: [0,1,0.01],
-    },
-    lightness:{
-        type: 'float',
-        value:0.5,
-        range:[0,1,0.01],
+    equipotentials:{
+        type:'bool',
+        value:true,
+        range:[],
     }
+    // positiveHue:{
+    //     type: 'float',
+    //     value: 0,
+    //     range: [0,1,0.01],
+    // },
+    // negativeHue:{
+    //     type: 'float',
+    //     value:0.6,
+    //     range:[0,1,0.01],
+    // },
+    // saturation:{
+    //     type: 'float',
+    //     value: 0.75,
+    //     range: [0,1,0.01],
+    // },
+    // lightness:{
+    //     type: 'float',
+    //     value:0.5,
+    //     range:[0,1,0.01],
+    // }
 }
 
 
 let surface = new ComputeMaterial(computer, matUniforms, vert, frag, matOptions);
 surface.setName('Coloration');
-
-
 
 
 

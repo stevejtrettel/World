@@ -95,7 +95,6 @@ float coordLines(vec2 freq, vec2 uv){
     
     float bright = abs( log( coordS ) + log( coordT ) );
     bright = clamp( 0.5 * gridThickness * bright, 0., 1. );
-    bright = 1.-bright;
 
     return bright;
 }
@@ -110,8 +109,17 @@ let fragAux = colorConversion+coordLines;
 //have available as varyings vPosition, vUv and vNormal
 let fragColor = `
 vec3 fragColor(){
+
+
+    float hue = vUv.x;
+    float cLines = coordLines(vec2(5),vUv);
+    float sat = 0.65*(1.-0.2*cLines);
+    float light = 0.75+0.25*cLines;
     
-    vec3 baseColor = hsb2rgb(vec3(vUv.x, 0.65, 0.4));
+    
+    vec3 baseColor = hsb2rgb(vec3(hue,sat, light));
+    
+    return baseColor;
 
     float grid = coordLines( vec2(5.,5.), vUv);
     grid = 0.7*grid + 0.3;

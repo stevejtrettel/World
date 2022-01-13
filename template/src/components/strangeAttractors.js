@@ -6,6 +6,7 @@ import { randomFns } from "../../../common/shaders/math/random.js";
 import { allAttractors } from "../../../common/shaders/odes/attractors.js";
 import {rk4_vec3 as rk4} from "../../../common/shaders/odes/rk4.js";
 import {CSParticle} from "../../../common/gpu/displays/CSParticle.js";
+import {NearestFilter} from "../../../3party/three/build/three.module.js";
 
 
 
@@ -18,6 +19,7 @@ const computeVariables = ['pos'];
 
 const computeOptions = {
     res: res,
+    filter: NearestFilter,
     resetSwitch: true,
 }
 
@@ -77,6 +79,7 @@ const ini = `
         void main() {
                 //normalized coords in (0,1)
                 vec2 uv = gl_FragCoord.xy/res;
+                ivec2 ij = ivec2(gl_FragCoord.xy);
                 
                 //get a random seed for the pixel
                 seed = randomSeed(gl_FragCoord.xy,1.);
@@ -91,7 +94,7 @@ const ini = `
                 vec3 ball = sph*rad;
                 
                 //make the initial position
-                vec3 iniPos = 1.*ball + vec3(0.,0.,2.);
+                vec3 iniPos = 1.*sph + vec3(0.,0.,2.);
            
                 //send result to data texture
                 gl_FragColor = vec4(iniPos,1.0);
@@ -126,12 +129,13 @@ void main()
         {   
             // Normalized pixel coordinates (from 0 to 1)
             vec2 uv = gl_FragCoord.xy/res;
+            ivec2 ij = ivec2(gl_FragCoord.xy);
             
             //random seed if needed:
             seed = randomSeed(gl_FragCoord.xy, frameNumber);
             
             //get data from the last frame
-            vec3 p = texture2D( pos, uv ).xyz;
+            vec3 p = texelFetch( pos, ij, 0 ).xyz;
          
             //update via RK, using the provided vecField
             vec3 q = rk4(p, dt);
@@ -140,7 +144,7 @@ void main()
             float speed = length(vecField(q));
 
             // Output to data texture
-            gl_FragColor = vec4(q, speed);
+            gl_FragColor = vec4(q, 1.);
         }
 `;
 
@@ -252,7 +256,7 @@ void main() {
     //figure out the color of the point:
     vec3 col = particlePosition;
       
-    gl_FragColor = vec4( particleSpeed*particlePosition, opacity );
+    gl_FragColor = vec4( vec3(1), opacity );
 }`;
 
 

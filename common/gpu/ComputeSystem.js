@@ -1,7 +1,7 @@
 //A compute system is a collection of ComputeShaders
 // (position,velocity,etc) that all work together
 
-import { Vector2 } from "../../3party/three/build/three.module.js";
+import { Vector2} from "../../3party/three/build/three.module.js";
 import { ComputeShader } from "./components/ComputeShader.js";
 import {FullScreenQuad} from "./components/FullScreenQuad.js";
 
@@ -46,8 +46,8 @@ class ComputeSystem {
         this.createUniform('frameNumber' ,'float', 0);
         this.createUniform('time' ,'float', 0);
         this.createUniform('dTime' ,'float', 0);
-
         this.createUniform('res', 'vec2', new Vector2(this.res[0], this.res[1]));
+
         for( let variable of this.variables ){
             this.createUniform(variable, 'sampler2D', null);
         }
@@ -61,7 +61,11 @@ class ComputeSystem {
 
             //build a compute system:
             //add the uniforms after, not during creation, as they are not in the shaders
-            this.compute[variable] = new ComputeShader( shaders[variable], {}, this.res, this.renderer );
+            const rtSettings ={
+                res: options.res,
+                filter: options.filter,
+            }
+            this.compute[variable] = new ComputeShader( shaders[variable], {}, rtSettings, this.renderer );
             this.compute[variable].addUniforms(this.uniforms, this.uniformString);
 
             //console.log(this.compute[variable].simulation.material.fragmentShader);

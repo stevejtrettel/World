@@ -9,31 +9,31 @@ import {
 
 
 
-//SHOULD SWITCH TO NEARESTFILTER IF WE WANT EXACT PIXEL
-//BUT THIS CAUSES PIXELATION WHEN WE TRY TO READ IT OFF AS A TEXTURE
-//INSTEAD: TRYING TO USE TEXELFETCH() AND LINEARFILTER
-const rtSettings = {
-    format:  RGBAFormat,
-    type:  FloatType,
-    wrapS: ClampToEdgeWrapping,
-    wrapT: ClampToEdgeWrapping,
-    minFilter: LinearFilter,
-    magFilter: LinearFilter,
-    depthBuffer: false,
-    stencilBuffer:  false,
-};
-
-
 
 // a pair of render targets that take in FullScreenQuads and render them, swap targets, and read out result
 //a compute system can be built of multiple FullScreenQuads and use this as the rendering device for all of them
 
 class ComputeRenderTargets {
 
-    constructor( res ){
+    constructor( settings={} ){
 
-        this.a = new WebGLRenderTarget(res[0], res[1], rtSettings);
-        this.b = new WebGLRenderTarget(res[0], res[1], rtSettings);
+        const rtSettings = {
+            format:  RGBAFormat,
+            type:  settings.type||FloatType,
+            wrapS: settings.wrap||ClampToEdgeWrapping,
+            wrapT: settings.wrap||ClampToEdgeWrapping,
+            minFilter: settings.filter||NearestFilter,
+            magFilter: settings.filter||NearestFilter,
+            depthBuffer: false,
+            stencilBuffer:  false,
+        };
+
+        const resX = settings.res[0]||256;
+        const resY = settings.res[1]||256;
+
+
+        this.a = new WebGLRenderTarget(resX,resY, rtSettings);
+        this.b = new WebGLRenderTarget(resX,resY, rtSettings);
        // this.data = null;
 
     }

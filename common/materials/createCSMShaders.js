@@ -15,7 +15,9 @@ const varyings = `
 `;
 
 const newPos = `
-    vec2 uv = position.xy;
+    //shrinking the domain SLIGHTLY to avoid seeing edge effects on the large edges
+    //this should be done another way than hard coding....
+    vec2 uv = 0.98*position.xy;
     vec3 newPos = displace( uv );
 `;
 

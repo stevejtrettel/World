@@ -6,10 +6,10 @@ import {ComputeRenderTargets} from "./ComputeRTs.js";
 //theyve already been built, including their uniforms, and come here complete
 class ComputeShader {
 
-    constructor( shaders, uniforms, resolution, renderer ){
+    constructor( shaders, uniforms, rtSettings, renderer ){
 
         //the render targets
-        this.rts = new ComputeRenderTargets( resolution );
+        this.rts = new ComputeRenderTargets( rtSettings );
 
         //save the renderer
         this.renderer=renderer;
