@@ -134,12 +134,10 @@ class SpaceCurve {
         this.curve = new CatmullRomCurve3(pts);
     }
 
-    setInvariants(curvature, torsion){
+    reset(curvature, torsion){
         this.integrator.derive = FrenetFormula(curvature, torsion);
-    }
-
-    resetCurve(curve){
-        this.tube.resetCurve(curve);
+        this.integrate();
+        this.tube.resetCurve(this.curve);
     }
 
     setName( name ) {

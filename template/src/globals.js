@@ -13,7 +13,7 @@ pmremGen.compileCubemapShader();
 
 
 const globals = {
-    //parser: math.parser(),
+    parser: math.parser(),
     renderer: renderer,
     pmremGen: pmremGen,
     color: 0x2f508a,
@@ -21,6 +21,6 @@ const globals = {
     params: globalParams,
 };
 
-
+console.log(globals.parser);
 
 export { globals };
