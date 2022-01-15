@@ -7,6 +7,9 @@ import {torus} from "./components/Torus.js";
 import { geo } from "./components/Geodesic.js";
 import { computeSurface } from "./components/computeSurface.js";
 import { pentagramMap } from "./components/pentagramMap.js";
+import { computeCurve } from "./components/computeCurve.js";
+
+
 
  // class Sph extends Mesh {
 //     constructor() {
@@ -38,15 +41,16 @@ import { pentagramMap } from "./components/pentagramMap.js";
 
 
 const objects = {
-   // ...pentagramMap,
+    //...pentagramMap,
     //...strangeAttractors,
-    //...flows,
+   // ...flows,
    // ...hopfTori,
-   // ...knotComplement,
+    //...knotComplement,
        // ...tubeTest,
         //...geo
        // torus,
-        ...computeSurface,
+      //  ...computeSurface,
+   ...computeCurve,
 };
 
 export { objects };

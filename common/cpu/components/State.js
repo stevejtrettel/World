@@ -2,6 +2,8 @@
 
 //states have two components: a position and velocity
 //they should be any form of Vector2, Vector3, Vector4
+//can solve systems of vector valued ODEs by having objects of State be Mat4 or Mat3...
+//SO LONG AS WE IMPLEMENT THE METHODS ADD AND SUB ON MATRICES:
 class State {
 
     constructor(pos, vel){

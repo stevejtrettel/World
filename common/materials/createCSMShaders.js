@@ -21,6 +21,15 @@ const newPos = `
     vec3 newPos = displace( uv );
 `;
 
+function createNewPosShader(scale){
+    return `
+        //shrinking the domain SLIGHTLY to avoid seeing edge effects on the large edges
+    //this should be done another way than hard coding....
+    vec2 uv = float(${scale})*position.xy;
+    vec3 newPos = displace( uv );
+    `;
+}
+
 const newNormalFromDisplace = `
     float offset = 0.001;
     vec2 tangent = vec2(1,0);
@@ -57,14 +66,17 @@ const newColor = `
 
 
 
+const defaultOptions = {
+    scaleFactor:1.,
+}
 
-
-function createVertexCSM(uniforms, vertAuxFns, displace, nVec ='') {
+function createVertexCSM(uniforms, vertAuxFns, displace, nVec=``, options=defaultOptions) {
 
     const defines = constants + varyings + uniforms;
     const header = vertAuxFns + displace + nVec;
     let main;
-    if(nVec){
+    const newPos = createNewPosShader(options.scaleFactor||1.);
+    if(options.nVec){
         main = newPos + newNormal + varyingValues;
     }
     else{

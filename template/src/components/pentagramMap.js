@@ -14,7 +14,7 @@ import {LinearFilter, NearestFilter} from "../../../3party/three/build/three.mod
 
 //Build the compute system
 
-const res = [2048,1024];
+const res = [4096,2048];
 
 const computeVariables = ['pos'];
 
@@ -93,7 +93,7 @@ const ini = `
 
                 
                 //make the initial position
-                vec4 iniPos = 0.001*vec4(x,y,z,w)+vec4(a0,b0,c0,d0);
+                vec4 iniPos = 0.0001*vec4(x,y,z,w)+vec4(a0,b0,c0,d0);
            
                 //send result to data texture
                 gl_FragColor = iniPos;
@@ -444,15 +444,16 @@ void main()
             
             //if the resulting point is "out of bounds", restart it
             //by randomly sampling the texture to get another point, and then perturbing:
-            if(length(q)>20.){
-
-                vec2 samplePt = vec2(randomFloat(), randomFloat());
-                vec4 samplePos = texture( pos, samplePt );
-                vec4 jiggle = vec4(randomFloat(-1.,1.), randomFloat(-1.,1.), randomFloat(-1.,1.), randomFloat(-1.,1.));
-
-                q =  samplePos + 0.01 * jiggle;
-
-            }
+            // if(length(q)>20.){
+            //
+            //     vec2 samplePt = vec2(randomFloat(), randomFloat());
+            //     vec4 samplePos = texture( pos, samplePt );
+            //     vec4 jiggle = vec4(randomFloat(-1.,1.), randomFloat(-1.,1.), randomFloat(-1.,1.), randomFloat(-1.,1.));
+            //
+            //   //  q =  samplePos + 0.01 * jiggle;
+            //   q=samplePos;
+            //
+            // }
 
             // Output to data texture
             gl_FragColor = q;
@@ -584,11 +585,8 @@ void main() {
     float opacity =0.15;
     
     //figure out the color of the point:
-    vec3 col = hsb2rgb(vec3(particleProjection/4.,0.5,0.5));
-  //  if(particlePosition.x<0.||particlePosition.y<0.||particlePosition.z<0.){
-   // col = vec3(1,0,0);
-   // }
-   // vec3 col = particlePosition;
+    float x = 1./3.14*atan(particleProjection/4.)+0.5;
+    vec3 col = hsb2rgb(vec3(x,0.5,0.5));
       
     gl_FragColor = vec4( col, opacity );
 }`;
