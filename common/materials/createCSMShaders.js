@@ -136,7 +136,7 @@ const posFromBuffer = `
 `;
 
 const normalFromBuffer = `
-    vec3 newNormal = normal;
+    vec3 newNormal = normalize(normal);
 `;
 
 

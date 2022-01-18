@@ -1,4 +1,6 @@
-import {CatmullRomCurve3, Vector2, Vector3} from "../../3party/three/build/three.module.js";
+import {CatmullRomCurve3, TubeBufferGeometry, Vector2,
+    MeshPhysicalMaterial, Vector3, Mesh,
+DoubleSide,} from "../../3party/three/build/three.module.js";
 
 import { RungeKutta } from "../cpu/RungeKutta.js";
 import { TNB } from "../cpu/components/TNB.js";
@@ -73,12 +75,31 @@ class SpaceCurve {
         let fragment = {
             aux: colorConversion,
             fragColor: `
-            vec3 fragColor(){      
-               return hsb2rgb(vec3(vUv.x, 0.75, 0.6));
+            vec3 fragColor(){     
+                return vec3(1.); 
+               //return hsb2rgb(vec3(vUv.x, 0.75, 0.6));
             }`,
         };
 
-        this.tube = new ParametricTube( this.curve, curveOptions, fragment, {},{});
+        const matOptions = {
+            clearcoat:1,
+            metalness:0,
+            roughness:0.3,
+        }
+
+         this.tube = new ParametricTube( this.curve, curveOptions, fragment, {},  matOptions);
+
+
+        // let mat = new MeshPhysicalMaterial();
+        // mat.clearcoat=1;
+        // mat.roughness=0.2;
+        // mat.metalness=0;
+        // mat.side= DoubleSide;
+        //
+        // let geom = new TubeBufferGeometry(this.curve, 1200,0.05,8,false);
+        //
+        // this.tube = new Mesh(geom, mat);
+
 
     }
 
@@ -137,7 +158,11 @@ class SpaceCurve {
     reset(curvature, torsion){
         this.integrator.derive = FrenetFormula(curvature, torsion);
         this.integrate();
+
+        // this.tube.geometry.dispose();
+        // this.tube.geometry= new TubeBufferGeometry(this.curve, 1200,0.05, 8,false);
         this.tube.resetCurve(this.curve);
+
     }
 
     setName( name ) {
@@ -146,6 +171,7 @@ class SpaceCurve {
 
     addToScene( scene ) {
         this.tube.addToScene( scene );
+        //scene.add(this.tube);
     }
 
     addToUI( ui ) {

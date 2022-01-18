@@ -21,6 +21,5 @@ const globals = {
     params: globalParams,
 };
 
-console.log(globals.parser);
 
 export { globals };
