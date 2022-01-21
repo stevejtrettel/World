@@ -7,9 +7,11 @@ import {torus} from "./components/Torus.js";
 import { geo } from "./components/Geodesic.js";
 import { computeSurface } from "./components/computeSurface.js";
 import { pentagramMap } from "./components/pentagramMap.js";
-import { computeCurve } from "./components/computeCurve.js";
-
-
+import { curveAndTorsion } from "./components/curveAndTorsion.js";
+import { wobbleSphere } from "./components/wobbleSphere.js";
+import { curveOnTorus } from "./components/curveOnTorus.js";
+import { cuttingCylinder } from "./components/cuttingCylinder.js";
+import { cuttingTorus } from "./components/cuttingTorus.js";
 
  // class Sph extends Mesh {
 //     constructor() {
@@ -46,11 +48,15 @@ const objects = {
    // ...flows,
    // ...hopfTori,
     //...knotComplement,
-       // ...tubeTest,
+        ...tubeTest,
         //...geo
        // torus,
       //  ...computeSurface,
-   ...computeCurve,
+  //...curveAndTorsion,
+    //wobbleSphere,
+     //curveOnTorus,
+    //cuttingCylinder,
+   // cuttingTorus,
 };
 
 export { objects };

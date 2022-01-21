@@ -21,7 +21,7 @@ const newPos = `
     vec3 newPos = displace( uv );
 `;
 
-function createNewPosShader(scale){
+function createNewPosShader(scale=1.){
     return `
         //shrinking the domain SLIGHTLY to avoid seeing edge effects on the large edges
     //this should be done another way than hard coding....
@@ -127,9 +127,7 @@ function createFragmentCSM(uniforms, fragAuxFns, fragColor) {
 
 
 
-const uvFromBuffer = `
-   
-`;
+const uvFromBuffer = ``;
 
 const posFromBuffer = `
     vec3 newPos = position;

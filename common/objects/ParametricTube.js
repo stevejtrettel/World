@@ -96,7 +96,7 @@ class BaseTube extends BufferGeometry {
 
                 //set the position and normal attributes:
                 posAtt.push(pos.x, pos.y, pos.z);
-                normalAtt.push(normal.x, normal.y, normal.z);
+                normalAtt.push(-normal.x, -normal.y, -normal.z);
                 uvAtt.push(uvx, uvy);
             }
         }

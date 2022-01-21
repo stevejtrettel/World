@@ -73,9 +73,9 @@ let spaceCurve = new SpaceCurve( equations.curvature, equations.torsion, 10., 0.
 
 
 
-let computeCurve = {
+let curveAndTorsion = {
     inputs: inputs,
     spaceCurve: spaceCurve,
 };
 
-export { computeCurve };
+export { curveAndTorsion };
