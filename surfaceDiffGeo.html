@@ -110,11 +110,13 @@
     import { computeSurface } from   "./template/src/components/computeSurface.js";
     let objects = { ...computeSurface };
 
+    let options={};
+
     //the function which builds a world from the default template,
     //using these objects
     import { mainFromTemplate } from "./template/mainFromTemplate.js";
     //call the function to run the app
-    mainFromTemplate(objects);
+    mainFromTemplate(objects,options);
 
 </script>
 

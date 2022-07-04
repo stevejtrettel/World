@@ -4,25 +4,34 @@
 
 import { World } from "../common/World/World.js";
 import { globals } from "./src/globals.js";
-import { environment } from "./src/environment.js";
+import { createEnvironment } from "./src/environment.js";
 import { lights } from "./src/lights.js";
 import { post } from "./src/post.js"
 
 
-function mainFromTemplate( objects ) {
+function mainFromTemplate( objects, options ) {
 
     // Get a reference to the container element, set options
     const container = document.querySelector('#World');
-    const options = {color: globals.color};
+
 
     // 1. Create an instance of the World class
     const world = new World( container, globals.renderer, options );
 
+
     //2. Introduce any global variables:
     world.addGlobalParams( globals.params );
 
+
     //3. Set the environment
+    let bkgColor=globals.color;;
+    if(options.hasOwnProperty("color")){
+        bkgColor=options.color;
+    }
+
+    const environment = createEnvironment(bkgColor);
     world.setEnvironment( environment ) ;
+
 
     //4. Fill this world with objects
     world.addObjects( objects );

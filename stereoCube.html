@@ -60,11 +60,16 @@
     import { stereoCube } from   "./template/src/components/stereoCube.js";
     let objects = { ...stereoCube };
 
+    //set the color of the background, etc
+    let options = {
+        color: 0x367557,
+    };
+
     //the function which builds a world from the default template,
     //using these objects
     import { mainFromTemplate } from "./template/mainFromTemplate.js";
     //call the function to run the app
-    mainFromTemplate(objects);
+    mainFromTemplate(objects, options);
 
 </script>
 
