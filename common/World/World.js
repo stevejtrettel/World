@@ -35,8 +35,8 @@ class World {
         this.loop.add( this.controls );
 
 
-        this.stats = createStats();
-        placeStats( this.stats );
+         this.stats = createStats();
+         placeStats( this.stats );
 
         this.ui = new UI();
         this.resizer = new Resizer( this.container, this.camera, this.renderer );
@@ -76,11 +76,6 @@ class World {
         //take in a postprocessor, add it to the rendering
 
     }
-
-
-
-
-
 
     render() {
         //render a single frame of World

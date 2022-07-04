@@ -17,7 +17,7 @@ class WobbleSphere {
         this.geometry = new SphereGeometry(1,128,128);
         this.material = new MeshPhysicalMaterial(matOptions);
         this.mesh = new Mesh(this.geometry, this.material);
-        this.params = {amplitude: 0.5}
+        this.params = {amplitude: 0.5};
     }
 
 

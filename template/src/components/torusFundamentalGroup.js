@@ -13,41 +13,51 @@ import {ParametricTube} from "../../../common/objects/ParametricTube.js";
 
 let surfaceEqn = {
     x:  `(2.+sin(t))*cos(s)`,
-    y: ` cos(t)+0.3*cos(s)*sin(2.*t)*sin(time)`,
+    y: ` cos(t)`,
     z: `(2.+sin(t))*sin(s)`,
 };
 
 function surfacePoint(uv,time){
-        let s = uv.x;
-        let t = uv.y;
+    let s = uv.x;
+    let t = uv.y;
 
-        let x = (2.+Math.sin(t))*Math.cos(s);
-        let y = Math.cos(t)+0.3*Math.cos(s)*Math.sin(2.*t)*Math.sin(time);
-        let z = (2.+Math.sin(t))*Math.sin(s);
+    let x = (2.+Math.sin(t))*Math.cos(s);
+    let y = Math.cos(t);
+    let z = (2.+Math.sin(t))*Math.sin(s);
 
-        return new Vector3(x,y,z);
+    return new Vector3(x,y,z);
 }
 
 
-function curvePoint(t, time){
+function curvePoint(s, p, q, time){
 
-    let u = Math.sin(6.29*t)*Math.sin(time/2)+(time/5-Math.sin(time/5));
-    let v = 6.29*t+4.*Math.sin(time);
+    const PI=3.14159;
 
+    let u = p*s;
+    let v = q*s;
+
+    //rescale to the domain
+    u *= 2*PI;
+    v *= 2*PI;
+
+    //deform the point (u,v):
+    u += Math.sin(6.29*s)*Math.sin(time/2)+(time/5-Math.sin(time/5));
+    v += Math.cos(6.29*s)*Math.sin(time/2)+Math.sin(time)+(time/7-Math.sin(time/7));
+
+    //return the result
     return new Vector2(u,v);
 }
 
 
-function createCurve(time){
+function createCurve(p,q,time){
     let pts = [];
-    let uv,p;
+    let uv,pos;
     for(let i=0;i<101;i++){
-        uv=curvePoint(i/100.,time);
-        p=surfacePoint(uv,time);
-        pts.push(p);
+        uv=curvePoint(i/100.,p,q,time);
+        pos=surfacePoint(uv,time);
+        pts.push(pos);
     }
     return new CatmullRomCurve3(pts);
-
 }
 
 
@@ -182,7 +192,7 @@ let options = {
 
 
 
-class CurveOnTorus {
+class TorusFundamentalGroup {
 
     constructor(){
 
@@ -190,9 +200,9 @@ class CurveOnTorus {
         this.torus.material.transmission=0.25;
         this.torus.material.opacity=1.;
 
-
-        let curve =createCurve(0);
+        let curve =createCurve(0,0,0);
         this.curve = new ParametricTube(curve, curveOptions, frag_Curve, {}, options);
+        this.params ={p:1,q:1};
     }
 
 
@@ -202,19 +212,20 @@ class CurveOnTorus {
     }
 
     addToUI(ui){
-
+        ui.add(this.params, 'p',0,5,1);
+        ui.add(this.params, 'q',0,5,1);
     }
 
     tick(time, dTime){
         this.torus.tick(time,dTime);
         this.curve.tick(time,dTime);
 
-        this.curve.resetCurve(createCurve(time));
+        this.curve.resetCurve(createCurve(this.params.p, this.params.q,time));
     }
 
 }
 
 
-const curveOnTorus = new CurveOnTorus();
+const item = new TorusFundamentalGroup();
 
-export{ curveOnTorus };
+export{ item };

@@ -5,11 +5,12 @@ class UI extends GUI {
 
     constructor () {
         super();
-
         this.close();
     }
 
-
+    toggleHide(){
+        GUI.toggleHide();
+    }
 }
 
 

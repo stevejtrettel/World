@@ -20,12 +20,6 @@ import {colorConversion} from "../../../common/shaders/colors/colorConversion.js
 
 
 
-let params = {rad:1};
-params.addToScene=(scene)=>{};
-params.addToUI=(ui)=>{
-    ui.add(params,'rad',0.01,1,0.01).name('Projection');
-}
-
 
 
 
@@ -385,7 +379,7 @@ sphCube.addToUI = (ui)=>{};
 
 
 let stereoCube = {
-    params:params,
+  //  params:params,
     plane: plane,
     sphere:sphere,
     sphCube:sphCube,

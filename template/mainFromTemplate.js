@@ -1,31 +1,15 @@
+
+//import everything except the objects of the scene
+//this uses all the default settings defined in the "template" folder
+
 import { World } from "../common/World/World.js";
 import { globals } from "./src/globals.js";
 import { environment } from "./src/environment.js";
 import { lights } from "./src/lights.js";
 import { post } from "./src/post.js"
 
-const location =  "./src/components/torusFundamentalGroup.js";
-console.log(location);
 
-console.log(item);
-
-let objects = {item};
-
-
-function test(){
-    let variable =`sin(x)`;
-    let str = `My favorite function is ${variable}`;
-
-    let createStr = ()=>{
-        return `My favorite function is ${variable}`;
-    }
-    console.log(createStr());
-    variable = 'exp(x)';
-    console.log(createStr());
-}
-
-
-function main() {
+function mainFromTemplate( objects ) {
 
     // Get a reference to the container element, set options
     const container = document.querySelector('#World');
@@ -53,5 +37,4 @@ function main() {
 }
 
 
-//call the function to run the app
-main();
+export { mainFromTemplate };

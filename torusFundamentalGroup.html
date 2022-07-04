@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>ThreeJS World</title>
+
+    <!--  CSS -->
+    <link rel="stylesheet" type="text/css" href="./css/main.css" media="screen" />
+
+    <!--  Mathjax-->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script> window.MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+    };
+    </script>
+
+
+<body>
+
+<!--Our World Scene goes Here!-->
+<div id="World">
+</div>
+
+<div id="info" >
+
+    <h2>Nontrivial Loops:</h2>
+    <h1>The Fundamental Group of the Torus</h1>
+    <p id="moreDetails"><b style = 'font-size:28px'>+</b></p>
+
+    <!--  <i class='fas fa-chevron-down' style='font-size:18px'></i>-->
+    <div id="details" class="hidden">
+   <p> This program illustrates the fundamental group of the torus, by depicting elements of the free homotopy class of loops
+        labeled by a pair of integers $(p,q)\in\mathbb{Z}\oplus\mathbb{Z}$.
+   </p>
+
+       <p> If $T$ is the torus of revolution depicted here, we denote by $\lambda$ the loop encircling the rotation axis, and $\mu$ the orthogonal loop, which when rotated traces out the torus.
+        Then the integer pair $(p,q)\in\mathbb{Z}\oplus\mathbb{Z}$ represents the free homotopy class of the loop $p\lambda +q\mu$.
+           </p>
+
+        <p>
+           (We can work with free homotopy classes as opposed to pointed homotopy classes
+           because the fundamental group is abelian).
+       </p>
+
+
+    </div>
+
+
+<!--    <div id="statsToggle"><p><b>+</b></p></div>-->
+    <div id="statsFolder"></div>
+
+
+
+</div>
+
+
+
+<p id="signature"><a href="http://www.stevejtrettel.site" > stevejtrettel</a> </p>
+
+<!-- Math Parser Engine -->
+<script src="./3party/math.js"></script>
+
+<!-- Make the More Details Box Expandable-->
+<script src = "./css/moreDetails.js"></script>
+
+
+
+<!-- Our Javscript Program -->
+
+<script  type="module">
+
+    //set the objects that will run in this simulation
+    import {item} from "./template/src/components/torusFundamentalGroup.js";
+    let objects = {item};
+
+    //the function which builds a world from the default template,
+    //using these objects
+    import { mainFromTemplate } from "./template/mainFromTemplate.js";
+    //call the function to run the app
+    mainFromTemplate(objects);
+
+</script>
+
+<!--<script src="./main.js" type="module"></script>-->
+
+
+
+
+</body>
+</html>

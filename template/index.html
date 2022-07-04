@@ -17,7 +17,9 @@
             inlineMath: [['$', '$'], ['\\(', '\\)']]
         }
     };
-    </script>
+        </script>
+
+
 <body>
 
 <!--Our World Scene goes Here!-->
@@ -146,8 +148,28 @@
 <!-- Make the More Details Box Expandable-->
 <script src = "../css/moreDetails.js"></script>
 
+
+
 <!-- Our Javscript Program -->
-<script src="./main.js" type="module"></script>
+
+<script  type="module">
+
+    //set the objects that will run in this simulation
+    import {item} from "./src/components/torusFundamentalGroup.js";
+    let objects = {item};
+
+    //the function which builds a world from the default template,
+    //using these objects
+    import { mainFromTemplate } from "./mainFromTemplate.js";
+    //call the function to run the app
+    mainFromTemplate(objects);
+
+</script>
+
+<!--<script src="./main.js" type="module"></script>-->
+
+
+
 
 </body>
 </html>
