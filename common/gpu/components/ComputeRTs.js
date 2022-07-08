@@ -62,6 +62,16 @@ class ComputeRenderTargets {
     }
 
 
+    readPixel(i,j,renderer){
+        //read out a vec4 as the rtargets store floats in rgba format
+        const read = new Float32Array( 4 );
+        //ij is the location of the pixel, 1,1 means we are reading one pixel out
+        //readRenderTargetPixels in general reads out a rectangle starting in the upper left at ij
+        renderer.readRenderTargetPixels( this.b, i,j, 1, 1, read );
+        return read;
+    }
+
+
 }
 
 

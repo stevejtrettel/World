@@ -513,15 +513,39 @@ surface.setName('Coloration');
 
 
 
+class PixelReader {
+    constructor(computer, variable, i,j){
+        this.computer=computer;
+        this.variable=variable;
+        this.i=i;
+        this.j=j;
+    }
+
+    addToScene(scene){}
+
+    addToUI(ui){}
+
+    tick(){
+        console.log(this.computer.compute[this.variable].readPixel(this.i,this.j));
+
+    }
+}
 
 
 
+
+
+
+// THIS IS JUST PRACTICE TO SEE IF MY READPIXEL COMMAND WORKS: IT DOES!
+
+let readout = new PixelReader(computer, 'curvature',5,5);
 
 const computeSurface = {
     eqn: equations,
     computer: computer,
   //  display: surfaceDisplay,
-    surface: surface
+    surface: surface,
+    //pixelReader:readout
 };
 
-export{ computeSurface };
+export default computeSurface;

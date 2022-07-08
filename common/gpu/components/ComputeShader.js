@@ -3,7 +3,7 @@ import {ComputeRenderTargets} from "./ComputeRTs.js";
 
 
 //shaders is either 1) a single shader or 2) a pair {initialization:x, simulation:y}
-//theyve already been built, including their uniforms, and come here complete
+//they've already been built, including their uniforms, and come here complete
 class ComputeShader {
 
     constructor( shaders, uniforms, rtSettings, renderer ){
@@ -88,6 +88,12 @@ class ComputeShader {
         return this.data;
     }
 
+    //ij are the pixel coordinates
+    //we want the value of that pixel's float rgba vector
+    readPixel(i,j){
+        return this.rts.readPixel(i,j,this.renderer);
+    }
+
     run() {
         //do one cycle of the cpu
         this.rts.render( this.simulation, this.renderer );
@@ -100,6 +106,8 @@ class ComputeShader {
        this.setData(this.rts.getResult());
 
     }
+
+
 
 
 }

@@ -14,14 +14,11 @@ function mainFromTemplate( objects, options ) {
     // Get a reference to the container element, set options
     const container = document.querySelector('#World');
 
-
     // 1. Create an instance of the World class
     const world = new World( container, globals.renderer, options );
 
-
     //2. Introduce any global variables:
     world.addGlobalParams( globals.params );
-
 
     //3. Set the environment
     let bkgColor=globals.color;;

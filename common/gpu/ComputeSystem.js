@@ -65,6 +65,7 @@ class ComputeSystem {
                 res: options.res,
                 filter: options.filter,
             }
+
             this.compute[variable] = new ComputeShader( shaders[variable], {}, rtSettings, this.renderer );
             this.compute[variable].addUniforms(this.uniforms, this.uniformString);
 
@@ -173,7 +174,9 @@ class ComputeSystem {
         this.uniforms.dTime.value = dTime;
     }
 
-
+    readPixel(variable, i,j){
+        return this.compute[variable].readPixel(i,j);
+    }
 
 }
 
