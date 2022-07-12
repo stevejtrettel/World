@@ -1,39 +1,9 @@
-import {ComputeSystem} from "../../../common/gpu/ComputeSystem.js";
-import {globals} from "../globals.js";
-import {
-    SphereBufferGeometry,
-    MeshNormalMaterial,
-    Mesh,
-    Vector3,
-    InstancedBufferGeometry,
-    InstancedBufferAttribute,
-    ShaderMaterial,
-    MeshBasicMaterial,
-    BoxBufferGeometry, Vector2,
-} from "../../../3party/three/build/three.module.js";
 
+import {globals} from "../globals.js";
+
+import {ComputeSystem} from "../../../common/gpu/ComputeSystem.js";
 import { CSQuad } from "../../../common/gpu/displays/CSQuad.js";
 import { CSSpheres } from "../../../common/gpu/displays/CSSpheres.js";
-
-
-
-
-
-
-//VERY USEFUL FUNCTION:
-//initialize an n-dimensional array ready to be filled with things:
-//ex: length = list of numbers, eg createAray(x,y) makes a 2d array of x by y
-function createArray(length) {
-    var arr = new Array(length || 0),
-        i = length;
-
-    if (arguments.length > 1) {
-        var args = Array.prototype.slice.call(arguments, 1);
-        while(i--) arr[length-1 - i] = createArray.apply(this, args);
-    }
-
-    return arr;
-}
 
 
 
@@ -56,29 +26,28 @@ const fetch = `
 const positionShader=fetch+`
     void main(){
     
-         float epsilon = 0.01;
+         float epsilon = 0.02;
          ivec2 ij = ivec2(int(gl_FragCoord.x),int(gl_FragCoord.y));
             
-         vec4 positionLast = fetch(position, ij);
+         vec4 positionLast = fetch(position2, ij);
          vec4 dPosition = fetch(dHdp, ij);
             
-         vec4 positionNext = positionLast + dPosition*epsilon;
+         vec4 positionNext = positionLast + dPosition*epsilon/2.;
          gl_FragColor = positionNext;
-   
-           
+         
         }
         `;
 
 const iniPositionShader=`
     void main(){
-           gl_FragColor = vec4(gl_FragCoord.x, gl_FragCoord.y, 0, 0);
+           gl_FragColor = vec4(gl_FragCoord.x-0.5, gl_FragCoord.y-0.5, 0, 0);
         }
 `;
 
 const momentumShader=fetch+`
     void main(){
     
-            float epsilon = 0.01;
+            float epsilon = 0.02;
             ivec2 ij = ivec2(int(gl_FragCoord.x),int(gl_FragCoord.y));
             
             vec4 momentumLast = fetch(momentum, ij);
@@ -91,7 +60,13 @@ const momentumShader=fetch+`
 `;
 const iniMomentumShader=`
     void main(){
-            gl_FragColor = vec4(sin(gl_FragCoord.x), cos(gl_FragCoord.y), sin(gl_FragCoord.x*gl_FragCoord.y),0.);
+    
+            if(gl_FragCoord.x==0.5 && gl_FragCoord.y==0.5){
+            gl_FragColor = vec4(0,0, 1,0.);
+            }
+            else{
+             gl_FragColor = vec4(0,0, 0,0.);
+             }
         }
         `;
 
@@ -99,14 +74,85 @@ const iniMomentumShader=`
 
 const positionShader2=fetch+`
     void main(){
-            gl_FragColor = vec4(0, 0, 0, 0);
+               
+         float epsilon = 0.02;
+         ivec2 ij = ivec2(int(gl_FragCoord.x),int(gl_FragCoord.y));
+            
+         vec4 positionLast = fetch(position, ij);
+         vec4 dPosition = fetch(dHdp2, ij);
+            
+         vec4 positionNext = positionLast + dPosition*epsilon/2.;
+         gl_FragColor = positionNext;
+   
         }
 `;
 
 
-const dHdqShader=fetch+`
+
+//take in two positions, return the gradient of the distance squared
+//of the first to the second, when varying the coordinates of the first:
+const gradPEFunction = `
+
+    float PE(vec4 p, vec4 q){
+        vec4 v = q-p;
+        float l = length(v);
+        float delta = l - restL;
+        
+        return 0.5*springK*delta*delta;
+    }
+    
+    
+    vec4 gradPE(sampler2D pos, ivec2 ij, ivec2 uv){
+        
+        vec4 ijPos = fetch(pos, ij);
+        vec4 uvPos = fetch(pos,uv);
+        
+        float dX, dY, dZ;
+        
+        vec4 eX=vec4(1,0,0,0);
+        vec4 eY=vec4(0,1,0,0);
+        vec4 eZ=vec4(0,0,1,0);
+        
+        float epsilon=0.001;
+        
+        dX = PE(ijPos+epsilon*eX,uvPos)-PE(ijPos-epsilon*eX,uvPos);
+        dY = PE(ijPos+epsilon*eY,uvPos)-PE(ijPos-epsilon*eY,uvPos);
+        dZ = PE(ijPos+epsilon*eZ,uvPos)-PE(ijPos-epsilon*eZ,uvPos);
+        
+        vec4 grad = vec4(dX,dY,dZ,0)/(2.*epsilon);
+        
+        return grad;
+    }
+`;
+
+
+const dHdqShader=fetch+gradPEFunction+ `
     void main(){
-            gl_FragColor = vec4(0, 0, 0, 0);
+        
+       ivec2 ij = ivec2(int(gl_FragCoord.x), int(gl_FragCoord.y));
+       ivec2 eX=ivec2(1,0);
+       ivec2 eY=ivec2(0,1);
+       
+       vec4 grad=vec4(0);
+
+       
+       if( ij.x != 0 ){
+          grad+=gradPE(position, ij,ij-eX); 
+       }
+
+       if( ij.x != int(res.x)-1 ){
+         grad+=gradPE(position, ij,ij+eX); 
+       }
+
+       if( ij.y != 0 ){
+          grad+=gradPE(position, ij,ij-eY); 
+       }
+
+       if( ij.y != int(res.y)-1 ){
+          grad+=gradPE(position, ij,ij+eY); 
+       }
+    
+            gl_FragColor = grad;
         }
 `;
 
@@ -121,19 +167,34 @@ const dHdpShader=fetch+`
         }
 `;
 
+//the only occurance of momentum in the hamiltonian is in the kinetic term p^2/2m
+//thus, the derivative of this is p/m:
+//that means, dHdp is just a rescaling of the momentum shader!
+const dHdpShader2=fetch+`
+    void main(){
+            ivec2 ij = ivec2(int(gl_FragCoord.x),int(gl_FragCoord.y));
+            vec4 momentum = fetch(momentum, ij);
+            gl_FragColor = momentum/mass;
+        }
+`;
 
 const shaders = {
+    dHdp: dHdpShader,
     position: {
         simulation:positionShader,
         initialization: iniPositionShader,
     },
+    dHdq:dHdqShader,
     momentum: {
         simulation: momentumShader,
         initialization: iniMomentumShader,
     },
-    position2: positionShader2,
-    dHdq:dHdqShader,
-    dHdp: dHdpShader,
+    dHdp2: dHdpShader2,
+    position2: {
+        simulation:positionShader2,
+        initialization: iniPositionShader,
+    },
+
 };
 
 
@@ -168,6 +229,8 @@ class SpringGrid {
         //extra uniforms, beyond time, resolution, and the data of each shader
         let uniforms = {
             mass:{type:'float', value:this.mass},
+            springK:{type:'float', value:this.k},
+            restL:{type:'float', value:this.restLength},
         };
 
         //options for the input:
@@ -187,7 +250,6 @@ class SpringGrid {
     addToScene(scene){
 
         this.computer.initialize();
-        this.computer.addToScene(scene);
 
         this.spheres.init();
         scene.add(this.spheres);
@@ -213,7 +275,7 @@ class SpringGrid {
 
 
 
-let springSystem = new SpringGrid([256,512],1,1,1,globals.renderer);
+let springSystem = new SpringGrid([10,10],1,1,1,globals.renderer);
 
 let testDisplay = new CSQuad(springSystem.computer);
 

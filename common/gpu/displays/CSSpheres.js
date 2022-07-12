@@ -75,8 +75,8 @@ class CSSpheres extends Mesh {
         let iIndex=[];
         let jIndex=[];
 
-        for( let i=0; i<this.computer.res[0];i++ ){
-            for( let j=0; j<this.computer.res[1];j++ ){
+        for( let i=0; i<this.computer.res[0]; i++ ){
+            for( let j=0; j<this.computer.res[1]; j++ ){
                 iIndex.push(i);
                 jIndex.push(j);
             }
