@@ -23,6 +23,12 @@ class ComputeShader {
 
         this.buildShaders = null;
 
+        const zeroShader=`
+            void main(){
+                     gl_FragColor = vec4(0,0, 0,0.);
+                }
+        `;
+
         //what was passed as shaders?
         //first instance: its a function meant to build the shader off some data!
         if(typeof shaders === 'function'){
@@ -34,6 +40,7 @@ class ComputeShader {
             });
             this.initialization = new FullScreenQuad({
                 fragmentShader:  this.buildShaders(),
+                //zeroShader;
                 uniforms: this.uniforms
             });
         }
@@ -42,13 +49,13 @@ class ComputeShader {
         // can either pass a single shader, or an object {initialization: x, simulation: y}
         else if (typeof shaders === 'string' || shaders instanceof String){
 
-            //if we were passed a single shader, do the same for both of them
+            //if we were passed a single shader, do the zero shader for initialization
             this.simulation = new FullScreenQuad({
                 fragmentShader: shaders,
                 uniforms: this.uniforms
             });
             this.initialization = new FullScreenQuad({
-                fragmentShader: shaders,
+                fragmentShader: zeroShader,
                 uniforms: this.uniforms
             });
         }

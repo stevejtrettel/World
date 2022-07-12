@@ -24,7 +24,7 @@ uniform sampler2D posData;//RenderTarget containing the transformed positions
 `;
 
 let vertexShader = fetch+`
-#define PI 3.14159265359
+
 attribute float iIndex;
 attribute float jIndex;
 
@@ -38,7 +38,6 @@ uniform sampler2D posData;//RenderTarget containing the transformed positions
       vec3 offset = fetch(posData,ij).xyz;
     
     vec3 transformed = position.xyz+offset;
-    transformed += vec3(iIndex, jIndex,0);
     
     gl_Position = projectionMatrix* modelViewMatrix * vec4(transformed, 1.);
   }

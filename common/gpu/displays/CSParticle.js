@@ -42,7 +42,10 @@ uniform sampler2D data;//RenderTarget containing the transformed positions
 
 void main()
 {
-    gl_FragColor = vec4( vec3(1.), .15 );
+    //the mesh is a square so the uvs = the xy positions of the vertices
+       float color = texture2D( data, position.xy ).w;
+   
+    gl_FragColor = vec4( color,0,0, 1. );
 }`;
 
 
