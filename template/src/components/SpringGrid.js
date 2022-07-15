@@ -3,49 +3,89 @@ import {globals} from "../globals.js";
 
 import { CSQuad } from "../../../common/gpu/displays/CSQuad.js";
 import { CSSpheres } from "../../../common/gpu/displays/CSSpheres.js";
-import {VerletGPU} from "../../../common/gpu/VerletGPU.js";
+import {VerletHamiltonian} from "../../../common/gpu/VerletHamiltonian.js";
+
 
 
 //components of shaders
 
+const step = `
+    const float epsilon = 0.001;
+`;
+
 const fetch = `
     vec4 fetch(sampler2D tex, ivec2 ij) {
-
         return texelFetch(tex, ij, 0);
     }
     `;
 
+const setIJ = `
+    ivec2 setIJ(){
+        return ivec2(int(gl_FragCoord.x),int(gl_FragCoord.y));
+    }
+`;
 
-const onEdge = `
-    bool onEdge(ivec2 ij){
+
+
+const onEdges =    `
+      bool onTop( ivec2 ij ){
+        return ij.y == int(res.y)-1;
+      }
+      
+      bool onBottom( ivec2 ij ){
+        return ij.y == 0;
+      }
+      
+      bool onLeft( ivec2 ij ){
+        return ij.x == 0;
+      }
+      
+      bool onRight( ivec2 ij ){
+        return ij.x == int(res.x)-1;
+      }
+      
+     bool onEdge(ivec2 ij){
         if( ij.x == 0 || ij.y == 0 || ij.x == int(res.x)-1 || ij.y == int(res.y)-1 ){
             return true;
         }
         return false;
     }
+    
+        bool onCorner( ivec2 ij ){
+        bool top = onTop(ij);
+        bool left = onLeft(ij);
+        bool right = onRight(ij);
+        bool bottom = onBottom(ij);
+        
+        return top&&left || top&&right;
+        
+        //|| bottom&&left || bottom&&right;
+    }
 `;
+
+
+
 
 //INPUT TO THE PHYSICAL SYSTEM
 
 
-const iniPositionShader=`
+const iniPositionShader = setIJ + fetch + `
     void main(){
-           gl_FragColor = vec4(floor(gl_FragCoord.x),0,  floor(gl_FragCoord.y), 0)/10.;
+           ivec2 ij = setIJ();
+           vec4 xdir = vec4(1,0,0,0);
+           vec4 ydir = vec4(0,1,1,0)/sqrt(2.);
+           
+           float x = float(ij.x);
+           float y = float(ij.y);
+         
+           gl_FragColor = gridSpacing * (x*xdir + y*ydir);
         }
 `;
 
 
-const iniMomentumShader=`
+const iniMomentumShader= setIJ + fetch + `
     void main(){
-       
-            // if(floor(gl_FragCoord.x)==floor(res.x/2.) && floor(gl_FragCoord.y)==floor(res.y/2.)){
-            // gl_FragColor = vec4(0,0, 20,0.);
-            // }
-            // else{
-            //  gl_FragColor = vec4(0,0, 0,0.);
-            //  }
-
-             gl_FragColor = vec4(0,0, 0,0.);
+                 gl_FragColor = vec4(0,0, 0,0.);
         }
         `;
 
@@ -55,136 +95,198 @@ const iniMomentumShader=`
 
 
 
-const PESpring =`
-    float PE(vec4 p, vec4 q, float rest){
-        vec4 v = q-p;
-        float l = length(v);
-        float delta = l - rest;
+
+
+
+
+const singleSpringPotential =    `
+    float singleSpringPotential( ivec2 ij, ivec2 uv, float rest ){
+        float totalPotential;
         
-        float springPE=0.5*springK*delta*delta;
+        //get endpoints of the spring,
+        vec4 pij = fetch( position, ij );
+        vec4 puv = fetch( position, uv );
         
-        return springPE;
+        //get vector along springs length
+        vec4 springVec = puv - pij;
+        float springLength = length( springVec );
+        vec4 springDir = normalize( springVec );
+        
+        //potential is proportional to square of difference from rest length:
+        float delta = (springLength - rest);
+        
+        totalPotential = delta*delta;
+        totalPotential *= 0.5*springConst;
+    
+        return totalPotential;
     }
-    `;
-
-
-
-//take in two positions, return the gradient of the distance squared
-//of the first to the second, when varying the coordinates of the first:
-
-const gradPESpring = PESpring+ `
-
-    vec4 gradPESpring(sampler2D pos, ivec2 ij, ivec2 uv, float rest){
+    
+    
+    //overload in terms ofspace variables instead of spring index
+    float singleSpringPotential( vec4 p, vec4 q, float rest ){
+        float totalPotential;
         
-        vec4 ijPos = fetch(pos, ij);
-        vec4 uvPos = fetch(pos,uv);
+        //get vector along springs length
+        vec4 springVec = q - p;
+        float springLength = length( springVec );
+        vec4 springDir = normalize( springVec );
+        
+        //potential is proportional to square of difference from rest length:
+        float delta = (springLength - rest);
+        
+        totalPotential = delta*delta;
+        totalPotential *= 0.5*springConst;
+    
+        return totalPotential;
+    }
+`;
+
+
+
+
+
+const singleSpringGradient =    `
+    vec4 singleSpringGradient( ivec2 ij, ivec2 uv, float rest ){
+        vec4 gradPotential;
+        
+        //get endpoints of the spring,
+        vec4 ijPos = fetch( position, ij );
+        vec4 uvPos = fetch( position, uv );
         
         float dX, dY, dZ;
         
-        vec4 eX=vec4(1,0,0,0);
-        vec4 eY=vec4(0,1,0,0);
-        vec4 eZ=vec4(0,0,1,0);
+        float ep = 0.0001;
         
-        float epsilon=0.0001;
+        vec4 eX=ep*vec4(1,0,0,0);
+        vec4 eY=ep*vec4(0,1,0,0);
+        vec4 eZ=ep*vec4(0,0,1,0);
         
-        dX = PE(ijPos+epsilon*eX,uvPos,rest)-PE(ijPos-epsilon*eX,uvPos,rest);
-        dY = PE(ijPos+epsilon*eY,uvPos,rest)-PE(ijPos-epsilon*eY,uvPos,rest);
-        dZ = PE(ijPos+epsilon*eZ,uvPos,rest)-PE(ijPos-epsilon*eZ,uvPos,rest);
+        dX = singleSpringPotential(ijPos+eX,uvPos,rest)-singleSpringPotential(ijPos-eX,uvPos,rest);
+        dY = singleSpringPotential(ijPos+eY,uvPos,rest)-singleSpringPotential(ijPos-eY,uvPos,rest);
+        dZ = singleSpringPotential(ijPos+eZ,uvPos,rest)-singleSpringPotential(ijPos-eZ,uvPos,rest);
         
-        vec4 grad = vec4(dX,dY,dZ,0)/(2.*epsilon);
-        
-        
-        return grad;
+        gradPotential = vec4(dX,dY,dZ,0)/(2.*ep);
+        return gradPotential;
     }
 `;
 
 
-const gradPEGravity =`
-
-    vec4 gradPEGravity(ivec2 ij){
-        return vec4(0,mass,0,0);
-    }
-`
 
 
-const gradPE=gradPESpring+gradPEGravity+`
-   
-   vec4 gradPE(ivec2 ij){
-   
-   //springs right along the coordinate axes
-       ivec2 eX=ivec2(1,0);
-       ivec2 eY=ivec2(0,1);
+
+
+
+const gridLineSprings = `
+    vec4 gridLineSprings(ivec2 ij) {
     
-       vec4 grad=vec4(0);
-       
-       //not on the left side, so can do the leftward spring
-       if( ij.x != 0 ){
-          grad+=gradPESpring(position, ij,ij-eX, restL); 
-       }
-
-        //not on the right side, so can do the rightward spring
-       if( ij.x != int(res.x)-1 ){
-         grad+=gradPESpring(position, ij,ij+eX,restL); 
-       }
-
-        //not on the bottom, do the topwards spring
-       if( ij.y != 0 ){
-          grad+=gradPESpring(position, ij,ij-eY,restL); 
-       }
-
-        //not on the top, can do the bottom-hanging spring
-       if( ij.y != int(res.y)-1 ){
-          grad+=gradPESpring(position, ij,ij+eY,restL); 
-       }
-
-       
-       //springs diagonal with respect to the axes:
-       ivec2 UR = eX+eY;
-       ivec2 UL = -eX+eY;
-       ivec2 DL = -eX-eY;
-       ivec2 DR = eX+eY;
-       
-       
-       float sq2=sqrt(2.);
-
-       //if we are not on the left side, can do left diagonals:
-
-       // if(ij.x != 0 ){
-       //
-       //      if( ij.y != int(res.y)-1 ){
-       //          //if we are not on the top, do the upwards left diagonal
-       //           grad+=gradPESpring(position, ij, ij+UL, sq2*restL); 
-       //          }
-       //
-       //      if( ij.y != 0 ){
-       //          //if we are not on the bottom, do downwards left diagonal
-       //          grad+=gradPESpring(position, ij, ij+DL, sq2*restL); 
-       //          }
-       //
-       //   }
-
-       //  //if we are not on the right side, can do right diagonals:
-       // if(ij.x != int(res.x)-1 ){
-       //  if( ij.y != int(res.y)-1 ){
-       //      //if we are not on the top, do the upwards right diagonal
-       //      grad+=gradPESpring(position, ij, ij+UR, sq2*restL); 
-       //      }
-       //
-       //  if( ij.y != 0 ){
-       //      //if we are not on the bottom, do downwards right diagonal
-       //      grad+=gradPESpring(position, ij, ij+DR, sq2*restL); 
-       //      }
-       //
-       //   }
-       //  
-    
-    
-    //add in the gravitational potential
-        grad += gradPEGravity(ij);
+        vec4 totalGradient = vec4(0.);
+        ivec2 dir;
+        float rest = gridSpacing;
         
-       return grad;
+        //if not on the top, have springs connecting to above
+        if( !onTop(ij) ){
+            dir = ivec2(0,1);
+            totalGradient += singleSpringGradient( ij, ij+dir, rest);
+        }
+        
+        //if not on bottom, have springs connecting to below:
+        if( !onBottom(ij) ){
+             dir = ivec2(0,-1);
+            totalGradient += singleSpringGradient( ij, ij+dir, rest);
+        }
+        
+        
+        //if furthermore not on the right, we have rightward springs:
+        if( !onRight(ij) ){
+            dir = ivec2(1,0);
+            totalGradient += singleSpringGradient( ij, ij+dir, rest);
+        }
+            
+        //if not on the left, we have leftward springs:
+        if( !onLeft(ij) ){
+            dir = ivec2(-1,0);
+            totalGradient += singleSpringGradient( ij, ij+dir, rest);
+        }
+    
+        return totalGradient;
+    }
+`;
+
+
+
+const diagLineSprings = `
+ vec4 diagLineSprings(ivec2 ij) {
+    
+        vec4 totalGradient = vec4(0.);
+        ivec2 dir;
+        float rest = sqrt(2.)*gridSpacing;
+        
+        //if not on the top, have springs connecting to above
+        if( !onTop(ij) ){
+            
+            //if furthermore not on the left, that means we have down,left-facing springs:
+            if( !onLeft(ij) ){
+                dir = ivec2(-1,1);
+                totalGradient += singleSpringGradient(ij, ij+dir, rest);
+            }
+            
+            //if furthermore not on the right, that means we have down,right-facing springs:
+            if( !onRight(ij) ){
+                dir = ivec2(1,1);
+                totalGradient += singleSpringGradient(ij, ij+dir, rest);
+            }
             
         }
+        
+        //if not on bottom, have springs connecting to above:
+        if( !onBottom(ij) ){
+        
+            //if furthermore not on the left, that means we have upward,left-facing springs:
+            if( !onLeft(ij) ){
+                dir = ivec2(-1,-1);
+                totalGradient += singleSpringGradient(ij, ij+dir, rest);
+            }
+            
+            //if furthermore not on the right, that means we have upward,right-facing springs:
+            if( !onRight(ij) ){
+                dir = ivec2(1,-1);
+                totalGradient += singleSpringGradient(ij, ij+dir, rest);
+            }
+        
+        }
+    
+        return totalGradient;
+    }
+`;
+
+
+
+
+//putting it all together:
+
+
+//the total forces acting on the system at a point ij:
+
+const springGradients = singleSpringPotential + singleSpringGradient + gridLineSprings + diagLineSprings + `
+    vec4 springGradients( ivec2 ij ){
+        vec4 totalGradient = vec4(0.);
+        
+        totalGradient += gridLineSprings(ij);
+        totalGradient += diagLineSprings(ij);
+        
+        return totalGradient;
+    }
+`;
+
+const envGradients = `
+    vec4 envGradients( ivec2 ij ){
+       vec4 totalGradient = vec4(0.);
+        
+        //the gradient from gravity is constant, downwards:
+        totalGradient += vec4( 0, 1., 0, 0);
+        
+        return totalGradient;
+    }
 `;
 
 
@@ -197,29 +299,43 @@ const gradPE=gradPESpring+gradPEGravity+`
 
 
 
+// Building the hamiltonian derivative shaders!
 
-//the only occurance of q in the hamiltonian is in the potential energy
-const dHdqShader = fetch + gradPE+ onEdge+`
+//the only occurence of q in the hamiltonian is in the potential energy
+const dHdqShader = setIJ + fetch + onEdges + springGradients + envGradients + `
  void main(){
-       
-       ivec2 ij = ivec2(int(gl_FragCoord.x), int(gl_FragCoord.y));
-       gl_FragColor = gradPE(ij);
-       if(onEdge(ij)){gl_FragColor = vec4(0);}
-       }
+     
+        vec4 grad = vec4(0.);
+        ivec2 ij = setIJ();
+        
+        grad += springGradients(ij);
+        grad += envGradients(ij);
+    
+        gl_FragColor = grad;
+         if(ij.y==int(res.y)-1 && (ij.x==0||ij.x==int(res.x/2.)||ij.x==int(res.x)-1)){gl_FragColor = vec4(0);}
+      
+    }
 `;
 
 //the only occurance of momentum in the hamiltonian is in the kinetic term p^2/2m
 //thus, the derivative of this is p/m:
 //that means, dHdp is just a rescaling of the momentum shader!
-const dHdpShader=fetch+onEdge+`
+const dHdpShader = setIJ + fetch + onEdges + `
     void main(){
-            ivec2 ij = ivec2(int(gl_FragCoord.x),int(gl_FragCoord.y));
-            vec4 momentum = fetch(momentum, ij);
-            gl_FragColor = momentum/mass;
-            if(onEdge(ij)){gl_FragColor = vec4(0);}
+     
+        vec4 grad = vec4(0.);
+        ivec2 ij = setIJ();
+        
+        vec4 momentum = fetch(momentum, ij);
+        
+        gl_FragColor = momentum/mass;
+        if(ij.y==int(res.y)-1 && (ij.x==0||ij.x==int(res.x/2.)||ij.x==int(res.x)-1)){gl_FragColor = vec4(0);}
+      
             
-        }
+    }
 `;
+
+
 
 
 
@@ -244,24 +360,24 @@ const initialCond = {
 
 
 class SpringGrid {
-    constructor(arraySize, mass, k, restLength, renderer){
+
+    constructor(arraySize, options, renderer){
 
         //copy over all the data
         this.arraySize=arraySize;
-        this.mass=mass;
-        this.k=k;
-        this.restLength=restLength;
+
         this.renderer = renderer;
 
         //extra uniforms, beyond time, resolution, and the data of each shader
         let uniforms = {
-            mass:{type:'float', value:this.mass},
-            springK:{type:'float', value:this.k},
-            restL:{type:'float', value:this.restLength},
+            mass: { type: 'float', value: options.mass },
+            springConst: { type:'float', value: options.springConst },
+            gridSpacing: { type: 'float', value: options.gridSpacing },
+            linearDrag: { type: 'float', value: options.linearDrag },
         };
 
         //build the Integrator for this:
-        this.integrator = new VerletGPU(hamiltonian,initialCond, uniforms, this.arraySize, this.renderer);
+        this.integrator = new VerletHamiltonian(hamiltonian, initialCond, uniforms, this.arraySize, this.renderer);
 
         //build the display for this
         this.spheres = new CSSpheres(this.integrator.computer, 'position');
@@ -296,19 +412,24 @@ class SpringGrid {
         this.integrator.setIterations(n);
     }
 
-    }
+}
 
 
 
 
+let options = {
+    mass: 0.1,
+    springConst: 30,
+    gridSpacing: 0.5,
+};
 
-let springSystem = new SpringGrid([64,64],0.1,10,0.1, globals.renderer);
+let springSystem = new SpringGrid([128,64], options, globals.renderer);
 springSystem.setIterations(10);
 
 
 let testDisplay = new CSQuad(springSystem.integrator.computer);
 
 export default {
-   system: springSystem,
+    system: springSystem,
     display: testDisplay,
 };

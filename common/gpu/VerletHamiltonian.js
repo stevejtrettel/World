@@ -16,19 +16,34 @@ import {ComputeSystem} from "./ComputeSystem.js";
 
 //components of shaders
 
+const step = `
+    const float epsilon = 0.001;
+`;
+
 const fetch = `
     vec4 fetch(sampler2D tex, ivec2 ij) {
         return texelFetch(tex, ij, 0);
     }
     `;
 
+const setIJ = `
+    ivec2 setIJ(){
+        return ivec2(int(gl_FragCoord.x),int(gl_FragCoord.y));
+    }
+`;
 
-const positionShader = fetch+`
+
+
+
+
+
+//the shaders that get used in verlet integration
+
+const positionShader = setIJ + fetch + step + `
       void main(){
-    
-         float epsilon = 0.001;
-         ivec2 ij = ivec2(int(gl_FragCoord.x),int(gl_FragCoord.y));
-            
+     
+         ivec2 ij = setIJ();
+
          vec4 positionLast = fetch(position2, ij);
          vec4 dPosition = fetch(dHdp, ij);
             
@@ -38,11 +53,10 @@ const positionShader = fetch+`
      }
 `;
 
-const momentumShader = fetch+`
+const momentumShader = setIJ + fetch + step + `
         void main(){
     
-            float epsilon = 0.001;
-            ivec2 ij = ivec2(int(gl_FragCoord.x),int(gl_FragCoord.y));
+            ivec2 ij = setIJ();
             
             vec4 momentumLast = fetch(momentum, ij);
             vec4 dMomentum = -fetch(dHdq, ij);
@@ -54,22 +68,21 @@ const momentumShader = fetch+`
 `;
 
 
-const position2Shader = fetch+`
+const position2Shader = setIJ + fetch + step + `
       void main(){
     
-         float epsilon = 0.001;
-         ivec2 ij = ivec2(int(gl_FragCoord.x),int(gl_FragCoord.y));
-            
+         ivec2 ij = setIJ();
+         
          vec4 positionLast = fetch(position, ij);
-         vec4 dPosition = fetch(dHdp, ij);
+         vec4 dPosition = fetch(dHdp2, ij);
             
          vec4 positionNext = positionLast + dPosition*epsilon/2.;
          gl_FragColor = positionNext;
-      
+     
      }
 `;
 
-class VerletGPU {
+class VerletHamiltonian {
 
     constructor(hamiltonian, initialCond, uniforms, res, renderer){
 
@@ -130,4 +143,4 @@ class VerletGPU {
 
 
 
-export { VerletGPU };
+export { VerletHamiltonian };

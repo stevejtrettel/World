@@ -111,7 +111,7 @@ class ComputeMaterial {
 
 
     addToScene( scene ){
-        this.mesh.rotateX(-3.14/2.);
+       // this.mesh.rotateX(-3.14/2.);
         scene.add(this.mesh);
 
     }
