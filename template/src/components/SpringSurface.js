@@ -309,8 +309,7 @@ class SpringSurface {
 //-------------------------------------------------------------------
 
 
-
-let matUniforms = {};
+const resolution = [128,64];
 
 let matOptions = {
     clearcoat:0.5,
@@ -318,20 +317,13 @@ let matOptions = {
     roughness:0.5,
 };
 
-let springMaterial = {
-    uniforms: matUniforms,
-    options: matOptions,
-};
-
-
-
 let springParameters = {
     mass:0.1,
     springConstShort: 30.,
     springConstLong: 60.,
-    gridSpacing : 0.5,
-    springDragConst : 0.75,
-    airDragConst : 0.005,
+    gridSpacing : 0.25,
+    springDragConst : 0.5,
+    airDragConst : 0.,
 };
 
 
@@ -356,9 +348,27 @@ const getInitialVel = `
 
 const setBdyCond = `
     void setBoundaryConditions(ivec2 ij, inout vec4 totalForce ){
-        //if(ij.y==int(res.y)-1 && (ij.x==0||ij.x==int(res.x/2.)||ij.x==int(res.x)-1)){totalForce = vec4(0);}
-        if(onCorner(ij)){totalForce =vec4(0);}
+        if(ij.y==int(res.y)-1 && (ij.x==0||ij.x==int(res.x/2.)||ij.x==int(res.x)-1)){totalForce = vec4(0);}
+        //if(onCorner(ij)){totalForce =vec4(0);}
     }`;
+
+
+
+
+
+
+
+//-------------------------------------------------------------------
+// actually doing it
+//-------------------------------------------------------------------
+
+
+
+
+let springMaterial = {
+    uniforms: {},
+    options: matOptions,
+};
 
 
 const springConditions = {
@@ -369,8 +379,15 @@ const springConditions = {
 
 
 
-let cloth = new SpringSurface([64,64], springParameters, springConditions, springMaterial, globals.renderer);
+let cloth = new SpringSurface(resolution, springParameters, springConditions, springMaterial, globals.renderer);
 cloth.setIterations(20);
+
+
+
+
+
+
+
 
 
 

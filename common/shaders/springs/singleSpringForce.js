@@ -14,9 +14,9 @@ const singleSpringForce =    `
         vec4 springDir = normalize( springVec );
         
         //force is proportional to difference from rest length:
-       // if(springLength > rest){
+        //if(springLength > rest){
             totalForce = (springLength - rest) * springDir;
-       // }
+        //}
     
         return totalForce;
     }

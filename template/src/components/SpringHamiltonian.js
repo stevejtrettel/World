@@ -1,18 +1,13 @@
+
 import {globals} from "../globals.js";
 
-import {VerletDissipative} from "../../../common/gpu/VerletDissipative.js";
+import {VerletHamiltonian } from "../../../common/gpu/VerletHamiltonian.js";
 import { CSSpheres } from "../../../common/gpu/displays/CSSpheres.js";
+import { CSQuad } from "../../../common/gpu/displays/CSQuad.js";
 
-
-import { colorConversion } from "../../../common/shaders/colors/colorConversion.js";
-
-import { singleSpringForce } from "../../../common/shaders/springs/singleSpringForce.js";
-import { singleSpringDrag } from "../../../common/shaders/springs/singleSpringDrag.js";
-import { gridSpringsForce, diagSpringsForce } from "../../../common/shaders/springs/springForces_Grid2D.js";
-import { gridSpringsDrag, diagSpringsDrag } from "../../../common/shaders/springs/springDrag_Grid2D.js";
 import { setIJ, onEdges, fetch } from "../../../common/shaders/springs/setup.js";
-
-
+import { singleSpringPotentialGrad } from "../../../common/shaders/springs/singleSpringPotential.js";
+import { diagSpringsPotentialGrad, gridSpringsPotentialGrad } from "../../../common/shaders/springs/springPotential_Grid2D.js";
 
 
 
@@ -22,70 +17,30 @@ import { setIJ, onEdges, fetch } from "../../../common/shaders/springs/setup.js"
 //-------------------------------------------------------------------
 
 
-const springForces = singleSpringForce + gridSpringsForce + diagSpringsForce + `
-    vec4 springForces( sampler2D posTex, ivec2 ij ){
+const springGradients =  singleSpringPotentialGrad + gridSpringsPotentialGrad + diagSpringsPotentialGrad + `
+    vec4 springGradients( sampler2D posTex, ivec2 ij ){
         vec4 totalForce = vec4(0.);
         
-        totalForce += gridSpringsForce(posTex, ij);
-        totalForce += diagSpringsForce(posTex, ij);
+        totalForce += gridSpringsPotentialGrad(posTex, ij);
+        totalForce += diagSpringsPotentialGrad(posTex, ij);
         
-        totalForce += doubleGridSpringsForce(posTex, ij);
-        totalForce += doubleDiagSpringsForce(posTex, ij);
+        totalForce += doubleGridSpringsPotentialGrad(posTex, ij);
+        totalForce += doubleDiagSpringsPotentialGrad(posTex, ij);
         
         return totalForce;
     }
 `;
 
-const envForces = `
-    vec4 envForces( sampler2D posTex, ivec2 ij ){
+const envGradients = `
+    vec4 envGradients( sampler2D posTex, ivec2 ij ){
        vec4 totalForce = vec4(0.);
         
         //the force from gravity is constant, downwards:
-        totalForce += vec4( 0, -5.*mass, 0, 0);
+        totalForce += vec4( 0, 5.*mass, 0, 0);
        
-        
         return totalForce;
     }
 `;
-
-
-
-
-
-
-
-
-
-const springDrag =  singleSpringDrag + gridSpringsDrag + diagSpringsDrag + `
-    vec4 springDrag( sampler2D velTex, ivec2 ij ){
-    
-        vec4 totalDrag = vec4(0.);
-
-        totalDrag += gridSpringsDrag( velTex, ij );
-        totalDrag += diagSpringsDrag( velTex, ij );
-
-        return totalDrag;
-    }
-`;
-
-const airDrag = `
-    vec4 airDrag( sampler2D velTex, ivec2 ij ){
-    
-        vec4 totalDrag = vec4(0.);
-        
-        vec4 vel = fetch( velTex, ij );
-        
-        totalDrag += -airDragConst * vel;
-       
-        return totalDrag;
-    }
-`;
-
-
-
-
-
-
 
 
 
@@ -111,7 +66,7 @@ class SpringGrid {
         };
 
 
-        const iniPositionShader = setIJ + fetch + springConditions.position + `
+        const iniPositionShader = setIJ + fetch + onEdges + springConditions.position + `
     void main(){
            ivec2 ij = setIJ();
            
@@ -121,71 +76,62 @@ class SpringGrid {
 `;
 
 
-        const iniVelocityShader= setIJ + fetch + springConditions.velocity + `
+        const iniMomentumShader= setIJ + fetch + onEdges + springConditions.momentum + `
         void main(){
              ivec2 ij = setIJ();
              
-             vec4 iniVel = getInitialVel(ij);
-             gl_FragColor = iniVel;
+             vec4 iniMom = getInitialMom(ij);
+             gl_FragColor = iniMom;
         }
         `;
 
 
         const initialCond = {
             position: iniPositionShader,
-            velocity: iniVelocityShader,
+            momentum: iniMomentumShader,
         };
 
 
-
-
-
-
-
-
-
-
         //all together these constitute the conservative forces of the system:
-        const getForceConservative = springForces + envForces + springConditions.boundary + `
-            vec4 getForceConservative( sampler2D posTex, sampler2D velTex, ivec2 ij ){
+        const getdHdq = springGradients + envGradients + springConditions.boundary + `
+            vec4 getdHdq( sampler2D posTex, sampler2D momTex, ivec2 ij ){
             
-                vec4 totalForce=vec4(0.);
-                totalForce += springForces( posTex, ij );
-                totalForce += envForces( posTex, ij );
+                vec4 dHdq=vec4(0.);
+                dHdq += springGradients( posTex, ij );
+                dHdq += envGradients( posTex, ij );
             
-                setBoundaryConditions( ij, totalForce );
+                setBoundaryConditions( ij, dHdq );
             
-                return totalForce;
+                return dHdq;
             }  
         `;
 
 
-        const getForceDissipative = onEdges + springDrag + airDrag + springConditions.boundary + `
-            vec4 getForceDissipative( sampler2D posTex, sampler2D velTex, ivec2 ij ){
+        //derivative of p^2/2m is just p/m
+        const getdHdp = springConditions.boundary + `
+            vec4 getdHdp( sampler2D posTex, sampler2D momTex, ivec2 ij ){
             
-                vec4 totalDrag = vec4(0.);
+                vec4 totalMomentum = fetch( momTex, ij );
         
-                totalDrag += springDrag( velTex, ij );
-                totalDrag += airDrag( velTex, ij );
+                vec4 dHdp = totalMomentum / mass;
                 
-                setBoundaryConditions( ij, totalDrag );
+                setBoundaryConditions( ij, dHdp );
                 
-                return totalDrag;
+                return dHdp;
             }
         `;
 
-        const forces = {
-            conservative: getForceConservative,
-            dissipative: getForceDissipative
+        const hamiltonian = {
+            dq: getdHdq,
+            dp: getdHdp
         };
 
-
         //build the Integrator for this:
-        this.integrator = new VerletDissipative(forces, initialCond, uniforms, this.arraySize, this.renderer);
+        this.integrator = new VerletHamiltonian(hamiltonian, initialCond, uniforms, this.arraySize, this.renderer);
 
 
         //build the display for this
-        this.spheres = new CSSpheres(this.integrator.computer, 'positionX');
+        this.spheres = new CSSpheres(this.integrator.computer, 'position');
 
 
 
@@ -247,13 +193,15 @@ class SpringGrid {
 
 
 
+const res =  [64,64];
+
 let springParameters = {
     mass:0.1,
-    springConstShort: 30.,
-    springConstLong: 60.,
+    springConstShort: 20.,
+    springConstLong: 20.,
     gridSpacing : 0.5,
-    springDragConst : 0.75,
-    airDragConst : 0.005,
+    springDragConst : 0.,
+    airDragConst : 0.,
 };
 
 
@@ -270,8 +218,8 @@ const getInitialPos = `
         }
 `;
 
-const getInitialVel = `
-    vec4 getInitialVel( ivec2 ij ){
+const getInitialMom = `
+    vec4 getInitialMom( ivec2 ij ){
         return vec4(0);
     }
 `;
@@ -285,20 +233,29 @@ const setBdyCond = `
 
 const springConditions = {
     position: getInitialPos,
-    velocity: getInitialVel,
+    momentum: getInitialMom,
     boundary: setBdyCond,
 };
 
 
 
-let springSim = new SpringGrid([64,64], springParameters, springConditions, globals.renderer);
-springSim.setIterations(20);
+let springSim = new SpringGrid(res, springParameters, springConditions, globals.renderer);
+springSim.setIterations(50);
+
+
+let testDisplay = new CSQuad(springSim.integrator.computer);
+
+export default {
+    system: springSim,
+    display: testDisplay,
+};
+
 
 
 
 export { SpringGrid };
 
-export default { springSim };
+
 
 
 
