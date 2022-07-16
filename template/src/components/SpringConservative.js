@@ -359,7 +359,7 @@ const initialCond = {
 
 
 
-class SpringGrid {
+class SpringConservative {
 
     constructor(arraySize, options, renderer){
 
@@ -423,7 +423,7 @@ let options = {
     gridSpacing: 0.5,
 };
 
-let springSystem = new SpringGrid([128,64], options, globals.renderer);
+let springSystem = new SpringConservative([128,64], options, globals.renderer);
 springSystem.setIterations(10);
 
 
