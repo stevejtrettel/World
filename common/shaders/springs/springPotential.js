@@ -1,6 +1,6 @@
 
-const singleSpringPotential =    `
-    float singleSpringPotential( sampler2D posTex, ivec2 ij, ivec2 uv,  float rest ){
+const springPotential =    `
+    float springPotential( sampler2D posTex, ivec2 ij, ivec2 uv,  Spring spring ){
         float totalPotential = 0.;
         
         //get endpoints of the spring,
@@ -12,7 +12,7 @@ const singleSpringPotential =    `
         float springLength = length( springVec );
         
         //potential is proportional to square of difference from rest length:
-        float delta = (springLength - rest);
+        float delta = (springLength - spring.restLength);
         totalPotential =  delta*delta;
         totalPotential *= 0.5;
         
@@ -25,7 +25,7 @@ const singleSpringPotential =    `
     
     
     //overload in terms of space variables instead of spring index
-    float singleSpringPotential( vec4 p, vec4 q, float rest ){
+    float springPotential( vec4 p, vec4 q, Spring spring ){
         float totalPotential;
         
         //get vector along springs length
@@ -33,7 +33,7 @@ const singleSpringPotential =    `
         float springLength = length( springVec );
         
         //potential is proportional to square of difference from rest length:
-        float delta = (springLength - rest);
+        float delta = (springLength - spring.restLength);
         
         totalPotential = delta*delta;
         totalPotential *= 0.5;
@@ -50,8 +50,8 @@ const singleSpringPotential =    `
 
 
 
-const singleSpringPotentialGrad =  singleSpringPotential + `
-    vec4 singleSpringPotentialGrad( sampler2D posTex, ivec2 ij, ivec2 uv, float rest ){
+const springPotentialGrad =  springPotential + `
+    vec4 springPotentialGrad( sampler2D posTex, ivec2 ij, ivec2 uv, Spring spring ){
         vec4 gradPotential;
         
         //get endpoints of the spring,
@@ -66,9 +66,9 @@ const singleSpringPotentialGrad =  singleSpringPotential + `
         vec4 eY=ep*vec4(0,1,0,0);
         vec4 eZ=ep*vec4(0,0,1,0);
         
-        dX = singleSpringPotential(ijPos+eX,uvPos,rest)-singleSpringPotential(ijPos-eX,uvPos,rest);
-        dY = singleSpringPotential(ijPos+eY,uvPos,rest)-singleSpringPotential(ijPos-eY,uvPos,rest);
-        dZ = singleSpringPotential(ijPos+eZ,uvPos,rest)-singleSpringPotential(ijPos-eZ,uvPos,rest);
+        dX = springPotential(ijPos+eX, uvPos, spring) - springPotential(ijPos-eX, uvPos, spring);
+        dY = springPotential(ijPos+eY, uvPos, spring) - springPotential(ijPos-eY, uvPos, spring);
+        dZ = springPotential(ijPos+eZ, uvPos, spring) - springPotential(ijPos-eZ, uvPos, spring);
         
         gradPotential = vec4(dX,dY,dZ,0)/(2.*ep);
         return gradPotential;
@@ -79,6 +79,6 @@ const singleSpringPotentialGrad =  singleSpringPotential + `
 
 
 export {
-    singleSpringPotential,
-    singleSpringPotentialGrad
+    springPotential,
+    springPotentialGrad
 };

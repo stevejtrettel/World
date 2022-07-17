@@ -6,10 +6,8 @@ import { CSSpheres } from "../../../common/gpu/displays/CSSpheres.js";
 import { CSQuad } from "../../../common/gpu/displays/CSQuad.js";
 
 import { setIJ, onEdges, fetch } from "../../../common/shaders/springs/setup.js";
-import { singleSpringPotentialGrad } from "../../../common/shaders/springs/singleSpringPotential.js";
-import { diagSpringsPotentialGrad, gridSpringsPotentialGrad } from "../../../common/shaders/springs/springPotential_Grid2D.js";
-
-
+import { SpringStruct } from "../../../common/shaders/springs/Spring.js";
+import { grid2D_springPotentialGrad } from "../../../common/shaders/springs/grid2D/grid2D_springPotentialGrad.js";
 
 
 //-------------------------------------------------------------------
@@ -17,15 +15,26 @@ import { diagSpringsPotentialGrad, gridSpringsPotentialGrad } from "../../../com
 //-------------------------------------------------------------------
 
 
-const springGradients =  singleSpringPotentialGrad + gridSpringsPotentialGrad + diagSpringsPotentialGrad + `
+// const springGradients =  singleSpringPotentialGrad + gridSpringsPotentialGrad + diagSpringsPotentialGrad + `
+//     vec4 springGradients( sampler2D posTex, ivec2 ij ){
+//         vec4 totalForce = vec4(0.);
+//
+//         totalForce += gridSpringsPotentialGrad(posTex, ij);
+//         totalForce += diagSpringsPotentialGrad(posTex, ij);
+//
+//         totalForce += doubleGridSpringsPotentialGrad(posTex, ij);
+//         totalForce += doubleDiagSpringsPotentialGrad(posTex, ij);
+//
+//         return totalForce;
+//     }
+// `;
+
+
+const springGradients =  SpringStruct + grid2D_springPotentialGrad + `
     vec4 springGradients( sampler2D posTex, ivec2 ij ){
         vec4 totalForce = vec4(0.);
         
-        totalForce += gridSpringsPotentialGrad(posTex, ij);
-        totalForce += diagSpringsPotentialGrad(posTex, ij);
-        
-        totalForce += doubleGridSpringsPotentialGrad(posTex, ij);
-        totalForce += doubleDiagSpringsPotentialGrad(posTex, ij);
+        totalForce += grid2D_springPotentialGrad(posTex, ij);
         
         return totalForce;
     }
@@ -58,12 +67,12 @@ class SpringGrid {
         //extra uniforms, beyond time, resolution, and the data of each shader
         let uniforms = {
             mass: { type: 'float', value: springParameters.mass },
-            springConstShort: { type:'float', value: springParameters.springConstShort},
-            springConstLong: { type:'float', value: springParameters.springConstLong},
+            springConst: { type:'float', value: springParameters.springConst},
             gridSpacing: { type: 'float', value: springParameters.gridSpacing },
-            springDragConst: { type: 'float', value: springParameters.springDragConst },
+            dampingConst: { type: 'float', value: springParameters.dampingConst },
             airDragConst: { type: 'float', value: springParameters.airDragConst },
         };
+
 
 
         const iniPositionShader = setIJ + fetch + onEdges + springConditions.position + `
@@ -197,10 +206,9 @@ const res =  [64,64];
 
 let springParameters = {
     mass:0.1,
-    springConstShort: 20.,
-    springConstLong: 20.,
-    gridSpacing : 0.5,
-    springDragConst : 0.,
+    springConst: 30.,
+    gridSpacing : 0.25,
+    dampingConst : 0.5,
     airDragConst : 0.,
 };
 

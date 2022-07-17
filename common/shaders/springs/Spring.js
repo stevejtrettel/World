@@ -3,6 +3,7 @@ const SpringStruct = `
         float restLength;
         float springConst;
         float dampingConst;
+        float mass;
     };
 `;
 
