@@ -5,35 +5,45 @@ import {ComputeMaterial} from "../../../common/materials/ComputeMaterial.js";
 
 import { colorConversion } from "../../../common/shaders/colors/colorConversion.js";
 
-import { singleSpringForce } from "../../../common/shaders/springs/singleSpringForce.js";
+import { singleSpringForce, springForce } from "../../../common/shaders/springs/springForce.js";
 import { singleSpringDrag } from "../../../common/shaders/springs/singleSpringDrag.js";
 import { gridSpringsForce, diagSpringsForce } from "../../../common/shaders/springs/springForces_Grid2D.js";
 import { gridSpringsDrag, diagSpringsDrag } from "../../../common/shaders/springs/springDrag_Grid2D.js";
 import { setIJ, onEdges, fetch } from "../../../common/shaders/springs/setup.js";
 
-
-
-
-
+import {SpringStruct} from "../../../common/shaders/springs/Spring.js";
+import { grid2D_springForce } from "../../../common/shaders/springs/grid2D_springForce.js";
+import { grid2D_springDamping } from "../../../common/shaders/springs/grid2D_springDamping.js";
 
 //-------------------------------------------------------------------
 // SETUP THE SPRING FORCES
 //-------------------------------------------------------------------
 
-
-const springForces = onEdges + singleSpringForce + gridSpringsForce + diagSpringsForce + `
+const springForces =  grid2D_springForce + `
     vec4 springForces( sampler2D posTex, ivec2 ij ){
         vec4 totalForce = vec4(0.);
         
-        totalForce += gridSpringsForce(posTex, ij);
-        totalForce += diagSpringsForce(posTex, ij);
-        
-        totalForce += doubleGridSpringsForce(posTex, ij);
-        totalForce += doubleDiagSpringsForce(posTex, ij);
+        totalForce += grid2D_springForce(posTex, ij);
         
         return totalForce;
     }
 `;
+
+
+
+// const springForces = onEdges + singleSpringForce + gridSpringsForce + diagSpringsForce + `
+//     vec4 springForces( sampler2D posTex, ivec2 ij ){
+//         vec4 totalForce = vec4(0.);
+//
+//         totalForce += gridSpringsForce(posTex, ij);
+//         totalForce += diagSpringsForce(posTex, ij);
+//
+//         totalForce += doubleGridSpringsForce(posTex, ij);
+//         totalForce += doubleDiagSpringsForce(posTex, ij);
+//
+//         return totalForce;
+//     }
+// `;
 
 const envForces = `
     vec4 envForces( sampler2D posTex, ivec2 ij ){
@@ -53,19 +63,28 @@ const envForces = `
 
 
 
-
-
-const springDrag =  singleSpringDrag + gridSpringsDrag + diagSpringsDrag + `
-    vec4 springDrag( sampler2D velTex, ivec2 ij ){
-    
-        vec4 totalDrag = vec4(0.);
-
-        totalDrag += gridSpringsDrag( velTex, ij );
-        totalDrag += diagSpringsDrag( velTex, ij );
-
-        return totalDrag;
+const springDamping =  grid2D_springDamping + `
+    vec4 springDamping( sampler2D posTex, ivec2 ij ){
+        vec4 totalForce = vec4(0.);
+        
+        totalForce += grid2D_springDamping(posTex, ij);
+        
+        return totalForce;
     }
 `;
+
+
+// const springDrag =  singleSpringDrag + gridSpringsDrag + diagSpringsDrag + `
+//     vec4 springDrag( sampler2D velTex, ivec2 ij ){
+//
+//         vec4 totalDrag = vec4(0.);
+//
+//         totalDrag += gridSpringsDrag( velTex, ij );
+//         totalDrag += diagSpringsDrag( velTex, ij );
+//
+//         return totalDrag;
+//     }
+// `;
 
 const airDrag = `
     vec4 airDrag( sampler2D velTex, ivec2 ij ){
@@ -191,7 +210,7 @@ class SpringSurface {
 
 
         //all together these constitute the conservative forces of the system:
-        const getForceConservative = springForces + envForces + springConditions.boundary + `
+        const getForceConservative = SpringStruct + springForces + envForces + springConditions.boundary + `
             vec4 getForceConservative( sampler2D posTex, sampler2D velTex, ivec2 ij ){
             
                 vec4 totalForce=vec4(0.);
@@ -205,12 +224,12 @@ class SpringSurface {
         `;
 
 
-        const getForceDissipative = onEdges + springDrag + airDrag + springConditions.boundary + `
+        const getForceDissipative = onEdges + SpringStruct+ springDamping + airDrag + springConditions.boundary + `
             vec4 getForceDissipative( sampler2D posTex, sampler2D velTex, ivec2 ij ){
             
                 vec4 totalDrag = vec4(0.);
         
-                totalDrag += springDrag( velTex, ij );
+                totalDrag += springDamping( velTex, ij );
                 totalDrag += airDrag( velTex, ij );
                 
                 setBoundaryConditions( ij, totalDrag );

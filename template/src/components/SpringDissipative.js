@@ -6,7 +6,7 @@ import { CSSpheres } from "../../../common/gpu/displays/CSSpheres.js";
 
 import { colorConversion } from "../../../common/shaders/colors/colorConversion.js";
 
-import { singleSpringForce } from "../../../common/shaders/springs/singleSpringForce.js";
+import { singleSpringForce } from "../../../common/shaders/springs/springForce.js";
 import { singleSpringDrag } from "../../../common/shaders/springs/singleSpringDrag.js";
 import { gridSpringsForce, diagSpringsForce } from "../../../common/shaders/springs/springForces_Grid2D.js";
 import { gridSpringsDrag, diagSpringsDrag } from "../../../common/shaders/springs/springDrag_Grid2D.js";
