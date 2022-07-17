@@ -1,4 +1,5 @@
 import { springDamping } from "../springDamping.js";
+import { grid2D_texLookup } from "./grid2D_texLookup.js";
 import { grid2D_Coord, grid2D_Diag } from "./grid2D.js";
 
 
@@ -9,7 +10,8 @@ let grid2D_Diag1_springDamping = grid2D_Diag('springDamping', 1);
 let grid2D_Diag2_springDamping = grid2D_Diag('springDamping', 2);
 
 const grid2D_springDamping =
-    springDamping+
+    springDamping +
+    grid2D_texLookup +
     grid2D_Coord1_springDamping +
     grid2D_Coord2_springDamping +
     grid2D_Diag1_springDamping +
