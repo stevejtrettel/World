@@ -1,5 +1,8 @@
+import { Vector3 } from "../../../3party/three/build/three.module.js";
+
 import {globals} from "../globals.js";
 
+import{ VerletCollision } from "../../../common/gpu/VerletCollision.js";
 import {VerletDissipative } from "../../../common/gpu/VerletDissipative.js";
 import { CSSpheres } from "../../../common/gpu/displays/CSSpheres.js";
 
@@ -8,6 +11,10 @@ import {SpringStruct} from "../../../common/shaders/springs/Spring.js";
 import { grid3D_texLookup } from "../../../common/shaders/springs/grid3D/grid3D_texLookup.js";
 import { grid3D_springForce } from "../../../common/shaders/springs/grid3D/grid3D_springForce.js";
 import { grid3D_springDamping } from "../../../common/shaders/springs/grid3D/grid3D_springDamping.js";
+
+
+import { PlaneObstacle } from "../../../common/shaders/springs/obstacles/Plane.js";
+
 
 //-------------------------------------------------------------------
 // SETUP THE SPRING FORCES
@@ -45,24 +52,42 @@ const envDrag = `
 
 
 
+const detectCollision = setIJK + grid3D_texLookup +`
+    vec4 detectCollision( ivec2 pixel ){
+        ivec3 ijk = setIJK();
+        vec4 pos = grid3D_texLookup(positionX, ijk);
+        if(pos.y<-6.){
+            return vec4(1);
+        }
+        return vec4(0);
+    }`;
+
+const updateVelocity = `
+    vec4 updateVelocity( vec4 vel, ivec2 pixel ){
+        return 0.75 * vec4(vel.x, -vel.y, vel.z, vel.w);
+    }
+    `;
+
+const updatePosition = `
+    vec4 updatePosition( vec4 pos, ivec2 pixel ){
+         return vec4(pos.x, -6., pos.z, pos.w);
+    }
+`;
 
 
+class SpringCube {
 
-
-
-
-
-
-
-
-class SpringGrid {
-
-    constructor(cubeSize, springParameters, springConditions, renderer){
+    constructor(cubeSize, springParameters, springConditions, collision, renderer){
 
         //copy over all the data
         this.cubeSize = cubeSize;
         this.arraySize=[this.cubeSize[0]*this.cubeSize[2], this.cubeSize[1]];
+        this.simTimeStep=springParameters.simTimeStep;
         this.renderer = renderer;
+
+        this.reset=function(){
+            this.integrator.initialize();
+        };
 
         //extra uniforms, beyond time, resolution, and the data of each shader
         let uniforms = {
@@ -72,9 +97,6 @@ class SpringGrid {
             dampingConst: { type: 'float', value: springParameters.dampingConst },
             airDragConst: { type: 'float', value: springParameters.airDragConst },
         };
-
-
-
 
         const iniPositionShader = setIJK + springConditions.position + `
     void main(){
@@ -150,12 +172,18 @@ class SpringGrid {
         };
 
 
+
         //build the Integrator for this:
-        this.integrator = new VerletDissipative(forces, initialCond, uniforms, this.arraySize, this.renderer);
+        this.integrator = new VerletCollision(forces, initialCond, collision, uniforms, this.arraySize, this.simTimeStep, this.renderer);
 
 
         //build the display for this
         this.spheres = new CSSpheres(this.integrator.computer, 'positionX');
+
+
+
+        //build the object we are colliding with.
+        this.object = new PlaneObstacle(new Vector3(0,-6,0), new Vector3(0,1,0));
 
     }
 
@@ -167,12 +195,14 @@ class SpringGrid {
         this.spheres.init();
         scene.add(this.spheres);
 
+        scene.add(this.object.mesh);
+
     }
 
 
 
     addToUI(ui){
-
+       ui.add(this, 'reset');
     }
 
 
@@ -218,11 +248,12 @@ class SpringGrid {
 const resolution = [16,16,16];
 
 let springParameters = {
-    mass:0.02,
-    springConst: 10.,
-    gridSpacing : 0.5,
-    dampingConst : 0.1,
+    mass:0.05,
+    springConst: 15.,
+    gridSpacing : 0.65,
+    dampingConst : 0.05,
     airDragConst : 0.,
+    simTimeStep:0.003,
 };
 
 
@@ -243,13 +274,14 @@ const getInitialPos = `
 
 const getInitialVel = `
     vec4 getInitialVel( ivec3 ijk ){
-        return vec4(0);
+        return vec4(1,0.5,0,0);
     }
 `;
 
 const setBdyCond = `
     void setBoundaryConditions(ivec3 ijk, inout vec4 totalForce ){
-        if(ijk.y==int(res.y)-1 && (ijk.x==0 || ijk.x==int(res.y)-1)){totalForce = vec4(0);}
+      //  if(ijk.y==0){totalForce=vec4(0.);}
+      //  if(ijk.y==int(res.y)-1 && (ijk.x==0 || ijk.x==int(res.y)-1)){totalForce = vec4(0);}
     }`;
 
 
@@ -264,6 +296,12 @@ const setBdyCond = `
 
 
 
+const collision = {
+    detectCollision: detectCollision,
+    updateVelocity: updateVelocity,
+    updatePosition: updatePosition,
+};
+
 
 const springConditions = {
     position: getInitialPos,
@@ -272,12 +310,12 @@ const springConditions = {
 };
 
 
-let springSim = new SpringGrid([32,32,32], springParameters, springConditions, globals.renderer);
+let springSim = new SpringCube(resolution, springParameters, springConditions, collision, globals.renderer);
 springSim.setIterations(20);
 
 
 
-export { SpringGrid };
+export { SpringCube };
 
 export default { springSim };
 

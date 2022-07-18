@@ -61,6 +61,7 @@ class SpringGrid {
         //copy over all the data
         this.arraySize=arraySize;
         this.renderer = renderer;
+        this.simTimeStep = springParameters.simTimeStep;
 
         //extra uniforms, beyond time, resolution, and the data of each shader
         let uniforms = {
@@ -143,7 +144,7 @@ class SpringGrid {
 
 
         //build the Integrator for this:
-        this.integrator = new VerletDissipative(forces, initialCond, uniforms, this.arraySize, this.renderer);
+        this.integrator = new VerletDissipative(forces, initialCond, uniforms, this.arraySize, this.simTimeStep, this.renderer);
 
 
         //build the display for this
@@ -209,11 +210,6 @@ class SpringGrid {
 
 const resolution = [128,64];
 
-let matOptions = {
-    clearcoat:0.5,
-    metalness:0.,
-    roughness:0.5,
-};
 
 let springParameters = {
     mass:0.1,
@@ -221,6 +217,7 @@ let springParameters = {
     gridSpacing : 0.25,
     dampingConst : 0.5,
     airDragConst : 0.,
+    simTimeStep:0.003,
 };
 
 
@@ -269,7 +266,7 @@ const springConditions = {
 };
 
 
-let springSim = new SpringGrid([128,64], springParameters, springConditions, globals.renderer);
+let springSim = new SpringGrid(resolution, springParameters, springConditions, globals.renderer);
 springSim.setIterations(20);
 
 

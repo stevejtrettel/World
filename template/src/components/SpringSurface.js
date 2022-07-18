@@ -102,6 +102,7 @@ class SpringSurface {
         //copy over all the data
         this.arraySize=arraySize;
         this.renderer = renderer;
+        this.simTimeStep = springParameters.simTimeStep;
 
         //extra uniforms, beyond time, resolution, and the data of each shader
         let uniforms = {
@@ -211,7 +212,7 @@ class SpringSurface {
 
 
         //build the Integrator for this:
-        this.integrator = new VerletDissipative(forces, initialCond, uniforms, this.arraySize, this.renderer);
+        this.integrator = new VerletDissipative(forces, initialCond, uniforms, this.arraySize, this.simTimeStep, this.renderer);
 
         //build the display for this
         this.surface = new ComputeMaterial(this.integrator.computer, springMaterial.uniforms, vert, frag, springMaterial.options);
@@ -285,6 +286,7 @@ let springParameters = {
     gridSpacing : 0.5,
     dampingConst : 0.1,
     airDragConst : 0.,
+    simTimeStep : 0.002,
 };
 
 

@@ -56,6 +56,9 @@ class CSSpheres extends Mesh {
             posData: { value: this.data },
             res: { value: new Vector2(this.computer.res[0],this.computer.res[1])},
         };
+
+
+        // transform a standard material to support instanced rendering
         let material = new ShaderMaterial({
             fragmentShader,
             vertexShader,
@@ -63,6 +66,8 @@ class CSSpheres extends Mesh {
         });
         this.material = material;
     }
+
+
     init() {
 
         let baseGeometry = new SphereBufferGeometry(0.1, 8, 8);

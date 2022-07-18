@@ -16,9 +16,6 @@ import {LinearFilter} from "../../3party/three/build/three.module.js";
 
 //components of shaders
 
-const step = `
-    const float dt = 0.002;
-`;
 
 const fetch = `
     vec4 fetch(sampler2D tex, ivec2 pixel) {
@@ -40,7 +37,7 @@ const setPixel = `
 
 //the shaders used in the integrator
 
-const velocityShader = setPixel + fetch + step + `
+const velocityShader = setPixel + fetch + `
     void main(){
         ivec2 pixel = setPixel();
         
@@ -48,27 +45,27 @@ const velocityShader = setPixel + fetch + step + `
         vec4 fC = fetch( forceConservative, pixel );
         vec4 fD = fetch( forceDissipative2, pixel );
         
-        vec4 newVel = vel + 1./(2.*mass)*(fC + fD)*dt;
+        vec4 newVel = vel + 1./(2.*mass)*(fC + fD)*simTimeStep;
         
         gl_FragColor = newVel;
     }
 `;
 
-const positionShader = setPixel + fetch + step + `
+const positionShader = setPixel + fetch + `
     void main(){
         ivec2 pixel = setPixel();
         
         vec4 vel = fetch( velocity, pixel );
         vec4 pos = fetch( positionX, pixel );
         
-        vec4 newPos = pos + vel*dt;
+        vec4 newPos = pos + vel*simTimeStep;
             
         gl_FragColor = newPos;
     }
 `;
 
 
-const velocity2Shader = setPixel + fetch + step + `
+const velocity2Shader = setPixel + fetch + `
     void main(){
         ivec2 pixel = setPixel();
         
@@ -76,7 +73,7 @@ const velocity2Shader = setPixel + fetch + step + `
         vec4 fC = fetch( forceConservative, pixel );
         vec4 fD = fetch( forceDissipative, pixel );
         
-        vec4 newVel = vel + 1./(2.*mass)*(fC + fD)*dt;
+        vec4 newVel = vel + 1./(2.*mass)*(fC + fD)*simTimeStep;
         
         gl_FragColor = newVel;
     }
@@ -86,13 +83,9 @@ const velocity2Shader = setPixel + fetch + step + `
 
 class VerletDissipative {
 
-    constructor(forces, initialCond, uniforms, res, renderer){
-
-
+    constructor(forces, initialCond, uniforms, res, simTimeStep, renderer){
 
         const variables = ['velocity', 'positionX', 'forceConservative', 'forceDissipative', 'velocity2', 'forceDissipative2'];
-
-
 
         const forceConservativeShader = setPixel + fetch + forces.conservative + `
             void main(){
@@ -104,7 +97,6 @@ class VerletDissipative {
                 gl_FragColor = force;
             }
 `;
-
         const forceDissipativeShader = setPixel + fetch + forces.dissipative + `
             void main(){
             
@@ -158,7 +150,17 @@ class VerletDissipative {
             filter:LinearFilter,
         };
 
-        this.computer = new ComputeSystem(variables, shaders, uniforms, options, renderer);
+        //add the timestep to the list of uniforms:
+        let allUniforms =
+            {
+                simTimeStep :{
+                    type: `float`,
+                    value: simTimeStep,
+                },
+                ...uniforms,
+            };
+
+        this.computer = new ComputeSystem(variables, shaders, allUniforms, options, renderer);
 
         this.iterations=1;
 
