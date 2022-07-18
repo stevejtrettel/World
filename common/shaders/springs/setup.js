@@ -12,6 +12,16 @@ const setIJ = `
 `;
 
 
+const setIJK = `
+    ivec3 setIJK(){
+        int i = int(mod(gl_FragCoord.x, res.y));
+        int j = int(gl_FragCoord.y);
+        int k = int(gl_FragCoord.x/res.y);
+        
+        return ivec3( i, j, k );
+    }
+`;
+
 
 const onEdges =    `
       bool onTop( ivec2 ij ){
@@ -55,5 +65,6 @@ const onEdges =    `
 export{
     fetch,
     setIJ,
+    setIJK,
     onEdges,
 };

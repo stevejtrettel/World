@@ -62,7 +62,7 @@ const fragColor = `
             
             vec3 col;
             
-            vec4 vel = texture(velocity, vUv);
+            vec4 vel = texture(forceConservative, vUv);
             float speed = length(vel);
 
             float k = 2./3.1415*atan(2.*speed);
@@ -153,7 +153,7 @@ class SpringSurface {
 
 
         //all together these constitute the conservative forces of the system:
-        const getForceConservative = SpringStruct + grid2D_springForce + envForces + springConditions.boundary + `
+        const getForceConservative = onEdges + SpringStruct + grid2D_springForce + envForces + springConditions.boundary + `
             vec4 getForceConservative( sampler2D posTex, sampler2D velTex, ivec2 ij ){
             
                 vec4 totalForce=vec4(0.);
@@ -281,9 +281,9 @@ let matOptions = {
 
 let springParameters = {
     mass:0.1,
-    springConst: 30.,
-    gridSpacing : 0.25,
-    dampingConst : 0.5,
+    springConst: 20.,
+    gridSpacing : 0.5,
+    dampingConst : 0.1,
     airDragConst : 0.,
 };
 
@@ -341,7 +341,7 @@ const springConditions = {
 
 
 let cloth = new SpringSurface(resolution, springParameters, springConditions, springMaterial, globals.renderer);
-cloth.setIterations(20);
+cloth.setIterations(30);
 
 
 

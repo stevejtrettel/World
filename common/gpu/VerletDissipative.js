@@ -1,4 +1,5 @@
 import {ComputeSystem} from "./ComputeSystem.js";
+import {LinearFilter} from "../../3party/three/build/three.module.js";
 
 
 
@@ -20,13 +21,13 @@ const step = `
 `;
 
 const fetch = `
-    vec4 fetch(sampler2D tex, ivec2 ij) {
-        return texelFetch(tex, ij, 0);
+    vec4 fetch(sampler2D tex, ivec2 pixel) {
+        return texelFetch(tex, pixel, 0);
     }
     `;
 
-const setIJ = `
-    ivec2 setIJ(){
+const setPixel = `
+    ivec2 setPixel(){
         return ivec2(int(gl_FragCoord.x),int(gl_FragCoord.y));
     }
 `;
@@ -39,13 +40,13 @@ const setIJ = `
 
 //the shaders used in the integrator
 
-const velocityShader = setIJ + fetch + step + `
+const velocityShader = setPixel + fetch + step + `
     void main(){
-        ivec2 ij = setIJ();
+        ivec2 pixel = setPixel();
         
-        vec4 vel = fetch( velocity2, ij );
-        vec4 fC = fetch( forceConservative, ij );
-        vec4 fD = fetch( forceDissipative2, ij );
+        vec4 vel = fetch( velocity2, pixel );
+        vec4 fC = fetch( forceConservative, pixel );
+        vec4 fD = fetch( forceDissipative2, pixel );
         
         vec4 newVel = vel + 1./(2.*mass)*(fC + fD)*dt;
         
@@ -53,12 +54,12 @@ const velocityShader = setIJ + fetch + step + `
     }
 `;
 
-const positionShader = setIJ + fetch + step + `
+const positionShader = setPixel + fetch + step + `
     void main(){
-        ivec2 ij = setIJ();
+        ivec2 pixel = setPixel();
         
-        vec4 vel = fetch( velocity, ij );
-        vec4 pos = fetch( positionX, ij );
+        vec4 vel = fetch( velocity, pixel );
+        vec4 pos = fetch( positionX, pixel );
         
         vec4 newPos = pos + vel*dt;
             
@@ -67,13 +68,13 @@ const positionShader = setIJ + fetch + step + `
 `;
 
 
-const velocity2Shader = setIJ + fetch + step + `
+const velocity2Shader = setPixel + fetch + step + `
     void main(){
-        ivec2 ij = setIJ();
+        ivec2 pixel = setPixel();
         
-        vec4 vel = fetch( velocity, ij );
-        vec4 fC = fetch( forceConservative, ij );
-        vec4 fD = fetch( forceDissipative, ij );
+        vec4 vel = fetch( velocity, pixel );
+        vec4 fC = fetch( forceConservative, pixel );
+        vec4 fD = fetch( forceDissipative, pixel );
         
         vec4 newVel = vel + 1./(2.*mass)*(fC + fD)*dt;
         
@@ -93,34 +94,34 @@ class VerletDissipative {
 
 
 
-        const forceConservativeShader = setIJ + fetch + forces.conservative + `
+        const forceConservativeShader = setPixel + fetch + forces.conservative + `
             void main(){
             
-                ivec2 ij = setIJ();
+                ivec2 pixel = setPixel();
                 
-                vec4 force = getForceConservative( positionX, velocity, ij );
+                vec4 force = getForceConservative( positionX, velocity, pixel );
                 
                 gl_FragColor = force;
             }
 `;
 
-        const forceDissipativeShader = setIJ + fetch + forces.dissipative + `
+        const forceDissipativeShader = setPixel + fetch + forces.dissipative + `
             void main(){
             
-                ivec2 ij = setIJ();
+                ivec2 pixel = setPixel();
                 
-                vec4 force = getForceDissipative( positionX, velocity, ij );
+                vec4 force = getForceDissipative( positionX, velocity, pixel );
                 
                 gl_FragColor = force;
             }
         `;
 
-        const forceDissipative2Shader = setIJ + fetch + forces.dissipative + `
+        const forceDissipative2Shader = setPixel + fetch + forces.dissipative + `
             void main(){
             
-                ivec2 ij = setIJ();
+                ivec2 pixel = setPixel();
                 
-                vec4 force = getForceDissipative( positionX, velocity2, ij );
+                vec4 force = getForceDissipative( positionX, velocity2, pixel );
                 
                 gl_FragColor = force;
                 
@@ -154,6 +155,7 @@ class VerletDissipative {
 
         const options = {
             res: res,
+            filter:LinearFilter,
         };
 
         this.computer = new ComputeSystem(variables, shaders, uniforms, options, renderer);

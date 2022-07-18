@@ -1,12 +1,13 @@
 import {globals} from "../globals.js";
 
-import {VerletDissipative} from "../../../common/gpu/VerletDissipative.js";
+import {VerletDissipative } from "../../../common/gpu/VerletDissipative.js";
 import { CSSpheres } from "../../../common/gpu/displays/CSSpheres.js";
 
-import { setIJ, onEdges, fetch } from "../../../common/shaders/springs/setup.js";
+import { setIJK, onEdges, fetch } from "../../../common/shaders/springs/setup.js";
 import {SpringStruct} from "../../../common/shaders/springs/Spring.js";
-import { grid2D_springForce } from "../../../common/shaders/springs/grid2D/grid2D_springForce.js";
-import { grid2D_springDamping } from "../../../common/shaders/springs/grid2D/grid2D_springDamping.js";
+import { grid3D_texLookup } from "../../../common/shaders/springs/grid3D/grid3D_texLookup.js";
+import { grid3D_springForce } from "../../../common/shaders/springs/grid3D/grid3D_springForce.js";
+import { grid3D_springDamping } from "../../../common/shaders/springs/grid3D/grid3D_springDamping.js";
 
 //-------------------------------------------------------------------
 // SETUP THE SPRING FORCES
@@ -15,7 +16,7 @@ import { grid2D_springDamping } from "../../../common/shaders/springs/grid2D/gri
 
 
 const envForces = `
-    vec4 envForces( sampler2D posTex, ivec2 ij ){
+    vec4 envForces( sampler2D posTex, ivec3 ijk ){
        vec4 totalForce = vec4(0.);
         
         //the force from gravity is constant, downwards:
@@ -29,11 +30,11 @@ const envForces = `
 
 
 const envDrag = `
-    vec4 envDrag( sampler2D velTex, ivec2 ij ){
+    vec4 envDrag( sampler2D velTex, ivec3 ijk ){
     
         vec4 totalDrag = vec4(0.);
         
-        vec4 vel = fetch( velTex, ij );
+        vec4 vel = grid3D_texLookup( velTex, ijk );
         
         totalDrag += -airDragConst * vel;
        
@@ -56,10 +57,11 @@ const envDrag = `
 
 class SpringGrid {
 
-    constructor(arraySize, springParameters, springConditions, renderer){
+    constructor(cubeSize, springParameters, springConditions, renderer){
 
         //copy over all the data
-        this.arraySize=arraySize;
+        this.cubeSize = cubeSize;
+        this.arraySize=[this.cubeSize[0]*this.cubeSize[2], this.cubeSize[1]];
         this.renderer = renderer;
 
         //extra uniforms, beyond time, resolution, and the data of each shader
@@ -74,21 +76,21 @@ class SpringGrid {
 
 
 
-        const iniPositionShader = setIJ + fetch + springConditions.position + `
+        const iniPositionShader = setIJK + springConditions.position + `
     void main(){
-           ivec2 ij = setIJ();
+           ivec3 ijk = setIJK();
            
-           vec4 iniPos = getInitialPos( ij );
+           vec4 iniPos = getInitialPos( ijk );
            gl_FragColor = iniPos;
         }
 `;
 
 
-        const iniVelocityShader= setIJ + fetch + springConditions.velocity + `
+        const iniVelocityShader= setIJK + springConditions.velocity + `
         void main(){
-             ivec2 ij = setIJ();
+             ivec3 ijk = setIJK();
              
-             vec4 iniVel = getInitialVel(ij);
+             vec4 iniVel = getInitialVel(ijk);
              gl_FragColor = iniVel;
         }
         `;
@@ -108,30 +110,36 @@ class SpringGrid {
 
 
         //all together these constitute the conservative forces of the system:
-        const getForceConservative = SpringStruct + grid2D_springForce + envForces + springConditions.boundary + `
-            vec4 getForceConservative( sampler2D posTex, sampler2D velTex, ivec2 ij ){
+        const getForceConservative = setIJK + SpringStruct + grid3D_texLookup + grid3D_springForce + envForces + springConditions.boundary + `
+            vec4 getForceConservative( sampler2D posTex, sampler2D velTex, ivec2 pixel ){
             
                 vec4 totalForce=vec4(0.);
-                totalForce += grid2D_springForce( posTex, ij );
-                totalForce += envForces( posTex, ij );
+                
+                ivec3 ijk = setIJK();
+                
+                totalForce += grid3D_springForce( posTex, ijk );
+                totalForce += envForces( posTex, ijk );
             
-                setBoundaryConditions( ij, totalForce );
-            
+                setBoundaryConditions( ijk, totalForce );
+
                 return totalForce;
             }  
         `;
 
 
-        const getForceDissipative = onEdges + SpringStruct+ grid2D_springDamping + envDrag + springConditions.boundary + `
-            vec4 getForceDissipative( sampler2D posTex, sampler2D velTex, ivec2 ij ){
+        const getForceDissipative = setIJK + onEdges + SpringStruct + grid3D_texLookup + grid3D_springDamping + envDrag + springConditions.boundary + `
+            vec4 getForceDissipative( sampler2D posTex, sampler2D velTex, ivec2 pixel ){
             
                 vec4 totalDrag = vec4(0.);
+                
+                ivec3 ijk = setIJK();
         
-                totalDrag += grid2D_springDamping( velTex, ij );
-                totalDrag += envDrag( velTex, ij );
+                totalDrag += grid3D_springDamping( velTex, ijk );
+                totalDrag += envDrag( velTex, ijk );
                 
-                setBoundaryConditions( ij, totalDrag );
+                setBoundaryConditions( ijk, totalDrag );
                 
+ 
                 return totalDrag;
             }
         `;
@@ -207,46 +215,41 @@ class SpringGrid {
 //-------------------------------------------------------------------
 
 
-const resolution = [128,64];
-
-let matOptions = {
-    clearcoat:0.5,
-    metalness:0.,
-    roughness:0.5,
-};
+const resolution = [16,16,16];
 
 let springParameters = {
-    mass:0.1,
-    springConst: 50.,
-    gridSpacing : 0.25,
-    dampingConst : 0.5,
+    mass:0.02,
+    springConst: 10.,
+    gridSpacing : 0.5,
+    dampingConst : 0.1,
     airDragConst : 0.,
 };
 
 
 const getInitialPos = `
-        vec4 getInitialPos( ivec2 ij ){
+        vec4 getInitialPos( ivec3 ijk ){
                vec4 xdir = vec4(1,0,0,0);
-               vec4 ydir = normalize(vec4(0,0,1,0));
+               vec4 ydir = vec4(0,1,0,0);
+               vec4 zdir = vec4(0,0,1,0);
                
-               float x = float(ij.x);
-               float y = float(ij.y);
+               float x = float(ijk.x);
+               float y = float(ijk.y);
+               float z = float(ijk.z);
              
-                vec4 origin = vec4(-res.x/2.+30., -res.y/2., -100, 0.);
-               return  origin + gridSpacing * (x*xdir + y*ydir);
+                vec4 origin = vec4(0,0,0,0);
+               return  origin + gridSpacing * (x*xdir + y*ydir+ z*zdir);
         }
 `;
 
 const getInitialVel = `
-    vec4 getInitialVel( ivec2 ij ){
+    vec4 getInitialVel( ivec3 ijk ){
         return vec4(0);
     }
 `;
 
 const setBdyCond = `
-    void setBoundaryConditions(ivec2 ij, inout vec4 totalForce ){
-        if(ij.y==int(res.y)-1 && (ij.x==0||ij.x==int(res.x/2.)||ij.x==int(res.x)-1)){totalForce = vec4(0);}
-        //if(onCorner(ij)){totalForce =vec4(0);}
+    void setBoundaryConditions(ivec3 ijk, inout vec4 totalForce ){
+        if(ijk.y==int(res.y)-1 && (ijk.x==0 || ijk.x==int(res.y)-1)){totalForce = vec4(0);}
     }`;
 
 
@@ -269,7 +272,7 @@ const springConditions = {
 };
 
 
-let springSim = new SpringGrid([128,64], springParameters, springConditions, globals.renderer);
+let springSim = new SpringGrid([32,32,32], springParameters, springConditions, globals.renderer);
 springSim.setIterations(20);
 
 
