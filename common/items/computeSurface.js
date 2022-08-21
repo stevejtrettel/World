@@ -1,9 +1,9 @@
-import{ globals } from "../globals.js";
-import { ComputeSystem } from "../../../common/gpu/ComputeSystem.js";
-import { CSQuad } from "../../../common/gpu/displays/CSQuad.js";
-import {ComputeMaterial} from "../../../common/materials/ComputeMaterial.js";
-import { colorConversion } from "../../../common/shaders/colors/colorConversion.js";
-import {LinearFilter, NearestFilter} from "../../../3party/three/build/three.module.js";
+import{ globals } from "../../template/src/globals.js";
+import { ComputeSystem } from "../gpu/ComputeSystem.js";
+import { CSQuad } from "../gpu/displays/CSQuad.js";
+import {ComputeMaterial} from "../materials/ComputeMaterial.js";
+import { colorConversion } from "../shaders/colors/colorConversion.js";
+import {LinearFilter, NearestFilter} from "../../3party/three/build/three.module.js";
 
 
 

@@ -1,7 +1,7 @@
-import {Vector3} from "../../../3party/three/build/three.module.js";
-import {RungeKutta} from "../../../common/cpu/RungeKutta.js";
-import {FlowLine} from "../../../common/objects/FlowLine.js";
-import {FlowLineField} from "../../../common/objects/FlowLineField.js";
+import {Vector3} from "../../3party/three/build/three.module.js";
+import {RungeKutta} from "../cpu/RungeKutta.js";
+import {FlowLine} from "../objects/FlowLine.js";
+import {FlowLineField} from "../objects/FlowLineField.js";
 
 
 const ep = 0.01;

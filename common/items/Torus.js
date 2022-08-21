@@ -1,6 +1,6 @@
 
-import { Surface } from "../../../common/math/Surface.js";
-import { ParametricSurface } from "../../../common/objects/ParametricSurface.js";
+import { Surface } from "../math/Surface.js";
+import { ParametricSurface } from "../objects/ParametricSurface.js";
 
 
 const torusEqn = new Surface(

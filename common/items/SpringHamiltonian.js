@@ -1,13 +1,13 @@
 
-import {globals} from "../globals.js";
+import {globals} from "../../template/src/globals.js";
 
-import {VerletHamiltonian } from "../../../common/gpu/VerletHamiltonian.js";
-import { CSSpheres } from "../../../common/gpu/displays/CSSpheres.js";
-import { CSQuad } from "../../../common/gpu/displays/CSQuad.js";
+import {VerletHamiltonian } from "../gpu/VerletHamiltonian.js";
+import { CSSpheres } from "../gpu/displays/CSSpheres.js";
+import { CSQuad } from "../gpu/displays/CSQuad.js";
 
-import { setIJ, onEdges, fetch } from "../../../common/shaders/springs/setup.js";
-import { SpringStruct } from "../../../common/shaders/springs/Spring.js";
-import { grid2D_springPotentialGrad } from "../../../common/shaders/springs/grid2D/grid2D_springPotentialGrad.js";
+import { setIJ, onEdges, fetch } from "../shaders/springs/setup.js";
+import { SpringStruct } from "../shaders/springs/Spring.js";
+import { grid2D_springPotentialGrad } from "../shaders/springs/grid2D/grid2D_springPotentialGrad.js";
 
 
 //-------------------------------------------------------------------

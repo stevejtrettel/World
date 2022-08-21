@@ -1,12 +1,12 @@
-import { rotateR4 } from "../../../common/shaders/geometry/rotateR4.js";
-import { projectR4 } from "../../../common/shaders/geometry/projectR4.js";
+import { rotateR4 } from "../shaders/geometry/rotateR4.js";
+import { projectR4 } from "../shaders/geometry/projectR4.js";
 
-import { parameterizedKnots } from "../../../common/shaders/geometry/parameterizedKnots.js";
-import { diffGeoS3 } from "../../../common/shaders/geometry/diffGeoS3.js";
+import { parameterizedKnots } from "../shaders/geometry/parameterizedKnots.js";
+import { diffGeoS3 } from "../shaders/geometry/diffGeoS3.js";
 
-import { colorConversion } from "../../../common/shaders/colors/colorConversion.js";
+import { colorConversion } from "../shaders/colors/colorConversion.js";
 
-import { ParametricMaterial } from "../../../common/materials/ParametricMaterial.js";
+import { ParametricMaterial } from "../materials/ParametricMaterial.js";
 
 
 

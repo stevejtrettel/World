@@ -1,10 +1,10 @@
-import { rotateR4 } from "../../../common/shaders/geometry/rotateR4.js";
-import { projectR4 } from "../../../common/shaders/geometry/projectR4.js";
-import { hopfMapTools, hopfSurface } from "../../../common/shaders/geometry/hopfMap.js";
+import { rotateR4 } from "../shaders/geometry/rotateR4.js";
+import { projectR4 } from "../shaders/geometry/projectR4.js";
+import { hopfMapTools, hopfSurface } from "../shaders/geometry/hopfMap.js";
 
-import { colorConversion } from "../../../common/shaders/colors/colorConversion.js";
+import { colorConversion } from "../shaders/colors/colorConversion.js";
 
-import { ParametricMaterial } from "../../../common/materials/ParametricMaterial.js";
+import { ParametricMaterial } from "../materials/ParametricMaterial.js";
 
 
 

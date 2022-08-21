@@ -4,7 +4,7 @@ import {
     Mesh,
     SphereGeometry,
     Vector3,
-} from "../../../3party/three/build/three.module.js";
+} from "../../3party/three/build/three.module.js";
 
 
 

@@ -1,19 +1,19 @@
-import { Vector3 } from "../../../3party/three/build/three.module.js";
+import { Vector3 } from "../../3party/three/build/three.module.js";
 
-import {globals} from "../globals.js";
+import {globals} from "../../template/src/globals.js";
 
-import{ VerletCollision } from "../../../common/gpu/VerletCollision.js";
-import {VerletDissipative } from "../../../common/gpu/VerletDissipative.js";
-import { CSSpheres } from "../../../common/gpu/displays/CSSpheres.js";
+import{ VerletCollision } from "../gpu/VerletCollision.js";
+import {VerletDissipative } from "../gpu/VerletDissipative.js";
+import { CSSpheres } from "../gpu/displays/CSSpheres.js";
 
-import { setIJK, onEdges, fetch } from "../../../common/shaders/springs/setup.js";
-import {SpringStruct} from "../../../common/shaders/springs/Spring.js";
-import { grid3D_texLookup } from "../../../common/shaders/springs/grid3D/grid3D_texLookup.js";
-import { grid3D_springForce } from "../../../common/shaders/springs/grid3D/grid3D_springForce.js";
-import { grid3D_springDamping } from "../../../common/shaders/springs/grid3D/grid3D_springDamping.js";
+import { setIJK, onEdges, fetch } from "../shaders/springs/setup.js";
+import {SpringStruct} from "../shaders/springs/Spring.js";
+import { grid3D_texLookup } from "../shaders/springs/grid3D/grid3D_texLookup.js";
+import { grid3D_springForce } from "../shaders/springs/grid3D/grid3D_springForce.js";
+import { grid3D_springDamping } from "../shaders/springs/grid3D/grid3D_springDamping.js";
 
 
-import { PlaneObstacle } from "../../../common/shaders/springs/obstacles/Plane.js";
+import { PlaneObstacle } from "../shaders/springs/obstacles/Plane.js";
 
 
 //-------------------------------------------------------------------

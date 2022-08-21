@@ -1,5 +1,5 @@
-import { globals } from "../globals.js";
-import {SpaceCurve} from "../../../common/objects/SpaceCurve.js";
+import { globals } from "../../template/src/globals.js";
+import {SpaceCurve} from "../objects/SpaceCurve.js";
 
 
 
