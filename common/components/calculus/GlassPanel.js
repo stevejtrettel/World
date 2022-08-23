@@ -1,6 +1,7 @@
 import {
     DoubleSide,
     Mesh,
+    Group,
     MeshPhysicalMaterial,
     PlaneBufferGeometry
 } from "../../../3party/three/build/three.module.js";
@@ -27,14 +28,16 @@ class GlassPanel{
 
         let glassGeometry = new PlaneBufferGeometry(xSpread, ySpread);
 
-        //right now centered at (0,0,0);
-        this.glass = new Mesh(glassGeometry, glassMaterial);
-
-        this.glass.position.set(
+        let glass =new Mesh(glassGeometry, glassMaterial);
+         glass.position.set(
             (this.xRange.min+this.xRange.max)/2,
             (this.yRange.min+this.yRange.max)/2,
             0,
         );
+
+         //add glass to the single element of a group, so we can adjust its position
+        this.glass = new Group();
+        this.glass.add(glass);
 
     };
 
@@ -55,6 +58,10 @@ class GlassPanel{
             (this.yRange.min+this.yRange.max)/2,
             0,
         );
+    }
+
+    setPosition(x,y,z){
+        this.glass.position.set(x,y,z);
     }
 }
 

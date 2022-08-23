@@ -45,6 +45,7 @@ class BlackBoard{
             transmission:0.9,
         }
         this.yAxis = new Rod(yOptions);
+
     }
 
     addToScene( scene ){
@@ -76,6 +77,12 @@ class BlackBoard{
         const yEnd2 = new Vector3(0,this.yRange.max,0);
         this.yAxis.resetRod(yEnd1,yEnd2);
 
+    }
+
+    setPosition(x,y,z){
+        this.board.setPosition(x,y,z);
+        this.xAxis.setPosition(x,y,z);
+        this.yAxis.setPosition(x,y,z);
     }
 
 }

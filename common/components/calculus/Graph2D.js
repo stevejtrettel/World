@@ -4,7 +4,8 @@ import {
     MeshPhysicalMaterial,
     SphereBufferGeometry,
     TubeBufferGeometry,
-    Vector3
+    Vector3,
+    Group,
 } from "../../../3party/three/build/three.module.js";
 
 
@@ -57,7 +58,7 @@ class Graph2D{
 
         let geometry = buildTubeGeometry(this.f, this.range, this.radius ,this.res);
 
-        this.graph = new Mesh(geometry, material);
+        this.tube = new Mesh(geometry, material);
 
         let sph = new SphereBufferGeometry(1.5*this.radius,32,16);
 
@@ -67,17 +68,20 @@ class Graph2D{
         this.minBall = new Mesh(sph, material);
         this.minBall.position.set(this.range.max, this.f(this.range.max), 0);
 
+        this.graph = new Group();
+        this.graph.add(this.minBall);
+        this.graph.add(this.maxBall);
+        this.graph.add(this.tube);
+
     }
 
     addToScene( scene ){
         scene.add(this.graph);
-        scene.add(this.minBall);
-        scene.add(this.maxBall);
     }
 
     updateGraph(){
-        this.graph.geometry.dispose();
-        this.graph.geometry=buildTubeGeometry(this.f,this.range,this.radius, this.res);
+        this.tube.geometry.dispose();
+        this.tube.geometry=buildTubeGeometry(this.f,this.range,this.radius, this.res);
         this.minBall.position.set(this.range.min, this.f(this.range.min), 0);
         this.maxBall.position.set(this.range.max, this.f(this.range.max), 0);
     }
@@ -90,6 +94,10 @@ class Graph2D{
     resetFunction(newFunction){
         this.f=newFunction;
         this.updateGraph();
+    }
+
+    setPosition(x,y,z){
+        this.graph.position.set(x,y,z);
     }
 
 }
