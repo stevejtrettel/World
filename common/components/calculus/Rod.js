@@ -1,6 +1,7 @@
 import {
     CatmullRomCurve3,
     DoubleSide,
+    Group,
     Mesh,
     MeshPhysicalMaterial,
     SphereBufferGeometry, TubeBufferGeometry
@@ -37,18 +38,18 @@ class Rod{
 
         this.tube = new Mesh(geom, material);
 
+        this.group = new Group();
+        this.group.add(this.tube);
+        this.group.add(this.ball1);
+        this.group.add(this.ball2);
     }
 
     addToScene( scene ){
-        scene.add(this.tube);
-        scene.add(this.ball1);
-        scene.add(this.ball2);
+        scene.add(this.group);
     }
 
     setPosition(x,y,z){
-        this.tube.position.set(x,y,z);
-        this.ball1.position.set(x,y,z);
-        this.ball2.position.set(x,y,z);
+       this.group.position.set(x,y,z);
     }
 
     resetRod(end1, end2){
@@ -61,6 +62,12 @@ class Rod{
         this.tube.geometry.dispose();
         const curve = new CatmullRomCurve3([this.end1, this.end2]);
         this.tube.geometry = new TubeBufferGeometry(curve, 1 ,this.radius, 8);
+    }
+
+    setVisibility(value){
+        this.tube.visible=value;
+        this.ball1.visible=value;
+        this.ball2.visible=value;
     }
 
 }

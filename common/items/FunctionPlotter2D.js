@@ -1,8 +1,8 @@
 
 import{ BlackBoard } from "../components/calculus/Blackboard.js";
 import {Graph2D } from "../components/calculus/Graph2D.js";
-import {SecantLine} from "../components/calculus/SecantLine.js";
-
+import { SecantLine } from "../components/calculus/SecantLine.js";
+import { TangentLine } from "../components/calculus/TangentLine.js";
 
 
 function getYRange(f, domain){
@@ -53,18 +53,31 @@ class GraphPlotter{
             x: setX(0.3, this.domain),
             f: this.f,
             h:0.5,
+            length:5,
             mainColor: options.color,
             auxColor: 0xffffff,
             accentColor: options.accentColor,
-            radius: options.radius,
+            radius: 0.5*options.radius,
         }
         this.secant = new SecantLine( secantOptions );
+        this.secant.setPosition(0,0,this.graph.radius);
+
+        const tangentOptions = {
+            x:setX(0.3,this.domain),
+            f:this.f,
+            length: 5,
+            radius: 0.75*options.radius,
+            color: options.accentColor,
+        }
+        this.tangent = new TangentLine( tangentOptions );
+        this.tangent.setPosition(0,0,-this.graph.radius);
     }
 
     addToScene( scene ){
         this.graph.addToScene( scene);
         this.blackboard.addToScene(scene);
         this.secant.addToScene(scene);
+        this.tangent.addToScene(scene);
     }
 
     addToUI( ui ){
@@ -80,6 +93,8 @@ class GraphPlotter{
             },
             x:this.secant.x,
             h:this.secant.h,
+            drawSecant:true,
+            drawTangent:true,
         }
 
         //this refers to the UI inside of the following commands
@@ -101,13 +116,22 @@ class GraphPlotter{
         });
 
 
-        secantFolder.add(params, 'x', 0, 1,0.01).name('x').onChange(function(){
+        secantFolder.add(params, 'x', 0, 1,0.001).name('x').onChange(function(){
             const newX = params.domain.min+(params.domain.max-params.domain.min)*params.x
             obj.secant.resetX(newX);
+            obj.tangent.resetX(newX);
         });
 
         secantFolder.add(params, 'h', 0.01, 2,0.01).name('h').onChange(function(){
             obj.secant.resetH(params.h);
+        });
+
+        ui.add(params, 'drawSecant').name('Secant').onChange(function(value) {
+            obj.secant.setVisibility(value);
+        });
+
+        ui.add(params, 'drawTangent').name('Tangent').onChange(function(value) {
+            obj.tangent.setVisibility(value);
         });
 
     }

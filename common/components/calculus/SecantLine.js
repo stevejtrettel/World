@@ -1,6 +1,7 @@
 import {
     Vector2,
     Vector3,
+    Group,
     MeshPhysicalMaterial,
     SphereBufferGeometry,
     Mesh,
@@ -9,35 +10,55 @@ import {
 import { Rod } from "./Rod.js";
 
 
+function secantSlope(f, x, deltaX){
+    let y = f(x);
+    let y2 = f(x+deltaX);
+    let deltaY = y2-y;
+    return deltaY/deltaX;
+}
+
 
 
 class SecantLine{
     constructor(options){
 
-        this.f=options.f;
+        this.f = options.f;
+
+        this.x = options.x;
+        this.y = this.f(this.x);
+
+        this.h = options.h;
+        this.x2 = this.x+this.h;
+        this.y2 = this.f(this.x2);
+
+        this.slope = (this.y2-this.y)/this.h;
+
+        this.length = options.length;
         this.radius = options.radius;
+        this.color = options.color;
 
-        this.setSlopeData(options.x,options.h);
+        //now have all the info needed for the point slope form of a line.
+        //just need to use this to make a line segment centered at x, of length L
 
-        //now set the actual objects that end up in the scene:
+        const delta = Math.sqrt(1/(1+this.slope*this.slope))*this.length/2.;
+        const xStart = this.x-delta;
+        const xEnd = this.x+delta;
 
-        const secantMaterial = new MeshPhysicalMaterial(
-            {
-                color: options.mainColor,
-                clearcoat:1,
-            }
-        );
+
+        const rodOptions = {
+            end1: new Vector3(xStart, this.getPoint(xStart), 0),
+            end2: new Vector3(xEnd, this.getPoint(xEnd), 0),
+            radius: this.radius,
+            color: options.color,
+        }
+
+        this.secantSegment = new Rod( rodOptions );
+
+
 
         const accentMaterial = new MeshPhysicalMaterial(
             {
                 color: options.accentColor,
-                clearcoat:1,
-            }
-        );
-
-        const auxMaterial = new MeshPhysicalMaterial(
-            {
-                color: options.auxColor,
                 clearcoat:1,
             }
         );
@@ -52,10 +73,10 @@ class SecantLine{
         this.ballXH =  new Mesh(ballGeometry, accentMaterial);
         this.ballXH.position.set(this.x2, this.y2, 0);
 
-        //elbow joint between rise and run
-        const joinSphereGeometry = new SphereBufferGeometry(0.5*this.radius,32,16);
-        this.joinSphere = new Mesh(joinSphereGeometry, auxMaterial);
-        this.joinSphere.position.set(this.x2,this.y,0);
+        this.balls = new Group();
+        this.balls.add(this.ballX);
+        this.balls.add(this.ballXH);
+
 
         this.run = new Rod(
             {
@@ -75,53 +96,44 @@ class SecantLine{
             }
         );
 
-        this.setSecantData();
+
     }
 
-    setSlopeData(x,h){
-        this.x=x;
-        this.h=h;
-        this.x2=x+h;
-        this.y=this.f(this.x);
-        this.y2=this.f(this.x2);
-        this.slope = (this.y2-this.y)/(this.x2-this.x);
+
+    getPoint(xNew){
+        return this.y+this.slope*(xNew-this.x);
     }
 
-    setSecantData(){
-        //now build the rod
-        //first: get the length of the secant
-        const relVec = new Vector2(this.x2,this.y2).sub(new Vector2(this.x,this.y));
-        const len = relVec.length();
-        //second: calculate what x value is needed to extend length by 2 in each direction
-        const deltaX = Math.sqrt(4/(1+this.slope*this.slope));
-
-        const xStart = this.x-deltaX;
-        const xEnd = this.x2+deltaX;
-
-        const yStart = this.f(xStart);
-        const yEnd = this.f(xEnd);
-
-        const end1 = new Vector3(xStart, yStart, 0);
-        const end2 = new Vector3(xEnd, yEnd, 0);
-    }
 
     addToScene( scene ){
-       scene.add(this.ballX);
-       scene.add(this.ballXH);
-       scene.add(this.joinSphere);
-       // this.secant.addToScene(scene);
+       scene.add(this.balls);
+
+       this.secantSegment.addToScene(scene);
        this.rise.addToScene(scene);
        this.run.addToScene(scene);
     }
 
-    resetX(x){
-        //reset the data
-        this.setSlopeData(x,this.h);
+    resetX( newX ){
+
+        this.x = newX;
+        this.y = this.f(this.x);
+        this.x2 = this.x+this.h;
+        this.y2 = this.f(this.x2);
+        this.slope = (this.y2-this.y)/this.h;
 
         //move the balls around
         this.ballX.position.set(this.x, this.y, 0);
         this.ballXH.position.set(this.x2, this.y2, 0);
-        this.joinSphere.position.set(this.x2,this.y,0);
+
+
+        const delta = Math.sqrt(1/(1+this.slope*this.slope))*this.length/2.;
+        const xStart = this.x-delta;
+        const xEnd = this.x+delta;
+
+        this.secantSegment.resetRod(
+            new Vector3(xStart, this.getPoint(xStart),0),
+            new Vector3(xEnd, this.getPoint(xEnd),0)
+        );
 
         //redraw the rods
         const rise1 = new Vector3(this.x2,this.y,0);
@@ -133,14 +145,26 @@ class SecantLine{
         this.run.resetRod(run1, run2);
      }
 
-    resetH(h){
-        //reset the data
-        this.setSlopeData(this.x, h);
+    resetH( newH ){
+
+        this.h = newH;
+        this.x2 = this.x+this.h;
+        this.y2 = this.f(this.x2);
+        this.slope = (this.y2-this.y)/this.h;
 
         //move the balls around
-        this.ballX.position.set(this.x, this.y, 0);
         this.ballXH.position.set(this.x2, this.y2, 0);
-        this.joinSphere.position.set(this.x2,this.y,0);
+
+        //redraw the secant line itself
+        const delta = Math.sqrt(1/(1+this.slope*this.slope))*this.length/2.;
+        const xStart = this.x-delta;
+        const xEnd = this.x+delta;
+
+        this.secantSegment.resetRod(
+            new Vector3(xStart, this.getPoint(xStart),0),
+            new Vector3(xEnd, this.getPoint(xEnd),0)
+        );
+
 
         //redraw the rods
         const rise1 = new Vector3(this.x2,this.y,0);
@@ -150,6 +174,24 @@ class SecantLine{
         const run1 = new Vector3(this.x, this.y,0);
         const run2 = new Vector3(this.x2, this.y, 0);
         this.run.resetRod(run1, run2);
+
+
+    }
+
+    setVisibility(value){
+        this.secantSegment.setVisibility(value);
+        this.rise.setVisibility(value);
+        this.run.setVisibility(value);
+
+        this.balls.visible = value;
+    }
+
+    setPosition(x,y,z){
+        this.secantSegment.setPosition(x,y,z);
+        this.rise.setPosition(x,y,z);
+        this.run.setPosition(x,y,z);
+
+        this.balls.position.set(x,y,z);
     }
 
 }
