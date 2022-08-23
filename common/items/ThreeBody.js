@@ -91,7 +91,7 @@ class Planet{
         );
 
         let trailCurve = new CatmullRomCurve3(this.trail);
-        let trailGeometry = new TubeBufferGeometry(trailCurve,Math.floor(this.trailLength/3),0.15*this.radius,8);
+        let trailGeometry = new TubeBufferGeometry(trailCurve,this.trailLength,0.15*this.radius,8);
         this.trailMesh=new Mesh(trailGeometry, trailMaterial);
 
     }
@@ -115,7 +115,7 @@ class Planet{
     redrawTrail(){
         this.trailMesh.geometry.dispose();
         const curve = new CatmullRomCurve3(this.trail);
-        this.trailMesh.geometry=new TubeBufferGeometry(curve,Math.floor(this.trailLength/3),0.15*this.radius,8);
+        this.trailMesh.geometry=new TubeBufferGeometry(curve,this.trailLength,0.15*this.radius,8);
     }
 
     setMass( newMass ){
@@ -188,6 +188,8 @@ class ThreeBody{
 
     constructor(a,b,c){
 
+        this.speed=0.3;
+
         //set up the planets
         this.a = new Planet(a);
         this.b = new Planet(b);
@@ -248,12 +250,27 @@ class ThreeBody{
             massA:planetA.mass,
             massB:planetB.mass,
             massC:planetC.mass,
+            speed:ThreeB.speed,
 
             reset: function()
             {
+
+
                 planetA.reset();
                 planetB.reset();
+
+                //rig it up so that the center of mass is at the origin, when choosing planetC position
+                // let com = planetA.pos.clone().multiplyScalar(planetA.mass);
+                // com.add(planetB.pos.clone().multiplyScalar(planetB.mass));
+                // planetC.pos = com.multiplyScalar(-1/planetC.mass);
+                // planetC.resetTrail();
+                // //rig it up so that there is no velocity about the center of mass:
+                // let totVel = planetA.vel.clone().add(planetB.vel);
+                // planetC.vel = totVel.multiplyScalar(-1);
                 planetC.reset();
+
+
+
                 //set up the state in state space
                 let pos = new ThreeBodyData(planetA.pos,planetB.pos,planetC.pos);
                 let vel = new ThreeBodyData(planetA.vel,planetB.vel,planetC.vel);
@@ -279,12 +296,17 @@ class ThreeBody{
             planetC.setMass(value);
         });
 
+        ui.add(params, 'speed', 0.01,1,0.01).name('Speed').onChange(function(value){
+            ThreeB.speed=value;
+        });
+
+
         ui.add(params, 'reset');
 
     }
 
     update(){
-        for(let i=0;i<30;i++) {
+        for(let i=0;i<200.*this.speed;i++) {
             this.state = this.integrator.step(this.state);
         }
 
@@ -319,7 +341,7 @@ const pA = {
     pos: new Vector3(0,0,0),
     vel: new Vector3(0,0,0),
     color: 0xffffff,
-    trailLength: 300,
+    trailLength: 1000,
 }
 
 const pB = {
@@ -327,7 +349,7 @@ const pB = {
     pos: new Vector3(0,3,0),
     vel: new Vector3(0,0,0.5),
     color: 0xd96493,
-    trailLength: 300,
+    trailLength: 1000,
 }
 
 const pC = {
@@ -335,7 +357,7 @@ const pC = {
     pos: new Vector3(0,0,3),
     vel: new Vector3(0.2,0,0),
     color: 0x32a852,
-    trailLength: 300,
+    trailLength: 1000,
 }
 
 const item = new ThreeBody(pA, pB, pC);
