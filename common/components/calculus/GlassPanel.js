@@ -45,7 +45,7 @@ class GlassPanel{
         scene.add(this.glass);
     }
 
-    resetRange(xRange, yRange){
+    resize(xRange, yRange){
         this.xRange=xRange;
         this.yRange=yRange;
         let xSpread = (this.xRange.max - this.xRange.min);
@@ -62,6 +62,10 @@ class GlassPanel{
 
     setPosition(x,y,z){
         this.glass.position.set(x,y,z);
+    }
+
+    setVisibility(value){
+        this.glass.visible = value;
     }
 }
 

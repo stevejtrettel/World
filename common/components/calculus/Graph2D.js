@@ -38,7 +38,7 @@ class Graph2D{
     constructor(options){
 
         //range is an object {min:x, max:y}
-        this.range = options.domain || options.xRange || options.range;
+        this.domain = options.domain;
 
         //radius of the eventual tube
         this.radius = options.radius || 0.1;
@@ -56,17 +56,17 @@ class Graph2D{
 
         this.res = options.res || 100;
 
-        let geometry = buildTubeGeometry(this.f, this.range, this.radius ,this.res);
+        let geometry = buildTubeGeometry(this.f, this.domain, this.radius ,this.res);
 
         this.tube = new Mesh(geometry, material);
 
         let sph = new SphereBufferGeometry(1.5*this.radius,32,16);
 
         this.maxBall = new Mesh(sph,material);
-        this.maxBall.position.set(this.range.min, this.f(this.range.min), 0);
+        this.maxBall.position.set(this.domain.min, this.f(this.domain.min), 0);
 
         this.minBall = new Mesh(sph, material);
-        this.minBall.position.set(this.range.max, this.f(this.range.max), 0);
+        this.minBall.position.set(this.domain.max, this.f(this.domain.max), 0);
 
         this.graph = new Group();
         this.graph.add(this.minBall);
@@ -81,13 +81,13 @@ class Graph2D{
 
     updateGraph(){
         this.tube.geometry.dispose();
-        this.tube.geometry=buildTubeGeometry(this.f,this.range,this.radius, this.res);
-        this.minBall.position.set(this.range.min, this.f(this.range.min), 0);
-        this.maxBall.position.set(this.range.max, this.f(this.range.max), 0);
+        this.tube.geometry=buildTubeGeometry(this.f,this.domain,this.radius, this.res);
+        this.minBall.position.set(this.domain.min, this.f(this.domain.min), 0);
+        this.maxBall.position.set(this.domain.max, this.f(this.domain.max), 0);
     }
 
-    resetRange(newRange){
-        this.range=newRange;
+    resetDomain(newDomain){
+        this.domain=newDomain;
         this.updateGraph();
     }
 
@@ -98,6 +98,10 @@ class Graph2D{
 
     setPosition(x,y,z){
         this.graph.position.set(x,y,z);
+    }
+
+    setVisibility(value){
+        this.graph.visible = value;
     }
 
 }

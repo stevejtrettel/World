@@ -14,18 +14,25 @@ class Rod{
         this.radius = options.radius || 0.1;
 
         const sph = new SphereBufferGeometry(1.5*this.radius,32,16);
+        let material;
 
-        let materialParameters = {
-            color: options.color,
-            clearcoat: 1,
-            ior:1.,
-        };
-        if(options.transmission){
-            materialParameters.opacity=0;
-            materialParameters.ior=1.;
-            materialParameters.transmission=options.transmission;
+        if('material' in options ){
+            material = options.material;
         }
-        const material = new MeshPhysicalMaterial(materialParameters);
+        else {
+
+            let materialParameters = {
+                color: options.color,
+                clearcoat: 1,
+                ior: 1.,
+            };
+            if (options.transmission) {
+                materialParameters.opacity = 0;
+                materialParameters.ior = 1.;
+                materialParameters.transmission = options.transmission;
+            }
+            material = new MeshPhysicalMaterial(materialParameters);
+        }
 
         this.ball1 = new Mesh(sph,material);
         this.ball1.position.set(this.end1.x,this.end1.y,this.end1.z);
@@ -52,9 +59,10 @@ class Rod{
        this.group.position.set(x,y,z);
     }
 
-    resetRod(end1, end2){
+    resize(end1, end2, rad=this.radius){
         this.end1=end1;
         this.end2=end2;
+        this.radius = rad;
 
         this.ball1.position.set(this.end1.x,this.end1.y,this.end1.z);
         this.ball2.position.set(this.end2.x,this.end2.y,this.end2.z);

@@ -54,7 +54,7 @@ class BlackBoard{
         this.yAxis.addToScene(scene);
     }
 
-    resetRange(xRange, yRange){
+    resize(xRange, yRange){
         this.xRange=xRange;
         this.yRange=yRange;
 
@@ -67,22 +67,27 @@ class BlackBoard{
             min: this.yRange.min-0.5,
             max: this.yRange.max+0.5,
         };
-        this.board.resetRange(newXRange, newYRange);
+        this.board.resize(newXRange, newYRange);
 
         const xEnd1 = new Vector3(this.xRange.min,0,0);
         const xEnd2 = new Vector3(this.xRange.max,0,0);
-        this.xAxis.resetRod(xEnd1,xEnd2);
+        this.xAxis.resize(xEnd1,xEnd2);
 
         const yEnd1 = new Vector3(0,this.yRange.min,0);
         const yEnd2 = new Vector3(0,this.yRange.max,0);
-        this.yAxis.resetRod(yEnd1,yEnd2);
-
+        this.yAxis.resize(yEnd1,yEnd2);
     }
 
     setPosition(x,y,z){
         this.board.setPosition(x,y,z);
         this.xAxis.setPosition(x,y,z);
         this.yAxis.setPosition(x,y,z);
+    }
+
+    setVisibility(value){
+        this.board.setVisibility(value);
+        this.xAxis.setVisibility(value);
+        this.yAxis.setVisibility(value);
     }
 
 }

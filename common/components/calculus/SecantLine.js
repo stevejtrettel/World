@@ -130,7 +130,7 @@ class SecantLine{
         const xStart = this.x-delta;
         const xEnd = this.x+delta;
 
-        this.secantSegment.resetRod(
+        this.secantSegment.resize(
             new Vector3(xStart, this.getPoint(xStart),0),
             new Vector3(xEnd, this.getPoint(xEnd),0)
         );
@@ -138,11 +138,11 @@ class SecantLine{
         //redraw the rods
         const rise1 = new Vector3(this.x2,this.y,0);
         const rise2 = new Vector3(this.x2, this.y2,0);
-        this.rise.resetRod(rise1, rise2);
+        this.rise.resize(rise1, rise2);
 
         const run1 = new Vector3(this.x, this.y,0);
         const run2 = new Vector3(this.x2, this.y, 0);
-        this.run.resetRod(run1, run2);
+        this.run.resize(run1, run2);
      }
 
     resetH( newH ){
@@ -160,7 +160,7 @@ class SecantLine{
         const xStart = this.x-delta;
         const xEnd = this.x+delta;
 
-        this.secantSegment.resetRod(
+        this.secantSegment.resize(
             new Vector3(xStart, this.getPoint(xStart),0),
             new Vector3(xEnd, this.getPoint(xEnd),0)
         );
@@ -169,11 +169,11 @@ class SecantLine{
         //redraw the rods
         const rise1 = new Vector3(this.x2,this.y,0);
         const rise2 = new Vector3(this.x2, this.y2,0);
-        this.rise.resetRod(rise1, rise2);
+        this.rise.resize(rise1, rise2);
 
         const run1 = new Vector3(this.x, this.y,0);
         const run2 = new Vector3(this.x2, this.y, 0);
-        this.run.resetRod(run1, run2);
+        this.run.resize(run1, run2);
 
 
     }

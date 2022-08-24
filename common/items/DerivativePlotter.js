@@ -1,33 +1,9 @@
 import {BlackBoard} from "../components/calculus/Blackboard.js";
 
-function differentiate(f){
-    return function(x){
-        const h = 0.001;
-        const dy = f(x+h/2)-f(x-h/2);
-        return dy/h;
-    }
-}
+import{ getRange, differentiate } from "../math/functions_singleVar.js";
+import {Graph2D} from "../components/calculus/Graph2D.js";
 
 
-function getYRange(f, domain){
-    let pts = [];
-    let res=100;
-    const spread = domain.max-domain.min;
-
-    let x;
-    for(let i=0;i<res;i++){
-        x=domain.min+i/res*spread;
-        pts.push(f(x));
-    }
-
-    const yMin = Math.min(...pts);
-    const yMax = Math.max(...pts);
-
-    return {
-        min: yMin,
-        max: yMax,
-    };
-}
 
 class DerivativePlotter {
     constructor( options ){
@@ -35,10 +11,10 @@ class DerivativePlotter {
         this.domain=options.domain;
 
         this.f = options.f;
-        this.fRange = getYRange(this.f,this.domain);
+        this.fRange = getRange(this.f,this.domain);
 
         this.fPrime = differentiate(this.f);
-        this.fPrimeRange = getYRange(this.fPrime, this.domain);
+        this.fPrimeRange = getRange(this.fPrime, this.domain);
 
         const fBoardOptions = {
             xRange: this.domain,
@@ -52,14 +28,38 @@ class DerivativePlotter {
             yRange: this.fPrimeRange,
             radius:options.radius,
         }
-        this.fPrimeBoard = new BlackBoard( fBoardOptions );
-        this.fPrimeBoard.setPosition(0,0,-3);
+        this.fPrimeBoard = new BlackBoard( fPrimeBoardOptions );
+        this.fPrimeBoard.setPosition(0,0,-2);
+
+        const graphOptions = {
+            domain: this.domain,
+            f: this.f,
+            radius: options.radius,
+            color: options.color,
+            res:500,
+        }
+        this.graph = new Graph2D( graphOptions );
+
+
+        const graphPrimeOptions = {
+            domain: this.domain,
+            f: this.fPrime,
+            radius: options.radius,
+            color: options.color,
+            res:500,
+        }
+        this.graphPrime = new Graph2D( graphPrimeOptions );
+        this.graphPrime.setPosition(0,0,-2);
+
+
 
     }
 
     addToScene( scene ){
         this.fBoard.addToScene(scene);
         this.fPrimeBoard.addToScene(scene);
+        this.graph.addToScene(scene);
+        this.graphPrime.addToScene(scene);
     }
 
     addToUI( ui ){
@@ -73,3 +73,17 @@ class DerivativePlotter {
 }
 
 
+
+const data = {
+    domain: { min:-5, max:3},
+    f: (x)=> Math.cos(3*x)+Math.cos(x),
+    res:300,
+    radius:0.05,
+    color:0x244f30,
+    accentColor:0xa8a032,
+};
+
+let example = new DerivativePlotter(data)
+
+
+export default { example };

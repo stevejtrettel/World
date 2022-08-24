@@ -8,7 +8,6 @@ function derivative(f, x){
 }
 
 
-
 class TangentLine{
     constructor( options ){
 
@@ -35,7 +34,6 @@ class TangentLine{
             radius: this.radius,
             color: options.color,
         }
-
         this.rod = new Rod( rodOptions );
 
     }

@@ -1,29 +1,10 @@
 
-import{ BlackBoard } from "../components/calculus/Blackboard.js";
-import {Graph2D } from "../components/calculus/Graph2D.js";
+import { GraphOnBoard } from "../components/calculus/GraphOnBoard.js";
 import { SecantLine } from "../components/calculus/SecantLine.js";
 import { TangentLine } from "../components/calculus/TangentLine.js";
 
-
-function getYRange(f, domain){
-    let pts = [];
-    let res=100;
-    const spread = domain.max-domain.min;
-
-    let x;
-    for(let i=0;i<res;i++){
-        x=domain.min+i/res*spread;
-        pts.push(f(x));
-    }
-
-    const yMin = Math.min(...pts);
-    const yMax = Math.max(...pts);
-
-    return {
-        min: yMin,
-        max: yMax,
-    };
-}
+import { getRange, differentiate } from "../math/functions_singleVar.js";
+import {RiemannRectangle} from "../components/calculus/RiemannRectangle.js";
 
 function setX(percent, domain){
     let spread = domain.max-domain.min;
@@ -32,21 +13,22 @@ function setX(percent, domain){
 }
 
 
-class GraphPlotter{
+class SecantLinePlotter{
     constructor(options){
+
         this.domain = options.domain;
-        this.f = options.f;
-        this.range = getYRange(this.f, this.domain);
+        this.f = options.f
+        this.range = getRange(this.f, this.domain);
 
-        this.graph = new Graph2D(options);
-
-
-        const boardOptions = {
-            xRange: this.domain,
-            yRange: this.range,
-            radius:options.radius,
+        const graphOptions = {
+            domain: this.domain,
+            range: this.range,
+            f: this.f,
+            radius: options.radius,
+            color: options.color,
+            res:500,
         }
-        this.blackboard = new BlackBoard( boardOptions );
+        this.graph = new GraphOnBoard( graphOptions );
 
 
         const secantOptions = {
@@ -71,13 +53,26 @@ class GraphPlotter{
         }
         this.tangent = new TangentLine( tangentOptions );
         this.tangent.setPosition(0,0,-this.graph.radius);
+
+
+
+
+        let rectOptions = {
+            x: setX(0.3,this.domain),
+            delta:0.5,
+            y:3,
+            color:options.color,
+            borderColor: 0xffffff,
+        }
+        this.rect = new RiemannRectangle(rectOptions);
+
     }
 
     addToScene( scene ){
         this.graph.addToScene( scene);
-        this.blackboard.addToScene(scene);
         this.secant.addToScene(scene);
         this.tangent.addToScene(scene);
+        this.rect.addToScene(scene);
     }
 
     addToUI( ui ){
@@ -104,20 +99,16 @@ class GraphPlotter{
         let secantFolder = ui.addFolder('Secant');
 
         domainFolder.add(params.domain, 'min', -5,0,0.01).name('xMin').onChange(function(){
-           obj.graph.resetRange(params.domain);
-           params.yRange = getYRange(obj.f,params.domain);
-           obj.blackboard.resetRange(params.domain,params.range);
+           obj.graph.resetDomain(params.domain);
         });
 
         domainFolder.add(params.domain, 'max', 0,3,0.01).name('xMax').onChange(function(){
-            obj.graph.resetRange(params.domain);
-            params.range = getYRange(obj.f,params.domain);
-            obj.blackboard.resetRange(params.domain,params.range);
+            obj.graph.resetDomain(params.domain);
         });
 
 
         secantFolder.add(params, 'x', 0, 1,0.001).name('x').onChange(function(){
-            const newX = params.domain.min+(params.domain.max-params.domain.min)*params.x
+            const newX = setX(params.x, params.domain);
             obj.secant.resetX(newX);
             obj.tangent.resetX(newX);
         });
@@ -139,7 +130,7 @@ class GraphPlotter{
     tick(time, dTime){}
 }
 
-export { GraphPlotter };
+export { SecantLinePlotter };
 
 
 const data = {
@@ -151,7 +142,7 @@ const data = {
     accentColor:0xa8a032,
 };
 
-let example = new GraphPlotter(data)
+let example = new SecantLinePlotter(data)
 
 
 export default { example };
