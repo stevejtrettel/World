@@ -54,25 +54,12 @@ class SecantLinePlotter{
         this.tangent = new TangentLine( tangentOptions );
         this.tangent.setPosition(0,0,-this.graph.radius);
 
-
-
-
-        let rectOptions = {
-            x: setX(0.3,this.domain),
-            delta:0.5,
-            y:3,
-            color:options.color,
-            borderColor: 0xffffff,
-        }
-        this.rect = new RiemannRectangle(rectOptions);
-
     }
 
     addToScene( scene ){
         this.graph.addToScene( scene);
         this.secant.addToScene(scene);
         this.tangent.addToScene(scene);
-        this.rect.addToScene(scene);
     }
 
     addToUI( ui ){

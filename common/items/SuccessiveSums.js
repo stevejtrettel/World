@@ -29,6 +29,20 @@ class SuccessiveSums{
            this.sum.push(newSum);
        }
 
+       // newOptions = {
+       //     f: this.f,
+       //     domain: this.domain,
+       //     posColor:0x244f30,
+       //     negColor:0xc98018,
+       //     borderColor:0x326ba8,
+       //     n: 500,
+       // }
+       // newSum = new RiemannSum( newOptions );
+       // newSum.setPosition(0,0,-this.num/2);
+       // this.sum.push(newSum);
+
+
+
    }
 
    addToScene( scene ){
