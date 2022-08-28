@@ -51,4 +51,4 @@ let flows = {
 }
 
 
-export { flows };
+export default { flows };

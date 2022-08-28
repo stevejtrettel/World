@@ -172,4 +172,4 @@ const knotComplement = {
     knotComp: knotComp,
 };
 
-export { knotComplement };
+export default { knotComplement };

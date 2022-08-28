@@ -615,4 +615,4 @@ const pentagramMap = {
 }
 
 
-export{ pentagramMap };
+export default { pentagramMap };

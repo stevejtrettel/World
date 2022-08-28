@@ -283,4 +283,4 @@ const strangeAttractors = {
 }
 
 
-export{ strangeAttractors };
+export default { strangeAttractors };

@@ -228,4 +228,4 @@ class TorusFundamentalGroup {
 
 const item = new TorusFundamentalGroup();
 
-export{ item };
+export default { item };

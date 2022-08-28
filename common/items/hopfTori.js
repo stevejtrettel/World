@@ -156,4 +156,4 @@ const hopfTori = {
     torus: torus,
 };
 
-export { hopfTori };
+export default { hopfTori };

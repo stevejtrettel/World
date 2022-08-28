@@ -74,4 +74,4 @@ let options = {
 let wobbleSphere = new WobbleSphere(options);
 
 
-export{ wobbleSphere };
+export default { wobbleSphere };

@@ -346,4 +346,4 @@ let stereoProj = {
 }
 
 
-export{ stereoProj };
+export default { stereoProj };

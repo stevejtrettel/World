@@ -318,4 +318,4 @@ class CuttingTorus {
 
 const cuttingTorus = new CuttingTorus();
 
-export{ cuttingTorus };
+export default { cuttingTorus };

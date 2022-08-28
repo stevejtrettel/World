@@ -42,7 +42,7 @@ torus.surface.setName(`Torus`);
 
 
 
-export { torus };
+export default { torus };
 
 
 

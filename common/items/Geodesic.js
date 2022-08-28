@@ -52,8 +52,4 @@ geodesic.tick= function( time, dTime ){
     geodesic.resetCurve(geodesic.curve);
 }
 
-const geo = {
-    tube: geodesic,
-}
-
-export { geo };
+export default { geodesic };

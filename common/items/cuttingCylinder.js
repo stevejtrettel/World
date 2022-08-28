@@ -267,4 +267,4 @@ class CuttingCylinder {
 
 const cuttingCylinder = new CuttingCylinder();
 
-export{ cuttingCylinder };
+export default { cuttingCylinder };

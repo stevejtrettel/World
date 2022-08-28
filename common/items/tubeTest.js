@@ -72,4 +72,4 @@ const tubeTest = {
     tube: tube,
 }
 
-export { tubeTest };
+export default { tubeTest };
