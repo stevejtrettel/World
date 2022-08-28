@@ -78,4 +78,4 @@ let curveAndTorsion = {
     spaceCurve: spaceCurve,
 };
 
-export default { curveAndTorsion };
+export default curveAndTorsion;

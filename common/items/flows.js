@@ -48,7 +48,7 @@ let flowLines = new FlowLineField( diffEq,100, 0.2);
 let flows = {
     curve: integralCurve,
     lines: flowLines,
-}
+};
 
 
-export default { flows };
+export default flows;

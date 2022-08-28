@@ -63,13 +63,4 @@ let tube = new ParametricTube(createCurve(0),curveOptions,frag,uniforms, options
 // };
 
 
-
-
-
-
-
-const tubeTest = {
-    tube: tube,
-}
-
-export default { tubeTest };
+export default { tube };

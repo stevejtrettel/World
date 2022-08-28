@@ -390,4 +390,4 @@ let stereoCube = {
 }
 
 
-export default { stereoCube };
+export default stereoCube;

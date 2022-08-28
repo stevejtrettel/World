@@ -168,8 +168,4 @@ let knotComp = new ParametricMaterial([2048,32], vert, frag, uniforms, options);
 knotComp.setName('KnotComplement');
 
 
-const knotComplement = {
-    knotComp: knotComp,
-};
-
-export default { knotComplement };
+export default { knotComp };
