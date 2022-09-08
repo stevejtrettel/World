@@ -11,6 +11,10 @@ class IntegralCurve {
         this.integrator = integrator;
         this.length = length;
 
+
+        //this takes the output of the integrator, and displays it in space
+        //for example, if you solve an ODE in coordinates then need to put back into R3 somehow.
+        //default just takes (x,y,z) to (x,y,z)...
         this.parameterization = parameterization;
 
 
