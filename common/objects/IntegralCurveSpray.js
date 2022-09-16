@@ -1,9 +1,14 @@
-
+import {
+    Group
+} from "../../3party/three/build/three.module.js";
 
 
 class IntegralCurveSpray {
 
-    constructor(integrator, iniCond, length, spread) {
+    constructor(integrator, parameterization, iniCond, num, length) {
+
+
+        this.curves = new Group();
 
     }
 

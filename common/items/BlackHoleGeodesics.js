@@ -43,7 +43,7 @@ class BlackHoleGeodesic {
 
 
 let bh = new BlackHole(1);
-let state = new State(new Vector3(4,0,0),new Vector3(-1,-1,0));
+let state = new State(new Vector3(5,0,0),new Vector3(-1,0.5,0));
 
 let example = new BlackHoleGeodesic(bh,state);
 

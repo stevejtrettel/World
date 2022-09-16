@@ -3,6 +3,8 @@ import { colorConversion } from "../shaders/colors/colorConversion.js";
 import { ParametricTube } from "./ParametricTube.js";
 
 
+import {Vector2} from "../../3party/three/build/three.module.js";
+
 class IntegralCurve {
 
     constructor(integrator, parameterization, state, length ){

@@ -31,7 +31,7 @@ function createNewPosShader(scale=1.){
 }
 
 const newNormalFromDisplace = `
-    float offset = 0.08;
+    float offset = 0.01;
     vec2 tangent = vec2(1,0);
     vec2 bitangent = vec2(0,1);
     vec2 neighbour1 = uv + tangent * offset;

@@ -17,7 +17,7 @@ import{
 
 
 //set up the integrator for the light-like geodesics.
-function accel( state, bhCenter, bhMass ){
+function accel( state, bhCenter, bhMass=1 ){
     let pos = state.pos;
     let vel = state.vel;
 
@@ -27,11 +27,15 @@ function accel( state, bhCenter, bhMass ){
 
     let R = pos.distanceTo(bhCenter);
 
-    let magnitude = bhMass * L2 / Math.pow(R,5);
+    let magnitude = 3/2* bhMass * L2 / Math.pow(R,5);
     let acc = pos.clone().multiplyScalar( -magnitude );
 
-    return new dState(vel, acc);
+    return new dState(vel.clone(), acc);
 };
+
+
+
+
 
 
 //class for storing the info about a black hole
@@ -75,7 +79,7 @@ class BlackHole{
         this.photonSphere = new Mesh(phGeom, phMat);
 
         this.derive = (state)=>accel(state,this.position, this.mass);
-        this.nullIntegrator = new RungeKutta(this.derive, ep );
+        this.nullIntegrator = new RungeKutta(this.derive, 0.01 );
 
     }
 
