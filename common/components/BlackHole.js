@@ -22,13 +22,14 @@ function accel( state, bhCenter, bhMass=1 ){
     let vel = state.vel;
 
     //the acceleration depends on a conserved quantity that looks like angular momentum
-    let ang = pos.clone().cross(vel);
+    let relPos = pos.clone().sub(bhCenter);
+    let ang = relPos.clone().cross(vel);
     let L2 = ang.lengthSq();
 
-    let R = pos.distanceTo(bhCenter);
+    let R = relPos.length();
 
-    let magnitude = 3/2* bhMass * L2 / Math.pow(R,5);
-    let acc = pos.clone().multiplyScalar( -magnitude );
+    let magnitude = - 3/2 * L2 /(R*R*R*R*R);
+    let acc = relPos.clone().multiplyScalar( magnitude );
 
     return new dState(vel.clone(), acc);
 };
@@ -40,7 +41,7 @@ function accel( state, bhCenter, bhMass=1 ){
 
 //class for storing the info about a black hole
 class BlackHole{
-    constructor(mass, ep=0.001){
+    constructor(mass=1, ep=0.01){
 
         //mass of the black hole
         this.mass=mass;
@@ -79,7 +80,7 @@ class BlackHole{
         this.photonSphere = new Mesh(phGeom, phMat);
 
         this.derive = (state)=>accel(state,this.position, this.mass);
-        this.nullIntegrator = new RungeKutta(this.derive, 0.01 );
+        this.nullIntegrator = new RungeKutta(this.derive, ep );
 
     }
 
@@ -91,7 +92,7 @@ class BlackHole{
     updateMass( mass ){
         this.mass=mass;
         this.radius=2.*this.mass;
-        this.derive = (state)=>accel(state,this.position, this.mass);
+        this.derive = (state)=>accel(state, this.position, this.mass);
 
         this.eventHorizon.geometry.dispose();
         this.eventHorizon.geometry = new SphereBufferGeometry(this.radius,32,16);

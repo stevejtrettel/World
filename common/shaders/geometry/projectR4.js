@@ -11,13 +11,13 @@ vec3 orthographicProj(vec4 p){
 
 vec3 stereographicProj(vec4 p){
 
-    if(p.w>-0.999){
+   // if(p.w>-0.999){
 
         return p.xyz/(p.w+1.0);
-    }
-    else{//delete the triangle
-        return vec3(0./0.);
-    }
+   // }
+  //  else{//delete the triangle
+        //return vec3(0./0.);
+   // }
 }
 
 

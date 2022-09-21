@@ -5,10 +5,10 @@ import {IntegralCurve} from "./IntegralCurve-Traditional.js";
 //iniCondGenerator is a function that takes a number and spits out a state
 //optionsGenerator is a function that takes a number and spits out a state
 //range is a set {min:xxx, max:xxx} that tells us which numbers to plug in to make
-
+//stop is a function that tells us when to stop integrating an integral curve
 
 class IntegralCurveSpray{
-    constructor(integrator, parameterization, iniCondGenerator, optionsGenerator, range ){
+    constructor(integrator, parameterization, iniCondGenerator, optionsGenerator, stop, range ){
 
         this.N = range.max-range.min+1;
         this.range = range;
@@ -20,7 +20,7 @@ class IntegralCurveSpray{
         for( let n=range.min; n<this.range.max+1; n++ ){
             curveOptions = optionsGenerator(n);
             state = this.ini(n,0);
-            intCurve = new IntegralCurve(integrator, parameterization, state, curveOptions);
+            intCurve = new IntegralCurve(integrator, parameterization, state, curveOptions, stop);
             this.curves.push(intCurve);
         }
     }

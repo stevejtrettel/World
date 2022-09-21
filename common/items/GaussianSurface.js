@@ -1,7 +1,6 @@
 import { Vector2, Vector3 } from "../../3party/three/build/three.module.js";
 
 
-
 import{ globals } from "../../template/src/globals.js";
 import { ComputeSystem } from "../gpu/ComputeSystem.js";
 import {ComputeMaterial} from "../materials/ComputeMaterial.js";
@@ -486,20 +485,21 @@ const curveOptions = {
     color: 0xffffff,
 };
 
-const geodesic = new IntegralCurve( integrator, parameterization, iniState, curveOptions);
 
-geodesic.tick= function( time, dTime ){
-    let iniState = new State( new Vector2(2,1), new Vector2(Math.cos(time/10),Math.sin(time/10)));
-    geodesic.integrate(iniState);
-    geodesic.resetCurve(geodesic.curve);
-}
+
+
+
+
+
+
 
 
 
 
 const iniCondGenerator = function(n,time=0){
-    let pos = new Vector2(1,1);
-    let vel = new Vector2(Math.cos(time/5+n/40),Math.sin(time/5+n/40))
+    let pos = new Vector2(-2,1);
+    let angle = -0.5+0.4*Math.sin(time/3)+n/40;
+    let vel = new Vector2(Math.cos(angle), Math.sin(angle)).normalize()
     return new State(pos,vel);
 }
 
@@ -507,21 +507,36 @@ const optionGenerator = function(n){
     return {
         length: 5,
         segments: 100,
-        radius: 0.05/(1+(0.2*n)*(0.2*n)),
+        radius: 0.03/(1+(0.3*n)*(0.3*n)),
         tubeRes: 8,
-        color: 0xffffff,
+        color: 0x2B4882,
     }
 }
 
 const range = {
-    min:-20,
-    max:20,
+    min:-10,
+    max:10,
 }
 
-const geoSpray = new IntegralCurveSpray(integrator, parameterization, iniCondGenerator, optionGenerator, range );
+const stop = function(state){
+    return false;
+}
+
+
+const geoSpray = new IntegralCurveSpray(integrator, parameterization, iniCondGenerator, optionGenerator, stop, range );
 geoSpray.tick = function(time,dTime){
     geoSpray.update(time);
 }
+
+
+
+// const geodesic = new IntegralCurve( integrator, parameterization, iniState, curveOptions, stop);
+// geodesic.tick= function( time, dTime ){
+//     let iniState = new State( new Vector2(2,1), new Vector2(Math.cos(time/10),Math.sin(time/10)));
+//     geodesic.integrate(iniState);
+//     geodesic.resetCurve(geodesic.curve);
+// }
+
 
 
 const gaussian = {

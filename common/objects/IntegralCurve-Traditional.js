@@ -17,9 +17,13 @@ const defaultOptions = {
     roughness:0,
 };
 
+const defaultStop=function(){
+    return false;
+}
+
 class IntegralCurve {
 
-    constructor(integrator, parameterization, state, options=defaultOptions){
+    constructor(integrator, parameterization, state, options=defaultOptions, stop=defaultStop){
 
         this.state = state;
         this.integrator = integrator;
@@ -38,9 +42,17 @@ class IntegralCurve {
         this.N = Math.floor(this.curveOptions.length/this.integrator.ep);
 
         this.curve=null;
+        this.stop=stop;
+
+
         this.integrate( this.state );
 
-        let curveMaterial = new MeshPhysicalMaterial();
+
+        let curveMaterial = new MeshPhysicalMaterial({
+            clearcoat:1,
+            color: this.curveOptions.color,
+            metalness:1,
+        });
         let tubeGeo = new TubeBufferGeometry(this.curve, this.curveOptions.segments, this.curveOptions.radius,this.curveOptions.res);
 
         let ball = new SphereBufferGeometry(2*this.curveOptions.radius, 32,16);
@@ -67,6 +79,10 @@ class IntegralCurve {
 
             p = this.parameterization( currentState.pos.clone() );
             pts.push( p.clone() );
+
+            if(this.stop(currentState)){
+                break;
+            }
 
             currentState = this.integrator.step( currentState );
 

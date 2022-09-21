@@ -6,14 +6,16 @@ import {
 
 function createCamera() {
     const camera = new PerspectiveCamera(
-        35, // fov = Field Of View
+        55, // fov = Field Of View
         1, // aspect ratio (dummy value)
         0.1, // near clipping plane
         200, // far clipping plane
     );
 
     // move the camera back so we can view the scene
-    camera.position.set(0, 8, 10);
+    camera.position.set(0, 0.1, 0);
+    camera.lookAt(0,0,0);
+   // camera.position.set(0, 8, 10);
 
     //animation for camera:
     camera.tick = () => {
