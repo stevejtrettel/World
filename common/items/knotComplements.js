@@ -127,7 +127,7 @@ let fragColor = `
 vec3 fragColor(){
 
 
-    float hue = vUv.x;
+    float hue = 0.75+vUv.x;
     float cLines = coordLines(vec2(5),vUv);
     float sat = 0.65;
     float light = 0.75-0.25*cLines;

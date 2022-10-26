@@ -13,9 +13,10 @@ function createCamera() {
     );
 
     // move the camera back so we can view the scene
-    camera.position.set(0, 0.1, 0);
+    //camera.position.set(0, 0.1, 0);
+    camera.position.set(0, 8, 10);
     camera.lookAt(0,0,0);
-   // camera.position.set(0, 8, 10);
+
 
     //animation for camera:
     camera.tick = () => {
