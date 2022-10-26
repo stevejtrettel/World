@@ -286,7 +286,7 @@ let hypMetric = function(pos){
     let gbb = sinh2a;
     let gcc = sinh2a*sinh2b;
 
-    return new Matrix3(
+    return new Matrix3().set(
         gaa,0,0,
         0,gbb,0,
         0,0,gcc
@@ -296,8 +296,9 @@ let hypMetric = function(pos){
 
 
 let hypDot = function(state1, state2){
+
     //assuming the states are at the same position: else throw error
-    if(state1.pos !== state2.pos ){
+    if(state1.pos.clone().sub(state2.pos.clone()).length() >0.0001 ){
         console.log('Error: Dot Product Requires Vectors Based at Same Point')
     }
 
@@ -327,7 +328,8 @@ let hypBasisVectors = function(pos){
 
     let b3 = new State(pos, new Vector3(0,0,1));
     let len3 = Math.sqrt(hypDot(b3,b3));
-    b1.multiplyScalar(1/len3);
+    b3.multiplyScalar(1/len3);
+
 
     return [b1,b2,b3];
 }
@@ -336,12 +338,12 @@ let hypBasisVectors = function(pos){
 
 
 
-let hypGradient = function(fn, state){
+let hypGradient = function(fn, pos){
 
     let eps =0.001;
-    let basis = hypBasisVectors(state.pos);
+    let basis = hypBasisVectors(pos);
 
-    let differential = new Vector3(0,0,0);
+    let differential = new State(pos, new Vector3(0,0,0));
 
     //add them all up:
     let df0 = basis[0].dirDeriv(fn);
@@ -358,13 +360,53 @@ let hypGradient = function(fn, state){
 
     //now the differential needs to be converted from a covector to a vector
     //using the hyperbolic metric:
-    let metric = hypMetric(state.pos);
-    let invMetric = new Matrix3();
-    invMetric.getInverse(metric);
-
-    let gradient = differential.applyMatrix3(invMetric);
-    return gradient;
+    let invMetric = hypMetric(pos).invert();
+    differential.vel = differential.vel.applyMatrix3(invMetric);
+    return differential;
 }
+
+
+
+//where are the sphere's allowed to go in the geometry: everywhere?
+let boundingBox = function(pos){
+    //center point of H3 in coordinates:
+    let center = new Vector3(0,0,0);
+    //distance from center to position
+    let dist = ambientSpace.distance(pos,center);
+    //how far is this from the boundary sphere of radius 5?
+    return 3.-dist;
+}
+
+
+
+
+class Geometry{
+    constructor(covDeriv,distance,metricTensor,dot,tangentBasis,gradient, boundingBox){
+        this.covariantDerivative=covDeriv;
+        this.distance = distance;
+        this.metricTensor = metricTensor;
+        this.dot = dot;
+        this.tangentBasis = tangentBasis;
+        this.gradient = gradient;
+        this.boundingBox = boundingBox;
+    }
+}
+
+
+
+
+
+let ambientSpace = new Geometry(
+    hypCovariantDerivative,
+    hypDistance,
+    hypMetric,
+    hypDot,
+    hypBasisVectors,
+    hypGradient,
+    boundingBox,
+);
+
+
 
 
 
@@ -377,6 +419,11 @@ let hypGradient = function(fn, state){
 
 //states are a DataList (an array with the added methods of clone, add, multiplyScalar, sub...)
 //masses and radii are normal arrays
+//bounding box is a function from position to reals, telling us where balls need to stop!
+
+//requires an ambient space to be defined OUTSIDE of the class, and NAMED AMBIENT SPACE
+//to make this work: annoying! When I feed in a geometry class as an argument, it has trouble producing
+//functions on the fly...idk why.
 
 class Simulation{
     constructor(states, masses, radii){
@@ -386,19 +433,20 @@ class Simulation{
         this.masses = masses;
         this.radii = radii;
 
-
+        //to set when intersecting
+        this.ballCollisionIndices=null;
+        this.boundaryCollisionIndex=null;
 
         //build an integrator
         let ep = 0.01;
         //get the function which takes the derivative of each element of a stateList:
-        let derive = function(states){
+        let derive = function(st){
             let res = [];
-            for( let i=0; i<states.length; i++){
-               res.push(hypCovariantDerivative(states[i]));
+            for( let i=0; i<st.length; i++){
+               res.push(ambientSpace.covariantDerivative(st[i]));
             }
             return new DataList(res);
         }
-        //console.log(derive(this.states));
 
         this.integrator = new RungeKutta(derive,ep);
 
@@ -408,38 +456,120 @@ class Simulation{
     kineticMetric(states1,states2){
         let K=0;
         for( let i=0; i<states1.length; i++){
-            K += 0.5 * this.masses[i] * hypDot(states1[i],states2[i]);
+            K += 0.5 * this.masses[i] * ambientSpace.dot(states1[i],states2[i]);
         }
         return K;
     }
 
-    //check if the current states intersect or not:
-    //RIGHT NOW WRITTEN FOR THE SPECIAL CASE OF TWO BODIES!
-    intersect(){
+    //check if the current states intersect or not
+    collide(){
 
-        let pos1 = this.states[0].pos;
-        let pos2 = this.states[1].pos;
+        //set off the default reporting of no collisions:
+        this.ballCollisionIndices=null;
+        this.boundaryCollisionIndex=null;
 
-        let dist = hypDistance(pos1,pos2);
-        let radiiSum = this.radii[0]+this.radii[1];
 
-        //return true if they intersect, false if they dont
-        return dist < radiiSum;
+        //check if any ball collided with the boundary:
+        for( let i=0; i<this.states.length; i++){
+            let posi = this.states[i].pos;
+            let radi = this.radii[i];
+
+            let dist = ambientSpace.boundingBox(posi)
+            if(dist-radi<0.){
+                this.boundaryCollisionIndex=i;
+                return true;
+            }
+        }
+
+
+        //check if any two balls collided with one another:
+        let posi, posj, radi, radj;
+        for( let i=1; i<this.states.length; i++){
+
+            posi = this.states[i].pos;
+            radi = this.radii[i];
+
+            for( let j=0; j<i; j++){
+                posj = this.states[j].pos;
+                radj = this.radii[j];
+
+                let dist = ambientSpace.distance(posi,posj);
+                let radiiSum = radi+radj
+
+                if(dist<radiiSum){
+                    //return the pair of indices of balls that are colliding:
+                    this.collisionIndices=[i,j];
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     //run smooth dynamics for each of the bodies involved:
     smoothDynamics(){
         this.states = this.integrator.step(this.states);
-        //console.log(this.states[0].pos);
     }
 
 
     //get the Riemannian gradient (wrt the kinetic energy metric)
     // of the overall signed distance function at the given point
     getDistGradient(){
-        let grad;
         console.log('need the gradient');
+
+        //don't need to compute the gradient of all pairs of distance functions: almost all are zero!
+        let grad = this.states.clone();
+        for(let n=0; n<this.states.length; n++){
+            grad[n].vel=new Vector3(0,0,0);
+        }
+
+        //if a ball impacted the boundary
+        if(this.boundaryCollisionIndex){
+            //just need the ones involving i and j:
+            let i = this.boundaryCollisionIndex;
+            let posi = this.states[i].pos;
+
+            //take gradient of boundary distance based at posi:
+            let gradi = ambientSpace.gradient(this.boundingBox,posi);
+
+            //replace this gradient with its correct nonzero version in the list
+            grad[i] = gradi;
+        }
+
+
+        //if two balls collided
+        if(this.ballCollisionIndices) {
+
+            //just need the ones involving i and j:
+            let i = this.ballCollisionIndices[0];
+            let j = this.ballCollisionIndices[1];
+            let posi = this.states[i].pos;
+            let posj = this.states[j].pos;
+
+            //for i: we fix particle-j and take the gradient
+            let disti = function (pos) {
+                return ambientSpace.distance(pos, posj);
+            }
+            //now find the gradient at posi:
+            let gradi = ambientSpace.gradient(disti, posi);
+
+            //do same for j
+            let distj = function (pos) {
+                return ambientSpace.distance(pos, posi);
+            }
+            let gradj = ambientSpace.gradient(distj, posj);
+
+            //replace these two gradients with their correct nonzero versions
+            grad[i] = gradi;
+            grad[j] = gradj;
+
+        }
+
+
+
         return grad;
+
     }
 
 
@@ -447,6 +577,8 @@ class Simulation{
     collisionDynamics(){
 
         //compute the gradient vector
+        //this automatically takes care of whether we are having a ball collision or a boundary
+        //collision: the math doesn't care!
         let grad = this.getDistGradient();
 
         //find its length, projection of states vector onto it
@@ -464,9 +596,13 @@ class Simulation{
 
     //step forward in time
     step(){
-        if(this.intersect()){
+
+        //get the points of collision, if there are any
+        if(this.collide()){
             this.collisionDynamics();
         }
+
+        //then after they've been resolved, run smooth dynamics
         this.smoothDynamics();
     }
 }
@@ -625,23 +761,14 @@ class Visualize{
 
 
 
+function getRandom(min, max) {
+    return Math.random() * (max - min) + min;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-function randomVector3(){
-    let x = Math.random();
-    let y = Math.random();
-    let z = Math.random();
+function randomVector3(rng){
+    let x = getRandom(-rng,rng);
+    let y = getRandom(-rng,rng);
+    let z = getRandom(-rng,rng);
     return new Vector3(x,y,z);
 }
 
@@ -650,8 +777,8 @@ let stateList = [];
 let radii = [];
 let masses = [];
 for(let i=0; i<10; i++){
-    let pos = randomVector3();
-    let vel = randomVector3();
+    let pos = randomVector3(2);
+    let vel = randomVector3(1);
     stateList.push(new State(pos,vel));
     let r = 0.1*Math.random();
     let m = r*r*r;
