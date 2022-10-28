@@ -2,7 +2,6 @@ import {
     Vector3,
     Matrix3,
     SphereBufferGeometry,
-    MeshNormalMaterial,
     MeshPhysicalMaterial,
     Mesh, DoubleSide, CatmullRomCurve3, TubeBufferGeometry
 } from "../../3party/three/build/three.module.js";
@@ -46,10 +45,10 @@ class State {
 
     //take the directional derivative of a function at pos in direction vel:
     dirDeriv(fn){
-        let eps = 0.001;
 
-        let pos1 = this.clone().flow(-eps/2.).pos;
-        let pos2 = this.clone().flow(eps/2.).pos;
+        let eps = 0.00001;
+        let pos1 = this.pos.clone().add(this.vel.clone().multiplyScalar(-eps/2));
+        let pos2 = this.pos.clone().add(this.vel.clone().multiplyScalar(eps/2));
 
         let dval = fn(pos2)-fn(pos1);
         return  dval/eps;
@@ -64,6 +63,8 @@ class State {
 
 }
 
+//a class for the differential of states on the tangent bundle:
+//vel is the velocity of the original configuration, and acc is the covariant derivative
 class dState {
     constructor(vel,acc){
         this.vel=vel.clone();
@@ -98,6 +99,7 @@ class dState {
 
 
 //classes for lists of States and dStates
+//these are states in the configuration space of the combined system: so these are the "q" in the paper
 class DataList extends Array {
     constructor(list) {
         super(...list);
@@ -148,24 +150,13 @@ class DataList extends Array {
 //items fed into RungeKutta need to have the following methods available:
 //.add, .multiplyScalar, .clone
 
+//implementing the Rk4 Scheme for arbitrary classes that have clone add and multiplyScalar
+//will use this possibly on individual states, or on entire DataLists!
+class RungeKutta {
 
-//base class for a numerical integrator to be extended
-class Integrator {
     constructor (derive, ep){
         this.derive=derive;
         this.ep=ep;
-    }
-
-    derive( state ){ }
-
-    step( state ) { }
-
-}
-
-class RungeKutta extends Integrator {
-
-    constructor(derive,ep){
-        super(derive,ep);
     }
 
     //step forwards one timestep
@@ -221,9 +212,29 @@ class RungeKutta extends Integrator {
 //some hyperbolic geometry stuff:
 // -------------------------------------------------------------
 
+
+
+let hypMetricTensor = function(pos){
+
+    let a = pos.x;
+    let b = pos.y;
+
+    let sinh2a = Math.sinh(a)*Math.sinh(a);
+    let sinh2b = Math.sinh(b)*Math.sinh(b);
+
+    let gaa = 1.;
+    let gbb = sinh2a;
+    let gcc = sinh2a*sinh2b;
+
+    return new Matrix3().set(
+        gaa,0,0,
+        0,gbb,0,
+        0,0,gcc
+    );
+}
+
 //take the derivative with the connection of a state (pos, vel)
-//return the corresponding (vel, acc)
-let hypCovariantDerivative = function(state){
+let hypAcceleration = function(state){
     let pos = state.pos;
     let a = pos.x;
     let b = pos.y;
@@ -245,10 +256,8 @@ let hypCovariantDerivative = function(state){
     let cPP = -2*(aP*cP*cotha + bP*cP * cotb);
 
     let acc = new Vector3(aPP, bPP, cPP);
-
-    return new dState(vel,acc);
+    return acc;
 }
-
 
 
 
@@ -273,106 +282,87 @@ let hypDistance = function(pos1, pos2){
 }
 
 
-
-let hypMetric = function(pos){
-
-    let a = pos.x;
-    let b = pos.y;
-
-    let sinh2a = Math.sinh(a)*Math.sinh(a);
-    let sinh2b = Math.sinh(b)*Math.sinh(b);
-
-    let gaa = 1.;
-    let gbb = sinh2a;
-    let gcc = sinh2a*sinh2b;
-
-    return new Matrix3().set(
-        gaa,0,0,
-        0,gbb,0,
-        0,0,gcc
-    );
-}
-
-
-
-let hypDot = function(state1, state2){
-
-    //assuming the states are at the same position: else throw error
-    if(state1.pos.clone().sub(state2.pos.clone()).length() >0.0001 ){
-        console.log('Error: Dot Product Requires Vectors Based at Same Point')
-    }
-
-    let mat = hypMetric(state1.pos);
-
-    let v1 = state1.vel;
-    let v2 = state2.vel;
-
-    //apply this to the second vector
-    let gv2 = v2.applyMatrix3(mat);
-
-    //compute the dot product:
-    return v1.dot(gv2);
-}
+//
+// let hypDot = function(state1, state2){
+//
+//     //assuming the states are at the same position: else throw error
+//     if(state1.pos.clone().sub(state2.pos.clone()).length() >0.0001 ){
+//         console.log('Error: Dot Product Requires Vectors Based at Same Point')
+//     }
+//
+//     let mat = hypMetricTensor(state1.pos);
+//
+//     let v1 = state1.vel;
+//     let v2 = state2.vel;
+//
+//     //apply this to the second vector
+//     let gv2 = v2.applyMatrix3(mat);
+//
+//     //compute the dot product:
+//     return v1.dot(gv2);
+// }
 
 
+
+//SHOULD REMOVE DEPENDENCE ON HYPDOT?
+//CAN WE DEFINE THIS INSIDE THE GEOMETRY EASIER?
 //returns a basis of the tangent space at a given point:
-let hypBasisVectors = function(pos){
-    //metric is diagonal so we can start with Euc vectors and rescale:
-    let b1 = new State(pos, new Vector3(1,0,0));
-    let len1 = Math.sqrt(hypDot(b1,b1));
-    b1.multiplyScalar(1/len1);
-
-    let b2 = new State(pos, new Vector3(0,1,0));
-    let len2 = Math.sqrt(hypDot(b2,b2));
-    b2.multiplyScalar(1/len2);
-
-    let b3 = new State(pos, new Vector3(0,0,1));
-    let len3 = Math.sqrt(hypDot(b3,b3));
-    b3.multiplyScalar(1/len3);
-
-
-    return [b1,b2,b3];
-}
-
+// let hypTangentBasis = function(pos){
+//     //metric is diagonal so we can start with Euc vectors and rescale:
+//     let b1 = new State(pos, new Vector3(1,0,0));
+//     let len1 = Math.sqrt(hypDot(b1,b1));
+//     b1.multiplyScalar(1/len1);
+//
+//     let b2 = new State(pos, new Vector3(0,1,0));
+//     let len2 = Math.sqrt(hypDot(b2,b2));
+//     b2.multiplyScalar(1/len2);
+//
+//     let b3 = new State(pos, new Vector3(0,0,1));
+//     let len3 = Math.sqrt(hypDot(b3,b3));
+//     b3.multiplyScalar(1/len3);
+//
+//     return [b1,b2,b3];
+// }
 
 
 
-
-let hypGradient = function(fn, pos){
-
-    let eps =0.001;
-    let basis = hypBasisVectors(pos);
-
-    let differential = new State(pos, new Vector3(0,0,0));
-
-    //add them all up:
-    let df0 = basis[0].dirDeriv(fn);
-    basis[0].multiplyScalar(df0);
-    differential.add(basis[0]);
-
-    let df1 = basis[1].dirDeriv(fn);
-    basis[1].multiplyScalar(df1);
-    differential.add(basis[1]);
-
-    let df2 = basis[2].dirDeriv(fn);
-    basis[2].multiplyScalar(df2);
-    differential.add(basis[2]);
-
-    //now the differential needs to be converted from a covector to a vector
-    //using the hyperbolic metric:
-    let invMetric = hypMetric(pos).invert();
-    differential.vel = differential.vel.applyMatrix3(invMetric);
-    return differential;
-}
+//
+//
+// let hypGradient = function(fn, pos){
+//
+//     let eps =0.001;
+//     let basis = hypBasisVectors(pos);
+//
+//     let differential = new State(pos, new Vector3(0,0,0));
+//
+//     //add them all up:
+//     let df0 = basis[0].dirDeriv(fn);
+//     basis[0].multiplyScalar(df0);
+//     differential.add(basis[0]);
+//
+//     let df1 = basis[1].dirDeriv(fn);
+//     basis[1].multiplyScalar(df1);
+//     differential.add(basis[1]);
+//
+//     let df2 = basis[2].dirDeriv(fn);
+//     basis[2].multiplyScalar(df2);
+//     differential.add(basis[2]);
+//
+//     //now the differential needs to be converted from a covector to a vector
+//     //using the hyperbolic metric:
+//     let invMetric = hypMetric(pos).invert();
+//     differential.vel = differential.vel.applyMatrix3(invMetric);
+//     return differential;
+// }
 
 
 
 //where are the sphere's allowed to go in the geometry: everywhere?
-let boundingBox = function(pos){
+let hypBoundingBox = function(pos){
     //center point of H3 in coordinates:
     let center = new Vector3(0,0,0);
     //distance from center to position
-    let dist = ambientSpace.distance(pos,center);
+    let dist = hypDistance(pos,center);
     //how far is this from the boundary sphere of radius 5?
     return 3.-dist;
 }
@@ -380,36 +370,143 @@ let boundingBox = function(pos){
 
 
 
-class Geometry{
-    constructor(covDeriv,distance,metricTensor,dot,tangentBasis,gradient, boundingBox){
-        this.covariantDerivative=covDeriv;
-        this.distance = distance;
-        this.metricTensor = metricTensor;
-        this.dot = dot;
-        this.tangentBasis = tangentBasis;
-        this.gradient = gradient;
-        this.boundingBox = boundingBox;
-    }
+
+
+
+
+let eucMetricTensor = function(pos){
+    return new Matrix3().identity();
+}
+
+let eucDistance = function(pos1, pos2){
+    return pos1.clone().sub(pos2).length()
+}
+
+let eucAcceleration = function(state){
+    return new Vector3(0,0,0);
+}
+
+
+//where are the sphere's allowed to go in the geometry: everywhere?
+let eucBoundingBox = function(pos){
+    //center point of H3 in coordinates:
+    let center = new Vector3(0,0,0);
+    //distance from center to position
+    let dist = eucDistance(pos,center);
+    //how far is this from the boundary sphere of radius 5?
+    return 4.-dist;
 }
 
 
 
 
 
-let ambientSpace = new Geometry(
-    hypCovariantDerivative,
+
+
+
+
+
+//the x coordinate is actually distance from the center in our coordinate system!
+//makes this function easier :)
+//AND makes all the confusion I had earlier about the directional derivatives make sense
+//directional derivative of distance from the origin IS just the x-derivative
+//so, in coordinates the derivative is just (1,0,0) all the time!
+// let boundingBox = function(pos){
+//
+//     return 3.-pos.x;
+// }
+
+
+
+
+class Geometry{
+    constructor(distance, metricTensor, acceleration, boundingBox){
+        this.acceleration = acceleration;
+        this.distance = distance;
+        this.metricTensor = metricTensor;
+        this.boundingBox = boundingBox;
+    }
+
+    covariantDerivative(state){
+        let vel = state.vel;
+        let acc = this.acceleration(state);
+        return new dState(vel,acc);
+    }
+
+    //calculate the dot product of two vectors, using the  metric tensor
+    dot(state1, state2){
+        let mat = this.metricTensor(state1.pos);
+        let v1 = state1.vel;
+        let v2 = state2.vel;
+
+        //apply this to the second vector
+        let gv2 = v2.applyMatrix3(mat);
+        //compute the dot product:
+        return v1.dot(gv2);
+    }
+
+    //get a basis for the tangent space
+    tangentBasis(pos){
+        let b1 = new State(pos, new Vector3(1,0,0));
+        let b2 = new State(pos, new Vector3(0,1,0));
+        let b3 = new State(pos, new Vector3(0,0,1));
+        return [b1,b2,b3];
+    }
+
+    gradient(fn,pos){
+
+        //WARNING: IF THE COORDINATE SYSTEM IS SINGULAR: THIS COMPUTATION IS BAD AT THAT POINT!
+        //NEED GOOD COORDINATES.....
+
+        let basis = this.tangentBasis(pos);
+        let differential = new State(pos, new Vector3(0,0,0));
+
+        //add them all up:
+        let df0 = basis[0].dirDeriv(fn);
+        basis[0].multiplyScalar(df0);
+        differential.add(basis[0]);
+
+        let df1 = basis[1].dirDeriv(fn);
+        basis[1].multiplyScalar(df1);
+        differential.add(basis[1]);
+
+        let df2 = basis[2].dirDeriv(fn);
+        basis[2].multiplyScalar(df2);
+        differential.add(basis[2]);
+
+        //now the differential needs to be converted from a covector to a vector
+        //using the hyperbolic metric:
+        let metric = this.metricTensor(pos);
+        if(Math.abs(metric.determinant())<0.00001){
+            console.log('Warning! Metric Tensor Near Singular');
+            console.log(pos);
+            console.log(metric);
+        }
+        let invMetric = metric.clone().invert();
+        differential.vel = differential.vel.applyMatrix3(invMetric);
+        return differential;
+    }
+
+}
+
+
+
+let hypGeo = new Geometry(
     hypDistance,
-    hypMetric,
-    hypDot,
-    hypBasisVectors,
-    hypGradient,
-    boundingBox,
+    hypMetricTensor,
+    hypAcceleration,
+    hypBoundingBox,
+);
+
+let eucGeo = new Geometry(
+    eucDistance,
+    eucMetricTensor,
+    eucAcceleration,
+    eucBoundingBox
 );
 
 
-
-
-
+let ambientSpace = eucGeo;
 
 
 //---------------------------------
@@ -462,7 +559,7 @@ class Simulation{
     }
 
     //check if the current states intersect or not
-    collide(){
+    detectCollision(){
 
         //set off the default reporting of no collisions:
         this.ballCollisionIndices=null;
@@ -471,12 +568,14 @@ class Simulation{
 
         //check if any ball collided with the boundary:
         for( let i=0; i<this.states.length; i++){
-            let posi = this.states[i].pos;
+            let posi = this.states[i].pos.clone();
             let radi = this.radii[i];
 
             let dist = ambientSpace.boundingBox(posi)
             if(dist-radi<0.){
                 this.boundaryCollisionIndex=i;
+
+                console.log('boundary collision detected');
                 return true;
             }
         }
@@ -498,12 +597,15 @@ class Simulation{
 
                 if(dist<radiiSum){
                     //return the pair of indices of balls that are colliding:
-                    this.collisionIndices=[i,j];
+                    this.ballCollisionIndices=[i,j];
+                    console.log('ball-on-ball collision detected');
+                    console.log(this.ballCollisionIndices);
                     return true;
                 }
             }
         }
 
+        console.log('no collisions');
         return false;
     }
 
@@ -516,41 +618,44 @@ class Simulation{
     //get the Riemannian gradient (wrt the kinetic energy metric)
     // of the overall signed distance function at the given point
     getDistGradient(){
-        console.log('need the gradient');
 
         //don't need to compute the gradient of all pairs of distance functions: almost all are zero!
         let grad = this.states.clone();
+
         for(let n=0; n<this.states.length; n++){
+            //not sure this is updating them all to zero....
             grad[n].vel=new Vector3(0,0,0);
         }
 
-        //if a ball impacted the boundary
-        if(this.boundaryCollisionIndex){
+        // //if a ball impacted the boundary
+        if(this.boundaryCollisionIndex != null){
+
             //just need the ones involving i and j:
             let i = this.boundaryCollisionIndex;
-            let posi = this.states[i].pos;
+            let posi = this.states[i].pos.clone();
 
             //take gradient of boundary distance based at posi:
-            let gradi = ambientSpace.gradient(this.boundingBox,posi);
+            let gradi = ambientSpace.gradient(ambientSpace.boundingBox, posi);
 
             //replace this gradient with its correct nonzero version in the list
+           // grad.splice(i, 1, gradi);
             grad[i] = gradi;
         }
 
-
         //if two balls collided
-        if(this.ballCollisionIndices) {
+        if( this.ballCollisionIndices != null ) {
 
             //just need the ones involving i and j:
             let i = this.ballCollisionIndices[0];
             let j = this.ballCollisionIndices[1];
-            let posi = this.states[i].pos;
-            let posj = this.states[j].pos;
+            let posi = this.states[i].pos.clone();
+            let posj = this.states[j].pos.clone();
 
             //for i: we fix particle-j and take the gradient
             let disti = function (pos) {
                 return ambientSpace.distance(pos, posj);
             }
+
             //now find the gradient at posi:
             let gradi = ambientSpace.gradient(disti, posi);
 
@@ -558,11 +663,15 @@ class Simulation{
             let distj = function (pos) {
                 return ambientSpace.distance(pos, posi);
             }
+
             let gradj = ambientSpace.gradient(distj, posj);
 
             //replace these two gradients with their correct nonzero versions
             grad[i] = gradi;
             grad[j] = gradj;
+
+            console.log(gradi);
+            console.log(gradj);
 
         }
 
@@ -598,7 +707,9 @@ class Simulation{
     step(){
 
         //get the points of collision, if there are any
-        if(this.collide()){
+        let collide = this.detectCollision();
+
+        if( collide ){
             this.collisionDynamics();
         }
 
@@ -703,7 +814,7 @@ class Visualize{
    constructor(simulation, projection, boundaryGeom) {
 
        this.N = simulation.states.length;
-       this.trailLength = 100.;
+       this.trailLength = 200.;
        this.simulation = simulation;
        this.projection = projection;
 
@@ -776,11 +887,11 @@ function randomVector3(rng){
 let stateList = [];
 let radii = [];
 let masses = [];
-for(let i=0; i<10; i++){
+for(let i=0; i<40; i++){
     let pos = randomVector3(2);
     let vel = randomVector3(1);
     stateList.push(new State(pos,vel));
-    let r = 0.1*Math.random();
+    let r = 0.3*Math.random();
     let m = r*r*r;
     radii.push(r);
     masses.push(m);
@@ -797,33 +908,35 @@ sim.step();
 
 
 let proj = function(coords){
-    let a = coords.x;
-    let b = coords.y;
-    let c = coords.z;
 
-    let sinha = Math.sinh(a);
-    let cosha = Math.cosh(a);
-    let sinb = Math.sin(b);
-    let cosb = Math.cos(b);
-    let sinc = Math.sin(c);
-    let cosc = Math.cos(c);
+    return coords;
 
-    let x = sinha * sinb * cosc;
-    let y = sinha * sinb * sinc;
-    let z = sinha * cosb;
-    let w = cosha;
-
-    let scale = 3./(1+w);
-
-    return new Vector3(x,y,z).multiplyScalar(scale);
+    //
+    // let a = coords.x;
+    // let b = coords.y;
+    // let c = coords.z;
+    //
+    // let sinha = Math.sinh(a);
+    // let cosha = Math.cosh(a);
+    // let sinb = Math.sin(b);
+    // let cosb = Math.cos(b);
+    // let sinc = Math.sin(c);
+    // let cosc = Math.cos(c);
+    //
+    // let x = sinha * sinb * cosc;
+    // let y = sinha * sinb * sinc;
+    // let z = sinha * cosb;
+    // let w = cosha;
+    //
+    // let scale = 3./(1+w);
+    //
+    // return new Vector3(x,y,z).multiplyScalar(scale);
 }
 
 
-const boundaryGeom = new SphereBufferGeometry(3,64,32);
-
+const boundaryGeom = new SphereBufferGeometry(4,64,32);
 
 let viz = new Visualize(sim, proj, boundaryGeom);
-
 
 
 export default {viz};
