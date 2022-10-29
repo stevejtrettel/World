@@ -36,7 +36,12 @@ let eucSpace = new Geometry(
     eucMetricTensor,
     eucChristoffel);
 
-let eucModel = new Model();
+
+let identityR3= function(coords){
+    return coords;
+}
+
+let eucModel = new Model(identityR3);
 
 
 
@@ -61,8 +66,5 @@ let eucObstacle = new Obstacle(
 
 //package stuff up for export
 let euclidean = new AmbientSpace( eucSpace, eucModel, eucObstacle);
-
-
-console.log(euclidean.obstacle.distance);
 
 export { euclidean };

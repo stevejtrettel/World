@@ -108,7 +108,31 @@ let hypSpace = new Geometry(
 
 
 
-let hypProjection = new Model();
+let toPoincareBall = function(coords){
+
+    let a = coords.x;
+    let b = coords.y;
+    let c = coords.z;
+
+    let sinha = Math.sinh(a);
+    let cosha = Math.cosh(a);
+    let sinb = Math.sin(b);
+    let cosb = Math.cos(b);
+    let sinc = Math.sin(c);
+    let cosc = Math.cos(c);
+
+    let x = sinha * sinb * cosc;
+    let y = sinha * sinb * sinc;
+    let z = sinha * cosb;
+    let w = cosha;
+
+    let scale = 6./(1+w);
+
+    return new Vector3(x,y,z).multiplyScalar(scale);
+}
+
+
+let hypProjection = new Model(toPoincareBall);
 
 
 

@@ -13,14 +13,14 @@ import {DataList} from "./Computation/DataList.js";
 let ambientSpace = euclidean;
 
 //build a configuration space:
-let NumBalls = 30;
-let MaxRad = 0.75;
+let NumBalls = 20;
+let MaxRad = 1.;
 
 let radii = [];
 let masses = [];
 for(let i=0; i<NumBalls; i++){
     let r = MaxRad* Math.random();
-    let m = r*r*r;
+    let m = 10.*r*r*r;
     radii.push(r);
     masses.push(m);
 }
@@ -30,7 +30,7 @@ let configurationSpace = new ConfigurationSpace(masses, radii);
 
 //build the initial set of states for the system:
 let iniCond = [];
-let maxPos = 2;
+let maxPos = 3;
 let maxVel = 1;
 
 for(let i=0; i<NumBalls; i++){

@@ -3,13 +3,8 @@
 
 class Model{
 
-    constructor(){
-
-    }
-
-
-    toR3(pos){
-        return(pos);
+    constructor(toR3){
+        this.toR3=toR3;
     }
 }
 

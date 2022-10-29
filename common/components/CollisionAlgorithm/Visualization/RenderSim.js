@@ -1,10 +1,11 @@
 
 import {
     Mesh,
-    MeshPhysicalMaterial
+    MeshPhysicalMaterial,
+    Color
 } from "../../../../3party/three/build/three.module.js";
 
-
+import { hslToHex } from "../Computation/random.js";
 import { Comet } from "./Comet.js";
 
 
@@ -50,7 +51,11 @@ class RenderSim{
             let pos = this.simulation.states[i].pos.clone();
             let center = this.projection(pos);
 
-            this.balls.push(new Comet(center, this.radii[i], 0xffffff, this.trailLength));
+            let hue = Math.random();
+            let color =  new Color().setHSL(hue, 0.4, 0.6);
+            let comet = new Comet(center, this.radii[i], color, this.trailLength);
+
+            this.balls.push(comet);
         }
 
 

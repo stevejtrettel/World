@@ -21,7 +21,7 @@ class Simulation{
 
 
         //build an integrator
-        let ep = 0.002;
+        let ep = 0.01;
         //get the function which takes the derivative of each element of a stateList:
         let derive = function(st){
             let res = [];

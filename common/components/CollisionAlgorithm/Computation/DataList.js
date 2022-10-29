@@ -60,6 +60,13 @@ class DataList extends Array {
         return this;
     }
 
+    flow(eps){
+        for( let i=0; i<this.length; i++){
+            this[i].flow( eps );
+        }
+        return this;
+    }
+
 }
 
 

@@ -7,7 +7,7 @@
 import { ambientSpace } from "../setup.js";
 import {Vector3} from "../../../../3party/three/build/three.module.js";
 
-
+import { State } from "../Computation/State.js";
 
 //right now the important parameters for the configuration space
 //are the list of masses and the radii of the balls involved
@@ -62,14 +62,12 @@ class ConfigurationSpace{
             let radi = this.radii[i];
             if( disti < radi ){
                 //the balls is intersecting the boundary:
-                //but, see if it is heading outward or inward (maybe it reflected int he last timestep, but
+                //but, see if it is heading outward or inward (maybe it reflected in the last timestep, but
                 //traveled a short distance since and so is still intersecting but we shoud NOT repeat the reflection!
-                let gradi = ambientSpace.gradient(ambientSpace.obstacle.distance, posi);
-                let cosAng = ambientSpace.dot(gradi,states[i]);
-
-                //now, if the gradient (which points inward to the center of the region)
-                // and the velocity point in opposite directions, this is an intersection with inadmissable tangent:
-                if(cosAng < 0.) {
+                let newPos = states[i].clone().flow(0.01).pos;
+                let newDist = ambientSpace.distToObstacle(newPos)
+                //if this new distance is less, it's an intersection with inadmissable tangent
+                if(newDist<disti) {
                     indices.push(i);
                 }
             }
@@ -120,7 +118,15 @@ class ConfigurationSpace{
                 let distij = ambientSpace.distance(states[i].pos, states[j].pos);
                 let radij = this.radii[i]+this.radii[j];
                 if(distij<radij){
-                    indices.push([i,j]);
+
+                    //the balls are intersecting: but are they approaching or moving apart?
+                    let newPosi = states[i].clone().flow(0.01).pos;
+                    let newPosj = states[j].clone().flow(0.01).pos;
+                    let newDist = ambientSpace.distance(newPosi,newPosj);
+                    //if this new distance is less, it's an intersection with inadmissable tangent
+                    if(newDist<distij) {
+                        indices.push([i,j]);
+                    }
                 }
             }
         }
