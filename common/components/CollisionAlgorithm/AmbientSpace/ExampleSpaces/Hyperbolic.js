@@ -132,7 +132,12 @@ let toPoincareBall = function(coords){
 }
 
 
-let hypProjection = new Model(toPoincareBall);
+let poincareBallScaling = function(pos){
+    return 1-pos.lengthSq();
+}
+
+
+let hypModel = new Model(toPoincareBall, poincareBallScaling);
 
 
 
@@ -171,6 +176,6 @@ let hypObstacle = new Obstacle(obstacleDistance, obstacleGeometry);
 // -------------------------------------------------------------
 //package and export
 // -------------------------------------------------------------
-let hyperbolic = new AmbientSpace(hypSpace, hypProjection, hypObstacle);
+let hyperbolic = new AmbientSpace(hypSpace, hypModel, hypObstacle);
 
 export { hyperbolic };

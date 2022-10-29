@@ -9,6 +9,11 @@ import {State} from "./Computation/State.js";
 import {DataList} from "./Computation/DataList.js";
 
 
+
+
+
+
+
 //set the ambient space for the project
 let ambientSpace = euclidean;
 
@@ -44,13 +49,14 @@ let states = new DataList(iniCond);
 
 
 //make the simulation
-let sim = new Simulation( states );
+let sim = new Simulation( states, 0.002 );
 
 //make the visualization of the simulation
 let viz = new RenderSim( sim, radii );
 
 //send the visualization off to be rendered on the screen
 export default { viz };
+
 
 //export these to use as global variables in the DEFINITIONS of the classes
 //Simulation, ConfigurationSpace, and RenderSim :0 :0 PLZ FIX

@@ -10,8 +10,9 @@ import{ ambientSpace, configurationSpace } from "../setup.js";
 
 
 class Simulation{
-    constructor(states) {
+    constructor(states, stepSize) {
         this.states = states;
+        this.stepSize =stepSize;
 
         //to set when intersecting
         this.collisions={
@@ -21,7 +22,6 @@ class Simulation{
 
 
         //build an integrator
-        let ep = 0.01;
         //get the function which takes the derivative of each element of a stateList:
         let derive = function(st){
             let res = [];
@@ -33,7 +33,7 @@ class Simulation{
             return accel;
         }
 
-        this.integrator = new RungeKutta(derive,ep);
+        this.integrator = new RungeKutta(derive,this.stepSize);
 
     }
 
@@ -74,12 +74,14 @@ class Simulation{
         //get the points of collision, if there are any
         let collide = this.detectCollision();
 
+
         if( collide ){
             this.collisionDynamics();
         }
 
         //then after they've been resolved, run smooth dynamics
         this.smoothDynamics();
+
     }
 
 }

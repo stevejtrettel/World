@@ -41,7 +41,11 @@ let identityR3= function(coords){
     return coords;
 }
 
-let eucModel = new Model(identityR3);
+let unitScaling = function(pos){
+    return 1.;
+}
+
+let eucModel = new Model(identityR3,unitScaling);
 
 
 

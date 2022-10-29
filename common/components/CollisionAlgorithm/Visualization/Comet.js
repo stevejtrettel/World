@@ -18,68 +18,65 @@ class Comet{
 
     //comet takes as input the initial position of the sphere
     //and the auxilary data on how to draw it
-    constructor(iniPos, radius, color, trailLength){
+    constructor(iniPos, radius, color, length){
         this.pos = iniPos;
         this.radius = radius;
 
         //build a tail of the right length, all at the starting point
-        this.trailLength = trailLength;
-        this.trail = [];
-        for(let i=0;i<this.trailLength;i++){
-            this.trail.push(this.pos);
+        this.length = length;
+        this.tail = [];
+        for(let i=0;i<this.length;i++){
+            this.tail.push(this.pos);
         }
 
-        const planetMaterial = new MeshPhysicalMaterial(
+        const cometMaterial = new MeshPhysicalMaterial(
             {
                 color: color,
                 clearcoat: 1,
-            }
-        );
-        const planetGeometry = new SphereBufferGeometry(this.radius,32,16);
-        this.planetMesh = new Mesh(planetGeometry, planetMaterial);
-        this.planetMesh.position.set(this.pos.x,this.pos.y,this.pos.z);
-
-
-        const trailMaterial = new MeshPhysicalMaterial(
-            {
-                clearcoat:0.5,
-                clearcoatRoughness: 0,
-
                 side: DoubleSide,
-                color: color,
             }
         );
+        const nucleusGeometry = new SphereBufferGeometry(this.radius,32,16);
+        this.nucleusMesh = new Mesh(nucleusGeometry, cometMaterial);
+        this.nucleusMesh.position.set(this.pos.x,this.pos.y,this.pos.z);
 
-        let trailCurve = new CatmullRomCurve3(this.trail);
-        let trailGeometry = new TubeBufferGeometry(trailCurve,this.trailLength,0.15*this.radius,8);
-        this.trailMesh=new Mesh(trailGeometry, trailMaterial);
+        let tailCurve = new CatmullRomCurve3(this.tail);
+        let tailGeometry = new TubeBufferGeometry(tailCurve,this.length,0.15*this.radius,8);
+        this.tailMesh=new Mesh(tailGeometry, cometMaterial);
 
     }
 
 
     //add the comet to a scene
     addToScene( scene ){
-        scene.add(this.planetMesh);
-        scene.add(this.trailMesh);
+        scene.add(this.nucleusMesh);
+        scene.add(this.tailMesh);
+    }
+
+
+    resize(rad){
+        this.radius=rad;
+        this.nucleusMesh.geometry.dispose();
+        this.nucleusMesh.geometry=new SphereBufferGeometry(this.radius,32,16);
     }
 
     //move the comet forward, adding one new position to the list
     //and removing the oldest.
     updatePos(pos){
         this.pos=pos;
-        this.planetMesh.position.set(this.pos.x,this.pos.y,this.pos.z);
+        this.nucleusMesh.position.set(this.pos.x,this.pos.y,this.pos.z);
 
         //add pos to the trail, and pop off the earliest element
-        this.trail.pop();
-        this.trail.unshift(this.pos);
+        this.tail.pop();
+        this.tail.unshift(this.pos);
     }
 
     //delete the current geometry of the tail, and create a new one
     //since the points have been updated.
-    redrawTrail(){
-        this.trailMesh.geometry.dispose();
-        const curve = new CatmullRomCurve3(this.trail);
-        this.trailMesh.geometry=new TubeBufferGeometry(curve,this.trailLength,0.15*this.radius,8);
+    redrawTail(){
+        this.tailMesh.geometry.dispose();
+        const curve = new CatmullRomCurve3(this.tail);
+        this.tailMesh.geometry=new TubeBufferGeometry(curve,this.length,0.15*this.radius,8);
     }
 
 }
