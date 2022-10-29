@@ -62,9 +62,8 @@ class ConfigurationSpace{
             let radi = this.radii[i];
             if( disti < radi ){
                 //the balls is intersecting the boundary:
-                //but, see if it is heading outward or inward (maybe it reflected in the last timestep, but
-                //traveled a short distance since and so is still intersecting but we shoud NOT repeat the reflection!
-                let newPos = states[i].clone().flow(0.01).pos;
+                //but, see if it is heading outward or inward
+                let newPos = states[i].clone().flow(0.001).pos;
                 let newDist = ambientSpace.distToObstacle(newPos)
                 //if this new distance is less, it's an intersection with inadmissable tangent
                 if(newDist<disti) {
@@ -98,8 +97,13 @@ class ConfigurationSpace{
                 let i = indices[index];
                 let posi = states[i].pos;
 
-                //compute the gradient of the function measuring distance to the obstacle
+                //with respect to the metric g on the ambient space X
                 let gradi = ambientSpace.gradient(ambientSpace.obstacle.distance, posi);
+
+                //the kinetic energy metric is 1/2*m*g, so the inverse metric tensor
+                //is scaled by 2/m:
+                gradi.multiplyScalar(2/this.masses[i]);
+
                 //replace this in the gradient list:
                 grad[i] = gradi;
             }
@@ -113,15 +117,15 @@ class ConfigurationSpace{
     ballCollisions( states ) {
         let indices = [];
 
-        for(let i=1; i<this.N; i++){
-            for( let j=0; j<i; j++ ){
+        for(let i=0; i<this.N; i++){
+            for( let j=i+1; j<this.N; j++ ){
                 let distij = ambientSpace.distance(states[i].pos, states[j].pos);
                 let radij = this.radii[i]+this.radii[j];
                 if(distij<radij){
 
                     //the balls are intersecting: but are they approaching or moving apart?
-                    let newPosi = states[i].clone().flow(0.01).pos;
-                    let newPosj = states[j].clone().flow(0.01).pos;
+                    let newPosi = states[i].clone().flow(0.001).pos;
+                    let newPosj = states[j].clone().flow(0.001).pos;
                     let newDist = ambientSpace.distance(newPosi,newPosj);
                     //if this new distance is less, it's an intersection with inadmissable tangent
                     if(newDist<distij) {
@@ -140,9 +144,6 @@ class ConfigurationSpace{
 
     //compute the gradient of the distance function
     //only compute for specified pairs [i,j] of balls, then add: rest are zero.
-    //(instead; could take the gradient of the overall distance function which
-    //is a minimum over all distances to balls, but this would have TONS
-    //of unnecessary computation)
     ballGradient(states, indices){
 
         //make a new state with same positions but zeroed out velocity:
@@ -169,6 +170,10 @@ class ConfigurationSpace{
                 }
                 //the gradient of this function, evaluated at position j
                 let gradjdisti = ambientSpace.gradient(disti, posj);
+
+                //the kinetic energy metric for the jth particle is the Riemannian metric g,
+                //scaled by 1/2*m: thus the gradient is the g-gradient scaled by 2/m
+                gradjdisti.multiplyScalar(2/this.masses[j]);
                 //replace the gradient at j with this:
                 grad[j] = gradjdisti;
 
@@ -178,6 +183,11 @@ class ConfigurationSpace{
                 }
                 //the gradient of this function, evaluated at position j
                 let gradidistj = ambientSpace.gradient(distj, posi);
+
+                //the kinetic energy metric for the jth particle is the Riemannian metric g,
+                //scaled by 1/2*m: thus the gradient is the g-gradient scaled by 2/m
+                gradjdisti.multiplyScalar(2/this.masses[i]);
+
                 //replace the gradient at j with this:
                 grad[i] = gradidistj;
 

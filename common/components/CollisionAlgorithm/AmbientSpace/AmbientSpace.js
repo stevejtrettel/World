@@ -29,7 +29,13 @@ class AmbientSpace{
 
     //projection from our chosen model so we can see it
     toR3(pos){
-        return this.model.toR3(pos);
+
+        let posR3 = this.model.toR3(pos);
+
+        return{
+            pos: posR3,
+            scaling: this.model.relativeScaling(posR3)
+        };
     }
 
 

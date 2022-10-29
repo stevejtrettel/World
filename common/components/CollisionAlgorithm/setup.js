@@ -18,14 +18,16 @@ import {DataList} from "./Computation/DataList.js";
 let ambientSpace = euclidean;
 
 //build a configuration space:
-let NumBalls = 20;
+let NumBalls = 50;
 let MaxRad = 1.;
 
-let radii = [];
-let masses = [];
-for(let i=0; i<NumBalls; i++){
-    let r = MaxRad* Math.random();
-    let m = 10.*r*r*r;
+let radii = [1];
+let masses = [1];
+for(let i=1; i<NumBalls; i++){
+    let r=0.1;
+    let m =0.0001;
+    //let r = MaxRad* Math.random();
+    //let m = 10.*r*r*r;
     radii.push(r);
     masses.push(m);
 }

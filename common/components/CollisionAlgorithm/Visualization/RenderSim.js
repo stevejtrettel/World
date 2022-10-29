@@ -46,15 +46,13 @@ class RenderSim{
         for(let i=0; i<this.N; i++){
 
             let coords = this.simulation.states[i].pos.clone();
-            let posR3 = ambientSpace.toR3(coords);
+            let proj = ambientSpace.toR3(coords);
 
             let hue = Math.random();
             let color =  new Color().setHSL(hue, 0.4, 0.6);
-            
-            let scaling = ambientSpace.model.relativeScaling(posR3);
-            let radius = this.radii[i] * scaling;
+            let radius = this.radii[i] * proj.scaling;
 
-            let comet = new Comet(posR3, radius, color, this.cometLength);
+            let comet = new Comet(proj.pos, radius, color, this.cometLength);
             this.balls.push(comet);
         }
 
@@ -66,13 +64,12 @@ class RenderSim{
         for(let i=0; i<this.N; i++){
 
             let coords = this.simulation.states[i].pos.clone();
-            let posR3 = ambientSpace.toR3(coords);
 
-            let scaling = ambientSpace.model.relativeScaling(posR3);
-            let radius = this.radii[i]*scaling;
+            let proj = ambientSpace.toR3(coords);
+            let radius = this.radii[i]*proj.scaling;
 
             this.balls[i].resize(radius);
-            this.balls[i].updatePos(posR3);
+            this.balls[i].updatePos(proj.pos);
             this.balls[i].redrawTail();
         }
     }
