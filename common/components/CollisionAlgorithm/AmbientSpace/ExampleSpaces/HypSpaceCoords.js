@@ -1,9 +1,10 @@
 import {
     Matrix3,
     SphereBufferGeometry,
+    BoxBufferGeometry,
     Vector3,
     Vector4
-} from "../../../../../3party/three/build/three.module.js";
+} from  "../../../../../3party/three/build/three.module.js";
 
 import { Geometry } from "../Components/Geometry.js";
 import {Model} from "../Components/Model.js";
@@ -12,13 +13,20 @@ import {Obstacle} from "../Components/Obstacle.js";
 import {AmbientSpace} from "../AmbientSpace.js";
 
 // -------------------------------------------------------------
-//some spherical geometry stuff:
+//some geometry stuff:
 // -------------------------------------------------------------
 
-//distance on the sphere:
-function threeSphereDistance(u,v){
-    return Math.acos(Math.abs(u.clone().dot(v)));
+
+function minkowskiDot(u,v){
+    return u.w*v.w - ( u.x*v.x + u.y*v.y + u.z*v.z );
 }
+
+//distance on hyperboloid:
+function hyperboloidDistance(u,v){
+    return Math.acosh(Math.abs(minkowskiDot(u,v)));
+}
+
+
 
 
 
@@ -31,10 +39,10 @@ function coords(pos){
     let gamma = pos.y;
     let omega = pos.z;
 
-    let x = Math.sin(rho);
-    let y = Math.cos(rho)*Math.sin(gamma);
-    let z = Math.cos(rho)*Math.cos(gamma)*Math.sin(omega);
-    let w = Math.cos(rho)*Math.cos(gamma)*Math.cos(omega);
+    let x = Math.sinh(rho);
+    let y = Math.cosh(rho)*Math.sinh(gamma);
+    let z = Math.cosh(rho)*Math.cosh(gamma)*Math.sinh(omega);
+    let w = Math.cosh(rho)*Math.cosh(gamma)*Math.cosh(omega);
 
     return new Vector4(x,y,z,w);
 }
@@ -44,18 +52,18 @@ function coords(pos){
 
 
 
-let sphMetricTensor = function(pos){
+let metricTensor = function(pos){
 
     let rho = pos.x;
     let gamma = pos.y;
     let omega = pos.z;
 
-    let cos2rho = Math.cos(rho)*Math.cos(rho);
-    let cos2gamma = Math.cos(gamma)*Math.cos(gamma)
+    let cosh2rho = Math.cosh(rho)*Math.cosh(rho);
+    let cosh2gamma = Math.cosh(gamma)*Math.cosh(gamma)
 
     let g11 = 1.;
-    let g22 = cos2rho;
-    let g33 = cos2rho*cos2gamma;
+    let g22 = cosh2rho;
+    let g33 = cosh2rho*cosh2gamma;
 
     return new Matrix3().set(
         g11,0,0,
@@ -66,17 +74,15 @@ let sphMetricTensor = function(pos){
 
 }
 
-let sphDistance = function(pos1, pos2){
+let distance = function(pos1, pos2){
 
     let u = coords(pos1);
     let v = coords(pos2);
 
-    return threeSphereDistance(u,v);
+    return hyperboloidDistance(u,v);
 }
 
-
-
-let sphChristoffel = function(state){
+let christoffel = function(state){
 
     let pos = state.pos;
     let vel = state.vel;
@@ -89,9 +95,9 @@ let sphChristoffel = function(state){
     let gammaP = vel.y;
     let omegaP = vel.z;
 
-    let rhoPP = -Math.cos(rho)*Math.sin(rho)*(gammaP*gammaP+Math.cos(gamma)*Math.cos(gamma)*omegaP*omegaP);
-    let gammaPP = -Math.cos(gamma)*Math.sin(gamma)*omegaP*omegaP + 2*Math.tan(rho)*gammaP*rhoP;
-    let omegaPP = 2*omegaP*(gammaP*Math.tan(gamma)+rhoP*Math.tan(rho));
+    let rhoPP = Math.cosh(rho)*Math.sinh(rho)*(gammaP*gammaP+Math.cosh(gamma)*Math.cosh(gamma)*omegaP*omegaP);
+    let gammaPP = Math.cosh(gamma)*Math.sinh(gamma)*omegaP*omegaP - 2*Math.tanh(rho)*gammaP*rhoP;
+    let omegaPP = -2*omegaP*(gammaP*Math.tanh(gamma)+rhoP*Math.tanh(rho));
 
     let acc = new Vector3(rhoPP, gammaPP, omegaPP);
 
@@ -100,10 +106,10 @@ let sphChristoffel = function(state){
 }
 
 
-let sphSpace = new Geometry(
-    sphDistance,
-    sphMetricTensor,
-    sphChristoffel
+let space = new Geometry(
+    distance,
+    metricTensor,
+    christoffel
 );
 
 
@@ -115,10 +121,10 @@ let sphSpace = new Geometry(
 // -------------------------------------------------------------
 
 //scale of the model on the screen
-const modelScale = 0.7;
+const modelScale = 6.;
 
 
-let stereoProj = function(coord){
+let toPoincareBall = function(coord){
 
     let p = coords(coord);
 
@@ -127,19 +133,19 @@ let stereoProj = function(coord){
     let z = p.z;
     let w = p.w;
 
-    let scale = modelScale/(1-w);
+    let scale = modelScale/(1+w);
 
     return new Vector3(x,y,z).multiplyScalar(scale);
 }
 
 
-let stereoScaling = function(pos){
+let pbScaling = function(pos){
     let len2 = pos.clone().lengthSq();
-    let scale = Math.sqrt(modelScale*modelScale + len2);
-    return scale/(modelScale*modelScale);
+    let scale = modelScale*modelScale - len2;
+    return 4.*scale/(modelScale*modelScale);
 }
 
-let sphModel = new Model(stereoProj,stereoScaling);
+let model = new Model(toPoincareBall,pbScaling);
 
 
 
@@ -149,23 +155,23 @@ let sphModel = new Model(stereoProj,stereoScaling);
 // -------------------------------------------------------------
 
 //a sphere of a fixed radius
-let obstacleSize = 1.5;
+let obstacleSize = 3.;
 
 let distToSphere = function(pos){
     //center point of H3 in coordinates:
     let center = new Vector3(0,0,0);
     //distance from center to position
-    let dist = sphDistance(pos,center);
+    let dist = hypDistance(pos,center);
     //how far is this from the boundary sphere of radius 5?
     return obstacleSize - dist;
 }
 
 
-let rad = modelScale * Math.tan(obstacleSize);
+let rad = modelScale * Math.tanh(obstacleSize);
 
 let sphereGeom = new SphereBufferGeometry(rad, 64, 32);
 
-let sphereObstacle = new Obstacle(
+let obstacle = new Obstacle(
     distToSphere,
     sphereGeom
 );
@@ -177,8 +183,8 @@ let sphereObstacle = new Obstacle(
 
 
 //package stuff up for export
-let spherical = new AmbientSpace( sphSpace, sphModel, sphereObstacle);
+let hyperbolic = new AmbientSpace( space, model, obstacle);
 
-export { spherical };
+export { hyperbolic };
 
 

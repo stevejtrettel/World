@@ -23,6 +23,7 @@ class Simulation{
 
         //build an integrator
         //get the function which takes the derivative of each element of a stateList:
+        //using ambientSpace.acceleration will allow us to use external potentials without changing code
         let derive = function(st){
             let res = [];
             for( let i=0; i<st.length; i++){

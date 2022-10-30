@@ -85,7 +85,6 @@ class Geometry {
         let invMetric = metric.clone().invert();
         differential.vel = differential.vel.clone().applyMatrix3(invMetric);
 
-        console.log(differential.vel);
         return differential;
     }
 

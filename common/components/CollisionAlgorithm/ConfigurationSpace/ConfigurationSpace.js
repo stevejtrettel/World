@@ -7,7 +7,6 @@
 import { ambientSpace } from "../setup.js";
 import {Vector3} from "../../../../3party/three/build/three.module.js";
 
-import { State } from "../Computation/State.js";
 
 //right now the important parameters for the configuration space
 //are the list of masses and the radii of the balls involved

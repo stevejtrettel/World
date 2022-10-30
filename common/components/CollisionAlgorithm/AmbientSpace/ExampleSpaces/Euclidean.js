@@ -3,13 +3,16 @@ import {
     SphereBufferGeometry,
     BoxBufferGeometry,
     Vector3
-} from "../../../../../3party/three/build/three.module.js";
+} from  "../../../../../3party/three/build/three.module.js";
 
 import { Geometry } from "../Components/Geometry.js";
 import {Model} from "../Components/Model.js";
 import {Obstacle} from "../Components/Obstacle.js";
 
 import {AmbientSpace} from "../AmbientSpace.js";
+
+import {randomVec3Ball} from "../../utils/random.js";
+import {State} from "../../Computation/State.js";
 
 // -------------------------------------------------------------
 //some euclidean geometry stuff:
@@ -62,16 +65,30 @@ let eucModel = new Model(identityR3,unitScaling);
 // -------------------------------------------------------------
 
 //a sphere
+let R = 6.;
 
 let distToSphere = function(pos){
-    return 6.-pos.length();
+    return R-pos.length();
 }
-let sphereGeom = new SphereBufferGeometry(6,64,32);
+let sphereGeom = new SphereBufferGeometry(R,64,32);
+
+let generateSphState = function(){
+    let pos = randomVec3Ball(0.8*R);
+    let vel = randomVec3Ball(1);
+    return new State(pos,vel);
+}
+
 
 let sphereObstacle = new Obstacle(
     distToSphere,
-    sphereGeom
+    sphereGeom,
+    R,
+    generateSphState
 );
+
+
+
+
 
 
 
@@ -88,9 +105,24 @@ let distToBox = function(pos){
 
 let boxGeom = new BoxBufferGeometry(12,8,8);
 
+let boxSize = 6.;
+
+let generateBoxState = function(){
+    let x = 6.*Math.random()-6;
+    let y = 4.*Math.random()-4;
+    let z = 4.*Math.random()-4;
+    let pos = new Vector3(x,y,z).multiplyScalar(0.8);
+    let vel = randomVec3Ball(1);
+    return new State(pos,vel);
+}
+
+
+
 let boxObstacle = new Obstacle(
     distToBox,
-    boxGeom
+    boxGeom,
+    boxSize,
+    generateBoxState,
 );
 
 
@@ -99,6 +131,6 @@ let boxObstacle = new Obstacle(
 
 
 //package stuff up for export
-let euclidean = new AmbientSpace( eucSpace, eucModel, boxObstacle);
+let euclidean = new AmbientSpace( eucSpace, eucModel, sphereObstacle);
 
 export { euclidean };
