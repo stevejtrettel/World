@@ -31,24 +31,21 @@ class ConfigurationSpace{
         let dot =0;
         for( let i=0; i< this.N; i++ ){
             //add up the dot product for each individual ball
-            dot += 0.5 * this.masses[i] * ambientSpace.dot(states1[i],states2[i]);
+            dot += 1/2 * this.masses[i] * ambientSpace.dot(states1[i],states2[i]);
         }
         return dot;
     }
 
-    //norm-square of the kinetic energy metric
-    kinetic( states ){
-        return this.dot(states, states);
-    }
-
     //norm of the kinetic energy metric
     norm( states ){
-        return Math.sqrt(this.kinetic(states));
+        return Math.sqrt(this.dot(states, states));
     }
 
     normalize( states ){
         let len = this.norm(states);
-        return states.multiplyScalar(1/len);
+        let res = states.clone().multiplyScalar(1/len);
+
+        return res;
     }
 
 
@@ -75,6 +72,9 @@ class ConfigurationSpace{
         if(indices.length===0){
             return null;
         }
+
+
+        console.log(indices);
         return indices;
     }
 
@@ -98,11 +98,11 @@ class ConfigurationSpace{
                 let posi = states[i].pos;
 
                 //with respect to the metric g on the ambient space X
-                let gradi = ambientSpace.gradient(ambientSpace.obstacle.distance, posi);
+                let geomGradi = ambientSpace.gradient(ambientSpace.obstacle.distance, posi);
 
                 //the kinetic energy metric is 1/2*m*g, so the inverse metric tensor
                 //is scaled by 2/m:
-                gradi.multiplyScalar(2/this.masses[i]);
+                let gradi = geomGradi.clone().multiplyScalar(2/this.masses[i]);
 
                 //replace this in the gradient list:
                 grad[i] = gradi;
@@ -119,10 +119,11 @@ class ConfigurationSpace{
 
         for(let i=0; i<this.N; i++){
             for( let j=i+1; j<this.N; j++ ){
+
                 let distij = ambientSpace.distance(states[i].pos, states[j].pos);
                 let radij = this.radii[i]+this.radii[j];
-                if(distij<radij){
 
+                if(distij<radij){
                     //the balls are intersecting: but are they approaching or moving apart?
                     let newPosi = states[i].clone().flow(0.001).pos;
                     let newPosj = states[j].clone().flow(0.001).pos;
@@ -138,6 +139,8 @@ class ConfigurationSpace{
         if( indices.length === 0 ){
             return null;
         }
+
+        console.log(indices);
         return indices;
     }
 
@@ -151,7 +154,6 @@ class ConfigurationSpace{
         for(let n=0; n<this.N; n++){
             grad[n].vel=new Vector3(0,0,0);
         }
-
 
         //replace the velocity with the gradient in the correct index slots
         if(indices != null) {
@@ -173,9 +175,8 @@ class ConfigurationSpace{
 
                 //the kinetic energy metric for the jth particle is the Riemannian metric g,
                 //scaled by 1/2*m: thus the gradient is the g-gradient scaled by 2/m
-                gradjdisti.multiplyScalar(2/this.masses[j]);
                 //replace the gradient at j with this:
-                grad[j] = gradjdisti;
+                grad[j] = gradjdisti.clone().multiplyScalar(2/this.masses[j]);;
 
                 //distance function to the ball "j":
                 let distj = function (pos) {
@@ -186,10 +187,8 @@ class ConfigurationSpace{
 
                 //the kinetic energy metric for the jth particle is the Riemannian metric g,
                 //scaled by 1/2*m: thus the gradient is the g-gradient scaled by 2/m
-                gradjdisti.multiplyScalar(2/this.masses[i]);
-
-                //replace the gradient at j with this:
-                grad[i] = gradidistj;
+                //replace the gradient at i with this:
+                grad[i] = gradidistj.clone().multiplyScalar(2/this.masses[i]);
 
             }
         }
@@ -199,29 +198,41 @@ class ConfigurationSpace{
 
 
     boundaryNormal(states, collisionIndices){
-        let grad1 = this.ballGradient(states, collisionIndices.ball);
-        let grad2 = this.obstacleGradient(states, collisionIndices.obstacle);
+        let grad1 = this.obstacleGradient(states, collisionIndices.obstacle);
+        let grad2 =  this.ballGradient(states, collisionIndices.ball);
 
         //add them together
-        grad1.add(grad2);
+        let grad = grad1.clone().add(grad2);
 
-        //normalize if we want: otherwise just return
-        return grad1;
-        //return this.normalize(grad1);
+        return this.normalize(grad.clone());
+    }
+
+    //this is MEANINGLESS outside of Euclidean space:
+    //this is only used for debugging: to confirm momentum is conserved
+    //with ball-on-ball collisions (but not collisions with the boundary, obv)
+    momentum(state){
+        let p = new Vector3().set(0,0,0);
+        for(let i=0; i<this.N;i++){
+            p.add(state[i].vel.clone().multiplyScalar(this.masses[i]));
+        }
+        return p;
     }
 
 
     //reflect a state in a normal vector
+    //states is the current tangent vector to configuration space (states of all the balls)
+    //normal is the normal vector to the boundary of configuration space
     reflectIn(states, normal){
 
         let dot = this.dot(states,normal);
-        let KE = this.kinetic(normal);
+        let norm2 = this.dot(normal,normal);
 
-        let coef = 2.*dot/KE;
+        let coef = 2.*dot/norm2;
 
-        return states.clone().sub(normal.multiplyScalar(coef));
+        let result =  states.clone().sub(normal.clone().multiplyScalar(coef));
+
+        return result;
     }
-
 
 }
 

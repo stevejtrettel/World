@@ -30,7 +30,7 @@ class RenderSim{
     constructor(simulation, radii) {
 
         this.N = simulation.states.length;
-        this.cometLength = 200.;
+        this.cometLength = 100.;
         this.simulation = simulation;
         this.radii = radii;
 
@@ -91,7 +91,7 @@ class RenderSim{
 
     tick(time,dTime){
 
-        for(let i=0; i<5; i++) {
+        for(let i=0; i<15; i++) {
             this.simulation.step();
         }
         this.updateBalls();

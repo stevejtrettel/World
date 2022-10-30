@@ -74,13 +74,14 @@ class Simulation{
         //get the points of collision, if there are any
         let collide = this.detectCollision();
 
-
         if( collide ){
             this.collisionDynamics();
         }
 
-        //then after they've been resolved, run smooth dynamics
-        this.smoothDynamics();
+        else {
+            //then after they've been resolved, run smooth dynamics
+            this.smoothDynamics();
+        }
 
     }
 

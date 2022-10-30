@@ -1,181 +1,190 @@
 import {
     Matrix3,
-    Vector3
+    SphereBufferGeometry,
+    BoxBufferGeometry,
+    Vector3,
+    Vector4
 } from "../../../../../3party/three/build/three.module.js";
 
-
-
 import { Geometry } from "../Components/Geometry.js";
-import { Model } from "../Components/Model.js";
-import { Obstacle } from "../Components/Obstacle.js";
+import {Model} from "../Components/Model.js";
+import {Obstacle} from "../Components/Obstacle.js";
 
-import { AmbientSpace } from "../AmbientSpace.js";
-
-
-
-
-
+import {AmbientSpace} from "../AmbientSpace.js";
 
 // -------------------------------------------------------------
-//some hyperbolic geometry stuff:
+//some euclidean geometry stuff:
 // -------------------------------------------------------------
-//right now using a metric tensor that is SINGULAR at the origin
-//leading to lots of numerical precision loss
+
+
+function minkowskiDot(u,v){
+    return u.w*v.w - ( u.x*v.x + u.y*v.y + u.z*v.z );
+}
+
+//distance on hyperboloid:
+function hyperboloidDistance(u,v){
+    return Math.acosh(Math.abs(minkowskiDot(u,v)));
+}
+
+
+
+
+
+
+
+//coordinates mapping onto the hyperboloid model of H3
+function coords(pos){
+
+    let rho = pos.x;
+    let gamma = pos.y;
+    let omega = pos.z;
+
+    let x = Math.sinh(rho);
+    let y = Math.cosh(rho)*Math.sinh(gamma);
+    let z = Math.cosh(rho)*Math.cosh(gamma)*Math.sinh(omega);
+    let w = Math.cosh(rho)*Math.cosh(gamma)*Math.cosh(omega);
+
+    return new Vector4(x,y,z,w);
+}
+
+
+
+
 
 
 let hypMetricTensor = function(pos){
 
-    let a = pos.x;
-    let b = pos.y;
+    let rho = pos.x;
+    let gamma = pos.y;
+    let omega = pos.z;
 
-    let sinh2a = Math.sinh(a)*Math.sinh(a);
-    let sinh2b = Math.sinh(b)*Math.sinh(b);
+    let cosh2rho = Math.cosh(rho)*Math.cosh(rho);
+    let cosh2gamma = Math.cosh(gamma)*Math.cosh(gamma)
 
-    let gaa = 1.;
-    let gbb = sinh2a;
-    let gcc = sinh2a*sinh2b;
+    let g11 = 1.;
+    let g22 = cosh2rho;
+    let g33 = cosh2rho*cosh2gamma;
 
     return new Matrix3().set(
-        gaa,0,0,
-        0,gbb,0,
-        0,0,gcc
+        g11,0,0,
+        0,g22,0,
+        0,0,g33
     );
+
+
 }
-
-//take the derivative with the connection of a state (pos, vel)
-let hypChristoffel = function(state){
-    let pos = state.pos;
-    let a = pos.x;
-    let b = pos.y;
-    let c = pos.z;
-
-    let vel = state.vel;
-    let aP = vel.x;
-    let bP = vel.y;
-    let cP = vel.z;
-
-    let sinh2a = Math.sinh(2.*a);
-    let cotha = 1/Math.tanh(a);
-    let sin2b = Math.sin(2.*b);
-    let sinb = Math.sin(b);
-    let cotb = 1./Math.tan(b);
-
-    let aPP = sinh2a/2 * (bP*bP + cP*cP * sinb*sinb);
-    let bPP = 1/2*(sin2b*cP*cP-4.*aP*bP * cotha);
-    let cPP = -2*(aP*cP*cotha + bP*cP * cotb);
-
-    let acc = new Vector3(aPP, bPP, cPP);
-    return acc;
-}
-
-
 
 let hypDistance = function(pos1, pos2){
 
-    let coshA1 = Math.cosh(pos1.x);
-    let sinhA1 = Math.sinh(pos1.x);
+    let u = coords(pos1);
+    let v = coords(pos2);
 
-    let coshA2 = Math.cosh(pos2.x);
-    let sinhA2 = Math.sinh(pos2.x);
+    return hyperboloidDistance(u,v);
+}
 
-    let cosB1 = Math.cos(pos1.y);
-    let sinB1 = Math.sin(pos1.y);
+let hypChristoffel = function(state){
 
-    let cosB2 = Math.cos(pos2.y);
-    let sinB2 = Math.sin(pos2.y);
+    let pos = state.pos;
+    let vel = state.vel;
 
-    let cosDeltaC = Math.cos(pos1.z-pos2.z);
+    let rho = pos.x;
+    let gamma = pos.y;
+    let omega = pos.z;
 
-    let delta = coshA1*coshA2 - sinhA1 * sinhA2 * (cosB1*cosB2 + sinB1*sinB2*(cosDeltaC));
-    return Math.acosh(delta);
+    let rhoP = vel.x;
+    let gammaP = vel.y;
+    let omegaP = vel.z;
+
+    let rhoPP = Math.cosh(rho)*Math.sinh(rho)*(gammaP*gammaP+Math.cosh(gamma)*Math.cosh(gamma)*omegaP*omegaP);
+    let gammaPP = Math.cosh(gamma)*Math.sinh(gamma)*omegaP*omegaP - 2*Math.tanh(rho)*gammaP*rhoP;
+    let omegaPP = -2*omegaP*(gammaP*Math.tanh(gamma)+rhoP*Math.tanh(rho));
+
+    let acc = new Vector3(rhoPP, gammaPP, omegaPP);
+
+    return acc;
+
 }
 
 
 let hypSpace = new Geometry(
     hypDistance,
     hypMetricTensor,
-    hypChristoffel);
-
-
+    hypChristoffel
+);
 
 
 
 
 
 // -------------------------------------------------------------
-//choice of an projection into R3:
+//model of Euclidean space : do nothing
 // -------------------------------------------------------------
 
+//scale of the model on the screen
+const modelScale = 6.;
 
 
-let toPoincareBall = function(coords){
+let toPoincareBall = function(coord){
 
-    let a = coords.x;
-    let b = coords.y;
-    let c = coords.z;
+    let p = coords(coord);
 
-    let sinha = Math.sinh(a);
-    let cosha = Math.cosh(a);
-    let sinb = Math.sin(b);
-    let cosb = Math.cos(b);
-    let sinc = Math.sin(c);
-    let cosc = Math.cos(c);
+    let x = p.x;
+    let y = p.y;
+    let z = p.z;
+    let w = p.w;
 
-    let x = sinha * sinb * cosc;
-    let y = sinha * sinb * sinc;
-    let z = sinha * cosb;
-    let w = cosha;
-
-    let scale = 6./(1+w);
+    let scale = modelScale/(1+w);
 
     return new Vector3(x,y,z).multiplyScalar(scale);
 }
 
 
-let poincareBallScaling = function(pos){
-    return 1-pos.lengthSq();
+let pbScaling = function(pos){
+    let len2 = pos.clone().lengthSq();
+    let scale = modelScale*modelScale - len2;
+    return 2.*scale/(modelScale*modelScale);
 }
 
-
-let hypModel = new Model(toPoincareBall, poincareBallScaling);
-
-
-
-
+let hypModel = new Model(toPoincareBall,pbScaling);
 
 
 
 
 // -------------------------------------------------------------
-//choice of an obstacle
+//obstacles to contain balls in Euclidean Space
 // -------------------------------------------------------------
-//right now confining balls to live in the interior of a sphere
 
-let obstacleDistance = function(pos){
+//a sphere of a fixed radius
+let obstacleSize = 3.;
+
+let distToSphere = function(pos){
     //center point of H3 in coordinates:
     let center = new Vector3(0,0,0);
     //distance from center to position
     let dist = hypDistance(pos,center);
     //how far is this from the boundary sphere of radius 5?
-    return 3.-dist;
+    return obstacleSize - dist;
 }
 
-let obstacleGeometry;
 
-let hypObstacle = new Obstacle(obstacleDistance, obstacleGeometry);
+let rad = modelScale * Math.tanh(obstacleSize);
 
+let sphereGeom = new SphereBufferGeometry(rad, 64, 32);
 
-
-
-
-
-
-
+let sphereObstacle = new Obstacle(
+    distToSphere,
+    sphereGeom
+);
 
 
-// -------------------------------------------------------------
-//package and export
-// -------------------------------------------------------------
-let hyperbolic = new AmbientSpace(hypSpace, hypModel, hypObstacle);
+
+
+
+
+
+//package stuff up for export
+let hyperbolic = new AmbientSpace( hypSpace, hypModel, sphereObstacle);
 
 export { hyperbolic };
+
+

@@ -28,8 +28,9 @@ class Geometry {
     //calculate the dot product of two vectors, using the  metric tensor
     dot(state1, state2){
         let mat = this.metricTensor(state1.pos);
-        let v1 = state1.vel;
-        let v2 = state2.vel;
+
+        let v1 = state1.vel.clone();
+        let v2 = state2.vel.clone();
 
         //apply this to the second vector
         let gv2 = v2.applyMatrix3(mat);
@@ -62,16 +63,16 @@ class Geometry {
 
         //add them all up:
         let df0 = basis[0].differentiate(fn);
-        basis[0].multiplyScalar(df0);
-        differential.add(basis[0]);
+        let b0 = basis[0].clone().multiplyScalar(df0);
+        differential.add(b0);
 
         let df1 = basis[1].differentiate(fn);
-        basis[1].multiplyScalar(df1);
-        differential.add(basis[1]);
+        let b1 = basis[1].clone().multiplyScalar(df1);
+        differential.add(b1);
 
         let df2 = basis[2].differentiate(fn);
-        basis[2].multiplyScalar(df2);
-        differential.add(basis[2]);
+        let b2 = basis[2].clone().multiplyScalar(df2);
+        differential.add(b2);
 
         //now the differential needs to be converted from a covector to a vector
         //using the hyperbolic metric:
@@ -82,7 +83,9 @@ class Geometry {
             console.log(metric);
         }
         let invMetric = metric.clone().invert();
-        differential.vel = differential.vel.applyMatrix3(invMetric);
+        differential.vel = differential.vel.clone().applyMatrix3(invMetric);
+
+        console.log(differential.vel);
         return differential;
     }
 

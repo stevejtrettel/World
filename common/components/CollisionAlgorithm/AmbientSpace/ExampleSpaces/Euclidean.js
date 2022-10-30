@@ -1,6 +1,7 @@
 import {
     Matrix3,
     SphereBufferGeometry,
+    BoxBufferGeometry,
     Vector3
 } from "../../../../../3party/three/build/three.module.js";
 
@@ -28,13 +29,18 @@ let eucChristoffel = function(state){
 }
 
 
-
-
-
 let eucSpace = new Geometry(
     eucDistance,
     eucMetricTensor,
     eucChristoffel);
+
+
+
+
+
+// -------------------------------------------------------------
+//model of Euclidean space : do nothing
+// -------------------------------------------------------------
 
 
 let identityR3= function(coords){
@@ -49,15 +55,42 @@ let eucModel = new Model(identityR3,unitScaling);
 
 
 
-let distToObstacle = function(pos){
+
+
+// -------------------------------------------------------------
+//obstacles to contain balls in Euclidean Space
+// -------------------------------------------------------------
+
+//a sphere
+
+let distToSphere = function(pos){
     return 6.-pos.length();
 }
+let sphereGeom = new SphereBufferGeometry(6,64,32);
 
-let obstacleGeometry = new SphereBufferGeometry(6,64,32);
+let sphereObstacle = new Obstacle(
+    distToSphere,
+    sphereGeom
+);
 
-let eucObstacle = new Obstacle(
-    distToObstacle,
-    obstacleGeometry
+
+
+//a box
+
+let distToBox = function(pos){
+    let xWall = 6 - Math.abs(pos.x);
+    let yWall = 4. - Math.abs(pos.y);
+    let zWall = 4 - Math.abs(pos.z);
+
+    return Math.min(xWall,Math.min(yWall,zWall));
+
+}
+
+let boxGeom = new BoxBufferGeometry(12,8,8);
+
+let boxObstacle = new Obstacle(
+    distToBox,
+    boxGeom
 );
 
 
@@ -65,10 +98,7 @@ let eucObstacle = new Obstacle(
 
 
 
-
-
-
 //package stuff up for export
-let euclidean = new AmbientSpace( eucSpace, eucModel, eucObstacle);
+let euclidean = new AmbientSpace( eucSpace, eucModel, boxObstacle);
 
 export { euclidean };

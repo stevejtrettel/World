@@ -50,7 +50,7 @@ class State {
     // at pos in direction vel:
     differentiate(fn){
 
-        let eps = 0.0001;
+        let eps = 0.00001;
         let pos1 = this.pos.clone().add(this.vel.clone().multiplyScalar(-eps/2));
         let pos2 = this.pos.clone().add(this.vel.clone().multiplyScalar(eps/2));
 
