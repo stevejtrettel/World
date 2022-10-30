@@ -9,17 +9,19 @@ import {Simulation} from "./ConfigurationSpace/Simulation.js";
 
 import {euclidean} from "./AmbientSpace/ExampleSpaces/Euclidean.js";
 import { hyperbolic } from "./AmbientSpace/ExampleSpaces/Hyperbolic.js";
+import { spherical } from "./AmbientSpace/ExampleSpaces/Spherical.js";
+
 
 
 
 
 
 //set the ambient space for the project
-let ambientSpace = hyperbolic;
+let ambientSpace = euclidean;
 
 //build a configuration space:
 let NumBalls = 70;
-let MaxRad = 0.5;
+let MaxRad = 0.05;
 
 let radii = [];
 let masses = [];
@@ -37,7 +39,7 @@ let configurationSpace = new ConfigurationSpace(masses, radii);
 
 //build the initial set of states for the system:
 let iniCond = [];
-let maxPos = 1.3;
+let maxPos = 0.6;
 let maxVel = 1;
 
 for(let i=0; i<NumBalls; i++){
