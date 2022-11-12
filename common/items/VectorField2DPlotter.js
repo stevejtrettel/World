@@ -8,7 +8,7 @@ import {
     Mesh
 } from "../../3party/three/build/three.module.js";
 
-import VectorField2D from "../components/calculus/VectorField2D.js";
+import VectorField2D from "../components/VectorCalculus/VectorField2D.js";
 import { GlassPanel } from "../components/calculus/GlassPanel.js";
 
 //using GLOBAL object math.parser: this is from the 3rd party math file loaded in the html

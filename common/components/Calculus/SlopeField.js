@@ -1,21 +1,18 @@
+
 import {
     InstancedMesh,
-    CatmullRomCurve3,
-    TubeBufferGeometry,
     MeshPhysicalMaterial,
-    Vector3,
     Object3D,
     Color,
     DynamicDrawUsage,
-    SphereBufferGeometry,
     DoubleSide,
-    BufferGeometry
+    Vector2,
+    CylinderBufferGeometry,
 } from "../../../3party/three/build/three.module.js";
 
-import{ mergeBufferGeometries } from "../../../3party/three/examples/jsm/utils/BufferGeometryUtils.js"
 
 class SlopeField{
-    constructor(yPrime,range, res){
+    constructor(yPrime, range, res){
 
         this.range = range;
         this.res = res;
@@ -44,7 +41,7 @@ class SlopeField{
             let yRng = (this.range.y.max-this.range.y.min);
             let yVal = yRng * yPercent + this.range.y.min;
 
-            return {x:xVal, y:yVal};
+            return new Vector2(xVal,yVal);
         }
 
         this.initialize();
@@ -59,16 +56,9 @@ class SlopeField{
         let length = 0.8* Math.min(xRng/this.res.x,yRng/this.res.y);
         let rad = 0.1*length;
 
-        let path = new CatmullRomCurve3([new Vector3(-length/2,0,0), new Vector3(length/2,0,0)]);
-        let tubeGeometry = new TubeBufferGeometry(path,2,rad,16,false);
+        let cylGeometry = new CylinderBufferGeometry(rad,rad,length,16,1);
+        this.baseGeometry = cylGeometry;
 
-        this.baseGeometry = tubeGeometry;
-
-        // let ballGeometry = new SphereBufferGeometry(rad,32,16);
-        // let end1 = ballGeometry.clone().translate(-length/2,0,0);
-        // let end2 = ballGeometry.clone().translate(length/2,0,0);
-        //
-        // this.baseGeometry = mergeBufferGeometries([tubeGeometry,end1,end2]);
     }
 
 
@@ -79,20 +69,21 @@ class SlopeField{
             side: DoubleSide,
         });
 
-        this.field = new InstancedMesh( this.baseGeometry, material, this.count );
-        this.field.instanceMatrix.setUsage( DynamicDrawUsage ); // will be updated every frame
+        this.slopes = new InstancedMesh( this.baseGeometry, material, this.count );
+        //starts pointing along y-axis:
+        this.slopes.instanceMatrix.setUsage( DynamicDrawUsage ); // will be updated every frame
     }
 
 
 
     addToScene(scene){
-        scene.add(this.field);
+        scene.add(this.slopes);
     }
 
 
     //switch out the differential equation
-    setDiffEq(fn){
-        this.yPrime=fn;
+    setYPrime(yPrime){
+        this.yPrime=yPrime;
     }
 
     setRange(range){
@@ -108,43 +99,49 @@ class SlopeField{
 
     //re-orient all of the slopes!
     //use the current this.slope function: this is updated somewhere else
-    update(time,a=0,b=0,c=0){
-        if ( this.field ) {//if its been initialized
+    update(time, params){
 
-            let coords, yPrime;
+        if ( this.slopes ) {//if its been initialized
+
+            let coords, vF;
             for(let index = 0; index<this.count; index++) {
 
                 //what point in the (x,y) plane does this index represent?
                 coords = this.getCoords(index);
                 //get the slope at this point
-                //time is an optional coordinate in the yPrime function
-                yPrime = this.yPrime(coords.x, coords.y,time,a,b,c);
+                vF = this.yPrime(coords, time, params);
                 //get the rotation angle this slope signifies:
-                let theta = Math.atan2(yPrime, 1);
-
+                //rotating BACKWARDS from the y-axis
+                let theta = -Math.atan2(vF.x, vF.y);
                 //build a matrix on this.dummy that moves it to the position specified by coords
                 this.dummy.position.set(coords.x, coords.y, 0.08);
+
                 //build in the rotational part of this matrix
+                //this.dummy.lookAt(coords.x+vF.x,coords.y+vF.y,0.08);
                 this.dummy.rotation.z = theta;
+
+                //set the scale:
+                let mag = vF.length();
+                let rescale = 2.*Math.tanh(mag/2.);
+                this.dummy.scale.set(rescale,rescale,rescale);
 
                 //set the color of this instance:
                 //use slope or xy data to do so?
                 let color = new Color().setHSL(theta/Math.PI, 0.4, 0.6)
 
-
                 //update the actual color at this point!
-                this.field.setColorAt(index, color);
+                this.slopes.setColorAt(index, color);
 
                 //update the actual matrix at this point!!!
                 this.dummy.updateMatrix();
-                this.field.setMatrixAt(index, this.dummy.matrix);
+                this.slopes.setMatrixAt(index, this.dummy.matrix);
 
             }
 
-            this.field.instanceMatrix.needsUpdate = true;
-            this.field.instanceColor.needsUpdate = true;
+            this.slopes.instanceMatrix.needsUpdate = true;
+            this.slopes.instanceColor.needsUpdate = true;
 
-         }
+        }
 
     }
 

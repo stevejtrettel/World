@@ -10,10 +10,8 @@ import {
 
 import SlopeField from "../components/calculus/SlopeField.js";
 import { GlassPanel } from "../components/calculus/GlassPanel.js";
-import {BlackBoard} from "../components/calculus/Blackboard.js";
 import {colorConversion} from "../shaders/colors/colorConversion.js";
 import {ParametricTube} from "../objects/ParametricTube.js";
-
 
 
 //using GLOBAL object math.parser: this is from the 3rd party math file loaded in the html
@@ -29,33 +27,28 @@ class SlopeFieldRungeKutta{
     }
 
     //step forwards one timestep
-    step(pos,time,a,b,c){
+    step(pos,time,params){
 
         let k1,k2,k3,k4;
-        let theSlope;
         let temp;
 
         //get the derivative
-        theSlope = this.yPrime(pos.x,pos.y,time,a,b,c)
-        k1 =  new Vector2(1,theSlope);
+        k1 =  this.yPrime(pos,time,params);
         k1.multiplyScalar(this.ep);
 
         //get k2
         temp=pos.clone().add(k1.clone().multiplyScalar(0.5));
-        theSlope = this.yPrime(temp.x,temp.y,time,a,b,c)
-        k2 =  new Vector2(1,theSlope);
+        k2 =  this.yPrime(temp,time,params);
         k2.multiplyScalar(this.ep);
 
         //get k3
         temp=pos.clone().add(k2.clone().multiplyScalar(0.5));
-        theSlope = this.yPrime(temp.x,temp.y,time,a,b,c)
-        k3 =  new Vector2(1,theSlope);
+        k3 =  this.yPrime(temp,time,params);
         k3.multiplyScalar(this.ep);
 
         //get k4
         temp=pos.clone().add(k3.multiplyScalar(1.));
-        theSlope = this.yPrime(temp.x,temp.y,time,a,b,c)
-        k4 =  new Vector2(1,theSlope);
+        k4 =  this.yPrime(temp,time,params);
         k4.multiplyScalar(this.ep);
 
         //add up results:
@@ -71,22 +64,20 @@ class SlopeFieldRungeKutta{
         return nextPos;
     }
 
-
-    setDiffEq(eqn){
+    setYPrime(eqn){
         this.yPrime=eqn;
     }
 }
 
 
-
 class SlopeFieldIntegralCurve{
 
     constructor(yPrime, iniCond, range) {
+
         this.yPrime = yPrime;
         this.iniCond = iniCond;
         this.N =400.;
         this.range=range;
-
 
         //make the curve into a tube:
         const curveOptions = {
@@ -104,8 +95,6 @@ class SlopeFieldIntegralCurve{
         };
 
 
-
-
         let sphere =  new SphereBufferGeometry(1.25*curveOptions.radius,32,16);
         let sphereMat = new MeshPhysicalMaterial();
         this.start = new Mesh(sphere,sphereMat);
@@ -114,7 +103,9 @@ class SlopeFieldIntegralCurve{
         //set up the integrator and the curve
         this.integrator = new SlopeFieldRungeKutta(this.yPrime, 0.03);
         this.curve = null;
-        this.computeCurve(0);
+
+        //initialize the curve
+        this.computeCurve();
 
 
 
@@ -133,13 +124,15 @@ class SlopeFieldIntegralCurve{
 
     }
 
-    computeCurve(time=0,a=0,b=0,c=0){
+    computeCurve(time=0, params={a:0,b:0,c:0}){
 
         let pts = [];
         let currentState = this.iniCond.clone();
 
         for(let i=0; i<this.N; i++){
-            currentState = this.integrator.step(currentState,time,a,b,c);
+
+            currentState = this.integrator.step(currentState, time, params);
+
             if(currentState.x>this.range.x.max) {
                 pts.push(new Vector3(this.range.x.max,currentState.y,0.1));
                 break;
@@ -179,20 +172,21 @@ class SlopeFieldIntegralCurve{
         scene.add(this.end);
     }
 
-    setDiffEq(eqn){
+    setYPrime(eqn){
         this.yPrime=eqn;
-        this.integrator.setDiffEq(this.yPrime);
+        this.integrator.setYPrime(this.yPrime);
+    }
+
+    setRange(rng){
+        this.range=rng;
     }
 
 }
 
 
 
-
-
-
 class SlopeFieldPlotter{
-    constructor(yPrime,range,res,){
+    constructor( range, res ){
 
         this.blackboard = new GlassPanel({
             xRange: range.x,
@@ -209,20 +203,24 @@ class SlopeFieldPlotter{
             b:1,
             c:1,
 
-            yPrimeText: 'cos(x)+sin(y)+sin(x+y+t)',
+            yPrimeText: 'sin(x*y+t)',
 
             reset: function(){
                 console.log('reset');
             }
         };
 
-        this.yPrime = parser.evaluate('yPrime(x,y,t,a,b,c)='.concat(this.params.yPrimeText));
+        let yC = parser.evaluate('yPrime(x,y,t,a,b,c)='.concat(this.params.yPrimeText));
 
-        this.slopeField = new SlopeField(this.yPrime, range, res);
+        this.yPrime = function(pos,time,params){
+            let x = 1;
+            let y = yC(pos.x,pos.y,time,params.a,params.b,params.c);
+            return new Vector2(x,y);
+        }
 
-        this.iniCond = new Vector2(0,0);
-        this.integralCurve = new SlopeFieldIntegralCurve(this.yPrime,this.iniCond,range);
-
+         this.slopeField = new SlopeField(this.yPrime, range, res);
+         this.iniCond = new Vector2(0,0);
+         this.integralCurve = new SlopeFieldIntegralCurve(this.yPrime, this.iniCond, range);
     }
 
     addToScene(scene){
@@ -232,12 +230,13 @@ class SlopeFieldPlotter{
     }
 
     addToUI(ui){
-        let domainFolder =ui.addFolder('Domain');
-        let paramFolder =ui.addFolder('Parameters');
+        let domainFolder = ui.addFolder('Domain');
+        let paramFolder = ui.addFolder('Parameters');
+
         let thisObj = this;
-        let thisBoard = this.blackboard;
         let thisField = this.slopeField;
         let thisCurve = this.integralCurve;
+
 
         domainFolder.add(this.params, 'xMin', -10, 10, 0.01).name('xMin').onChange(function(value){
             let rng = {
@@ -245,6 +244,7 @@ class SlopeFieldPlotter{
                 y:{min:thisField.range.y.min, max:thisField.range.y.max}
             };
             thisField.setRange(rng);
+            thisCurve.setRange(rng);
         });
 
 
@@ -254,6 +254,7 @@ class SlopeFieldPlotter{
                 y:{min: thisField.range.y.min, max: thisField.range.y.max}
             };
             thisField.setRange(rng);
+            thisCurve.setRange(rng);
         });
 
         domainFolder.add(this.params, 'yMin', -10, 10, 0.01).name('yMin').onChange(function(value){
@@ -262,6 +263,7 @@ class SlopeFieldPlotter{
                 y:{min:value, max:thisField.range.y.max}
             };
             thisField.setRange(rng);
+            thisCurve.setRange(rng);
         });
 
         domainFolder.add(this.params, 'yMax', -10, 10, 0.01).name('yMin').onChange(function(value){
@@ -270,45 +272,48 @@ class SlopeFieldPlotter{
                 y:{min:thisField.range.y.min, max:value }
             };
             thisField.setRange(rng);
+            thisCurve.setRange(rng);
         });
 
 
         paramFolder.add(this.params, 'a', -2, 2, 0.01).name('a').onChange(function(value){
         });
-        paramFolder.add(this.params, 'b', -2, 2, 0.01).name('a').onChange(function(value){
+        paramFolder.add(this.params, 'b', -2, 2, 0.01).name('b').onChange(function(value){
         });
-        paramFolder.add(this.params, 'c', -2, 2, 0.01).name('a').onChange(function(value){
+        paramFolder.add(this.params, 'c', -2, 2, 0.01).name('c').onChange(function(value){
         });
 
 
-        ui.add(this.params,'yPrimeText').name('yPrime(x,y,t,a,b,c)=');
+        ui.add(this.params,'yPrimeText').name('yPrime=');
 
         ui.add(this.params, 'reset').onChange(
             function(){
-                let yP=parser.evaluate('yPrime(x,y,t,a,b,c)='.concat(thisObj.params.yPrimeText));
-                thisObj.yPrime=yP;
-                thisField.setDiffEq(yP);
-                thisCurve.setDiffEq(yP);
+
+                let yC = parser.evaluate('yPrime(x,y,t,a,b,c)='.concat(thisObj.params.yPrimeText));
+
+                let eqn = function(pos,time,params){
+                    let x = 1;
+                    let y = yC(pos.x,pos.y,time,params.a,params.b,params.c);
+                    return new Vector2(x,y);
+                }
+
+                thisObj.yPrime = eqn;
+                thisField.setYPrime(eqn);
+                thisCurve.setYPrime(eqn);
             }
         )
     }
 
     tick(time,dTime){
 
-        this.slopeField.update(time,this.params.a,this.params.b,this.params.c);
+        this.slopeField.update(time,this.params);
 
-        this.integralCurve.computeCurve(time,this.params.a,this.params.b,this.params.c);
+        this.integralCurve.computeCurve(time,this.params);
         this.integralCurve.resetCurve(this.integralCurve.curve);
+
     }
 
 }
-
-
-
-
-
-
-
 
 
 
@@ -319,10 +324,11 @@ let range = {
 
 let res = {x:100,y:100};
 
-let yPrime = function(x,y,time){
-    return x+y+Math.sin(time);
-}
-
-let example = new SlopeFieldPlotter(yPrime,range,res);
+let example = new SlopeFieldPlotter(range, res);
 
 export default {example};
+
+
+
+
+
