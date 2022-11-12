@@ -43,6 +43,8 @@ class SlopeFieldIntegralCurve{
             }`,
         };
 
+        this.visibility = true;
+
 
         let sphere =  new SphereBufferGeometry(1.25*curveOptions.radius,32,16);
         let sphereMat = new MeshPhysicalMaterial();
@@ -130,6 +132,17 @@ class SlopeFieldIntegralCurve{
         this.range=rng;
     }
 
+    setInitialCondition(iniCond){
+        this.iniCond = iniCond;
+    }
+
+    toggleVisibility(){
+        this.visibility = !this.visibility;
+        this.tube.mesh.visible=this.visibility;
+        this.start.visible=this.visibility;
+        this.end.visible=this.visibility;
+    }
+
 }
 
 
@@ -147,6 +160,9 @@ class SlopeFieldPlotter{
             xMax: range.x.max,
             yMin: range.y.min,
             yMax: range.y.max,
+
+            initialX:0,
+            initialY:0,
 
             a:1,
             b:1,
@@ -182,7 +198,7 @@ class SlopeFieldPlotter{
 
     addToUI(ui){
         let domainFolder = ui.addFolder('Domain');
-        let paramFolder = ui.addFolder('Parameters');
+
 
         let thisObj = this;
         let thisField = this.slopeField;
@@ -227,12 +243,21 @@ class SlopeFieldPlotter{
         });
 
 
-        paramFolder.add(this.params, 'a', -2, 2, 0.01).name('a').onChange(function(value){
-        });
-        paramFolder.add(this.params, 'b', -2, 2, 0.01).name('b').onChange(function(value){
-        });
-        paramFolder.add(this.params, 'c', -2, 2, 0.01).name('c').onChange(function(value){
-        });
+
+
+        let curveFolder = ui.addFolder('IntegralCurve');
+
+        curveFolder.add(this.params,'initialX',-10,10,0.01);
+        curveFolder.add(this.params,'initialY',-10,10,0.01);
+
+        curveFolder.add(this.params,'showCurve').onChange(
+            function(value){
+                thisCurve.toggleVisibility();
+            }
+        )
+
+
+
 
 
         ui.add(this.params,'yPrimeText').name('yPrime=');
@@ -253,6 +278,16 @@ class SlopeFieldPlotter{
                 thisCurve.setYPrime(eqn);
             }
         )
+
+        let paramFolder = ui.addFolder('Parameters');
+
+        paramFolder.add(this.params, 'a', -2, 2, 0.01).name('a').onChange(function(value){
+        });
+        paramFolder.add(this.params, 'b', -2, 2, 0.01).name('b').onChange(function(value){
+        });
+        paramFolder.add(this.params, 'c', -2, 2, 0.01).name('c').onChange(function(value){
+        });
+
     }
 
     tick(time,dTime){

@@ -30,6 +30,9 @@ class VectorField2DPlotter{
             yMin: range.y.min,
             yMax: range.y.max,
 
+            initialX:0,
+            initialY:0,
+
             a:1,
             b:1,
             c:1,
@@ -38,6 +41,8 @@ class VectorField2DPlotter{
 
             xPrimeText: 'cos(x)+sin(y)+sin(x+y+t)',
             yPrimeText: 'sin(x*y+t)',
+
+            showCurve: true,
 
             reset: function(){
                 console.log('reset');
@@ -66,12 +71,14 @@ class VectorField2DPlotter{
     }
 
     addToUI(ui){
-        let domainFolder =ui.addFolder('Domain');
-        let paramFolder =ui.addFolder('Parameters');
+
         let thisObj = this;
         let thisBoard = this.blackboard;
         let thisField = this.vectorField;
         let thisCurve = this.integralCurve;
+
+
+        let domainFolder =ui.addFolder('Domain');
 
 
         domainFolder.add(this.params, 'xMin', -10, 10, 0.01).name('xMin').onChange(function(value){
@@ -112,12 +119,32 @@ class VectorField2DPlotter{
         });
 
 
-        paramFolder.add(this.params, 'a', -2, 2, 0.01).name('a').onChange(function(value){
-        });
-        paramFolder.add(this.params, 'b', -2, 2, 0.01).name('a').onChange(function(value){
-        });
-        paramFolder.add(this.params, 'c', -2, 2, 0.01).name('a').onChange(function(value){
-        });
+        let curveFolder = ui.addFolder('IntegralCurve');
+
+        curveFolder.add(this.params,'initialX',-10,10,0.01).onChange(
+            function(value){
+                let iniCond = new Vector2(value,thisObj.iniCond.y);
+                thisCurve.setInitialCondition(iniCond);
+                thisCurve.computeCurve(thisObj.params);
+                thisCurve.resetCurve(thisCurve.curve);
+            }
+        );
+        curveFolder.add(this.params,'initialY',-10,10,0.01).onChange(
+            function(value){
+                let iniCond = new Vector2(thisObj.iniCond.x,value);
+                thisCurve.setInitialCondition(iniCond);
+                thisCurve.computeCurve(thisObj.params);
+                thisCurve.resetCurve(thisCurve.curve);
+            }
+        );
+
+        curveFolder.add(this.params,'showCurve').onChange(
+            function(value){
+                thisCurve.toggleVisibility();
+            }
+        )
+
+
 
         ui.add(this.params,'xPrimeText').name('xPrime=');
         ui.add(this.params,'yPrimeText').name('yPrime=');
@@ -139,6 +166,19 @@ class VectorField2DPlotter{
                 thisCurve.setYPrime(eqn);
             }
         )
+
+
+        let paramFolder =ui.addFolder('Parameters');
+
+        paramFolder.add(this.params, 'a', -2, 2, 0.01).name('a').onChange(function(value){
+        });
+        paramFolder.add(this.params, 'b', -2, 2, 0.01).name('a').onChange(function(value){
+        });
+        paramFolder.add(this.params, 'c', -2, 2, 0.01).name('a').onChange(function(value){
+        });
+
+
+
     }
 
     tick(time,dTime){
