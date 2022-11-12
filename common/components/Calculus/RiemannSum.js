@@ -17,13 +17,12 @@ import {
 
 
 class RiemannSum{
-    constructor( curve, range, N ){
+    constructor( curve, range, N, thickness=0.15 ){
+
         this.curve = curve;
-
-        console.log(this.curve);
-
         this.range = range;
         this.N = N;
+        this.thickness=thickness;
 
         //dummy object to be able to make the matrix for each case:
         this.dummy = new Object3D();
@@ -31,12 +30,17 @@ class RiemannSum{
         //this index is always between 0 and this.N-1
         this.getCoords = function(index){
             let span = (this.range.max-this.range.min);
-            let xPercent = index / this.N;
+
+            //midpoint Riemann Sum
+            let xPercent = (index+0.5) / this.N;
             let xVal = span * xPercent + this.range.min;
+
             return xVal;
         }
 
         this.initialize();
+
+        this.value;
     }
 
 
@@ -75,6 +79,9 @@ class RiemannSum{
 
             for(let index = 0; index<this.totalCount; index++) {
 
+                //calculate the value of the Riemann Sum
+                this.value=0;
+
                 //what point in the (x,y) plane does this index represent?
                 xCoord = this.getCoords(index);
                 //get the y-Value at this point
@@ -87,7 +94,10 @@ class RiemannSum{
                 //scale the object correctly: stretch out in the x and y directions
                 xScale = (this.range.max-this.range.min)/this.N;
                 yScale = Math.abs(yVal);
-                this.dummy.scale.set(xScale,yScale,0.15);
+                this.dummy.scale.set(xScale,yScale,this.thickness);
+
+                //add the area of this new rectangle onto the sum
+                this.value += xScale*yVal;
 
                 //set the color of this instance:
                 //make it different for positive and negative areas:
@@ -133,6 +143,13 @@ class RiemannSum{
         this.N=N;
     }
 
+    setVisibility(value){
+        this.barGraph.visible=value;
+    }
+
+    getValue(){
+        return this.value;
+    }
 
 }
 

@@ -1,14 +1,4 @@
-import {
-    CatmullRomCurve3,
-    Vector2,
-    Vector3,
-    DoubleSide,
-    SphereBufferGeometry,
-    MeshPhysicalMaterial,
-    Mesh
-} from "../../3party/three/build/three.module.js";
 
-import { getRange } from "../math/functions_singleVar.js";
 import RiemannSum from "../components/Calculus/RiemannSum.js";
 import Graph2D from "../components/Calculus/Graph2D.js";
 

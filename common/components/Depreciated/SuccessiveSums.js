@@ -1,6 +1,4 @@
-import{ FogExp2 } from "../../3party/three/build/three.module.js";
-
-import{ RiemannSum } from "../components/Depreciated/RiemannSum.js";
+import {RiemannSum} from "./RiemannSum.js";
 
 class SuccessiveSums{
    constructor( options ){
