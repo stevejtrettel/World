@@ -172,6 +172,8 @@ class SlopeFieldPlotter{
 
             yPrimeText: 'sin(x*y+t)',
 
+            showCurve: true,
+
             reset: function(){
                 console.log('reset');
             }
@@ -247,15 +249,28 @@ class SlopeFieldPlotter{
 
         let curveFolder = ui.addFolder('IntegralCurve');
 
-        curveFolder.add(this.params,'initialX',-10,10,0.01);
-        curveFolder.add(this.params,'initialY',-10,10,0.01);
+        curveFolder.add(this.params,'initialX',-10,10,0.01).onChange(
+            function(value){
+                let iniCond = new Vector2(value,thisObj.iniCond.y);
+                thisCurve.setInitialCondition(iniCond);
+                thisCurve.computeCurve(thisObj.params);
+                thisCurve.resetCurve(thisCurve.curve);
+            }
+        );
+        curveFolder.add(this.params,'initialY',-10,10,0.01).onChange(
+            function(value){
+                let iniCond = new Vector2(thisObj.iniCond.x,value);
+                thisCurve.setInitialCondition(iniCond);
+                thisCurve.computeCurve(thisObj.params);
+                thisCurve.resetCurve(thisCurve.curve);
+            }
+        );
 
         curveFolder.add(this.params,'showCurve').onChange(
             function(value){
                 thisCurve.toggleVisibility();
             }
         )
-
 
 
 
