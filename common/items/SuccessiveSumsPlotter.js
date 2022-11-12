@@ -1,4 +1,4 @@
-import{ FogExp2 } from "../../3party/three/build/three.module.js";
+
 import RiemannSum from "../components/Calculus/RiemannSum.js";
 
 
@@ -60,6 +60,8 @@ class SuccessiveSumsPlotter{
 
     initialize(){
         this.sums = [];
+
+
         let singleSum, numBars;
         let barCount = 1;
         for(let i =0; i<this.numSums; i++){
@@ -74,6 +76,8 @@ class SuccessiveSumsPlotter{
             singleSum.barGraph.position.set(0,0,(this.numSums/2-i)*this.thickness);
             this.sums.push(singleSum);
         }
+
+
     }
 
     addToScene(scene){

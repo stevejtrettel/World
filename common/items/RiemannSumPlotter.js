@@ -1,12 +1,75 @@
 
 import RiemannSum from "../components/Calculus/RiemannSum.js";
 import Graph2D from "../components/Calculus/Graph2D.js";
-
-import { GlassPanel } from "../components/calculus/GlassPanel.js";
-
+import {BoxBufferGeometry, MeshPhysicalMaterial, Mesh} from "../../3party/three/build/three.module.js";
 
 //using GLOBAL object math.parser: this is from the 3rd party math file loaded in the html
 const parser = math.parser();
+
+
+
+class AccumulationBlock{
+    constructor(curve,range,N){
+       this.curve=curve;
+       this.range=range;
+       this.N=N;
+
+        //make a block for keeping track of the net area
+        let blockGeom = new BoxBufferGeometry(1,1,1);
+        let blockMat = new MeshPhysicalMaterial();
+        this.block = new Mesh(blockGeom,blockMat);
+        this.block.position.set(this.range.min,0,-2);
+        this.block.scale.set(1,0.001,1);
+    }
+
+    addToScene(scene){
+        scene.add(this.block);
+    }
+
+    setCurve(curve){
+        this.curve=curve;
+    }
+
+    setRange(domain){
+        this.domain=domain;
+    }
+
+    setN(N){
+        this.N=N;
+    }
+
+    setVisibility(value){
+        this.block.visible=value;
+    }
+
+    //get the Riemann sum only up to the current Index
+    update(currentIndex, params){
+
+        let spread = this.range.max-this.range.min;
+        let deltaX = spread/this.N;
+        //discrete x-location of the box: so it moves forward one Riemann sum block at at time
+        let xLoc = spread*(currentIndex/this.N) + this.range.min;
+
+        //add up all the values to compute the Riemann Sum!
+        let totalVal = 0;
+        let xVal,yVal;
+        for(let i=0; i<currentIndex; i++){
+            //midpoint sum
+            xVal = spread * (i+1/2)/this.N + this.range.min;
+            yVal = this.curve(xVal, params);
+            totalVal += yVal*deltaX;
+        }
+
+        //put our summation rectangle in the right position and scale:
+        this.block.position.set(xLoc,totalVal/2,-2.);
+        this.block.scale.set(1,totalVal,1);
+    }
+
+}
+
+
+
+
 
 class RiemannSumPlotter{
     constructor(range,N){
@@ -17,6 +80,8 @@ class RiemannSumPlotter{
 
             N:N,
 
+            accumulate:0,
+
             a:1,
             b:1,
             c:1,
@@ -26,17 +91,12 @@ class RiemannSumPlotter{
             curveText: 'cos(x)+x/(1+x*x)',
 
             showCurve:true,
+            showAccumulate:false,
 
             reset: function(){
                 console.log('reset');
             }
         };
-
-        // this.blackboard = new GlassPanel({
-        //     xRange: range.x,
-        //     yRange: range.y,
-        // });
-
 
         //define the function which gives our curve:
         let func = parser.evaluate('curve(x,t,a,b,c)='.concat(this.params.curveText));
@@ -49,7 +109,6 @@ class RiemannSumPlotter{
 
         this.riemannSum = new RiemannSum(this.curve, range, N);
 
-
         let graphOptions = {
             domain:range,
             radius:0.03,
@@ -60,40 +119,54 @@ class RiemannSumPlotter{
 
         this.functionGraph = new Graph2D(graphOptions);
 
+        this.netArea = new AccumulationBlock(
+            this.curve,
+            {min:this.params.xMin, max:this.params.xMax},
+            this.params.N
+        );
+        this.netArea.setVisibility(this.params.showAccumulate);
+
     }
 
     addToScene(scene){
         this.riemannSum.addToScene(scene);
         this.functionGraph.addToScene(scene);
-        //this.blackboard.addToScene(scene);
+        this.netArea.addToScene(scene);
     }
 
     addToUI(ui){
 
         let thisObj = this;
-       // let thisBoard = this.blackboard;
         let thisBarGraph = this.riemannSum;
+        let thisAccBar = this.netArea;
         let thisFunctionGraph = this.functionGraph;
 
         let domainFolder =ui.addFolder('Domain');
 
         domainFolder.add(this.params, 'xMin', -10, 10, 0.01).name('xMin').onChange(function(value){
-            let rng = {
-                x:{min:value,max:thisBarGraph.range.max},
-            };
+            let rng = {min:value,max:thisBarGraph.range.max};
             thisBarGraph.setRange(rng);
+            thisAccBar.setRange(rng);
+
         });
 
         domainFolder.add(this.params, 'xMax', -10, 10, 0.01).name('xMax').onChange(function(value){
-            let rng = {
-                x:{min: thisBarGraph.range.min, max: value}
-            };
+            let rng = {min: thisBarGraph.range.min, max: value};
             thisBarGraph.setRange(rng);
+            thisAccBar.setRange(rng);
         });
 
-        ui.add(this.params,'N', 1,thisBarGraph.totalCount,1).name('Number of Rectangles').onChange(function(value){
+        ui.add(this.params,'showCurve').onChange(
+            function(value){
+                thisFunctionGraph.setVisibility(value);
+            }
+        );
+
+        ui.add(this.params,'N', 1,thisBarGraph.totalCount,1).name('Bars').onChange(function(value){
            thisBarGraph.setN(value);
+           thisAccBar.setN(value);
         });
+
 
         ui.add(this.params,'curveText').name('y=');
 
@@ -123,17 +196,34 @@ class RiemannSumPlotter{
         paramFolder.add(this.params, 'c', -2, 2, 0.01).name('a').onChange(function(value){
         });
 
-        ui.add(this.params,'showCurve').onChange(
+        let integrationFolder =ui.addFolder('Integration');
+
+        integrationFolder.add(this.params,'accumulate', 0,1,0.001).name('Integrate').onChange(function(value){
+
+            let currentIndex = Math.floor(value * thisObj.params.N);
+            thisAccBar.update(currentIndex, thisObj.params);
+
+        });
+
+        integrationFolder.add(this.params,'showAccumulate').name('Show Integral').onChange(
             function(value){
-                thisFunctionGraph.setVisibility(value);
+                thisAccBar.setVisibility(value);
             }
-        )
+        );
+
+
+
 
     }
 
     tick(time,dTime){
         this.params.time=time;
         this.riemannSum.update(this.params);
+
+        if(this.params.showAccumulate) {
+            let currentIndex = Math.floor(this.params.accumulate * this.params.N);
+            this.netArea.update(currentIndex, this.params);
+        }
 
         //only do this computation if the curve is visible!
         //otherwise its a waste
