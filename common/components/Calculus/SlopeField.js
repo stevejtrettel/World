@@ -99,7 +99,7 @@ class SlopeField{
 
     //re-orient all of the slopes!
     //use the current this.slope function: this is updated somewhere else
-    update(time, params){
+    update(params){
 
         if ( this.slopes ) {//if its been initialized
 
@@ -109,27 +109,19 @@ class SlopeField{
                 //what point in the (x,y) plane does this index represent?
                 coords = this.getCoords(index);
                 //get the slope at this point
-                vF = this.yPrime(coords, time, params);
+                vF = this.yPrime(coords, params);
                 //get the rotation angle this slope signifies:
                 //rotating BACKWARDS from the y-axis
                 let theta = -Math.atan2(vF.x, vF.y);
+
                 //build a matrix on this.dummy that moves it to the position specified by coords
                 this.dummy.position.set(coords.x, coords.y, 0.08);
 
                 //build in the rotational part of this matrix
-                //this.dummy.lookAt(coords.x+vF.x,coords.y+vF.y,0.08);
                 this.dummy.rotation.z = theta;
 
-                //set the scale:
-                let mag = vF.length();
-                let rescale = 2.*Math.tanh(mag/2.);
-                this.dummy.scale.set(rescale,rescale,rescale);
-
                 //set the color of this instance:
-                //use slope or xy data to do so?
                 let color = new Color().setHSL(theta/Math.PI, 0.4, 0.6)
-
-                //update the actual color at this point!
                 this.slopes.setColorAt(index, color);
 
                 //update the actual matrix at this point!!!

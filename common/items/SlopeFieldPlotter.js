@@ -27,28 +27,28 @@ class SlopeFieldRungeKutta{
     }
 
     //step forwards one timestep
-    step(pos,time,params){
+    step(pos,params){
 
         let k1,k2,k3,k4;
         let temp;
 
         //get the derivative
-        k1 =  this.yPrime(pos,time,params);
+        k1 =  this.yPrime(pos,params);
         k1.multiplyScalar(this.ep);
 
         //get k2
         temp=pos.clone().add(k1.clone().multiplyScalar(0.5));
-        k2 =  this.yPrime(temp,time,params);
+        k2 =  this.yPrime(temp,params);
         k2.multiplyScalar(this.ep);
 
         //get k3
         temp=pos.clone().add(k2.clone().multiplyScalar(0.5));
-        k3 =  this.yPrime(temp,time,params);
+        k3 =  this.yPrime(temp,params);
         k3.multiplyScalar(this.ep);
 
         //get k4
         temp=pos.clone().add(k3.multiplyScalar(1.));
-        k4 =  this.yPrime(temp,time,params);
+        k4 =  this.yPrime(temp,params);
         k4.multiplyScalar(this.ep);
 
         //add up results:
@@ -124,14 +124,14 @@ class SlopeFieldIntegralCurve{
 
     }
 
-    computeCurve(time=0, params={a:0,b:0,c:0}){
+    computeCurve(params={a:0,b:0,c:0,time:0}){
 
         let pts = [];
         let currentState = this.iniCond.clone();
 
         for(let i=0; i<this.N; i++){
 
-            currentState = this.integrator.step(currentState, time, params);
+            currentState = this.integrator.step(currentState, params);
 
             if(currentState.x>this.range.x.max) {
                 pts.push(new Vector3(this.range.x.max,currentState.y,0.1));
@@ -203,6 +203,8 @@ class SlopeFieldPlotter{
             b:1,
             c:1,
 
+            time:0,
+
             yPrimeText: 'sin(x*y+t)',
 
             reset: function(){
@@ -212,9 +214,9 @@ class SlopeFieldPlotter{
 
         let yC = parser.evaluate('yPrime(x,y,t,a,b,c)='.concat(this.params.yPrimeText));
 
-        this.yPrime = function(pos,time,params){
+        this.yPrime = function(pos,params){
             let x = 1;
-            let y = yC(pos.x,pos.y,time,params.a,params.b,params.c);
+            let y = yC(pos.x,pos.y, params.time,params.a,params.b,params.c);
             return new Vector2(x,y);
         }
 
@@ -291,9 +293,9 @@ class SlopeFieldPlotter{
 
                 let yC = parser.evaluate('yPrime(x,y,t,a,b,c)='.concat(thisObj.params.yPrimeText));
 
-                let eqn = function(pos,time,params){
+                let eqn = function(pos,params){
                     let x = 1;
-                    let y = yC(pos.x,pos.y,time,params.a,params.b,params.c);
+                    let y = yC(pos.x,pos.y,params.time,params.a,params.b,params.c);
                     return new Vector2(x,y);
                 }
 
@@ -306,9 +308,10 @@ class SlopeFieldPlotter{
 
     tick(time,dTime){
 
-        this.slopeField.update(time,this.params);
+        this.params.time=time;
+        this.slopeField.update(this.params);
 
-        this.integralCurve.computeCurve(time,this.params);
+        this.integralCurve.computeCurve(this.params);
         this.integralCurve.resetCurve(this.integralCurve.curve);
 
     }

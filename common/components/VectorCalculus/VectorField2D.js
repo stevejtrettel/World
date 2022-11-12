@@ -101,7 +101,7 @@ class VectorField2D{
 
     //re-orient all of the slopes!
     //use the current this.slope function: this is updated somewhere else
-    update(time, params){
+    update(params){
         if ( this.vectors ) {//if its been initialized
 
             let coords, vF;
@@ -110,7 +110,7 @@ class VectorField2D{
                 //what point in the (x,y) plane does this index represent?
                 coords = this.getCoords(index);
                 //get the slope at this point
-                vF = this.vectorField(coords, time, params);
+                vF = this.vectorField(coords, params);
                 //get the rotation angle this slope signifies:
                 //rotating BACKWARDS from the y-axis
                 let theta = -Math.atan2(vF.x, vF.y);

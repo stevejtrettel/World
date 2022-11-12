@@ -33,6 +33,8 @@ class VectorField2DPlotter{
             b:1,
             c:1,
 
+            time:0,
+
             xPrimeText: 'cos(x)+sin(y)+sin(x+y+t)',
             yPrimeText: 'sin(x*y+t)',
 
@@ -44,9 +46,9 @@ class VectorField2DPlotter{
         let xC = parser.evaluate('xPrime(x,y,t,a,b,c)='.concat(this.params.xPrimeText));
         let yC = parser.evaluate('yPrime(x,y,t,a,b,c)='.concat(this.params.yPrimeText));
 
-        this.vectorFieldEqn = function(pos,time,params){
-            let x = xC(pos.x,pos.y,time,params.a,params.b,params.c);
-            let y = yC(pos.x,pos.y,time,params.a,params.b,params.c);
+        this.vectorFieldEqn = function(pos, params){
+            let x = xC(pos.x,pos.y,params.time,params.a,params.b,params.c);
+            let y = yC(pos.x,pos.y,params.time,params.a,params.b,params.c);
             return new Vector2(x,y);
         }
 
@@ -117,9 +119,9 @@ class VectorField2DPlotter{
                 let xC = parser.evaluate('xPrime(x,y,t,a,b,c)='.concat(thisObj.params.xPrimeText));
                 let yC = parser.evaluate('yPrime(x,y,t,a,b,c)='.concat(thisObj.params.yPrimeText));
 
-                 let eqn = function(pos,time,params){
-                    let x = xC(pos.x,pos.y,time,params.a,params.b,params.c);
-                    let y = yC(pos.x,pos.y,time,params.a,params.b,params.c);
+                 let eqn = function(pos,params){
+                    let x = xC(pos.x,pos.y,params.time,params.a,params.b,params.c);
+                    let y = yC(pos.x,pos.y,params.time,params.a,params.b,params.c);
                     return new Vector2(x,y);
                 }
 
@@ -131,7 +133,8 @@ class VectorField2DPlotter{
 
     tick(time,dTime){
 
-        this.vectorField.update(time,this.params);
+        this.params.time=time;
+        this.vectorField.update(this.params);
 
     }
 
