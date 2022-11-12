@@ -179,6 +179,7 @@ class RiemannSumPlotter{
                     return y;
                 }
 
+                thisObj.params.time=0;
                 thisObj.curve = eqn;
                 thisBarGraph.setCurve(eqn);
                 thisFunctionGraph.setFunction(eqn);
@@ -191,9 +192,9 @@ class RiemannSumPlotter{
 
         paramFolder.add(this.params, 'a', -2, 2, 0.01).name('a').onChange(function(value){
         });
-        paramFolder.add(this.params, 'b', -2, 2, 0.01).name('a').onChange(function(value){
+        paramFolder.add(this.params, 'b', -2, 2, 0.01).name('b').onChange(function(value){
         });
-        paramFolder.add(this.params, 'c', -2, 2, 0.01).name('a').onChange(function(value){
+        paramFolder.add(this.params, 'c', -2, 2, 0.01).name('c').onChange(function(value){
         });
 
         let integrationFolder =ui.addFolder('Integration');
@@ -217,7 +218,7 @@ class RiemannSumPlotter{
     }
 
     tick(time,dTime){
-        this.params.time=time;
+        this.params.time += dTime;
         this.riemannSum.update(this.params);
 
         if(this.params.showAccumulate) {

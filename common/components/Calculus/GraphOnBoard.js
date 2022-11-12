@@ -1,5 +1,5 @@
 import {getRange} from "../../math/functions_singleVar.js";
-import {Graph2D} from "./Graph2D.js";
+import Graph2D from "./Graph2D.js";
 import {BlackBoard} from "./Blackboard.js";
 
 //class to draw a graph on a board, and automatically deal with resizing the range/domain etc
@@ -55,18 +55,21 @@ class GraphOnBoard{
         this.blackboard.setVisibility(value);
     }
 
-    resetDomain( newDomain ){
-        this.graph.resetDomain(this.domain);
+    setDomain( newDomain ){
+        this.graph.setDomain(this.domain);
         this.range = getRange(this.f,this.domain);
         this.blackboard.resize(this.domain,this.range);
     }
 
-    resetFunction( newFunction ){
+    setFunction( newFunction ){
         this.f=newFunction;
-        this.graph.updateGraph();
+        this.graph.update();
         this.range = getRange(this.f, this.domain);
         this.blackboard.resize(this.domain, this.range);
     }
+
+
+
 }
 
 

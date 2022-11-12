@@ -126,6 +126,8 @@ class SuccessiveSumsPlotter{
         ui.add(this.params, 'reset').onChange(
             function(){
 
+                thisObj.params.time=0;
+
                 let curve = parser.evaluate('curve(x,t,a,b,c)='.concat(thisObj.params.curveText));
                 let eqn = function(x,params={time:0,a:0,b:0,c:0}){
                     let y = curve(x, params.time,params.a,params.b,params.c);
@@ -153,7 +155,8 @@ class SuccessiveSumsPlotter{
     }
 
     tick(time,dTime){
-        this.params.time=time;
+
+        this.params.time += dTime;
 
         for(let i=0; i<this.numSums; i++){
             if(this.sums[i].barGraph.visible){
