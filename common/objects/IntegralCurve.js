@@ -26,7 +26,6 @@ class IntegralCurve {
         this.curve=null;
         this.integrate( this.state );
 
-
         //build a tube around this
 
         const curveOptions = {
@@ -55,7 +54,12 @@ class IntegralCurve {
 
         for(let i=0; i<this.N; i++){
 
-            p = this.parameterization( currentState.pos.clone() );
+            if(currentState.pos) {
+                p = this.parameterization(currentState.pos.clone());
+            }
+            else{
+                p=this.parameterization(currentState.clone());
+            }
             pts.push( p.clone() );
 
             currentState = this.integrator.step( currentState );

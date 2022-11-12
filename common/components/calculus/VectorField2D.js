@@ -6,17 +6,17 @@ import {
     Vector3,
     Object3D,
     Color,
-    DynamicDrawUsage, SphereBufferGeometry, DoubleSide, BufferGeometry
+    DynamicDrawUsage, SphereBufferGeometry, DoubleSide, BufferGeometry, ConeBufferGeometry
 } from "../../../3party/three/build/three.module.js";
 
 import{ mergeBufferGeometries } from "../../../3party/three/examples/jsm/utils/BufferGeometryUtils.js"
 
-class SlopeField{
-    constructor(yPrime,range, res){
+class VectorField2D{
+    constructor(vectorField, range, res){
 
         this.range = range;
         this.res = res;
-        this.yPrime = yPrime;
+        this.vectorField = vectorField;
 
         //how many meshes are there?
         this.count = this.res.x * this.res.y;
@@ -56,16 +56,10 @@ class SlopeField{
         let length = 0.8* Math.min(xRng/this.res.x,yRng/this.res.y);
         let rad = 0.1*length;
 
-        let path = new CatmullRomCurve3([new Vector3(-length/2,0,0), new Vector3(length/2,0,0)]);
-        let tubeGeometry = new TubeBufferGeometry(path,2,rad,16,false);
+        let coneGeometry = new ConeBufferGeometry(rad,length,16,1);
 
-        this.baseGeometry = tubeGeometry;
+        this.baseGeometry = coneGeometry;
 
-        // let ballGeometry = new SphereBufferGeometry(rad,32,16);
-        // let end1 = ballGeometry.clone().translate(-length/2,0,0);
-        // let end2 = ballGeometry.clone().translate(length/2,0,0);
-        //
-        // this.baseGeometry = mergeBufferGeometries([tubeGeometry,end1,end2]);
     }
 
 
@@ -76,20 +70,20 @@ class SlopeField{
             side: DoubleSide,
         });
 
-        this.field = new InstancedMesh( this.baseGeometry, material, this.count );
-        this.field.instanceMatrix.setUsage( DynamicDrawUsage ); // will be updated every frame
+        this.vectors = new InstancedMesh( this.baseGeometry, material, this.count );
+        this.vectors.instanceMatrix.setUsage( DynamicDrawUsage ); // will be updated every frame
     }
 
 
 
     addToScene(scene){
-        scene.add(this.field);
+        scene.add(this.vectors);
     }
 
 
     //switch out the differential equation
-    setDiffEq(fn){
-        this.yPrime=fn;
+    setVectorField(fn){
+        this.vectorField=fn;
     }
 
     setRange(range){
@@ -106,7 +100,7 @@ class SlopeField{
     //re-orient all of the slopes!
     //use the current this.slope function: this is updated somewhere else
     update(time,a=0,b=0,c=0){
-        if ( this.field ) {//if its been initialized
+        if ( this.vectors ) {//if its been initialized
 
             let coords, yPrime;
             for(let index = 0; index<this.count; index++) {
@@ -115,7 +109,7 @@ class SlopeField{
                 coords = this.getCoords(index);
                 //get the slope at this point
                 //time is an optional coordinate in the yPrime function
-                yPrime = this.yPrime(coords.x, coords.y,time,a,b,c);
+                yPrime = this.slope(coords.x, coords.y,time,a,b,c);
                 //get the rotation angle this slope signifies:
                 let theta = Math.atan2(yPrime, 1);
 
@@ -130,18 +124,18 @@ class SlopeField{
 
 
                 //update the actual color at this point!
-                this.field.setColorAt(index, color);
+                this.vectors.setColorAt(index, color);
 
                 //update the actual matrix at this point!!!
                 this.dummy.updateMatrix();
-                this.field.setMatrixAt(index, this.dummy.matrix);
+                this.vectors.setMatrixAt(index, this.dummy.matrix);
 
             }
 
-            this.field.instanceMatrix.needsUpdate = true;
-            this.field.instanceColor.needsUpdate = true;
+            this.vectors.instanceMatrix.needsUpdate = true;
+            this.vectors.instanceColor.needsUpdate = true;
 
-         }
+        }
 
     }
 
@@ -149,4 +143,4 @@ class SlopeField{
 }
 
 
-export default SlopeField;
+export default VectorField2D;

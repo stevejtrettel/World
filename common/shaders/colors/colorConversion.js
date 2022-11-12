@@ -35,6 +35,7 @@ vec3 cubehelix(vec3 c) {
   ));
 }
 
+float TWO_PI = 6.28318530718;
 vec3 rainbowGradient(float t) {
   return cubehelix(vec3(
     TWO_PI * t - 1.74533,
