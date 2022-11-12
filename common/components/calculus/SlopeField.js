@@ -6,7 +6,10 @@ import {
     Vector3,
     Object3D,
     Color,
-    DynamicDrawUsage, SphereBufferGeometry, DoubleSide, BufferGeometry
+    DynamicDrawUsage,
+    SphereBufferGeometry,
+    DoubleSide,
+    BufferGeometry
 } from "../../../3party/three/build/three.module.js";
 
 import{ mergeBufferGeometries } from "../../../3party/three/examples/jsm/utils/BufferGeometryUtils.js"

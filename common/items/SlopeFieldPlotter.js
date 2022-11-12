@@ -223,13 +223,6 @@ class SlopeFieldPlotter{
         this.iniCond = new Vector2(0,0);
         this.integralCurve = new SlopeFieldIntegralCurve(this.yPrime,this.iniCond,range);
 
-
-        this.reset=function(){
-            this.yPrime=parser.evaluate('yPrime(x,y,t,a,b,c)='.concat(value));
-            this.slopeField.setDiffEq(this.yPrime);
-            this.integralCurve.setDiffEq(this.yPrime);
-        };
-
     }
 
     addToScene(scene){

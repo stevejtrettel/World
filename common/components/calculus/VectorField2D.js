@@ -1,15 +1,15 @@
 import {
     InstancedMesh,
-    CatmullRomCurve3,
-    TubeBufferGeometry,
     MeshPhysicalMaterial,
     Vector3,
     Object3D,
     Color,
-    DynamicDrawUsage, SphereBufferGeometry, DoubleSide, BufferGeometry, ConeBufferGeometry
+    DynamicDrawUsage,
+    DoubleSide,
+    ConeBufferGeometry,
+    Vector2
 } from "../../../3party/three/build/three.module.js";
 
-import{ mergeBufferGeometries } from "../../../3party/three/examples/jsm/utils/BufferGeometryUtils.js"
 
 class VectorField2D{
     constructor(vectorField, range, res){
@@ -41,7 +41,7 @@ class VectorField2D{
             let yRng = (this.range.y.max-this.range.y.min);
             let yVal = yRng * yPercent + this.range.y.min;
 
-            return {x:xVal, y:yVal};
+            return new Vector2(xVal,yVal);
         }
 
         this.initialize();
@@ -71,6 +71,8 @@ class VectorField2D{
         });
 
         this.vectors = new InstancedMesh( this.baseGeometry, material, this.count );
+        //rotate so its pointing the right way: along the x axis as default:
+        this.vectors.rotateZ(-Math.PI/2);
         this.vectors.instanceMatrix.setUsage( DynamicDrawUsage ); // will be updated every frame
     }
 
@@ -99,19 +101,18 @@ class VectorField2D{
 
     //re-orient all of the slopes!
     //use the current this.slope function: this is updated somewhere else
-    update(time,a=0,b=0,c=0){
+    update(time, data){
         if ( this.vectors ) {//if its been initialized
 
-            let coords, yPrime;
+            let coords, vF;
             for(let index = 0; index<this.count; index++) {
 
                 //what point in the (x,y) plane does this index represent?
                 coords = this.getCoords(index);
                 //get the slope at this point
-                //time is an optional coordinate in the yPrime function
-                yPrime = this.slope(coords.x, coords.y,time,a,b,c);
+                vF = this.vectorField(coords, time, data);
                 //get the rotation angle this slope signifies:
-                let theta = Math.atan2(yPrime, 1);
+                let theta = Math.atan2(vF.y, vF.x);
 
                 //build a matrix on this.dummy that moves it to the position specified by coords
                 this.dummy.position.set(coords.x, coords.y, 0.08);
