@@ -280,7 +280,7 @@ let example = new SlopeFieldPlotter(range, res);
 
 export default {example};
 
-
+export { SlopeFieldIntegralCurve };
 
 
 

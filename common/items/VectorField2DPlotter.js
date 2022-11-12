@@ -8,6 +8,7 @@ import {
     Mesh
 } from "../../3party/three/build/three.module.js";
 
+import {SlopeFieldIntegralCurve } from "./SlopeFieldPlotter.js";
 import VectorField2D from "../components/VectorCalculus/VectorField2D.js";
 import { GlassPanel } from "../components/calculus/GlassPanel.js";
 
@@ -53,12 +54,15 @@ class VectorField2DPlotter{
         }
 
         this.vectorField = new VectorField2D(this.vectorFieldEqn, range, res);
+        this.iniCond = new Vector2(0,0);
+        this.integralCurve = new SlopeFieldIntegralCurve(this.vectorFieldEqn, this.iniCond, range);
 
     }
 
     addToScene(scene){
         this.vectorField.addToScene(scene);
         this.blackboard.addToScene(scene);
+        this.integralCurve.addToScene(scene);
     }
 
     addToUI(ui){
@@ -67,6 +71,7 @@ class VectorField2DPlotter{
         let thisObj = this;
         let thisBoard = this.blackboard;
         let thisField = this.vectorField;
+        let thisCurve = this.integralCurve;
 
 
         domainFolder.add(this.params, 'xMin', -10, 10, 0.01).name('xMin').onChange(function(value){
@@ -75,6 +80,7 @@ class VectorField2DPlotter{
                 y:{min:thisField.range.y.min, max:thisField.range.y.max}
             };
             thisField.setRange(rng);
+            thisCurve.setRange(rng);
         });
 
 
@@ -84,6 +90,7 @@ class VectorField2DPlotter{
                 y:{min: thisField.range.y.min, max: thisField.range.y.max}
             };
             thisField.setRange(rng);
+            thisCurve.setRange(rng);
         });
 
         domainFolder.add(this.params, 'yMin', -10, 10, 0.01).name('yMin').onChange(function(value){
@@ -92,6 +99,7 @@ class VectorField2DPlotter{
                 y:{min:value, max:thisField.range.y.max}
             };
             thisField.setRange(rng);
+            thisCurve.setRange(rng);
         });
 
         domainFolder.add(this.params, 'yMax', -10, 10, 0.01).name('yMin').onChange(function(value){
@@ -100,6 +108,7 @@ class VectorField2DPlotter{
                 y:{min:thisField.range.y.min, max:value }
             };
             thisField.setRange(rng);
+            thisCurve.setRange(rng);
         });
 
 
@@ -127,6 +136,7 @@ class VectorField2DPlotter{
 
                 thisObj.vectorFieldEqn = eqn;
                 thisField.setVectorField(eqn);
+                thisCurve.setYPrime(eqn);
             }
         )
     }
@@ -135,6 +145,9 @@ class VectorField2DPlotter{
 
         this.params.time=time;
         this.vectorField.update(this.params);
+
+        this.integralCurve.computeCurve(this.params);
+        this.integralCurve.resetCurve(this.integralCurve.curve);
 
     }
 
