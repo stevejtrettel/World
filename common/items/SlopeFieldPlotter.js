@@ -8,6 +8,7 @@ import {
     Mesh
 } from "../../3party/three/build/three.module.js";
 
+import RungeKuttaParams from "../cpu/RungeKuttaParams.js";
 import SlopeField from "../components/calculus/SlopeField.js";
 import { GlassPanel } from "../components/calculus/GlassPanel.js";
 import {colorConversion} from "../shaders/colors/colorConversion.js";
@@ -16,58 +17,6 @@ import {ParametricTube} from "../objects/ParametricTube.js";
 
 //using GLOBAL object math.parser: this is from the 3rd party math file loaded in the html
 const parser = math.parser();
-
-
-class SlopeFieldRungeKutta{
-
-    //slope is a function taking in x,y,time and spitting out a real number yPrime:
-    constructor(yPrime,ep){
-        this.yPrime=yPrime;
-        this.ep=ep;
-    }
-
-    //step forwards one timestep
-    step(pos,params){
-
-        let k1,k2,k3,k4;
-        let temp;
-
-        //get the derivative
-        k1 =  this.yPrime(pos,params);
-        k1.multiplyScalar(this.ep);
-
-        //get k2
-        temp=pos.clone().add(k1.clone().multiplyScalar(0.5));
-        k2 =  this.yPrime(temp,params);
-        k2.multiplyScalar(this.ep);
-
-        //get k3
-        temp=pos.clone().add(k2.clone().multiplyScalar(0.5));
-        k3 =  this.yPrime(temp,params);
-        k3.multiplyScalar(this.ep);
-
-        //get k4
-        temp=pos.clone().add(k3.multiplyScalar(1.));
-        k4 =  this.yPrime(temp,params);
-        k4.multiplyScalar(this.ep);
-
-        //add up results:
-        let total = k1;//scale factor 1
-        total.add(k2.multiplyScalar(2));
-        total.add(k3.multiplyScalar(2));
-        total.add(k4);//scale factor 1
-        total.multiplyScalar(1/6);
-
-        //move ahead one step
-        let nextPos = pos.clone().add(total);
-
-        return nextPos;
-    }
-
-    setYPrime(eqn){
-        this.yPrime=eqn;
-    }
-}
 
 
 class SlopeFieldIntegralCurve{
@@ -101,7 +50,7 @@ class SlopeFieldIntegralCurve{
         this.end = new Mesh(sphere, sphereMat);
 
         //set up the integrator and the curve
-        this.integrator = new SlopeFieldRungeKutta(this.yPrime, 0.03);
+        this.integrator = new RungeKuttaParams(this.yPrime, 0.03);
         this.curve = null;
 
         //initialize the curve
@@ -174,7 +123,7 @@ class SlopeFieldIntegralCurve{
 
     setYPrime(eqn){
         this.yPrime=eqn;
-        this.integrator.setYPrime(this.yPrime);
+        this.integrator.setDerive(this.yPrime);
     }
 
     setRange(rng){
