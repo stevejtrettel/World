@@ -15,8 +15,9 @@ class RiemannSum2DPlotter{
             yMin: range.y.min,
             yMax: range.y.max,
 
-            xRes:res.x,
-            yRes:res.y,
+             numBars: res.x*res.y,
+            // xRes:res.x,
+            // yRes:res.y,
 
             a:1,
             b:1,
@@ -67,13 +68,15 @@ class RiemannSum2DPlotter{
         //     thisBarGraph.setRange(rng);
         // });
 
-        ui.add(this.params,'xRes', 1,200,1).name('BarsX').onChange(function(value){
-            thisBarGraph.setRes({x:value, y:thisObj.params.yRes});
+        ui.add(this.params,'numBars', 4,40000,1).name('Bars').onChange(function(value){
+            let xBars = Math.ceil(Math.sqrt(value));
+            let yBars = xBars;//square right now
+            thisBarGraph.setRes({x:xBars, y:yBars});
         });
 
-        ui.add(this.params,'yRes', 1,200,1).name('BarsY').onChange(function(value){
-            thisBarGraph.setRes({x:thisObj.params.xRes, y:value});
-        });
+        // ui.add(this.params,'yRes', 1,200,1).name('BarsY').onChange(function(value){
+        //     thisBarGraph.setRes({x:thisObj.params.xRes, y:value});
+        // });
 
 
         ui.add(this.params,'functionText').name('z=');
