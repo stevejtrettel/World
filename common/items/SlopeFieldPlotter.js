@@ -249,7 +249,7 @@ class SlopeFieldPlotter{
 
         let curveFolder = ui.addFolder('IntegralCurve');
 
-        curveFolder.add(this.params,'initialX',-10,10,0.01).onChange(
+        curveFolder.add(this.params,'initialX',-10,10,0.01).name('x0').onChange(
             function(value){
                 let iniCond = new Vector2(value,thisObj.iniCond.y);
                 thisCurve.setInitialCondition(iniCond);
@@ -257,7 +257,7 @@ class SlopeFieldPlotter{
                 thisCurve.resetCurve(thisCurve.curve);
             }
         );
-        curveFolder.add(this.params,'initialY',-10,10,0.01).onChange(
+        curveFolder.add(this.params,'initialY',-10,10,0.01).name('y0').onChange(
             function(value){
                 let iniCond = new Vector2(thisObj.iniCond.x,value);
                 thisCurve.setInitialCondition(iniCond);

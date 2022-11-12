@@ -11,22 +11,6 @@ import {
 
 
 
-function buildTubeGeometry(f,domain, radius, res){
-    let pts = [];
-    let x,y;
-    const spread = domain.max-domain.min;
-    for(let i=0;i<res;i++){
-        x=domain.min+i/res*spread;
-        y=f(x);
-        pts.push(new Vector3(x,y,0));
-    }
-    let curve = new CatmullRomCurve3(pts);
-
-    return new TubeBufferGeometry(curve, res,radius,8);
-}
-
-
-
 //the input options that are required:
 //xRange or range
 //radius
@@ -56,9 +40,8 @@ class Graph2D{
 
         this.res = options.res || 100;
 
-        let geometry = buildTubeGeometry(this.f, this.domain, this.radius ,this.res);
-
-        this.tube = new Mesh(geometry, material);
+        this.buildTubeGeometry();
+        this.tube = new Mesh(this.tubeGeometry, material);
 
         let sph = new SphereBufferGeometry(1.5*this.radius,32,16);
 
@@ -75,25 +58,42 @@ class Graph2D{
 
     }
 
+
+    buildTubeGeometry(params){
+        let pts = [];
+        let x,y;
+        const spread = this.domain.max-this.domain.min;
+        for(let i=0;i<this.res;i++){
+            x=this.domain.min+i/this.res*spread;
+            y=this.f(x,params);
+            pts.push(new Vector3(x,y,0));
+        }
+        let curve = new CatmullRomCurve3(pts);
+
+        this.tubeGeometry = new TubeBufferGeometry(curve, this.res,this.radius,16);
+    }
+
+
     addToScene( scene ){
         scene.add(this.graph);
     }
 
-    updateGraph(){
+    update(params){
+
         this.tube.geometry.dispose();
-        this.tube.geometry=buildTubeGeometry(this.f,this.domain,this.radius, this.res);
-        this.minBall.position.set(this.domain.min, this.f(this.domain.min), 0);
-        this.maxBall.position.set(this.domain.max, this.f(this.domain.max), 0);
+        this.buildTubeGeometry(params);
+        this.tube.geometry = this.tubeGeometry;
+
+        this.minBall.position.set(this.domain.min, this.f(this.domain.min,params), 0);
+        this.maxBall.position.set(this.domain.max, this.f(this.domain.max,params), 0);
     }
 
-    resetDomain(newDomain){
+    setDomain(newDomain){
         this.domain=newDomain;
-        this.updateGraph();
     }
 
-    resetFunction(newFunction){
+    setFunction(newFunction){
         this.f=newFunction;
-        this.updateGraph();
     }
 
     setPosition(x,y,z){
@@ -106,5 +106,4 @@ class Graph2D{
 
 }
 
-
-export { Graph2D };
+export default Graph2D;

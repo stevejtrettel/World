@@ -4,7 +4,7 @@ import { SecantLine } from "../components/calculus/SecantLine.js";
 import { TangentLine } from "../components/calculus/TangentLine.js";
 
 import { getRange, differentiate } from "../math/functions_singleVar.js";
-import {RiemannRectangle} from "../components/calculus/RiemannRectangle.js";
+import {RiemannRectangle} from "../components/Depreciated/RiemannRectangle.js";
 
 function setX(percent, domain){
     let spread = domain.max-domain.min;

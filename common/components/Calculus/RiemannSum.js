@@ -1,96 +1,141 @@
-import{ setX } from "../../math/functions_singleVar.js";
-import {RiemannRectangle} from "./RiemannRectangle.js";
-import {DoubleSide, MeshPhysicalMaterial} from "../../../3party/three/build/three.module.js";
+import {
+    Color,
+    DoubleSide,
+    DynamicDrawUsage,
+    InstancedMesh,
+    MeshPhysicalMaterial,
+    Object3D,
+    PlaneBufferGeometry,
+    BoxBufferGeometry,
+} from "../../../3party/three/build/three.module.js";
+
+
+//curve is a function that takes in an x value and parameters
+//curve(x,params);
+//range is an object {min:-3,max:2}
+//N is the number of bars in the Riemann sum to be displayed.
+
 
 class RiemannSum{
-    constructor( options ){
-        this.f = options.f;
-        this.domain = options.domain;
+    constructor( curve, range, N ){
+        this.curve = curve;
 
-        this.n = options.n;
-        let spread = this.domain.max-this.domain.min;
-        this.delta = spread/this.n;
+        console.log(this.curve);
+
+        this.range = range;
+        this.N = N;
+
+        //dummy object to be able to make the matrix for each case:
+        this.dummy = new Object3D();
+
+        //this index is always between 0 and this.N-1
+        this.getCoords = function(index){
+            let span = (this.range.max-this.range.min);
+            let xPercent = index / this.N;
+            let xVal = span * xPercent + this.range.min;
+            return xVal;
+        }
+
+        this.initialize();
+    }
 
 
-        //make the border material
-
-        //make the interior material
-        let posMat = new MeshPhysicalMaterial({
-            clearcoat:1,
-            color:options.posColor,
+    initialize(){
+        //all the Riemann sum rectangles are going to be resized versions of this:
+        const barGeometry = new BoxBufferGeometry(1,1,1);
+        const barMaterial = new MeshPhysicalMaterial({
             side: DoubleSide,
-            }
-        );
+            clearcoat:1,
+        });
 
-        let negMat = new MeshPhysicalMaterial({
-                clearcoat:1,
-                color:options.negColor,
-                side: DoubleSide,
-            }
-        );
+        //the maximum number of different bars we can have in the bargraph show up
+        this.totalCount=1000;
 
-        let borderMaterial = new MeshPhysicalMaterial({
-                clearcoat:1,
-                color:options.borderColor,
-                side: DoubleSide,
-            }
-        );
+        this.barGraph = new InstancedMesh( barGeometry, barMaterial, this.totalCount );
+        //starts pointing along y-axis:
+        this.barGraph.instanceMatrix.setUsage( DynamicDrawUsage ); // will be updated every frame
 
-        //for now just a left hand sum:
-        let x,y;
-        let mat;
-        this.rects = [];
-        for(let i=0;i<this.n;i++){
-            x = setX(i/this.n, this.domain);
-            y = this.f(x);
-            if(y>0){
-                mat=posMat;
+    }
+
+
+    addToScene(scene){
+        scene.add(this.barGraph);
+    }
+
+    update(params){
+
+
+        if ( this.barGraph ) {//if it's been initialized
+
+            //set the count to the current value of N:
+            this.barGraph.count = this.N;
+
+            let xCoord, yVal;
+            let xScale,yScale;
+
+            for(let index = 0; index<this.totalCount; index++) {
+
+                //what point in the (x,y) plane does this index represent?
+                xCoord = this.getCoords(index);
+                //get the y-Value at this point
+                yVal = this.curve(xCoord, params);
+
+                //build a matrix on this.dummy that moves it to the position specified by coords
+                //rectangle's x is at the xCoord, center is half way up the total y-Value
+                this.dummy.position.set(xCoord, yVal/2, 0.0);
+
+                //scale the object correctly: stretch out in the x and y directions
+                xScale = (this.range.max-this.range.min)/this.N;
+                yScale = Math.abs(yVal);
+                this.dummy.scale.set(xScale,yScale,0.15);
+
+                //set the color of this instance:
+                //make it different for positive and negative areas:
+                let hue =0.;
+                if(yVal>0){
+                    hue = 0.3;
+                }
+                else{
+                    hue = 0.01;
+                }
+                let color = new Color().setHSL(hue, 0.5, 0.5);
+                this.barGraph.setColorAt(index, color);
+
+                //update the actual matrix at this point!!!
+                this.dummy.updateMatrix();
+                this.barGraph.setMatrixAt(index, this.dummy.matrix);
+
+                if(index>this.N-1){
+                    break;
+                }
+
             }
-            else{
-                mat=negMat;
-            }
-            this.rects.push(new RiemannRectangle({
-                x:x,
-                y:y,
-                delta:this.delta,
-                material: mat,
-                borderMaterial:borderMaterial,
-            }));
+
+            this.barGraph.instanceMatrix.needsUpdate = true;
+            this.barGraph.instanceColor.needsUpdate = true;
+
         }
     }
 
 
-    addToScene( scene ){
-        for(let i=0; i<this.n; i++){
-            this.rects[i].addToScene(scene);
-        }
+    //all of these need to be followed by "update"
+    //after the switch has been made:
+
+    setCurve(curve){
+        this.curve=curve;
     }
 
-    setPosition(x,y,z){
-        for(let i=0; i<this.n; i++){
-            this.rects[i].setPosition(x,y,z);
-        }
+    setRange(range){
+        this.range=range;
     }
 
-    addToUI(ui){}
+    setN(N){
+        this.N=N;
+    }
 
-    tick(time,dTime){}
+
 }
 
 
-export{ RiemannSum };
 
-
-
-let data = {
-    domain: { min:-5, max:3},
-    n:60,
-    f: (x)=> Math.cos(3*x)+Math.cos(x),
-    posColor:0x244f30,
-    negColor:0xc98018,
-    borderColor:0xa8a032,
-};
-
-let example = new RiemannSum( data );
-
-export default {example};
+export default RiemannSum;
