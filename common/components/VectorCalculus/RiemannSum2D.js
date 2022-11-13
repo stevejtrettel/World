@@ -57,7 +57,6 @@ class RiemannSum2D{
 
         this.initialize();
 
-        this.value=0;
 
     }
 
@@ -68,7 +67,7 @@ class RiemannSum2D{
         const barMaterial = new MeshPhysicalMaterial(this.defaultMaterial);
 
         //the maximum number of different bars we can have in the bargraph show up
-        this.totalCount=100000;
+        this.totalCount=40000;
 
         this.barGraph = new InstancedMesh( barGeometry, barMaterial, this.totalCount );
         //starts pointing along y-axis:
@@ -85,8 +84,6 @@ class RiemannSum2D{
 
         if ( this.barGraph ) {//if it's been initialized
 
-            this.value=0;
-
             let deltaX = (this.range.x.max-this.range.x.min)/this.res.x;
             let deltaY = (this.range.y.max-this.range.y.min)/this.res.y;
 
@@ -101,8 +98,6 @@ class RiemannSum2D{
                 coords = this.getCoords(index);
                 //get the y-Value at this point
                 val = this.f(coords, params);
-
-                this.value += val*deltaX*deltaY;
 
                 //build a matrix on this.dummy that moves it to the position specified by coords
                 //rectangle's x is at the xCoord, center is half way up the total y-Value
@@ -153,9 +148,6 @@ class RiemannSum2D{
         this.barGraph.visible=value;
     }
 
-    getValue(){
-        return this.value;
-    }
 
 }
 

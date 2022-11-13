@@ -6,7 +6,7 @@ import RiemannSum2D from "../components/VectorCalculus/RiemannSum2D.js";
 const parser = math.parser();
 
 class RiemannSum2DPlotter{
-    constructor(range,res, materialProps){
+    constructor(fnText, range, res, materialProps){
 
         this.params = {
             xMin: range.x.min,
@@ -25,7 +25,7 @@ class RiemannSum2DPlotter{
 
             time:0,
 
-            functionText: 'x/5+sin(y*x/5)',
+            functionText: fnText,
 
             showCurve:true,
 
@@ -68,7 +68,7 @@ class RiemannSum2DPlotter{
         //     thisBarGraph.setRange(rng);
         // });
 
-        ui.add(this.params,'numBars', 4,100000,1).name('Bars').onChange(function(value){
+        ui.add(this.params,'numBars', 4,40000,1).name('Bars').onChange(function(value){
             let xBars = Math.ceil(Math.sqrt(value));
             let yBars = xBars;//square right now
             thisBarGraph.setRes({x:xBars, y:yBars});
@@ -128,6 +128,8 @@ let range = {x:{ min:-10,max:10},
     y:{ min:-10,max:10}};
 let res = {x:20,y:20};
 
-let example = new RiemannSum2DPlotter(range, res );
+let fnText = 'x/5+sin(y*x/5)';
+
+let example = new RiemannSum2DPlotter(fnText,range, res );
 
 export default {example};

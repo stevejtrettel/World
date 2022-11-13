@@ -8,8 +8,10 @@ const parser = math.parser();
 
 
 //for a given function, just a plot of a lot of different Riemann sums in a row
-class SuccessiveSumsPlotter{
-    constructor(){
+class RiemannSumSequencePlotter {
+    constructor(fnText,range){
+
+        this.range=range;
 
         //what is the total number of allowed Riemann Sum Graphs?
         this.numSums = 100;
@@ -20,8 +22,6 @@ class SuccessiveSumsPlotter{
 
         //how thick are the individual bars of the Riemann Sums?
         this.thickness = 0.25;
-
-        this.range = {min:-5,max:5};
 
         this.params = {
             xMin: this.range.min,
@@ -36,7 +36,7 @@ class SuccessiveSumsPlotter{
 
             time:0,
 
-            curveText: 'cos(x)',
+            curveText: fnText,
 
             showCurve:true,
 
@@ -167,9 +167,10 @@ class SuccessiveSumsPlotter{
 }
 
 
+let fnText = 'cos(x)';
+let range = {min:-5,max:5};
 
-
-let example = new SuccessiveSumsPlotter();
+let example = new RiemannSumSequencePlotter(fnText,range);
 export default { example };
 
 

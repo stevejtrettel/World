@@ -72,7 +72,7 @@ class AccumulationBlock{
 
 
 class RiemannSumPlotter{
-    constructor(range,N){
+    constructor(fnText, range,N){
 
         this.params = {
             xMin: range.min,
@@ -88,7 +88,7 @@ class RiemannSumPlotter{
 
             time:0,
 
-            curveText: 'cos(x)+x/(1+x*x)',
+            curveText: fnText,
 
             showCurve:true,
             showAccumulate:false,
@@ -242,10 +242,10 @@ class RiemannSumPlotter{
 
 
 
-
+let fnText = 'cos(x)+x/(1+x*x)';
 let range = { min:-10,max:10};
 let N = 100;
 
-let example = new RiemannSumPlotter(range, N);
+let example = new RiemannSumPlotter(fnText, range, N);
 
 export default {example};
