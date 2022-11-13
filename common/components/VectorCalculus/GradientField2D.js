@@ -11,15 +11,51 @@ import {
 } from "../../../3party/three/build/three.module.js";
 
 
-class VectorField2D{
-    constructor(vectorField, range, res){
+class GradientField2D{
+    constructor(scalarFunction, range ){
 
         this.range = range;
-        this.res = res;
-        this.vectorField = vectorField;
+        this.scalarFunction = scalarFunction;
 
-        //how many meshes are there?
+        //defauly resolution:easily changed via UI
+        this.res = {x:50,y:50};
+
+        this.xPartial = function(coords, params){
+            let eps = 0.001;
+            let p0 = coords.clone().add(new Vector2(-eps/2,0));
+            let p1 = coords.clone().add(new Vector2(eps/2,0));
+            let val0 = this.scalarFunction(p0,params);
+            let val1 = this.scalarFunction(p1,params);
+
+            let deriv = (val1-val0)/eps;
+            return deriv;
+        }
+
+        this.yPartial = function(coords, params){
+            let eps = 0.001;
+            let p0 = coords.clone().add(new Vector2(0,-eps/2));
+            let p1 = coords.clone().add(new Vector2(0,eps/2));
+            let val0 = this.scalarFunction(p0,params);
+            let val1 = this.scalarFunction(p1,params);
+
+            let deriv = (val1-val0)/eps;
+            return deriv;
+        }
+
+        this.gradient = function(coords, params){
+            let dx = this.xPartial(coords,params);
+            let dy = this.yPartial(coords,params);
+            return new Vector2(dx,dy);
+        }
+
+
+
+
+        //NOW I'M BASICALLY READY TO MAKE A VECTOR FIELD 2D:
+
+        //how many meshes are there for real?
         this.count = this.res.x * this.res.y;
+        //how many meshes will we allow to be possible
         this.maxCount = 10000;
 
         //dummy object to be able to make the matrix for each case:
@@ -28,12 +64,12 @@ class VectorField2D{
         this.getCoords = function(index){
 
             //get col
-            let yIndex = Math.floor(index/this.res.x)+0.5;
+            let yIndex = Math.floor(index/this.res.x);
             //get percentage
             let yPercent = yIndex/this.res.y;
 
             //get row:
-            let xIndex = (index % this.res.x)+0.5;
+            let xIndex = index % this.res.x;
             let xPercent = xIndex / this.res.x;
 
             //convert these to actual coords using the resolution:
@@ -57,6 +93,7 @@ class VectorField2D{
     }
 
 
+
     initialize(){
 
         this.buildBaseGeometry();
@@ -78,19 +115,18 @@ class VectorField2D{
 
 
     //switch out the differential equation
-    setVectorField(fn){
-        this.vectorField=fn;
+    setFunction(fn){
+        this.scalarFunction=fn;
     }
 
     setRange(range){
         this.range=range;
-        //should have time in the update; but we are updating every frame anyway...
-        //this.update();
     }
 
     setRes(res){
         this.res=res;
         this.count = this.res.x * this.res.y;
+        //turn off instances that are not being used:
         this.vectors.count=this.count;
     }
 
@@ -105,28 +141,27 @@ class VectorField2D{
                 //what point in the (x,y) plane does this index represent?
                 coords = this.getCoords(index);
                 //get the slope at this point
-                vF = this.vectorField(coords, params);
+                vF = this.gradient(coords, params);
                 //get the rotation angle this slope signifies:
-                //rotating BACKWARDS from the y-axis
-                let theta = -Math.atan2(vF.x, vF.y);
+                let theta = Math.atan2(vF.x, vF.y);
 
                 //build a matrix on this.dummy that moves it to the position specified by coords
-                this.dummy.position.set(coords.x, coords.y, 0.08);
+                this.dummy.position.set(coords.x,0, coords.y);
 
                 //build in the rotational part of this matrix
                 //this.dummy.lookAt(coords.x+vF.x,coords.y+vF.y,0.08);
-                this.dummy.rotation.z = theta;
-
+                this.dummy.rotation.z=-3.1415/2.;
+                this.dummy.rotation.y = -3.1415/2+theta;
 
                 //set the original scale based on the resolution
                 let deltaX = (this.range.x.max-this.range.x.min)/this.res.x;
                 let deltaY = (this.range.y.max-this.range.y.min)/this.res.y;
-                let size = 0.8* Math.min(deltaX,deltaY);
+                let size = 0.5* Math.min(deltaX,deltaY);
 
                 //set the scale based on the vectors magnitude:
                 let mag = vF.length();
                 let rescale = 2.*Math.tanh(mag/2.);
-                size *= rescale;
+                size = rescale*size;
                 this.dummy.scale.set(size,size,size);
 
                 //set the color of this instance:
@@ -153,4 +188,4 @@ class VectorField2D{
 }
 
 
-export default VectorField2D;
+export default GradientField2D;

@@ -82,16 +82,17 @@ class SecantLinePlotter{
         //this refers to the UI inside of the following commands
         let obj = this;
 
-        let domainFolder = ui.addFolder('Domain');
-        let secantFolder = ui.addFolder('Secant');
+        // let domainFolder = ui.addFolder('Domain');
 
-        domainFolder.add(params.domain, 'min', -5,0,0.01).name('xMin').onChange(function(){
-           obj.graph.resetDomain(params.domain);
-        });
+         let secantFolder = ui.addFolder('Secant');
 
-        domainFolder.add(params.domain, 'max', 0,3,0.01).name('xMax').onChange(function(){
-            obj.graph.resetDomain(params.domain);
-        });
+        // domainFolder.add(params.domain, 'min', -5,0,0.01).name('xMin').onChange(function(){
+        //    obj.graph.resetDomain(params.domain);
+        // });
+        //
+        // domainFolder.add(params.domain, 'max', 0,3,0.01).name('xMax').onChange(function(){
+        //     obj.graph.resetDomain(params.domain);
+        // });
 
 
         secantFolder.add(params, 'x', 0, 1,0.001).name('x').onChange(function(){

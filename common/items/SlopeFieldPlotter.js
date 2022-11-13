@@ -43,8 +43,6 @@ class SlopeFieldIntegralCurve{
             }`,
         };
 
-        this.visibility = true;
-
 
         let sphere =  new SphereBufferGeometry(1.25*curveOptions.radius,32,16);
         let sphereMat = new MeshPhysicalMaterial();
@@ -136,11 +134,10 @@ class SlopeFieldIntegralCurve{
         this.iniCond = iniCond;
     }
 
-    toggleVisibility(){
-        this.visibility = !this.visibility;
-        this.tube.mesh.visible=this.visibility;
-        this.start.visible=this.visibility;
-        this.end.visible=this.visibility;
+    setVisibility(value){
+        this.tube.mesh.visible=value;
+        this.start.visible=value;
+        this.end.visible=value;
     }
 
 }
@@ -164,6 +161,8 @@ class SlopeFieldPlotter{
             initialX:0,
             initialY:0,
 
+            res: 50,
+
             a:1,
             b:1,
             c:1,
@@ -172,7 +171,7 @@ class SlopeFieldPlotter{
 
             yPrimeText: 'sin(x*y+t)',
 
-            showCurve: true,
+            showCurve: false,
 
             reset: function(){
                 console.log('reset');
@@ -190,6 +189,7 @@ class SlopeFieldPlotter{
          this.slopeField = new SlopeField(this.yPrime, range, res);
          this.iniCond = new Vector2(0,0);
          this.integralCurve = new SlopeFieldIntegralCurve(this.yPrime, this.iniCond, range);
+         this.integralCurve.setVisibility(this.params.showCurve);
     }
 
     addToScene(scene){
@@ -199,51 +199,82 @@ class SlopeFieldPlotter{
     }
 
     addToUI(ui){
-        let domainFolder = ui.addFolder('Domain');
-
 
         let thisObj = this;
         let thisField = this.slopeField;
         let thisCurve = this.integralCurve;
 
+        // let domainFolder = ui.addFolder('Domain');
+        // domainFolder.add(this.params, 'xMin', -10, 10, 0.01).name('xMin').onChange(function(value){
+        //     let rng = {
+        //         x:{min:value,max:thisField.range.x.max},
+        //         y:{min:thisField.range.y.min, max:thisField.range.y.max}
+        //     };
+        //     thisField.setRange(rng);
+        //     thisCurve.setRange(rng);
+        // });
+        //
+        //
+        // domainFolder.add(this.params, 'xMax', -10, 10, 0.01).name('xMax').onChange(function(value){
+        //     let rng = {
+        //         x:{min: thisField.range.x.min, max: value},
+        //         y:{min: thisField.range.y.min, max: thisField.range.y.max}
+        //     };
+        //     thisField.setRange(rng);
+        //     thisCurve.setRange(rng);
+        // });
+        //
+        // domainFolder.add(this.params, 'yMin', -10, 10, 0.01).name('yMin').onChange(function(value){
+        //     let rng = {
+        //         x:{min:thisField.range.x.min, max: thisField.range.x.max},
+        //         y:{min:value, max:thisField.range.y.max}
+        //     };
+        //     thisField.setRange(rng);
+        //     thisCurve.setRange(rng);
+        // });
+        //
+        // domainFolder.add(this.params, 'yMax', -10, 10, 0.01).name('yMin').onChange(function(value){
+        //     let rng = {
+        //         x:{min:thisField.range.x.min, max: thisField.range.x.max},
+        //         y:{min:thisField.range.y.min, max:value }
+        //     };
+        //     thisField.setRange(rng);
+        //     thisCurve.setRange(rng);
+        // });
 
-        domainFolder.add(this.params, 'xMin', -10, 10, 0.01).name('xMin').onChange(function(value){
-            let rng = {
-                x:{min:value,max:thisField.range.x.max},
-                y:{min:thisField.range.y.min, max:thisField.range.y.max}
-            };
-            thisField.setRange(rng);
-            thisCurve.setRange(rng);
+
+        ui.add(this.params,'yPrimeText').name('yPrime=');
+
+        ui.add(this.params, 'reset').onChange(
+            function(){
+
+                let yC = parser.evaluate('yPrime(x,y,t,a,b,c)='.concat(thisObj.params.yPrimeText));
+
+                let eqn = function(pos,params){
+                    let x = 1;
+                    let y = yC(pos.x,pos.y,params.time,params.a,params.b,params.c);
+                    return new Vector2(x,y);
+                }
+
+                thisObj.yPrime = eqn;
+                thisField.setYPrime(eqn);
+                thisCurve.setYPrime(eqn);
+            }
+        );
+
+        ui.add(this.params, 'res', 10, 100, 1).name('res').onChange(function(value){
+            let res ={ x: value, y:value};
+            thisField.setRes(res);
         });
 
+        let paramFolder = ui.addFolder('Parameters');
 
-        domainFolder.add(this.params, 'xMax', -10, 10, 0.01).name('xMax').onChange(function(value){
-            let rng = {
-                x:{min: thisField.range.x.min, max: value},
-                y:{min: thisField.range.y.min, max: thisField.range.y.max}
-            };
-            thisField.setRange(rng);
-            thisCurve.setRange(rng);
+        paramFolder.add(this.params, 'a', -2, 2, 0.01).name('a').onChange(function(value){
         });
-
-        domainFolder.add(this.params, 'yMin', -10, 10, 0.01).name('yMin').onChange(function(value){
-            let rng = {
-                x:{min:thisField.range.x.min, max: thisField.range.x.max},
-                y:{min:value, max:thisField.range.y.max}
-            };
-            thisField.setRange(rng);
-            thisCurve.setRange(rng);
+        paramFolder.add(this.params, 'b', -2, 2, 0.01).name('b').onChange(function(value){
         });
-
-        domainFolder.add(this.params, 'yMax', -10, 10, 0.01).name('yMin').onChange(function(value){
-            let rng = {
-                x:{min:thisField.range.x.min, max: thisField.range.x.max},
-                y:{min:thisField.range.y.min, max:value }
-            };
-            thisField.setRange(rng);
-            thisCurve.setRange(rng);
+        paramFolder.add(this.params, 'c', -2, 2, 0.01).name('c').onChange(function(value){
         });
-
 
 
 
@@ -268,40 +299,11 @@ class SlopeFieldPlotter{
 
         curveFolder.add(this.params,'showCurve').onChange(
             function(value){
-                thisCurve.toggleVisibility();
+                thisCurve.setVisibility(value);
             }
-        )
+        );
 
 
-
-
-        ui.add(this.params,'yPrimeText').name('yPrime=');
-
-        ui.add(this.params, 'reset').onChange(
-            function(){
-
-                let yC = parser.evaluate('yPrime(x,y,t,a,b,c)='.concat(thisObj.params.yPrimeText));
-
-                let eqn = function(pos,params){
-                    let x = 1;
-                    let y = yC(pos.x,pos.y,params.time,params.a,params.b,params.c);
-                    return new Vector2(x,y);
-                }
-
-                thisObj.yPrime = eqn;
-                thisField.setYPrime(eqn);
-                thisCurve.setYPrime(eqn);
-            }
-        )
-
-        let paramFolder = ui.addFolder('Parameters');
-
-        paramFolder.add(this.params, 'a', -2, 2, 0.01).name('a').onChange(function(value){
-        });
-        paramFolder.add(this.params, 'b', -2, 2, 0.01).name('b').onChange(function(value){
-        });
-        paramFolder.add(this.params, 'c', -2, 2, 0.01).name('c').onChange(function(value){
-        });
 
     }
 

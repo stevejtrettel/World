@@ -18,8 +18,10 @@ class SlopeField{
         this.res = res;
         this.yPrime = yPrime;
 
-        //how many meshes are there?
+        //how many meshes are there for real?
         this.count = this.res.x * this.res.y;
+        //how many meshes will we allow to be possible
+        this.maxCount = 10000;
 
         //dummy object to be able to make the matrix for each case:
         this.dummy = new Object3D();
@@ -27,12 +29,12 @@ class SlopeField{
         this.getCoords = function(index){
 
             //get col
-            let yIndex = Math.floor(index/this.res.x);
+            let yIndex = Math.floor(index/this.res.x)+0.5;
             //get percentage
             let yPercent = yIndex/this.res.y;
 
             //get row:
-            let xIndex = index % this.res.x;
+            let xIndex = (index % this.res.x)+0.5;
             let xPercent = xIndex / this.res.x;
 
             //convert these to actual coords using the resolution:
@@ -50,15 +52,10 @@ class SlopeField{
 
 
     buildBaseGeometry(){
-        //get the dimensions of a "rod"
-        let xRng = (this.range.x.max-this.range.x.min);
-        let yRng = (this.range.y.max-this.range.y.min);
-        let length = 0.8* Math.min(xRng/this.res.x,yRng/this.res.y);
-        let rad = 0.1*length;
-
-        let cylGeometry = new CylinderBufferGeometry(rad,rad,length,16,1);
+        let length = 1;
+        let rad = 0.1;
+        let cylGeometry = new CylinderBufferGeometry(rad,rad,length, 16,1);
         this.baseGeometry = cylGeometry;
-
     }
 
 
@@ -69,7 +66,7 @@ class SlopeField{
             side: DoubleSide,
         });
 
-        this.slopes = new InstancedMesh( this.baseGeometry, material, this.count );
+        this.slopes = new InstancedMesh( this.baseGeometry, material, this.maxCount );
         //starts pointing along y-axis:
         this.slopes.instanceMatrix.setUsage( DynamicDrawUsage ); // will be updated every frame
     }
@@ -95,6 +92,8 @@ class SlopeField{
     setRes(res){
         this.res=res;
         this.count = this.res.x * this.res.y;
+        //turn off instances that are not being used:
+        this.slopes.count=this.count;
     }
 
     //re-orient all of the slopes!
@@ -119,6 +118,12 @@ class SlopeField{
 
                 //build in the rotational part of this matrix
                 this.dummy.rotation.z = theta;
+
+                //rescale the slopes based on how many there are:
+                let deltaX = (this.range.x.max-this.range.x.min)/this.res.x;
+                let deltaY = (this.range.y.max-this.range.y.min)/this.res.y;
+                let size = 0.8* Math.min(deltaX,deltaY);
+                this.dummy.scale.set(size,size,size);
 
                 //set the color of this instance:
                 let color = new Color().setHSL(theta/Math.PI, 0.4, 0.6)

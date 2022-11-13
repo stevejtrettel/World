@@ -60,7 +60,7 @@ class TotalVolume{
 
 
 
-class FubiniPlotter{
+class FubiniSumPlotter {
     constructor(fnText, range, res, thickness){
 
         this.thickness = thickness;
@@ -204,6 +204,6 @@ let range = {x:{ min:-10,max:10},
     y:{ min:-10,max:10}};
 let res = {x:20,y:20};
 
-let example = new FubiniPlotter('x/5+sin(y*x/5)+sin(x*y/5+t)', range, res, 4 );
+let example = new FubiniSumPlotter('x/5+sin(y*x/5)+sin(x*y/5+t)', range, res, 4 );
 
 export default {example};

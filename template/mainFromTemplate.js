@@ -11,6 +11,8 @@ import { post } from "./src/post.js"
 
 function mainFromTemplate( objects, options ) {
 
+    console.log(objects);
+
     // Get a reference to the container element, set options
     const container = document.querySelector('#World');
 
