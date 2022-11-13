@@ -97,7 +97,7 @@ class IteratedIntegralX{
                     y += deltaY;
 
                     //add to the running total:
-                    this.value = deltaY * val;
+                    this.value += deltaY * val;
 
                     //set green for pos and red for neg:
                     let color = posNegColor(val);
@@ -107,7 +107,7 @@ class IteratedIntegralX{
                     this.dummy.updateMatrix();
                     this.barGraph.setMatrixAt(index, this.dummy.matrix);
 
-                    if(index>this.res.y-1){
+                    if(index>this.res.y){
                         break;
                     }
 
@@ -251,7 +251,7 @@ class IteratedIntegralY{
                 this.dummy.updateMatrix();
                 this.barGraph.setMatrixAt(index, this.dummy.matrix);
 
-                if(index>this.res.x-1){
+                if(index>this.res.x){
                     break;
                 }
 

@@ -84,9 +84,9 @@ class FubiniSumPlotter {
 
             functionText: fnText,
 
-            reset: function(){
-                console.log('reset');
-            }
+            // reset: function(){
+            //     console.log('reset');
+            // }
         };
 
         //define the function which gives our curve:
@@ -100,11 +100,9 @@ class FubiniSumPlotter {
 
         let matProps = {
             side:DoubleSide,
-            transparent:true,
-            opacity:0.2,
+           // transparent:true,
+           // opacity:0.2,
         }
-
-
 
 
         this.riemannSum = new RiemannSum2D(this.f, range, res, matProps );
@@ -158,11 +156,9 @@ class FubiniSumPlotter {
         // });
 
 
-        ui.add(this.params,'functionText').name('z=');
-
-        ui.add(this.params, 'reset').onChange(
-            function(){
-
+        ui.add(this.params,'functionText').name('z=').onFinishChange(
+            function(value){
+                thisObj.params.functionText=value;
                 let curve = parser.evaluate('f(x,y,t,a,b,c)='.concat(thisObj.params.functionText));
                 let eqn = function(coords ,params={time:0,a:0,b:0,c:0}){
                     let z = curve(coords.x, coords.y, params.time, params.a, params.b, params.c);
@@ -176,6 +172,23 @@ class FubiniSumPlotter {
                 thisObj.yIntegral.setF(eqn);
             }
         );
+
+        // ui.add(this.params, 'reset').onChange(
+        //     function(){
+        //
+        //         let curve = parser.evaluate('f(x,y,t,a,b,c)='.concat(thisObj.params.functionText));
+        //         let eqn = function(coords ,params={time:0,a:0,b:0,c:0}){
+        //             let z = curve(coords.x, coords.y, params.time, params.a, params.b, params.c);
+        //             return z;
+        //         }
+        //
+        //         thisObj.params.time=0;
+        //         thisObj.f = eqn;
+        //         thisObj.riemannSum.setFunction(eqn);
+        //         thisObj.xIntegral.setF(eqn);
+        //         thisObj.yIntegral.setF(eqn);
+        //     }
+        // );
 
 
         let paramFolder =ui.addFolder('Parameters');
@@ -194,7 +207,7 @@ class FubiniSumPlotter {
         this.riemannSum.update(this.params);
         this.xIntegral.update(this.params);
         this.yIntegral.update(this.params);
-        this.totalIntegral.update(this.xIntegral.value);
+        this.totalIntegral.update(this.xIntegral.value/this.thickness);
     }
 }
 

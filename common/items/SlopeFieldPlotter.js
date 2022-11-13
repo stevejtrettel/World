@@ -173,9 +173,9 @@ class SlopeFieldPlotter{
 
             showCurve: false,
 
-            reset: function(){
-                console.log('reset');
-            }
+            // reset: function(){
+            //     console.log('reset');
+            // }
         };
 
         let yC = parser.evaluate('yPrime(x,y,t,a,b,c)='.concat(this.params.yPrimeText));
@@ -243,11 +243,9 @@ class SlopeFieldPlotter{
         // });
 
 
-        ui.add(this.params,'yPrimeText').name('yPrime=');
-
-        ui.add(this.params, 'reset').onChange(
-            function(){
-
+        ui.add(this.params,'yPrimeText').name('yPrime=').onFinishChange(
+            function(value){
+                thisObj.params.yPrimeText=value;
                 let yC = parser.evaluate('yPrime(x,y,t,a,b,c)='.concat(thisObj.params.yPrimeText));
 
                 let eqn = function(pos,params){
@@ -255,12 +253,28 @@ class SlopeFieldPlotter{
                     let y = yC(pos.x,pos.y,params.time,params.a,params.b,params.c);
                     return new Vector2(x,y);
                 }
-
                 thisObj.yPrime = eqn;
                 thisField.setYPrime(eqn);
                 thisCurve.setYPrime(eqn);
             }
         );
+
+        // ui.add(this.params, 'reset').onChange(
+        //     function(){
+        //
+        //         let yC = parser.evaluate('yPrime(x,y,t,a,b,c)='.concat(thisObj.params.yPrimeText));
+        //
+        //         let eqn = function(pos,params){
+        //             let x = 1;
+        //             let y = yC(pos.x,pos.y,params.time,params.a,params.b,params.c);
+        //             return new Vector2(x,y);
+        //         }
+        //
+        //         thisObj.yPrime = eqn;
+        //         thisField.setYPrime(eqn);
+        //         thisCurve.setYPrime(eqn);
+        //     }
+        // );
 
         ui.add(this.params, 'res', 10, 100, 1).name('res').onChange(function(value){
             let res ={ x: value, y:value};

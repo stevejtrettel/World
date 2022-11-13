@@ -29,9 +29,9 @@ class RiemannSum2DPlotter{
 
             showCurve:true,
 
-            reset: function(){
-                console.log('reset');
-            }
+            // reset: function(){
+            //     console.log('reset');
+            // }
         };
 
         //define the function which gives our curve:
@@ -79,11 +79,9 @@ class RiemannSum2DPlotter{
         // });
 
 
-        ui.add(this.params,'functionText').name('z=');
-
-        ui.add(this.params, 'reset').onChange(
-            function(){
-
+        ui.add(this.params,'functionText').name('z=').onFinishChange(
+            function(value){
+                thisObj.params.functionText = value;
                 let curve = parser.evaluate('f(x,y,t,a,b,c)='.concat(thisObj.params.functionText));
                 let eqn = function(coords ,params={time:0,a:0,b:0,c:0}){
                     let z = curve(coords.x, coords.y, params.time, params.a, params.b, params.c);
@@ -95,6 +93,21 @@ class RiemannSum2DPlotter{
                 thisBarGraph.setFunction(eqn);
             }
         );
+
+        // ui.add(this.params, 'reset').onChange(
+        //     function(){
+        //
+        //         let curve = parser.evaluate('f(x,y,t,a,b,c)='.concat(thisObj.params.functionText));
+        //         let eqn = function(coords ,params={time:0,a:0,b:0,c:0}){
+        //             let z = curve(coords.x, coords.y, params.time, params.a, params.b, params.c);
+        //             return z;
+        //         }
+        //
+        //         thisObj.params.time=0;
+        //         thisObj.curve = eqn;
+        //         thisBarGraph.setFunction(eqn);
+        //     }
+        // );
 
 
         let paramFolder =ui.addFolder('Parameters');

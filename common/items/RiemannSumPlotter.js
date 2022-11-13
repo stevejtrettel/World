@@ -93,9 +93,9 @@ class RiemannSumPlotter{
             showCurve:true,
             showAccumulate:false,
 
-            reset: function(){
-                console.log('reset');
-            }
+            // reset: function(){
+            //     console.log('reset');
+            // }
         };
 
         //define the function which gives our curve:
@@ -168,11 +168,9 @@ class RiemannSumPlotter{
         });
 
 
-        ui.add(this.params,'curveText').name('y=');
-
-        ui.add(this.params, 'reset').onChange(
-            function(){
-
+        ui.add(this.params,'curveText').name('y=').onFinishChange(
+            function(value){
+                thisObj.params.curveText=value;
                 let curve = parser.evaluate('curve(x,t,a,b,c)='.concat(thisObj.params.curveText));
                 let eqn = function(x,params={time:0,a:0,b:0,c:0}){
                     let y = curve(x, params.time,params.a,params.b,params.c);
@@ -183,9 +181,25 @@ class RiemannSumPlotter{
                 thisObj.curve = eqn;
                 thisBarGraph.setCurve(eqn);
                 thisFunctionGraph.setFunction(eqn);
-
             }
         );
+        //
+        // ui.add(this.params, 'reset').onChange(
+        //     function(){
+        //
+        //         let curve = parser.evaluate('curve(x,t,a,b,c)='.concat(thisObj.params.curveText));
+        //         let eqn = function(x,params={time:0,a:0,b:0,c:0}){
+        //             let y = curve(x, params.time,params.a,params.b,params.c);
+        //             return y;
+        //         }
+        //
+        //         thisObj.params.time=0;
+        //         thisObj.curve = eqn;
+        //         thisBarGraph.setCurve(eqn);
+        //         thisFunctionGraph.setFunction(eqn);
+        //
+        //     }
+        // );
 
 
         let paramFolder =ui.addFolder('Parameters');

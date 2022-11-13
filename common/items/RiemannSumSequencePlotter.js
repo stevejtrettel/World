@@ -40,9 +40,9 @@ class RiemannSumSequencePlotter {
 
             showCurve:true,
 
-            reset: function(){
-                console.log('reset');
-            }
+            // reset: function(){
+            //     console.log('reset');
+            // }
         };
 
         //define the function which gives our curve:
@@ -121,25 +121,42 @@ class RiemannSumSequencePlotter {
             }
         });
 
-        ui.add(this.params,'curveText').name('y=');
+        ui.add(this.params,'curveText').name('y=').onFinishChange(
+            function(value) {
 
-        ui.add(this.params, 'reset').onChange(
-            function(){
-
-                thisObj.params.time=0;
+                thisObj.params.curveText=value;
+                thisObj.params.time = 0;
 
                 let curve = parser.evaluate('curve(x,t,a,b,c)='.concat(thisObj.params.curveText));
-                let eqn = function(x,params={time:0,a:0,b:0,c:0}){
-                    let y = curve(x, params.time,params.a,params.b,params.c);
+                let eqn = function (x, params = {time: 0, a: 0, b: 0, c: 0}) {
+                    let y = curve(x, params.time, params.a, params.b, params.c);
                     return y;
                 }
 
                 thisObj.curve = eqn;
-                for(let i=0; i<thisObj.numSums; i++){
+                for (let i = 0; i < thisObj.numSums; i++) {
                     thisObj.sums[i].setCurve(eqn);
                 }
             }
         );
+
+        // ui.add(this.params, 'reset').onChange(
+        //     function(){
+        //
+        //         thisObj.params.time=0;
+        //
+        //         let curve = parser.evaluate('curve(x,t,a,b,c)='.concat(thisObj.params.curveText));
+        //         let eqn = function(x,params={time:0,a:0,b:0,c:0}){
+        //             let y = curve(x, params.time,params.a,params.b,params.c);
+        //             return y;
+        //         }
+        //
+        //         thisObj.curve = eqn;
+        //         for(let i=0; i<thisObj.numSums; i++){
+        //             thisObj.sums[i].setCurve(eqn);
+        //         }
+        //     }
+        // );
 
 
         let paramFolder =ui.addFolder('Parameters');

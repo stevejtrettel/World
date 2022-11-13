@@ -26,9 +26,9 @@ class GradientField2DPlotter{
 
             fnText: fnText,
 
-            reset: function(){
-                console.log('reset');
-            }
+            // reset: function(){
+            //     console.log('reset');
+            // }
         };
 
         let fn = parser.evaluate('fn(x,y,t,a,b,c)='.concat(this.params.fnText));
@@ -85,14 +85,11 @@ class GradientField2DPlotter{
         // });
 
 
-        ui.add(this.params,'fnText').name('f=');
+        ui.add(this.params,'fnText').name('f=').onFinishChange(
+            function(value){
 
-
-        ui.add(this.params, 'reset').onChange(
-            function(){
-
-                let fn = parser.evaluate('fn(x,y,t,a,b,c)='.concat(thisObj.params.fnText));
-
+                thisObj.params.fnText = value;
+                let fn = parser.evaluate('fn(x,y,t,a,b,c)='.concat(value));
 
                 let eqn = function(pos,params){
                     return fn(pos.x,pos.y,params.time,params.a,params.b,params.c);
@@ -102,6 +99,22 @@ class GradientField2DPlotter{
                 thisField.setFunction(eqn);
             }
         );
+
+
+        // ui.add(this.params, 'reset').onChange(
+        //     function(){
+        //
+        //         let fn = parser.evaluate('fn(x,y,t,a,b,c)='.concat(thisObj.params.fnText));
+        //
+        //
+        //         let eqn = function(pos,params){
+        //             return fn(pos.x,pos.y,params.time,params.a,params.b,params.c);
+        //         }
+        //
+        //         thisObj.scalarFn = eqn;
+        //         thisField.setFunction(eqn);
+        //     }
+        // );
 
         ui.add(this.params, 'res', 10, 100, 1).name('res').onChange(function(value){
             let res ={ x: value, y:value};
@@ -134,7 +147,7 @@ class GradientField2DPlotter{
 
 
 
-let fn = 'x^2+y^2';
+let fn = 'x*y-sin(x-t)*y';
 
 let range = {
     x:{ min:-10,max:10},

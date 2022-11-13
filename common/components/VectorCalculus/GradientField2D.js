@@ -156,20 +156,19 @@ class GradientField2D{
                 //set the original scale based on the resolution
                 let deltaX = (this.range.x.max-this.range.x.min)/this.res.x;
                 let deltaY = (this.range.y.max-this.range.y.min)/this.res.y;
-                let size = 0.5* Math.min(deltaX,deltaY);
+                let size = 0.8* Math.min(deltaX,deltaY);
 
                 //set the scale based on the vectors magnitude:
                 let mag = vF.length();
-                let rescale = 2.*Math.tanh(mag/2.);
+                let rescale = Math.tanh(mag/3.);
                 size = rescale*size;
                 this.dummy.scale.set(size,size,size);
 
-                //set the color of this instance:
-                //use slope or xy data to do so?
-                let color = new Color().setHSL(theta/Math.PI, 0.4, 0.6)
-
-                //update the actual color at this point!
-                this.vectors.setColorAt(index, color);
+                // //set the color of this instance:
+                // //use slope or xy data to do so?
+                // let color = new Color().setHSL(theta/Math.PI, 0.4, 0.6)
+                // //update the actual color at this point!
+                // this.vectors.setColorAt(index, color);
 
                 //update the actual matrix at this point!!!
                 this.dummy.updateMatrix();
@@ -178,7 +177,7 @@ class GradientField2D{
             }
 
             this.vectors.instanceMatrix.needsUpdate = true;
-            this.vectors.instanceColor.needsUpdate = true;
+           // this.vectors.instanceColor.needsUpdate = true;
 
         }
 

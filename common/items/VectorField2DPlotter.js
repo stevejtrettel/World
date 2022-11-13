@@ -46,9 +46,9 @@ class VectorField2DPlotter{
 
             showCurve: false,
 
-            reset: function(){
-                console.log('reset');
-            }
+            // reset: function(){
+            //     console.log('reset');
+            // }
         };
 
         let xC = parser.evaluate('xPrime(x,y,t,a,b,c)='.concat(this.params.xPrimeText));
@@ -125,26 +125,63 @@ class VectorField2DPlotter{
 
 
 
-        ui.add(this.params,'xPrimeText').name('xPrime=');
-        ui.add(this.params,'yPrimeText').name('yPrime=');
-
-        ui.add(this.params, 'reset').onChange(
-            function(){
-
+        ui.add(this.params,'xPrimeText').name('xPrime=').onFinishChange(
+            function(value){
+                thisObj.params.xPrimeText = value;
                 let xC = parser.evaluate('xPrime(x,y,t,a,b,c)='.concat(thisObj.params.xPrimeText));
                 let yC = parser.evaluate('yPrime(x,y,t,a,b,c)='.concat(thisObj.params.yPrimeText));
-
-                 let eqn = function(pos,params){
+                let eqn = function(pos,params){
                     let x = xC(pos.x,pos.y,params.time,params.a,params.b,params.c);
                     let y = yC(pos.x,pos.y,params.time,params.a,params.b,params.c);
                     return new Vector2(x,y);
                 }
-
                 thisObj.vectorFieldEqn = eqn;
                 thisField.setVectorField(eqn);
                 thisCurve.setYPrime(eqn);
             }
         );
+
+
+        //same function except it only does the change when you've altered the y coordinate
+        ui.add(this.params,'yPrimeText').name('yPrime=').onFinishChange(
+            function(value){
+                thisObj.params.yPrimeText = value;
+                let xC = parser.evaluate('xPrime(x,y,t,a,b,c)='.concat(thisObj.params.xPrimeText));
+                let yC = parser.evaluate('yPrime(x,y,t,a,b,c)='.concat(thisObj.params.yPrimeText));
+                let eqn = function(pos,params){
+                    let x = xC(pos.x,pos.y,params.time,params.a,params.b,params.c);
+                    let y = yC(pos.x,pos.y,params.time,params.a,params.b,params.c);
+                    return new Vector2(x,y);
+                }
+                thisObj.vectorFieldEqn = eqn;
+                thisField.setVectorField(eqn);
+                thisCurve.setYPrime(eqn);
+            }
+        );
+
+
+        // ui.add(this.params,'yPrimeText').name('yPrime=');
+        //
+        //
+
+
+        // ui.add(this.params, 'reset').onChange(
+        //     function(){
+        //
+        //         let xC = parser.evaluate('xPrime(x,y,t,a,b,c)='.concat(thisObj.params.xPrimeText));
+        //         let yC = parser.evaluate('yPrime(x,y,t,a,b,c)='.concat(thisObj.params.yPrimeText));
+        //
+        //          let eqn = function(pos,params){
+        //             let x = xC(pos.x,pos.y,params.time,params.a,params.b,params.c);
+        //             let y = yC(pos.x,pos.y,params.time,params.a,params.b,params.c);
+        //             return new Vector2(x,y);
+        //         }
+        //
+        //         thisObj.vectorFieldEqn = eqn;
+        //         thisField.setVectorField(eqn);
+        //         thisCurve.setYPrime(eqn);
+        //     }
+        // );
 
 
         ui.add(this.params, 'res', 10, 100, 1).name('res').onChange(function(value){
