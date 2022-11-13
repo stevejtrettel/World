@@ -83,6 +83,10 @@ class IteratedIntegralX{
 
                 for(let index = 0; index<this.totalCount; index++) {
 
+                    if(index>this.res.y-1){
+                        break;
+                    }
+
                     //get the y-Value at this point
                     val = this.integratedX(y, params);
                     //build a matrix on this.dummy that moves it to the position specified by coords
@@ -106,10 +110,6 @@ class IteratedIntegralX{
                     //update the actual matrix at this point!!!
                     this.dummy.updateMatrix();
                     this.barGraph.setMatrixAt(index, this.dummy.matrix);
-
-                    if(index>this.res.y){
-                        break;
-                    }
 
                 }
 
@@ -224,7 +224,10 @@ class IteratedIntegralY{
 
             for(let index = 0; index<this.totalCount; index++) {
 
-
+                if(index>this.res.x-1){
+                    break;
+                }
+                
                 //get the y-Value at this point
                 val = this.integratedY(x, params);
 
@@ -251,9 +254,7 @@ class IteratedIntegralY{
                 this.dummy.updateMatrix();
                 this.barGraph.setMatrixAt(index, this.dummy.matrix);
 
-                if(index>this.res.x){
-                    break;
-                }
+
 
             }
 
