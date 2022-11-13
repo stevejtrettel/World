@@ -9,6 +9,8 @@ import {
     BoxBufferGeometry,
 } from "../../../3party/three/build/three.module.js";
 
+import {posNegColor } from "../../utils/colors.js";
+
 
 //curve is a function that takes in an x value and parameters
 //curve(x,params);
@@ -99,16 +101,8 @@ class RiemannSum{
                 //add the area of this new rectangle onto the sum
                 this.value += xScale*yVal;
 
-                //set the color of this instance:
-                //make it different for positive and negative areas:
-                let hue =0.;
-                if(yVal>0){
-                    hue = 0.3;
-                }
-                else{
-                    hue = 0.01;
-                }
-                let color = new Color().setHSL(hue, 0.5, 0.5);
+                //set green for pos and red for neg:
+                let color = posNegColor(yVal);
                 this.barGraph.setColorAt(index, color);
 
                 //update the actual matrix at this point!!!

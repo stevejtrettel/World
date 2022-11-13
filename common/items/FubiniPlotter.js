@@ -1,12 +1,69 @@
+import {
+    BoxBufferGeometry,
+    DoubleSide,
+    MeshPhysicalMaterial,
+    Mesh, Color,
+} from "../../3party/three/build/three.module.js";
 
-import {posNegColor} from "../utils/colors.js";
+
 import RiemannSum2D from "../components/VectorCalculus/RiemannSum2D.js";
+
+import {
+    IteratedIntegralX,
+    IteratedIntegralY,
+} from "../components/VectorCalculus/IteratedIntegral.js";
+
+import {posNegColor } from "../utils/colors.js";
+
 
 //using GLOBAL object math.parser: this is from the 3rd party math file loaded in the html
 const parser = math.parser();
 
-class RiemannSum2DPlotter{
-    constructor(range,res, materialProps){
+
+
+
+class TotalVolume{
+    constructor(range,thickness){
+        this.range=range;
+        this.thickness=thickness;
+
+        //total area inside the entire region:
+        let mat = new MeshPhysicalMaterial({
+            side:DoubleSide,
+        });
+        let geom = new BoxBufferGeometry(1,1,1);
+
+        this.block = new Mesh(geom,mat);
+
+    }
+
+    addToScene(scene){
+        scene.add(this.block);
+    }
+
+    setRange(range){
+        this.range=range;
+    }
+    setThickness(thickness){
+        this.thickness=thickness;
+    }
+
+    update(height){
+
+        //update position based on range, and height based on the new integral's value
+        this.block.position.set(2*this.range.x.max,height/2,-2*this.range.y.max);
+        this.block.scale.set(this.thickness,Math.abs(height),this.thickness);
+        this.block.material.color=posNegColor(height);
+    }
+
+}
+
+
+
+class FubiniPlotter{
+    constructor(fnText, range, res, thickness){
+
+        this.thickness = thickness;
 
         this.params = {
             xMin: range.x.min,
@@ -16,8 +73,8 @@ class RiemannSum2DPlotter{
             yMax: range.y.max,
 
              numBars: res.x*res.y,
-            // xRes:res.x,
-            // yRes:res.y,
+             xRes:res.x,
+             yRes:res.y,
 
             a:1,
             b:1,
@@ -25,9 +82,7 @@ class RiemannSum2DPlotter{
 
             time:0,
 
-            functionText: 'x/5+sin(y*x/5)',
-
-            showCurve:true,
+            functionText: fnText,
 
             reset: function(){
                 console.log('reset');
@@ -43,17 +98,39 @@ class RiemannSum2DPlotter{
             return z;
         }
 
-        this.riemannSum = new RiemannSum2D(this.f, range, res, materialProps);
+        let matProps = {
+            side:DoubleSide,
+            transparent:true,
+            opacity:0.2,
+        }
+
+
+
+
+        this.riemannSum = new RiemannSum2D(this.f, range, res, matProps );
+
+        this.xIntegral = new IteratedIntegralX(this.f, range, res, this.thickness);
+        this.yIntegral = new IteratedIntegralY(this.f, range, res, this.thickness);
+
+        this.totalIntegral = new TotalVolume(range,thickness);
+
+
     }
+
+
+
 
     addToScene(scene){
         this.riemannSum.addToScene(scene);
+        this.xIntegral.addToScene(scene);
+        this.yIntegral.addToScene(scene);
+        this.totalIntegral.addToScene(scene);
     }
 
     addToUI(ui){
 
+        //for some reason cant call"this" inside the ui functions
         let thisObj = this;
-        let thisBarGraph = this.riemannSum;
 
         // let domainFolder =ui.addFolder('Domain');
         //
@@ -68,10 +145,12 @@ class RiemannSum2DPlotter{
         //     thisBarGraph.setRange(rng);
         // });
 
-        ui.add(this.params,'numBars', 4,100000,1).name('Bars').onChange(function(value){
+        ui.add(this.params,'numBars', 4, 10000, 1).name('Bars').onChange(function(value){
             let xBars = Math.ceil(Math.sqrt(value));
             let yBars = xBars;//square right now
-            thisBarGraph.setRes({x:xBars, y:yBars});
+            thisObj.riemannSum.setRes({x:xBars, y:yBars});
+            thisObj.xIntegral.setRes({x:xBars,y:yBars});
+            thisObj.yIntegral.setRes({x:xBars,y:yBars});
         });
 
         // ui.add(this.params,'yRes', 1,200,1).name('BarsY').onChange(function(value){
@@ -91,8 +170,10 @@ class RiemannSum2DPlotter{
                 }
 
                 thisObj.params.time=0;
-                thisObj.curve = eqn;
-                thisBarGraph.setFunction(eqn);
+                thisObj.f = eqn;
+                thisObj.riemannSum.setFunction(eqn);
+                thisObj.xIntegral.setF(eqn);
+                thisObj.yIntegral.setF(eqn);
             }
         );
 
@@ -111,23 +192,18 @@ class RiemannSum2DPlotter{
     tick(time,dTime){
         this.params.time += dTime;
         this.riemannSum.update(this.params);
-
+        this.xIntegral.update(this.params);
+        this.yIntegral.update(this.params);
+        this.totalIntegral.update(this.xIntegral.value);
     }
 }
 
 
 
-
-
-let matProps = {
-    transparent:true,
-    opacity:0.2,
-}
-
 let range = {x:{ min:-10,max:10},
     y:{ min:-10,max:10}};
 let res = {x:20,y:20};
 
-let example = new RiemannSum2DPlotter(range, res );
+let example = new FubiniPlotter('x/5+sin(y*x/5)+sin(x*y/5+t)', range, res, 4 );
 
 export default {example};

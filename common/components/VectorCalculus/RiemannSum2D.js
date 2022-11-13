@@ -7,6 +7,7 @@ import {
     Object3D,
     BoxBufferGeometry, Vector2,
 } from "../../../3party/three/build/three.module.js";
+import {posNegColor} from "../../utils/colors.js";
 
 
 //curve is a function that takes in an x value and parameters
@@ -15,14 +16,21 @@ import {
 //N is the number of bars in the Riemann sum to be displayed.
 
 
+let defaultMaterial={
+    side: DoubleSide,
+    clearcoat:1,
+};
+
 class RiemannSum2D{
-    constructor( f, range, res ){
+    constructor( f, range, res, matProps= defaultMaterial){
 
         this.f = f;
         this.range = range;
 
         this.res = res;
         this.count = this.res.x*this.res.y;
+
+        this.defaultMaterial = matProps;
 
         //dummy object to be able to make the matrix for each case:
         this.dummy = new Object3D();
@@ -35,7 +43,7 @@ class RiemannSum2D{
             let yPercent = yIndex / this.res.y;
 
             //get row:
-            let xIndex = index % this.res.x+0.5;
+            let xIndex = Math.floor(index % this.res.x) + 0.5;
             let xPercent = xIndex/this.res.x;
 
             //convert these to actual coords using the resolution:
@@ -49,19 +57,18 @@ class RiemannSum2D{
 
         this.initialize();
 
+        this.value=0;
+
     }
 
 
     initialize(){
         //all the Riemann sum rectangles are going to be resized versions of this:
         const barGeometry = new BoxBufferGeometry(1,1,1);
-        const barMaterial = new MeshPhysicalMaterial({
-            side: DoubleSide,
-            clearcoat:1,
-        });
+        const barMaterial = new MeshPhysicalMaterial(this.defaultMaterial);
 
         //the maximum number of different bars we can have in the bargraph show up
-        this.totalCount=40000;
+        this.totalCount=100000;
 
         this.barGraph = new InstancedMesh( barGeometry, barMaterial, this.totalCount );
         //starts pointing along y-axis:
@@ -78,11 +85,15 @@ class RiemannSum2D{
 
         if ( this.barGraph ) {//if it's been initialized
 
+            this.value=0;
+
+            let deltaX = (this.range.x.max-this.range.x.min)/this.res.x;
+            let deltaY = (this.range.y.max-this.range.y.min)/this.res.y;
+
             //set the count to the current value of N:
             this.barGraph.count = this.res.x*this.res.y;
 
             let coords, val;
-            let xScale,yScale,zScale;
 
             for(let index = 0; index<this.totalCount; index++) {
 
@@ -91,38 +102,29 @@ class RiemannSum2D{
                 //get the y-Value at this point
                 val = this.f(coords, params);
 
+                this.value += val*deltaX*deltaY;
 
                 //build a matrix on this.dummy that moves it to the position specified by coords
                 //rectangle's x is at the xCoord, center is half way up the total y-Value
-                this.dummy.position.set(coords.x,  val/2, coords.y);
+                this.dummy.position.set(coords.x, val/2, coords.y);
 
                 //scale the object correctly: stretch out in the x and y directions
-                xScale = (this.range.x.max-this.range.x.min)/this.res.x;
-                yScale = (this.range.y.max-this.range.y.min)/this.res.y;
-                zScale = Math.abs(val);
-                this.dummy.scale.set(xScale,zScale,yScale);
+                this.dummy.scale.set(deltaX, Math.abs(val), deltaY);
 
-                //set the color of this instance:
-                //make it different for positive and negative areas:
-                let hue =0.;
-                if(val>0){
-                    hue = 0.3;
-                }
-                else{
-                    hue = 0.01;
-                }
-                let color = new Color().setHSL(hue, 0.5, 0.5);
+                //set green for pos and red for neg:
+                let color = posNegColor(val);
                 this.barGraph.setColorAt(index, color);
 
                 //update the actual matrix at this point!!!
                 this.dummy.updateMatrix();
                 this.barGraph.setMatrixAt(index, this.dummy.matrix);
 
-                if(index>this.count){
+                if(index>this.count-1){
                     break;
                 }
 
             }
+
 
             this.barGraph.instanceMatrix.needsUpdate = true;
             this.barGraph.instanceColor.needsUpdate = true;
@@ -149,6 +151,10 @@ class RiemannSum2D{
 
     setVisibility(value){
         this.barGraph.visible=value;
+    }
+
+    getValue(){
+        return this.value;
     }
 
 }
