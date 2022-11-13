@@ -227,7 +227,7 @@ class IteratedIntegralY{
                 if(index>this.res.x-1){
                     break;
                 }
-                
+
                 //get the y-Value at this point
                 val = this.integratedY(x, params);
 
