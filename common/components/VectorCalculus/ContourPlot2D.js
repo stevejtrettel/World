@@ -28,17 +28,26 @@ let createGLSLFunction = function(fnText){
 //points in the square (0,1)x(0,1)
 const toUV = `
     vec2 toUV(vec2 pixelCoords){
+    
+        //FLIP THE X COORDINATE:
+        //TO MATCH WITH THE GRADIENT VECTOR FIELD: THINK I NEED TO REFLECT SOMEWHERE ELSE?
         return vec2(pixelCoords.x/res.x,pixelCoords.y/res.y);
     }
     `;
 
 const toCoords = `
     vec2 toCoords( vec2 uv ){
+    
         float spreadX = (xMax-xMin);
         float spreadY = (yMax-yMin);
         float x = spreadX*uv.x + xMin;
         float y = spreadY*uv.y + yMin;
-        return vec2(x,y);
+        
+        //FLIP THE X COORDINATE
+        //TO LINE UP WITH THE GRADIENT FIELD
+        //THINK I NEED A REFLECTION SOMEWHERE
+        //NEED TO TRACK THIS DOWN: HACK!!! :(
+        return vec2(-x,y);
     }
 `;
 
@@ -55,9 +64,9 @@ const mainShaderFn = `
         
         //map z to a color value:
         //using hsb2rgb from color conversion at the moment:
-        z=sin(log(abs(z)));
-        z=pow(abs(z),10.);
-        vec3 color =vec3(z,0.1,0.1);
+
+        float large = pow(abs(sin(z)),70.);
+        vec3 color =vec3(large,0,0);
     
         //return this to the shader
         gl_FragColor = vec4(color,1);
@@ -116,8 +125,8 @@ class ContourPlot2D{
         this.plane.scale.set(spreadX,spreadY,1);
 
         //now rotate it to lie horizontally
-        this.plane.rotateX(Math.PI/2);
-
+        this.plane.rotateX(-Math.PI/2);
+        this.plane.rotateZ(Math.PI);
     }
 
     setPosition(x,y,z){

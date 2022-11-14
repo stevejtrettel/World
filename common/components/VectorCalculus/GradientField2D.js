@@ -156,7 +156,7 @@ class GradientField2D{
                 //set the original scale based on the resolution
                 let deltaX = (this.range.x.max-this.range.x.min)/this.res.x;
                 let deltaY = (this.range.y.max-this.range.y.min)/this.res.y;
-                let size = 0.8* Math.min(deltaX,deltaY);
+                let size = Math.min(deltaX,deltaY);
 
                 //set the scale based on the vectors magnitude:
                 let mag = vF.length();
