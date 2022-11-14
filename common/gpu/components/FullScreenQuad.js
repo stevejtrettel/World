@@ -33,6 +33,7 @@ class FullScreenQuad {
 
 
     //add new uniforms to the shader
+    //to be used one at a time, as you add new ones
     addUniforms(uniformObject, uniformString ){
         this.uniformObject = {...uniformObject, ...this.uniformObject};
         this.uniformString = uniformString + this.uniformString;
@@ -42,25 +43,20 @@ class FullScreenQuad {
 
 
     render( renderer ) {
-
         renderer.render( this._mesh, _camera );
-
     }
 
 
     recompile(buildShader){
-
         //takes in a function buildShader and remakes everythign!
         //probably can clean this up
-
         this.parameters.fragmentShader = buildShader();
         this._mesh.material.dispose();
         this._mesh.material = new ShaderMaterial(this.parameters);
-        this._mesh.material.fragmentShader = this.uniformString + this._mesh.material.fragmentShader;
-        this._mesh.material.uniforms = this.uniformObject;
 
+       this._mesh.material.fragmentShader = this.uniformString + this._mesh.material.fragmentShader;
+       this._mesh.material.uniforms = this.uniformObject;
     }
-
 
 }
 

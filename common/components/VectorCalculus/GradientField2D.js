@@ -64,12 +64,12 @@ class GradientField2D{
         this.getCoords = function(index){
 
             //get col
-            let yIndex = Math.floor(index/this.res.x);
+            let yIndex = Math.floor(index/this.res.x) + 0.5;
             //get percentage
             let yPercent = yIndex/this.res.y;
 
             //get row:
-            let xIndex = index % this.res.x;
+            let xIndex = (index % this.res.x) + 0.5;
             let xPercent = xIndex / this.res.x;
 
             //convert these to actual coords using the resolution:
