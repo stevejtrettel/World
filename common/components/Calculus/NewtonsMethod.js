@@ -1,6 +1,5 @@
-import{ Vector3 } from "../../../3party/three/build/three.module.js";
+import{ Vector3, Color } from "../../../3party/three/build/three.module.js";
 import { Rod } from "./Rod.js";
-
 
 //f is a function that takes in x; and parameters
 //x0 is a point:
@@ -13,24 +12,29 @@ class NewtonStep{
         //do newton's method with the original value of the parameters (if any)
         //to get the points p0,p1 and p2 for the stage of the method.
         //leaving out params will set it to whatever is the default argument in this.f
+
         this.compute();
 
-        let derivRad = Math.min(0.1,this.p1.clone().sub(this.p2).length()/10.);
-        let valRad = Math.min(0.1,this.p0.clone().sub(this.p1).length()/10.);
+        let derivRad = Math.min(0.03,this.p1.clone().sub(this.p2).length()/2.);
+        let valRad = Math.min(0.03,this.p0.clone().sub(this.p1).length()/2.);
+
+
+        let hue = Math.random();
+        let color =  new Color().setHSL(hue, 0.4, 0.6);
 
         //create the rods that we display for each:
         let derivRodOptions = {
             end1: this.p1,
             end2: this.p2,
-            color: 0xffffff,
+            color: color,
             radius: derivRad,
         };
 
         let valueRodOptions = {
             end1: this.p0,
             end2: this.p1,
-            transmission:0.95,
-            color:0xffffff,
+            //transmission:0.5,
+            color: color,
             radius: valRad,
         };
 
@@ -68,9 +72,9 @@ class NewtonStep{
     }
 
     resetRods(){
-        let newDerivRad = Math.min(0.1,this.p1.clone().sub(this.p2).length()/10.);
+        let newDerivRad = Math.min(0.03,this.p1.clone().sub(this.p2).length()/2.);
         this.derivativeRod.resize(this.p1,this.p2,newDerivRad);
-        let newValRad = Math.min(0.1,this.p0.clone().sub(this.p1).length()/10.);
+        let newValRad = Math.min(0.03,this.p0.clone().sub(this.p1).length()/2.);
         this.valueRod.resize(this.p0,this.p1,newValRad);
     }
 

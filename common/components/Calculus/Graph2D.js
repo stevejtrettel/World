@@ -43,12 +43,15 @@ class Graph2D{
         this.buildTubeGeometry();
         this.tube = new Mesh(this.tubeGeometry, material);
 
-        let sph = new SphereBufferGeometry(1.5*this.radius,32,16);
+        let sph = new SphereBufferGeometry(1,32,16);
+        let ballRad = 1.5*this.radius;
 
         this.maxBall = new Mesh(sph,material);
+        this.maxBall.scale.set(ballRad,ballRad,ballRad);
         this.maxBall.position.set(this.domain.min, this.f(this.domain.min), 0);
 
         this.minBall = new Mesh(sph, material);
+        this.minBall.scale.set(ballRad,ballRad,ballRad);
         this.minBall.position.set(this.domain.max, this.f(this.domain.max), 0);
 
         this.graph = new Group();
@@ -78,11 +81,19 @@ class Graph2D{
         scene.add(this.graph);
     }
 
+    setRadius(rad){
+        this.radius=rad;
+    }
+
     update(params){
 
         this.tube.geometry.dispose();
         this.buildTubeGeometry(params);
         this.tube.geometry = this.tubeGeometry;
+
+        let ballRad = 1.5 * this.radius;
+        this.minBall.scale.set(ballRad,ballRad,ballRad);
+        this.maxBall.scale.set(ballRad,ballRad,ballRad);
 
         this.minBall.position.set(this.domain.min, this.f(this.domain.min,params), 0);
         this.maxBall.position.set(this.domain.max, this.f(this.domain.max,params), 0);

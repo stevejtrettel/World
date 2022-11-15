@@ -14,18 +14,19 @@ class NewtonsMethodPlotter{
 
         //do not allow time as a parameter
         this.params = {
-            fText : 'x^2-x',
-            x0:0,
+            fText : '2*cos(x)',
+            x0: 0.42,
             a: 0,
             b: 0,
             c:0,
+            curveRad:0.02,
         }
 
         //define the function which gives our curve:
-        let func = parser.evaluate('f(x,t,a,b,c)='.concat(this.params.fText));
+        let func = parser.evaluate('f(x,a,b,c)='.concat(this.params.fText));
         //the function with all the variables:
-        this.f = function(x, params={t:0,a:0,b:0,c:0}){
-            let y = func(x, params.t, params.a, params.b, params.c);
+        this.f = function(x, params={a:0,b:0,c:0}){
+            let y = func(x, params.a, params.b, params.c);
             return y;
         };
 
@@ -36,16 +37,16 @@ class NewtonsMethodPlotter{
             f: this.f,
             domain: this.range.x,
             res:100,
-            radius: 0.05
+            radius: this.params.curveRad,
         }
 
         this.graph = new Graph2D(graphOptions);
-        this.newton = new NewtonsMethod(this.f,this.params.x0,10);
+        this.newton = new NewtonsMethod(this.f,this.params.x0,5);
 
 
         let boardOptions = {
-            xRange: {min:-10,max:10},
-            yRange: {min:-7,max:7},
+            xRange: {min:-6,max:6},
+            yRange: {min:-4,max:4},
             radius: 0.02,
         }
         this.blackboard = new BlackBoard(boardOptions);
@@ -65,9 +66,9 @@ class NewtonsMethodPlotter{
         ui.add(this.params,'fText').name('y=').onFinishChange(
             function(value){
                 thisObj.params.curveText=value;
-                let fn = parser.evaluate('f(x,t,a,b,c)='.concat(thisObj.params.fText));
-                let eqn = function(x,params={t:0,a:0,b:0,c:0}){
-                    let y = fn(x, params.time,params.a,params.b,params.c);
+                let fn = parser.evaluate('f(x,a,b,c)='.concat(thisObj.params.fText));
+                let eqn = function(x,params={a:0,b:0,c:0}){
+                    let y = fn(x, params.a,params.b,params.c);
                     return y;
                 }
 
@@ -81,7 +82,7 @@ class NewtonsMethodPlotter{
             }
         );
 
-        ui.add(this.params, 'x0', -2, 2, 0.01).name('x0').onChange(function(value){
+        ui.add(this.params, 'x0', -2, 2, 0.001).name('x0').onChange(function(value){
             thisObj.newton.setX0(value);
             thisObj.newton.update(thisObj.params);
         });
@@ -102,6 +103,13 @@ class NewtonsMethodPlotter{
             thisObj.graph.update(thisObj.params);
             thisObj.newton.update(thisObj.params);
         });
+
+        ui.add(this.params, 'curveRad', 0, 0.1, 0.001).name('graphSize').onChange(function(value){
+            thisObj.graph.setRadius(value);
+            thisObj.graph.update(thisObj.params);
+        });
+
+
 
     }
 

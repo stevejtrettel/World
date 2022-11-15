@@ -13,7 +13,7 @@ class Rod{
         this.end2=options.end2;
         this.radius = options.radius || 0.1;
 
-        const sph = new SphereBufferGeometry(1.5*this.radius,32,16);
+        const sph = new SphereBufferGeometry(1,32,16);
         let material;
 
         if('material' in options ){
@@ -34,10 +34,15 @@ class Rod{
             material = new MeshPhysicalMaterial(materialParameters);
         }
 
+        let ballRad = 1.5*this.radius;
+
+
         this.ball1 = new Mesh(sph,material);
+        this.ball1.scale.set(ballRad,ballRad,ballRad);
         this.ball1.position.set(this.end1.x,this.end1.y,this.end1.z);
 
         this.ball2 = new Mesh(sph,material);
+        this.ball2.scale.set(ballRad,ballRad,ballRad);
         this.ball2.position.set(this.end2.x,this.end2.y,this.end2.z);
 
         const curve = new CatmullRomCurve3([this.end1, this.end2]);
@@ -63,6 +68,11 @@ class Rod{
         this.end1=end1;
         this.end2=end2;
         this.radius = rad;
+
+
+        let ballRad = 1.5*this.radius;
+        this.ball1.scale.set(ballRad,ballRad,ballRad);
+        this.ball2.scale.set(ballRad,ballRad,ballRad);
 
         this.ball1.position.set(this.end1.x,this.end1.y,this.end1.z);
         this.ball2.position.set(this.end2.x,this.end2.y,this.end2.z);
