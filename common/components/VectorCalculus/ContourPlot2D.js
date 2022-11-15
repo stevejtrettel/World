@@ -65,8 +65,9 @@ const mainShaderFn = `
         //map z to a color value:
         //using hsb2rgb from color conversion at the moment:
 
+        float small = pow(abs(sin(10.* z)),150.);
         float large = pow(abs(sin(z)),70.);
-        vec3 color =vec3(large,0,0);
+        vec3 color =vec3(large,0,small);
     
         //return this to the shader
         gl_FragColor = vec4(color,1);
@@ -79,7 +80,7 @@ const mainShaderFn = `
 
 class ContourPlot2D{
     constructor(fnText, uniforms, uniformString, range){
-        this.res = [1024,1024];
+        this.res = [2048,2048];
         this.range = range;
         this.uniforms = uniforms;
         this.f = fnText;
@@ -90,7 +91,7 @@ class ContourPlot2D{
         float xMax = 10.;
         float yMin = -10.;
         float yMax = 10.;
-        vec2 res = vec2(1024,1024);
+        vec2 res = vec2(2048,2048);
         `;
 
         //setup the shader for drawing the base geometry.

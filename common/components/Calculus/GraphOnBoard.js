@@ -68,6 +68,12 @@ class GraphOnBoard{
         this.blackboard.resize(this.domain, this.range);
     }
 
+    update(params){
+        this.graph.update(params);
+        // this.range = getRange(this.f, this.domain);
+        // this.blackboard.resize(this.domain, this.range);
+    }
+
 
 
 }

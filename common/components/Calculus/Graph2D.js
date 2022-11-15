@@ -70,7 +70,7 @@ class Graph2D{
         }
         let curve = new CatmullRomCurve3(pts);
 
-        this.tubeGeometry = new TubeBufferGeometry(curve, this.res,this.radius,16);
+        this.tubeGeometry = new TubeBufferGeometry(curve, 5.*this.res,this.radius,16);
     }
 
 
