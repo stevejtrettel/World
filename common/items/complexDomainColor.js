@@ -38,8 +38,6 @@ let options = {
 };
 
 
-
-
 const toDomain = `
 vec2 toDomain( vec2 uv ){
     return 10.*(uv-vec2(0.5));

@@ -2,7 +2,11 @@ import  Graph2D  from '../components/Calculus/Graph2D.js';
 import NewtonsMethod from "../components/Calculus/NewtonsMethod.js";
 import {BlackBoard} from "../components/Calculus/Blackboard.js";
 
+
 let parser = math.parser();
+
+
+
 
 class NewtonsMethodPlotter{
     constructor(){
