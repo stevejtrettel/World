@@ -3,7 +3,7 @@ const complex = `
 // even though a GPU is precisely the sort of place where you ought to be 
 // *very* concerned about overflow.
 
-#define PI 3.141592653589793238
+//#define PI 3.141592653589793238
 #define TO_RADIANS 0.01745329251
 #define HALF_PI 1.57079633
 #define HALF_PI_INV 0.15915494309

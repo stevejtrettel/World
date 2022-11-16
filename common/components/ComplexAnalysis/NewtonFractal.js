@@ -4,7 +4,7 @@ import {
     LinearFilter,
     MeshPhysicalMaterial,
     BoxBufferGeometry,
-    Mesh,
+    Mesh, NearestFilter,
 } from "../../../3party/three/build/three.module.js";
 
 
@@ -62,7 +62,7 @@ vec2 fPrime( vec2 z ){
     
     //if the function is complex differentiable the limit exists and
     //is equal along all directions approaching zero: so, approach along real axis!
-    vec2 df = f(z+vec2(eps,0))-f(z);
+    vec2 df = f(z+vec2(eps/2.,0))-f(z-vec2(eps/2.,0));
     
     return df/eps;
 }
@@ -146,7 +146,7 @@ class NewtonFractal{
         //resolution and the linear filter to not be pixelated.
         let rtSettings = {
             res:this.res,
-            filter:LinearFilter,
+            filter:NearestFilter,
         };
         this.texShader = new TextureShader(shader, this.uniforms, this.uniformString, rtSettings, globals.renderer );
 

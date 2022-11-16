@@ -5,7 +5,8 @@
 
 //shader pieces to build up a custom shader material
 
-const constants = ` float PI = 3.14159; \n`
+const constants = ``;
+    //` float PI = 3.14159; \n`
 
 
 const varyings = `
@@ -17,7 +18,8 @@ const varyings = `
 const newPos = `
     //shrinking the domain SLIGHTLY to avoid seeing edge effects on the large edges
     //this should be done another way than hard coding....
-    vec2 uv = 0.98*position.xy;
+    //vec2 uv = 0.98*position.xy;
+    vec2 uv = position.xy;
     vec3 newPos = displace( uv );
 `;
 
