@@ -79,10 +79,10 @@ class RiemannSum{
             let xCoord, yVal;
             let xScale,yScale;
 
-            for(let index = 0; index<this.totalCount; index++) {
+            //calculate the value of the Riemann Sum
+            this.value=0;
 
-                //calculate the value of the Riemann Sum
-                this.value=0;
+            for(let index = 0; index<this.totalCount; index++) {
 
                 //what point in the (x,y) plane does this index represent?
                 xCoord = this.getCoords(index);
@@ -143,6 +143,10 @@ class RiemannSum{
 
     getValue(){
         return this.value;
+    }
+
+    setPosition(x,y,z){
+        this.barGraph.position.set(x,y,z);
     }
 
 }

@@ -4,7 +4,7 @@ import {
     LinearFilter,
     MeshPhysicalMaterial,
     BoxBufferGeometry,
-    Mesh, NearestFilter,
+    Mesh, NearestFilter, PlaneBufferGeometry,
 } from "../../../3party/three/build/three.module.js";
 
 
@@ -159,7 +159,8 @@ class NewtonFractal{
         planeMat.map = null;
 
 
-        let planeGeom = new BoxBufferGeometry(1,1,0.1);
+        let planeGeom = new PlaneBufferGeometry(1,1);
+            //new BoxBufferGeometry(1,1,0.1);
 
         this.plane = new Mesh(planeGeom,planeMat);
 

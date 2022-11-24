@@ -16,9 +16,10 @@ class GlassPanel{
 
         let glassMaterial = new MeshPhysicalMaterial(
             {
-                opacity: 0,
-                ior:1.,
-                transmission: 0.98,
+                transparent:true,
+                opacity: 0.05,
+                // ior:1.,
+                // transmission: 0.98,
                 clearcoat: 1,
                 side: DoubleSide,
             });

@@ -45,7 +45,7 @@ class NewtonsMethodPlotter{
         }
 
         this.graph = new Graph2D(graphOptions);
-        this.newton = new NewtonsMethod(this.f,this.params.x0,5);
+        this.newton = new NewtonsMethod(this.f,this.params.x0,2);
 
 
         let boardOptions = {

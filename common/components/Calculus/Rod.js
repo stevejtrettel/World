@@ -7,6 +7,10 @@ import {
     SphereBufferGeometry, TubeBufferGeometry
 } from "../../../3party/three/build/three.module.js";
 
+
+
+//the options for a rod are:
+//end1, end2, radius,
 class Rod{
     constructor(options){
         this.end1=options.end1;
