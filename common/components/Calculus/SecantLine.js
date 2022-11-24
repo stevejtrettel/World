@@ -18,7 +18,8 @@ function secantSlope(f, x, deltaX){
 }
 
 
-
+//options require the following:
+//f,x,h,length,radius,color
 class SecantLine{
     constructor(options){
 
@@ -99,11 +100,9 @@ class SecantLine{
 
     }
 
-
     getPoint(xNew){
         return this.y+this.slope*(xNew-this.x);
     }
-
 
     addToScene( scene ){
        scene.add(this.balls);
@@ -113,12 +112,39 @@ class SecantLine{
        this.run.addToScene(scene);
     }
 
-    resetX( newX ){
-
+    setX( newX ){
         this.x = newX;
-        this.y = this.f(this.x);
+     }
+
+    setH( newH ){
+        this.h = newH;
+    }
+
+    setF( newF ){
+        this.f=newF;
+    }
+
+    setVisibility(value){
+        this.secantSegment.setVisibility(value);
+        this.rise.setVisibility(value);
+        this.run.setVisibility(value);
+
+        this.balls.visible = value;
+    }
+
+    setPosition(x,y,z){
+        this.secantSegment.setPosition(x,y,z);
+        this.rise.setPosition(x,y,z);
+        this.run.setPosition(x,y,z);
+
+        this.balls.position.set(x,y,z);
+    }
+
+
+    update(params){
+        this.y = this.f(this.x,params);
         this.x2 = this.x+this.h;
-        this.y2 = this.f(this.x2);
+        this.y2 = this.f(this.x2,params);
         this.slope = (this.y2-this.y)/this.h;
 
         //move the balls around
@@ -143,59 +169,8 @@ class SecantLine{
         const run1 = new Vector3(this.x, this.y,0);
         const run2 = new Vector3(this.x2, this.y, 0);
         this.run.resize(run1, run2);
-     }
-
-    resetH( newH ){
-
-        this.h = newH;
-        this.x2 = this.x+this.h;
-        this.y2 = this.f(this.x2);
-        this.slope = (this.y2-this.y)/this.h;
-
-        //move the balls around
-        this.ballXH.position.set(this.x2, this.y2, 0);
-
-        //redraw the secant line itself
-        const delta = Math.sqrt(1/(1+this.slope*this.slope))*this.length/2.;
-        const xStart = this.x-delta;
-        const xEnd = this.x+delta;
-
-        this.secantSegment.resize(
-            new Vector3(xStart, this.getPoint(xStart),0),
-            new Vector3(xEnd, this.getPoint(xEnd),0)
-        );
-
-
-        //redraw the rods
-        const rise1 = new Vector3(this.x2,this.y,0);
-        const rise2 = new Vector3(this.x2, this.y2,0);
-        this.rise.resize(rise1, rise2);
-
-        const run1 = new Vector3(this.x, this.y,0);
-        const run2 = new Vector3(this.x2, this.y, 0);
-        this.run.resize(run1, run2);
-
-
-    }
-
-    setVisibility(value){
-        this.secantSegment.setVisibility(value);
-        this.rise.setVisibility(value);
-        this.run.setVisibility(value);
-
-        this.balls.visible = value;
-    }
-
-    setPosition(x,y,z){
-        this.secantSegment.setPosition(x,y,z);
-        this.rise.setPosition(x,y,z);
-        this.run.setPosition(x,y,z);
-
-        this.balls.position.set(x,y,z);
     }
 
 }
 
-
-
-export{ SecantLine };
+export default SecantLine;

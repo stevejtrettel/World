@@ -60,6 +60,7 @@ class Graph2DIntegral{
         this.graph.add(this.maxBall);
         this.graph.add(this.tube);
 
+
     }
 
 
@@ -78,12 +79,9 @@ class Graph2DIntegral{
             pts.push(new Vector3(x,val,0));
         }
 
-        //the definite integral is the last value to come out of the function
-        this.definiteIntegral = val;
-
         //draw the curve
-        let curve = new CatmullRomCurve3(pts);
-        this.tubeGeometry = new TubeBufferGeometry(curve, 5.*this.res,this.radius,16);
+        this.curve = new CatmullRomCurve3(pts);
+        this.tubeGeometry = new TubeBufferGeometry(this.curve, 5.*this.res,this.radius,16);
     }
 
 
@@ -107,7 +105,7 @@ class Graph2DIntegral{
 
         //the starting area is zero; the final is the totalIntegral
         this.minBall.position.set(this.domain.min, 0., 0);
-        this.maxBall.position.set(this.domain.max, this.definiteIntegral, 0);
+        this.maxBall.position.set(this.domain.max, this.curve.getPoint(1), 0);
     }
 
     setDomain(newDomain){
@@ -126,8 +124,10 @@ class Graph2DIntegral{
         this.graph.visible = value;
     }
 
-    getIntegral(){
-        return this.definiteIntegral;
+    getIntegral(x=this.domain.max){
+        let p = (x-this.domain.min)/(this.domain.max-this.domain.min);
+        //the y value of the point is the integral
+        return this.curve.getPoint(p).y;
     }
 
 }

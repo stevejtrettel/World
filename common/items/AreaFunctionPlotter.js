@@ -5,27 +5,13 @@ import Graph2D from "../components/Calculus/Graph2D.js";
 import {Rod} from "../components/Calculus/Rod.js";
 import Graph2DIntegral from "../components/Calculus/Graph2DIntegral.js";
 import {BlackBoard} from "../components/Calculus/Blackboard.js";
-import SecantLine from "../components/Calculus/SecantLine.js";
 
 //using GLOBAL object math.parser: this is from the 3rd party math file loaded in the html
 const parser = math.parser();
 
 
 
-
-//some useful functions for computing secant things:
-function secantEndpts(x, h, y2, y1, length){
-    const slope = (y2-y1)/h;
-    const delta = Math.sqrt(1/(1+slope*slope))*length/2.;
-    return {
-        start: new Vector3(x-delta, y1 - slope * delta,0),
-        end: new Vector3(x+delta,y1 + slope * delta,0),
-    };
-}
-
-
-
-class FTCPlotter{
+class AreaFunctionPlotter{
     constructor(fnText, range ){
 
         this.N = 1000;
@@ -35,12 +21,12 @@ class FTCPlotter{
             xMax: range.max,
 
             x:0.75,
-            h:2.,
 
             a:1,
             b:1,
             c:1,
 
+            time:0,
             curveText: fnText,
 
             showCurve:true,
@@ -65,53 +51,29 @@ class FTCPlotter{
             color: 0xffffff,
         };
 
-        this.rescale = function(percent){
-            let spread = this.params.xMax - this.params.xMin;
-            return this.params.xMin + percent * spread;
-        }
-
-        //draw the graph and the antiderivative:
         this.functionGraph = new Graph2D(graphOptions);
         this.functionGraph.setPosition(0,0,-3);
+
         this.antiderivative = new Graph2DIntegral(graphOptions);
 
+
+
         //draw the bargraph:
-        let bgRange = {min: this.rescale(this.params.x), max: this.rescale(this.params.x)+this.params.h};
+        //this range is different (as it depends on the parameter x):
+        let bgRange = {min: this.params.xMin, max: this.params.xMin + this.params.x * (this.params.xMax-this.params.xMin)};
         this.riemannSum = new RiemannSum(this.curve, bgRange, this.N);
         this.riemannSum.setPosition(0,0,-3);
-        this.riemannSum.update(this.params);
+
 
         //draw a vertical bar at the point we are measuring: (for the antiderivative)
-        let xRescale = this.rescale(this.params.x);
-        let cvRod = {
-            end1: new Vector3(xRescale,0,0),
-            end2: new Vector3(xRescale, this.antiderivative.getIntegral(xRescale),0),
+        let xRescaled = this.params.xMin + this.params.x * (this.params.xMax - this.params.xMin);
+        let rodOptions = {
+            end1: new Vector3(xRescaled,0,0),
+            end2: new Vector3(xRescaled, this.antiderivative.getIntegral(),0),
             color: 0xe8c156,//a yellow
-            radius: 0.05,
         }
-        this.currentValue = new Rod(cvRod);
+        this.currentValue = new Rod(rodOptions);
 
-        let xhRescale = xRescale + this.params.h;
-        let nvRod ={
-            end1: new Vector3(xhRescale,0,0),
-            end2: new Vector3(xhRescale, this.antiderivative.getIntegral(xhRescale),0),
-            color: 0xe8c156,//a yellow
-            radius: 0.05,
-        }
-        this.nextValue = new Rod(nvRod);
-
-
-        this.secLength = (this.params.xMax-this.params.xMin)/2.;
-        let y2 = this.antiderivative.getIntegral(xhRescale);
-        let y1 = this.antiderivative.getIntegral(xRescale)
-        let secPts = secantEndpts(xRescale,this.params.h,y2,y1,this.secLength);
-        let secRod = {
-            end1: secPts.start,
-            end2: secPts.end,
-            color:0x9d6ef5,
-            radius:0.05,
-        }
-        this.secant = new Rod(secRod);
 
 
         //draw the blackboard this is all taking place on:
@@ -121,28 +83,10 @@ class FTCPlotter{
         }
         this.blackboard = new BlackBoard(boardOptions);
 
+
+
+
     }
-
-
-    update(){
-        this.riemannSum.update(this.params);
-        this.antiderivative.update(this.params);
-        this.functionGraph.update(this.params);
-
-        //reset the bars:
-        let xRescale = this.rescale(this.params.x);
-        let xhRescale = xRescale + this.params.h;
-        let yx = this.antiderivative.getIntegral(xRescale);
-        let yxh = this.antiderivative.getIntegral(xhRescale);
-
-        this.currentValue.resize(new Vector3(xRescale,0,0), new Vector3(xRescale, yx,0));
-        this.nextValue.resize(new Vector3(xhRescale,0,0), new Vector3(xhRescale, yxh,0));
-
-
-        let secPts = secantEndpts(xRescale,this.params.h,yxh,yx,this.secLength);
-        this.secant.resize(secPts.start,secPts.end);
-    }
-
 
     addToScene(scene){
         this.riemannSum.addToScene(scene);
@@ -150,8 +94,6 @@ class FTCPlotter{
         this.antiderivative.addToScene(scene);
         this.blackboard.addToScene(scene);
         this.currentValue.addToScene(scene);
-        this.nextValue.addToScene(scene);
-        this.secant.addToScene(scene);
     }
 
     addToUI(ui){
@@ -169,8 +111,6 @@ class FTCPlotter{
             thisBarGraph.setRange(bgRange);
             thisFunctionGraph.setDomain(rng);
             thisAntideriv.setDomain(rng);
-
-            thisObj.update();
         });
 
         domainFolder.add(this.params, 'xMax', -10, 10, 0.01).name('xMax').onChange(function(value){
@@ -179,76 +119,71 @@ class FTCPlotter{
             thisBarGraph.setRange(bgRange);
             thisFunctionGraph.setDomain(rng);
             thisAntideriv.setDomain(rng);
-
-            thisObj.update();
         });
 
-
+        // ui.add(this.params,'showCurve').onChange(
+        //     function(value){
+        //         thisFunctionGraph.setVisibility(value);
+        //     }
+        // );
 
 
         ui.add(this.params,'curveText').name('y=').onFinishChange(
-            function(value) {
-                thisObj.params.curveText = value;
+            function(value){
+                thisObj.params.curveText=value;
                 let curve = parser.evaluate('curve(x,t,a,b,c)='.concat(thisObj.params.curveText));
-                let eqn = function (x, params = {time: 0, a: 0, b: 0, c: 0}) {
-                    let y = curve(x, params.time, params.a, params.b, params.c);
+                let eqn = function(x,params={time:0,a:0,b:0,c:0}){
+                    let y = curve(x, params.time,params.a,params.b,params.c);
                     return y;
                 }
 
+                thisObj.params.time=0;
                 thisObj.curve = eqn;
                 thisBarGraph.setCurve(eqn);
                 thisAntideriv.setFunction(eqn);
                 thisFunctionGraph.setFunction(eqn);
 
-
-                //reset the bars:
-                thisObj.update();
             }
         );
 
-
-
-
         ui.add(this.params, 'x', 0,1,0.001).name('x').onChange(function(value){
 
-            let xRescale = thisObj.rescale(thisObj.params.x);
-            let xhRescale = xRescale + thisObj.params.h;
-            let range = {min: xRescale, max: xhRescale };
+            let xRescaled = thisObj.params.xMin + value *(thisObj.params.xMax-thisObj.params.xMin);
+            let range = {min: thisObj.params.xMin, max: xRescaled  };
             thisBarGraph.setRange(range);
 
-
-           thisObj.update();
-
-        });
-
-        ui.add(this.params, 'h', 0.001,5,0.001).name('h').onChange(function(value){
-
-            let xRescale = thisObj.rescale(thisObj.params.x);
-            let xhRescale = xRescale + value;
-            let range = {min: xRescale, max: xhRescale };
-            thisBarGraph.setRange(range);
-
-            thisObj.update();
         });
 
         let paramFolder =ui.addFolder('Parameters');
 
         paramFolder.add(this.params, 'a', -2, 2, 0.01).name('a').onChange(function(value){
-            thisObj.update();
+
         });
 
         paramFolder.add(this.params, 'b', -2, 2, 0.01).name('b').onChange(function(value){
-            thisObj.update();
+
         });
 
         paramFolder.add(this.params, 'c', -2, 2, 0.01).name('c').onChange(function(value){
-            thisObj.update();
-        });
 
+        });
     }
 
     tick(time,dTime){
-        //all the updating is happening inside the UI only:
+        this.params.time += dTime;
+
+        //this is for free basically: not re-making any geometries
+        this.riemannSum.update(this.params);
+
+        //really should only do this if stuff is changing:
+        this.antiderivative.update(this.params);
+        this.functionGraph.update(this.params);
+
+        let xResize =  this.params.xMin + this.params.x * (this.params.xMax - this.params.xMin);
+        let end1 = new Vector3(xResize, 0,0);
+        let end2 = new Vector3(xResize, this.riemannSum.getValue(),0);
+        this.currentValue.resize(end1,end2);
+
     }
 }
 
@@ -263,6 +198,6 @@ class FTCPlotter{
 let fnText = 'cos(x)+x/(1+x*x)';
 let range = { min:-10,max:10};
 
-let example = new FTCPlotter(fnText, range );
+let example = new AreaFunctionPlotter(fnText, range );
 
 export default {example};
