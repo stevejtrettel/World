@@ -1,4 +1,4 @@
-import {Vector3} from "../../3party/three/build/three.module.js";
+import {Color, Vector3} from "../../3party/three/build/three.module.js";
 
 import SurfaceRevolutionX from "../components/Calculus/SurfaceRevolutionX.js";
 import {BlackBoard} from "../components/Calculus/Blackboard.js";
@@ -12,11 +12,18 @@ import Washer from "../components/Calculus/Washer.js";
 const parser = math.parser();
 
 
+
+//SOME NICE COLORS:
+let medBlue = new Color().setHSL(0.6,0.5,0.5);
+let darkBlue = new Color().setHSL(0.65,0.7,0.2);
+let lightGreen = new Color().setHSL(0.3,0.5,0.5);
+let yellow = new Color().setHSL(0.13,0.8,0.4);
+let lightYellow = new Color().setHSL(0.15,0.7,0.8);
+
 class DiskAndWasherPlotter{
    constructor(domain) {
 
        this.domain = domain;
-
 
        this.params = {
 
@@ -32,6 +39,7 @@ class DiskAndWasherPlotter{
            angle: 0,
 
            showArea:true,
+           showCurves:true,
 
            a:0,
            b:0,
@@ -53,14 +61,12 @@ class DiskAndWasherPlotter{
            radius:0.03,
            res:300,
            f: outerCurveFn,
-           color: 0xffffff,
+           color: yellow,
        };
        this.outerCurve = new Graph2D(outerCurveOptions);
        this.outerSurface = new SurfaceRevolutionX(outerCurveFn, this.domain, this.params.axis,this.params.angle);
 
-
-
-
+       
 
        //THE INSIDE CURVE AND SURFACE
        let innerFunc = parser.evaluate('curve(x,a,b,c)='.concat(this.params.innerCurveText));
@@ -76,7 +82,7 @@ class DiskAndWasherPlotter{
            radius:0.03,
            res:300,
            f: innerCurveFn,
-           color: 0xffffff,
+           color: yellow,
        };
        this.innerCurve = new Graph2D(innerCurveOptions);
        this.innerSurface = new SurfaceRevolutionX(innerCurveFn, this.domain, this.params.axis,this.params.angle);
@@ -88,7 +94,7 @@ class DiskAndWasherPlotter{
 
 
        //AREA BETWEEN CURVES:
-       this.area = new AreaBetweenCurves(this.domain,outerCurveFn,innerCurveFn,0xffffff);
+       this.area = new AreaBetweenCurves(this.domain,outerCurveFn,innerCurveFn,lightYellow);
 
        //THE BLACKBOARD
        this.blackboard = new BlackBoard({
@@ -258,6 +264,12 @@ class DiskAndWasherPlotter{
            }
        );
 
+       extraFolder.add(this.params,'showCurves').name('Show Curves').onChange(
+           function(value){
+               thisObj.outerCurve.setVisibility(value);
+               thisObj.innerCurve.setVisibility(value);
+           }
+       );
 
 
    }

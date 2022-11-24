@@ -1,4 +1,11 @@
-import {DoubleSide, Mesh, MeshPhysicalMaterial, RingBufferGeometry,Vector3} from "../../../3party/three/build/three.module.js";
+import {
+    DoubleSide,
+    Mesh,
+    MeshPhysicalMaterial,
+    RingBufferGeometry,
+    Vector3,
+    Color
+} from "../../../3party/three/build/three.module.js";
 
 import {Rod} from "./Rod.js";
 import ParametricCurve from "../VectorCalculus/ParametricCurve.js";
@@ -6,7 +13,7 @@ import ParametricCurve from "../VectorCalculus/ParametricCurve.js";
 
 //a class for drawing a washer between two curves
 class Washer{
-    constructor(x,top, bottom, axis=0, angle=2.*Math.PI) {
+    constructor(x,top, bottom, axis=0, angle=2.*Math.PI, options={}) {
 
         this.x =x;
         this.top = top;
@@ -14,29 +21,40 @@ class Washer{
         this.axis = axis;
         this.angle = angle;
 
+        this.surfaceColor = options.surfaceColor || new Color().setHSL(0.6,0.5,0.5);
+        this.bdyColor = options.bdyColor || new Color().setHSL(0.6,0.7,0.2);
+
         let geom =  this.createRingGeometry();
         let mat = new MeshPhysicalMaterial({
             side: DoubleSide,
             clearcoat:1,
-            color: 0xffffff,
+            color: this.surfaceColor,
         });
 
         this.surface = new Mesh(geom,mat);
         this.surface.rotateY(-Math.PI/2);
         this.surface.position.set(this.x,this.axis,0);
 
+
+
+        let bdyOptions = {
+            radius: 0.05,
+            color: this.bdyColor,
+            res: 64,
+        }
+
         this.outerFn = this.createBdy(this.top);
-        this.outer = new ParametricCurve(this.outerFn,{min:0,max:this.angle});
+        this.outer = new ParametricCurve(this.outerFn,{min:0,max:this.angle},bdyOptions);
 
         this.innerFn = this.createBdy(this.bottom);
-        this.inner = new ParametricCurve(this.innerFn,{min:0,max:this.angle});
+        this.inner = new ParametricCurve(this.innerFn,{min:0,max:this.angle},bdyOptions);
 
 
         this.start = new Rod({
             end1: this.innerFn(0,{}),
             end2: this.outerFn(0,{}),
             radius:0.05,
-            color:0xffffff,
+            color:this.bdyColor,
         });
 
 
@@ -44,7 +62,7 @@ class Washer{
             end1: this.innerFn(this.angle,{}),
             end2: this.outerFn(this.angle,{}),
             radius:0.05,
-            color:0xffffff,
+            color:this.bdyColor,
         });
 
     }

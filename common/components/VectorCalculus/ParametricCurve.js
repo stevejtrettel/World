@@ -42,7 +42,7 @@ class ParametricCurve{
 
     createTube(params){
         let pts = [];
-        for(let i=0;i<this.res;i++){
+        for(let i=0;i<this.res+1;i++){
             let t = this.rescaleT(i/this.res);
             pts.push(this.curveFn(t));
         }
@@ -69,6 +69,11 @@ class ParametricCurve{
         this.curveFn = curve;
     }
 
+    setVisibility(value){
+        this.tube.visible=value;
+        this.start.visible=value;
+        this.end.visible=value;
+    }
 
     update(params){
         this.tube.geometry.dispose();
