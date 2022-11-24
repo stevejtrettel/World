@@ -204,6 +204,9 @@ class DiskAndWasherPlotter{
 
                thisObj.outerSurface.setCurve(eqn);
                thisObj.outerSurface.update(thisObj.params);
+
+               thisObj.washer.setTop(eqn);
+               thisObj.washer.update(thisObj.params);
            }
        );
 
@@ -223,6 +226,9 @@ class DiskAndWasherPlotter{
 
                thisObj.innerSurface.setCurve(eqn);
                thisObj.innerSurface.update(thisObj.params);
+
+               thisObj.washer.setBottom(eqn);
+               thisObj.washer.update(thisObj.params);
            }
        );
 

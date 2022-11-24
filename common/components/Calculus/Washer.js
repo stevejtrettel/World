@@ -102,10 +102,14 @@ class Washer{
 
     setTop(top){
         this.top=top;
+        this.outerFn = this.createBdy(this.top);
+        this.outer.setCurve(this.outerFn);
     }
 
     setBottom(bottom){
         this.bottom=bottom;
+        this.innerFn = this.createBdy(this.bottom);
+        this.inner.setCurve(this.innerFn);
     }
 
     setAxis(axis){
