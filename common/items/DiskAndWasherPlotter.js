@@ -66,7 +66,7 @@ class DiskAndWasherPlotter{
        this.outerCurve = new Graph2D(outerCurveOptions);
        this.outerSurface = new SurfaceRevolutionX(outerCurveFn, this.domain, this.params.axis,this.params.angle);
 
-       
+
 
        //THE INSIDE CURVE AND SURFACE
        let innerFunc = parser.evaluate('curve(x,a,b,c)='.concat(this.params.innerCurveText));
