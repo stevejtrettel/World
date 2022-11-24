@@ -89,6 +89,10 @@ class AreaBetweenCurves{
         this.area.visible=value;
     }
 
+    setPosition(x,y,z){
+        this.area.position.set(x,y,z);
+    }
+
 }
 
 

@@ -16,7 +16,7 @@ const parser = math.parser();
 //SOME NICE COLORS:
 let medBlue = new Color().setHSL(0.6,0.5,0.5);
 let darkBlue = new Color().setHSL(0.65,0.7,0.2);
-let lightGreen = new Color().setHSL(0.3,0.5,0.5);
+let lightGreen = new Color().setHSL(0.3,0.5,0.6);
 let yellow = new Color().setHSL(0.13,0.8,0.4);
 let lightYellow = new Color().setHSL(0.15,0.7,0.8);
 
@@ -30,7 +30,7 @@ class DiskAndWasherPlotter{
            xMin: this.domain.min,
            xMax: this.domain.max,
 
-           outerCurveText: '2+0.3*sin(x)',
+           outerCurveText: '2',
            innerCurveText:'1/(1+x^2)',
 
            x: 0.75,
@@ -117,6 +117,37 @@ class DiskAndWasherPlotter{
        //THE WASHER
        this.washer = new Washer(this.params.x,outerCurveFn,innerCurveFn, this.params.axis, this.params.angle);
 
+
+
+
+
+       //IN THE BACKGROUND: THE CURVE WE INTEGRATE
+       this.integralBoard = new BlackBoard({
+           xRange:domain,
+           yRange:domain,
+           radius:0.02,
+       });
+
+
+       this.integralBoard.setPosition(0,0,-15);
+       let integralFn = function(x, params={a:0,b:0,c:0}){
+           let big = outerCurveFn(x,params);
+           let small = innerCurveFn(x,params);
+
+           return big*big-small*small;
+       }
+       let integralCurveOptions = {
+           domain:this.domain,
+           radius:0.03,
+           res:150,
+           f: integralFn,
+           color: yellow,
+       };
+       this.integralCurve = new Graph2D(integralCurveOptions);
+       this.integralCurve.setPosition(0,0,-15);
+       this.integralArea = new AreaBetweenCurves(this.domain,integralFn,(x,params)=>{return 0.},lightGreen);
+       this.integralArea.setPosition(0,0,-15);
+
    }
 
 
@@ -165,6 +196,10 @@ class DiskAndWasherPlotter{
        this.outerCurve.addToScene(scene);
        this.washer.addToScene(scene);
 
+       this.integralBoard.addToScene(scene);
+       this.integralCurve.addToScene(scene);
+       this.integralArea.addToScene(scene);
+
    }
 
 
@@ -195,6 +230,8 @@ class DiskAndWasherPlotter{
                    let y = curve(x, params.a,params.b,params.c);
                    return y;
                }
+
+
 
                thisObj.area.setTop(eqn);
                thisObj.area.update(thisObj.params);
@@ -229,6 +266,9 @@ class DiskAndWasherPlotter{
 
                thisObj.washer.setBottom(eqn);
                thisObj.washer.update(thisObj.params);
+
+
+
            }
        );
 
