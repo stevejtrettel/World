@@ -66,12 +66,26 @@ class DiskRiemannSumPlotter{
         this.areaRiemannSum = new RiemannSum(this.areaFn,range,N,1.5);
         this.areaRiemannSum.setPosition(0,0,-15);
 
+        let areaGraphOptions = {
+            domain:range,
+            radius:0.03,
+            res:300,
+            f: this.areaFn,
+            color: 0xffffff,
+        };
+
+        this.areaGraph = new Graph2D(areaGraphOptions);
+        this.areaGraph.setPosition(0,0,-15);
+
+
+
     }
 
     addToScene(scene){
         this.riemannSum.addToScene(scene);
         this.functionGraph.addToScene(scene);
         this.areaRiemannSum.addToScene(scene);
+        this.areaGraph.addToScene(scene);
     }
 
     addToUI(ui){
@@ -121,6 +135,7 @@ class DiskRiemannSumPlotter{
 
                 thisObj.areaFn = areaEqn;
                 thisObj.areaRiemannSum.setCurve(areaEqn);
+                thisObj.areaGraph.setFunction(areaEqn);
             }
         );
 
@@ -138,6 +153,7 @@ class DiskRiemannSumPlotter{
         visFolder.add(this.params,'showCurve').onChange(
             function(value){
                 thisFunctionGraph.setVisibility(value);
+                thisObj.areaGraph.setVisibility(value);
             }
         );
         visFolder.add(this.params,'showDisks').onChange(
@@ -157,6 +173,7 @@ class DiskRiemannSumPlotter{
         this.params.time += dTime;
         this.riemannSum.update(this.params);
         this.areaRiemannSum.update(this.params);
+        this.areaGraph.update(this.params);
 
         //only do this computation if the curve is visible!
         //otherwise its a waste
