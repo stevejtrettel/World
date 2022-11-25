@@ -280,6 +280,8 @@ class DiskAndWasherPlotter{
                thisObj.integralArea.setTop(thisObj.integrand);
                thisObj.integralArea.update(thisObj.params);
 
+               thisObj.integralSlice.resize(new Vector3(thisObj.params.x,0,0), new Vector3(thisObj.params.x, thisObj.integrand(thisObj.params.x,thisObj.params)));
+
 
            }
        );
@@ -314,7 +316,7 @@ class DiskAndWasherPlotter{
                thisObj.integralArea.setTop(thisObj.integrand);
                thisObj.integralArea.update(thisObj.params);
 
-
+               thisObj.integralSlice.resize(new Vector3(thisObj.params.x,0,0), new Vector3(thisObj.params.x, thisObj.integrand(thisObj.params.x,thisObj.params)));
 
            }
        );

@@ -1,6 +1,7 @@
 
 import DiskRiemannSum from "../components/Calculus/DiskRiemannSum.js";
 import Graph2D from "../components/Calculus/Graph2D.js";
+import RiemannSum from "../components/Calculus/RiemannSum.js";
 
 
 //using GLOBAL object math.parser: this is from the 3rd party math file loaded in the html
@@ -25,6 +26,8 @@ class DiskRiemannSumPlotter{
             curveText: fnText,
 
             showCurve:true,
+            showDisks:true,
+            showBars:true,
 
         };
 
@@ -36,6 +39,13 @@ class DiskRiemannSumPlotter{
             let y = func(x, params.time, params.a, params.b, params.c);
             return y;
         }
+
+        this.areaFn = function(x, params={time:0, a:0,b:0,c:0}){
+            let rad = func(x,params.time, params.a, params.b, params.c);
+            return 3.14/2.*rad*rad;
+        }
+
+
 
         this.riemannSum = new DiskRiemannSum(this.curve, range, N);
 
@@ -49,11 +59,19 @@ class DiskRiemannSumPlotter{
 
         this.functionGraph = new Graph2D(graphOptions);
 
+
+
+
+        //AREA IN THE BACK
+        this.areaRiemannSum = new RiemannSum(this.areaFn,range,N,1.5);
+        this.areaRiemannSum.setPosition(0,0,-15);
+
     }
 
     addToScene(scene){
         this.riemannSum.addToScene(scene);
         this.functionGraph.addToScene(scene);
+        this.areaRiemannSum.addToScene(scene);
     }
 
     addToUI(ui){
@@ -67,21 +85,18 @@ class DiskRiemannSumPlotter{
         domainFolder.add(this.params, 'xMin', -10, 10, 0.01).name('xMin').onChange(function(value){
             let rng = {min:value,max:thisBarGraph.range.max};
             thisBarGraph.setRange(rng);
+            thisObj.areaRiemannSum.setRange(rng);
         });
 
         domainFolder.add(this.params, 'xMax', -10, 10, 0.01).name('xMax').onChange(function(value){
             let rng = {min: thisBarGraph.range.min, max: value};
             thisBarGraph.setRange(rng);
+            thisObj.areaRiemannSum.setRange(rng);
         });
-
-        ui.add(this.params,'showCurve').onChange(
-            function(value){
-                thisFunctionGraph.setVisibility(value);
-            }
-        );
 
         ui.add(this.params,'N', 1,thisBarGraph.totalCount,1).name('Bars').onChange(function(value){
             thisBarGraph.setN(value);
+            thisObj.areaRiemannSum.setN(value);
         });
 
 
@@ -94,10 +109,18 @@ class DiskRiemannSumPlotter{
                     return y;
                 }
 
+                let areaEqn = function(x, params={time:0, a:0,b:0,c:0}){
+                    let rad = eqn(x,params);
+                    return 3.14/2.*rad*rad;
+                }
+
                 thisObj.params.time=0;
                 thisObj.curve = eqn;
                 thisBarGraph.setCurve(eqn);
                 thisFunctionGraph.setFunction(eqn);
+
+                thisObj.areaFn = areaEqn;
+                thisObj.areaRiemannSum.setCurve(areaEqn);
             }
         );
 
@@ -111,11 +134,29 @@ class DiskRiemannSumPlotter{
         });
 
 
+        let visFolder = ui.addFolder('Visibility');
+        visFolder.add(this.params,'showCurve').onChange(
+            function(value){
+                thisFunctionGraph.setVisibility(value);
+            }
+        );
+        visFolder.add(this.params,'showDisks').onChange(
+            function(value){
+                thisBarGraph.setVisibility(value);
+            }
+        );
+        visFolder.add(this.params,'showBars').onChange(
+            function(value){
+                thisObj.areaRiemannSum.setVisibility(value);
+            }
+        );
+
     }
 
     tick(time,dTime){
         this.params.time += dTime;
         this.riemannSum.update(this.params);
+        this.areaRiemannSum.update(this.params);
 
         //only do this computation if the curve is visible!
         //otherwise its a waste
