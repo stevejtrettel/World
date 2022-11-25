@@ -51,7 +51,7 @@ class DiskAndWasherPlotter{
        //THE OUTSIDE CURVE AND SURFACE
        let outerFunc = parser.evaluate('curve(x,a,b,c)='.concat(this.params.outerCurveText));
        //the function with all the variables:
-       let outerCurveFn = function(x, params={a:0,b:0,c:0}){
+       this.outerCurveFn = function(x, params={a:0,b:0,c:0}){
            let y = outerFunc(x, params.a, params.b, params.c);
            return y;
        }
@@ -60,18 +60,18 @@ class DiskAndWasherPlotter{
            domain:this.domain,
            radius:0.03,
            res:300,
-           f: outerCurveFn,
+           f: this.outerCurveFn,
            color: yellow,
        };
        this.outerCurve = new Graph2D(outerCurveOptions);
-       this.outerSurface = new SurfaceRevolutionX(outerCurveFn, this.domain, this.params.axis,this.params.angle);
+       this.outerSurface = new SurfaceRevolutionX(this.outerCurveFn, this.domain, this.params.axis,this.params.angle);
 
 
 
        //THE INSIDE CURVE AND SURFACE
        let innerFunc = parser.evaluate('curve(x,a,b,c)='.concat(this.params.innerCurveText));
        //the function with all the variables:
-       let innerCurveFn = function(x, params={a:0,b:0,c:0}){
+       this.innerCurveFn = function(x, params={a:0,b:0,c:0}){
            let y = innerFunc(x, params.a, params.b, params.c);
            return y;
        }
@@ -81,11 +81,11 @@ class DiskAndWasherPlotter{
            domain:this.domain,
            radius:0.03,
            res:300,
-           f: innerCurveFn,
+           f: this.innerCurveFn,
            color: yellow,
        };
        this.innerCurve = new Graph2D(innerCurveOptions);
-       this.innerSurface = new SurfaceRevolutionX(innerCurveFn, this.domain, this.params.axis,this.params.angle);
+       this.innerSurface = new SurfaceRevolutionX(this.innerCurveFn, this.domain, this.params.axis,this.params.angle);
        //change the inner material
        //transmitting things are visible thru transparent things
        this.innerSurface.surface.material.transparent=false;
@@ -94,7 +94,7 @@ class DiskAndWasherPlotter{
 
 
        //AREA BETWEEN CURVES:
-       this.area = new AreaBetweenCurves(this.domain,outerCurveFn,innerCurveFn,lightYellow);
+       this.area = new AreaBetweenCurves(this.domain,this.outerCurveFn,this.innerCurveFn,lightYellow);
 
        //THE BLACKBOARD
        this.blackboard = new BlackBoard({
@@ -115,10 +115,7 @@ class DiskAndWasherPlotter{
 
 
        //THE WASHER
-       this.washer = new Washer(this.params.x,outerCurveFn,innerCurveFn, this.params.axis, this.params.angle);
-
-
-
+       this.washer = new Washer(this.params.x,this.outerCurveFn,this.innerCurveFn, this.params.axis, this.params.angle);
 
 
        //IN THE BACKGROUND: THE CURVE WE INTEGRATE
@@ -128,26 +125,42 @@ class DiskAndWasherPlotter{
            radius:0.02,
        });
 
-
        this.integralBoard.setPosition(0,0,-15);
-       let integralFn = function(x, params={a:0,b:0,c:0}){
-           let big = outerCurveFn(x,params);
-           let small = innerCurveFn(x,params);
-
-           return big*big-small*small;
-       }
+       this.integrand = this.createIntegrand();
        let integralCurveOptions = {
            domain:this.domain,
            radius:0.03,
            res:150,
-           f: integralFn,
+           f: this.integrand,
            color: yellow,
        };
        this.integralCurve = new Graph2D(integralCurveOptions);
        this.integralCurve.setPosition(0,0,-15);
-       this.integralArea = new AreaBetweenCurves(this.domain,integralFn,(x,params)=>{return 0.},lightGreen);
+       this.integralArea = new AreaBetweenCurves(this.domain,this.integrand,(x,params)=>{return 0.},medBlue);
        this.integralArea.setPosition(0,0,-15);
 
+
+       //the background slice:
+       this.integralSlice = new Rod({
+           end1: new Vector3(this.params.x,0,0),
+           end2: new Vector3(this.params.x, this.integrand(this.params.x),0),
+           radius:0.05,
+           color:darkBlue,
+       });
+       this.integralSlice.setPosition(0,0,-15);
+
+   }
+
+   createIntegrand(){
+       let outer = this.outerCurveFn;
+       let inner = this.innerCurveFn;
+       let axis = this.params.axis;
+
+       return function(x,params){
+           let big = outer(x, params)-axis;
+           let small = inner(x, params)-axis;
+           return big*big-small*small;
+       }
    }
 
 
@@ -158,6 +171,8 @@ class DiskAndWasherPlotter{
        this.area.setDomain(dom);
        this.innerCurve.setDomain(dom);
        this.outerCurve.setDomain(dom);
+       this.integralCurve.setDomain(dom);
+       this.integralArea.setDomain(dom);
     }
 
     setAngle(ang){
@@ -167,10 +182,16 @@ class DiskAndWasherPlotter{
     }
 
     setAxis(axis){
+
        this.outerSurface.setAxis(axis);
        this.innerSurface.setAxis(axis);
        this.washer.setAxis(axis);
        this.axis.resize(new Vector3(this.domain.min, axis, 0),new Vector3(this.domain.max, axis, 0));
+
+       this.integrand = this.createIntegrand();
+       this.integralArea.setTop(this.integrand);
+       this.integralCurve.setFunction(this.integrand);
+       this.integralSlice.resize( new Vector3(this.params.x,0,0), new Vector3(this.params.x, this.integrand(this.params.x,this.params),0));
     }
 
    update(params){
@@ -180,6 +201,10 @@ class DiskAndWasherPlotter{
        this.innerSurface.update(params);
        this.washer.update(params);
        this.area.update(params);
+
+       this.integralArea.update(params);
+       this.integralCurve.update(params);
+
    }
 
 
@@ -199,6 +224,7 @@ class DiskAndWasherPlotter{
        this.integralBoard.addToScene(scene);
        this.integralCurve.addToScene(scene);
        this.integralArea.addToScene(scene);
+       this.integralSlice.addToScene(scene);
 
    }
 
@@ -232,6 +258,7 @@ class DiskAndWasherPlotter{
                }
 
 
+               thisObj.outerCurveFn = eqn;
 
                thisObj.area.setTop(eqn);
                thisObj.area.update(thisObj.params);
@@ -244,6 +271,16 @@ class DiskAndWasherPlotter{
 
                thisObj.washer.setTop(eqn);
                thisObj.washer.update(thisObj.params);
+
+
+               thisObj.integrand = thisObj.createIntegrand();
+               thisObj.integralCurve.setFunction(thisObj.integrand);
+               thisObj.integralCurve.update(thisObj.params);
+
+               thisObj.integralArea.setTop(thisObj.integrand);
+               thisObj.integralArea.update(thisObj.params);
+
+
            }
        );
 
@@ -254,6 +291,8 @@ class DiskAndWasherPlotter{
                    let y = curve(x, params.a,params.b,params.c);
                    return y;
                }
+
+               thisObj.innerCurveFn = eqn;
 
                thisObj.area.setBottom(eqn);
                thisObj.area.update(thisObj.params);
@@ -268,6 +307,14 @@ class DiskAndWasherPlotter{
                thisObj.washer.update(thisObj.params);
 
 
+               thisObj.integrand = thisObj.createIntegrand();
+               thisObj.integralCurve.setFunction(thisObj.integrand);
+               thisObj.integralCurve.update(thisObj.params);
+
+               thisObj.integralArea.setTop(thisObj.integrand);
+               thisObj.integralArea.update(thisObj.params);
+
+
 
            }
        );
@@ -275,6 +322,7 @@ class DiskAndWasherPlotter{
        ui.add(this.params, 'x', -10, 10, 0.01).name('slice').onChange(function(value){
            thisObj.washer.setX(value);
            thisObj.washer.update(thisObj.params);
+           thisObj.integralSlice.resize(new Vector3(thisObj.params.x,0,0), new Vector3(thisObj.params.x, thisObj.integrand(thisObj.params.x,thisObj.params)));
        });
 
        ui.add(this.params, 'angle', 0, 6.29, 0.1).name('rotate').onChange(function(value){
@@ -300,6 +348,7 @@ class DiskAndWasherPlotter{
        let extraFolder =ui.addFolder('Extra');
 
        extraFolder.add(this.params, 'axis', -5, 5, 0.01).name('axis').onChange(function(value){
+           thisObj.params.axis = value;
            thisObj.setAxis(value);
            thisObj.update(thisObj.params);
        });
