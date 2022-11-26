@@ -87,9 +87,11 @@ const fragColor = `
             float hue = 1.-(1.+k)/2.-0.2;
 
             float sat = 0.6;
+  
            
            //change lightness to get dark areas:
            float mag = 0.15*(pow(abs(sin(20.*k)),30.))+0.9;
+
            
             col = hsb2rgb(vec3(hue, sat, 0.5*mag));
 
