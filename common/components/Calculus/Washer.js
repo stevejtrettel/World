@@ -81,8 +81,8 @@ class Washer{
     }
 
     createRingGeometry(params){
-        let outerRadius = this.top(this.x)-this.axis;
-        let innerRadius = this.bottom(this.x)-this.axis;
+        let outerRadius = this.top(this.x,params)-this.axis;
+        let innerRadius = this.bottom(this.x,params)-this.axis;
         return new RingBufferGeometry(innerRadius,outerRadius,32,1,Math.PI/2,this.angle);
     }
 
