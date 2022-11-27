@@ -30,6 +30,10 @@ class ParametricMaterial {
         this.uniformString = ``;
         this.uniforms = {};
 
+        //make strings for any new varyings that are introduced:
+        this.varyingDefString=``;
+
+
         //uniforms relevant to the compute system:
         this.createUniform('frameNumber' ,'float', 0);
         this.createUniform('time' ,'float', 0);
@@ -92,6 +96,12 @@ class ParametricMaterial {
     createUniform(variable, type, value) {
         this.uniforms[ variable ] = {value: value };
         this.uniformString += `uniform ${type} ${variable}; \n`;
+    }
+
+
+    //NOT USED YET: NEED TO INTRODUCE THE ABILITY TO CREATE CUSTOM VARYINGS!
+    createVarying(variable,type, value){
+        this.varyingDefString += `varying ${type} ${variable}; \n`;
     }
 
 

@@ -42,7 +42,7 @@ const hydrogenOrbital =  sphericalHarmonic+laguerre+factorialPrefactor+`
         float Rnl = radConstant * radPrefactor * radLaguerre;
         
         //the real spherical harmonic component
-        float Ylm = sphericalHarmonic(l,m,s);
+        float Ylm = sphericalHarmonic(l,m,s).x;
         
         //the phase of the spherical harmonic component:
         float shPhase = 0.;

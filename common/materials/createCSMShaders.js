@@ -25,7 +25,7 @@ const newPos = `
 
 function createNewPosShader(scale=1.){
     return `
-        //shrinking the domain SLIGHTLY to avoid seeing edge effects on the large edges
+    //shrinking the domain SLIGHTLY to avoid seeing edge effects on the large edges
     //this should be done another way than hard coding....
     vec2 uv = float(${scale})*position.xy;
     vec3 newPos = displace( uv );

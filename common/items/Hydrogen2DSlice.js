@@ -46,7 +46,7 @@ let parametricSurf = `
     
     float radius = 5.;
     //convert to a point in 3D space:
-    float r  = radius * uv.x;
+    float r  = radius * uv.x-0.003;
     float theta = (2.*PI+0.01) *uv.y;
     float x = r * cos(theta);
     float y = r * sin(theta);

@@ -1,4 +1,6 @@
- const legendre = `
+
+
+const legendreClenshaw = `
  // Created by Roni Koitermaa - Roninkoi/2019
 // License Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.
 // Uses Clenshaw algorithm to solve spherical harmonics from Legendre polynomials
@@ -44,7 +46,7 @@ float legendre(int l, int m, float x)
 
 
 
-const altLegendre = `
+const legendreClenshawAlt = `
 //From https://www.shadertoy.com/view/tlX3WN
 // Clenshaw's algorithm for the normalized associated Legendre polynomial (spherical harmonics)
 #define MAX_POLYNOMIAL_ORDER 9
@@ -70,4 +72,42 @@ float legendre(int n, int m, float x){
 }
 `;
 
-export default altLegendre;
+
+
+//a THIRD IMPLEMENTATION
+import factorial from "./factorial.js";
+const legendreRecursive = factorial + `
+ // associated legendre polynomials
+float legendre(int l, int m, float x) {
+    if (l < abs(m))
+        return 0.0;
+    if (l == 0)
+        return 1.0;
+    float mul = m >= 0 ? 1.0 : float((~m&1)*2-1)*fac2(l,m);
+    m = abs(m);
+    // recursive calculation of legendre polynomial
+    float lp1 = 0.0;
+    float lp2 = float((~m&1)*2-1)*dfac(2*m-1)*pow(1.0-x*x, float(m)/2.0);
+    for (int i = m+1; i <= l; i++) {
+        float lp = (x*float(2*i-1)*lp2 - float(i+m-1)*lp1)/float(i-m);
+        lp1 = lp2; lp2 = lp;
+    }
+    
+    //the resulting value:
+    float res =  lp2 / mul;
+    
+    //now, multiply by a normalization constant:
+    float prefactor = 1.0/sqrt(4.*PI)*sqrt(float(2*l+1)*fac2(l,m));
+    
+    return prefactor * res;
+}
+`;
+
+
+
+
+
+
+
+export {legendreClenshaw, legendreClenshawAlt};
+export {legendreRecursive};
