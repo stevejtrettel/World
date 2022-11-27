@@ -1,9 +1,7 @@
-import SphericalHarmonic from "../shaders/math/sphericalHarmonic.js";
+
 import { colorConversion } from "../shaders/colors/colorConversion.js";
 import { ParametricMaterial } from "../materials/ParametricMaterial.js";
 import sphericalHarmonic from "../shaders/math/sphericalHarmonic.js";
-
-
 
 
 let uniforms = {
