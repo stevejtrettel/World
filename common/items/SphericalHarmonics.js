@@ -29,6 +29,11 @@ let uniforms = {
             'Polar': 2,
         }],
     },
+    correctSpeed:{
+        type: 'bool',
+        value: false,
+        range: [],
+    },
 };
 
 
@@ -73,6 +78,13 @@ vec3 displace( vec2 uv ){
     //get the real part of the spherical harmonic:
     float dR = vVec2.x;
     
+    //what is the frequency that we move at?
+    float lambda = 1.;
+    if(correctSpeed){
+        float L = float(l);
+        lambda = sqrt(L*(L+1.))/4.;
+    }
+    
     //how should this affect the position vector?
     float mag;
     if(plotStyle==0){
@@ -80,7 +92,7 @@ vec3 displace( vec2 uv ){
         //allow ourselves to change the amplitude:
         dR = dR * amplitude;
         //multiply by the frequency of oscillation
-        dR = dR * sin(time);
+        dR = dR * sin(lambda * time);
         //preturb the unit sphere by this:
         mag = 1. + dR;
     }
@@ -115,9 +127,16 @@ let fragAux = colorConversion;
 const fragColor = `
       vec3 fragColor(){
       
+        //what is the frequency that we move at?
+        float lambda = 1.;
+        if(correctSpeed){
+            float L = float(l);
+            lambda = sqrt(L*(L+1.))/4.;
+        }
+          
             //get the real part of the spherical harmonic:
             //this was stored as a varying vec2 in the function above:
-            float SH = vVec2.x*sin(time);
+            float SH = vVec2.x*sin(lambda * time);
             
             
             if(plotStyle==0){
