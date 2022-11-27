@@ -13,12 +13,17 @@ const varyings = `
     varying vec2 vUv;
     varying vec3 vPosition;
     //for some reason varying vNormal is already defined for us
+    
+    //there are other BLANK varyings that I have made available to every material
+    //it would be better to replace this with a createVarying command or something...
+    varying float vFloat;
+    varying vec2 vVec2;
+    varying vec3 vVec3;
+    varying vec4 vVec4;
+    //if you use any of these, you have to define them when you make the "displace" function
 `;
 
 const newPos = `
-    //shrinking the domain SLIGHTLY to avoid seeing edge effects on the large edges
-    //this should be done another way than hard coding....
-    //vec2 uv = 0.98*position.xy;
     vec2 uv = position.xy;
     vec3 newPos = displace( uv );
 `;
@@ -67,7 +72,6 @@ const newColor = `
 
 
 
-
 const defaultOptions = {
     scaleFactor:1.,
 }
@@ -77,7 +81,7 @@ function createVertexCSM(uniforms, vertAuxFns, displace, nVec=``, options=defaul
     const defines = constants + varyings + uniforms;
     const header = vertAuxFns + displace + nVec;
     let main;
-    const newPos = createNewPosShader(options.scaleFactor||1.);
+    //const newPos = createNewPosShader(options.scaleFactor||1.);
     if(options.nVec){
         main = newPos + newNormal + varyingValues;
     }

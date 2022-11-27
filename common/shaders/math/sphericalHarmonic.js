@@ -4,14 +4,14 @@ import {legendreClenshaw, legendreClenshawAlt, legendreRecursive} from "./legend
 
 
 // Y_l_m(s), where l is the band and m the range in [-l..l]
-let sphericalHarmonic = legendreRecursive + `
+let sphericalHarmonic = legendreClenshaw + `
 // spherical harmonics function
 vec2 sphericalHarmonic(int l, int m, vec3 pos){
 
     //compute theta and phi:
     pos = normalize(pos);
     float cosPhi = pos.y;
-    float theta = atan(pos.z,pos.x);
+    float theta = atan(-pos.z,pos.x);
     
     //the collection "legendreRecursive" has implemented factorials and everything we need below:
     //this is just directly implementing wikipedia's formula:
@@ -22,8 +22,7 @@ vec2 sphericalHarmonic(int l, int m, vec3 pos){
     float modulus = legPoly;
     vec2 argument = vec2(cos(phase),sin(phase));
    
-    
-    return sign*modulus*argument;
+    return modulus*argument;
 }
 `;
 
@@ -69,4 +68,4 @@ vec2 sphericalHarmonic( in int l, in int m, in vec3 s )
     return res;
 }`;
 
-export default sphericalHarmonic2;
+export default sphericalHarmonic;
