@@ -75,6 +75,12 @@ class ParametricCurve{
         this.end.visible=value;
     }
 
+    setPosition(x,y,z){
+        this.tube.position.set(x,y,z);
+        this.start.position.set(x,y,z);
+        this.end.position.set(x,y,z);
+    }
+
     update(params){
         this.tube.geometry.dispose();
         this.tube.geometry = this.createTube(params);

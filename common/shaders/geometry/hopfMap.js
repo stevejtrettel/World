@@ -70,4 +70,10 @@ const hopfSurface =
 `;
 
 
+
+const hopfComputation = `
+//compute the moduli of a given curve:
+`;
+
+
 export { hopfMapTools, hopfSurface };
