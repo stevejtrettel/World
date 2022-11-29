@@ -270,6 +270,10 @@ class Slice{
         this.outerBdy.visible=value;
         this.innerBdy.visible=value;
     }
+
+    setColor(color){
+        this.ring.material.color = color;
+    }
 }
 
 
@@ -279,12 +283,17 @@ class SphereAndCylinder{
 
         //how big is our sphere and cylinder?
         this.radius =radius;
+
+        //how many slices should we prepare in case we need them?
+        this.maxSlices = 25.;
+
+        //starting: a cylinder not a sphere
         this.t=0;
 
         //animation parameters for the UI
         this.params ={
             t:0,
-            n:3,
+            n:8,
             animate:true,
             slice:0.25,
         }
@@ -293,8 +302,7 @@ class SphereAndCylinder{
         this.cylinder = new DeformCylinder(this.radius);
 
         //make a list of slices
-        this.maxSlices = 25.;
-        this.numSlices = 3.;
+        this.numSlices = this.params.n;
         this.sliceHeights = [];
         this.slices = [];
 
@@ -305,6 +313,8 @@ class SphereAndCylinder{
                 height = (i+1)*delta - 1.;
                 slice = new Slice(height,this.radius,this.t);
                 slice.setVisibility(true);
+                let color = new Color().setHSL(0.8*(i+1)/(this.numSlices+1),0.75,0.5);
+                slice.setColor(color);
             }
             else{
                 height=0.;
@@ -321,11 +331,14 @@ class SphereAndCylinder{
     setNumSlices(n){
         this.numSlices = n;
         let delta = 2./ (this.numSlices+1);
+        let color;
         //re-space the slices on next draw, and set visibility:
         for(let i=0; i<this.maxSlices; i++){
             if(i<this.numSlices) {
                 this.sliceHeights[i] = (i+1)*delta - 1.;
                 this.slices[i].setVisibility(true);
+                color = new Color().setHSL(0.8*(i+1)/(this.numSlices+1),0.75,0.5);
+                this.slices[i].setColor(color);
             }
             else{
                 this.sliceHeights[i]=0;
@@ -364,8 +377,8 @@ class SphereAndCylinder{
         //     }
         // });
         ui.add(this.params, 'n',0,thisObj.maxSlices,1).name('Slices').onChange(function(value){
-                thisObj.setNumSlices(value);
-                thisObj.updateSlices(thisObj.t);
+            thisObj.setNumSlices(value);
+            thisObj.updateSlices(thisObj.t);
         });
     }
 
