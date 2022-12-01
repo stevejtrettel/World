@@ -68,6 +68,7 @@ class VectorField2D{
         //rotate so its pointing the right way: along the x axis as default:
        // this.vectors.rotateZ(-Math.PI/2);
         this.vectors.instanceMatrix.setUsage( DynamicDrawUsage ); // will be updated every frame
+        this.update();
     }
 
 
@@ -92,6 +93,10 @@ class VectorField2D{
         this.res=res;
         this.count = this.res.x * this.res.y;
         this.vectors.count=this.count;
+    }
+
+    setPosition(x,y,z){
+        this.vectors.position.set(x,y,z);
     }
 
     //re-orient all of the slopes!

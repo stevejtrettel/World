@@ -1,57 +1,17 @@
-import { World } from "../common/World/World.js";
-import { globals } from "./src/globals.js";
-import { environment } from "./src/environment.js";
-import { lights } from "./src/lights.js";
-import { post } from "./src/post.js"
-
-const location =  "./src/components/torusFundamentalGroup.js";
-console.log(location);
-
-console.log(item);
-
-let objects = {item};
 
 
-function test(){
-    let variable =`sin(x)`;
-    let str = `My favorite function is ${variable}`;
+//set the objects that will run in this simulation
+import item from "../common/items/computeSurface.js";
+let objects = {...item};
 
-    let createStr = ()=>{
-        return `My favorite function is ${variable}`;
-    }
-    console.log(createStr());
-    variable = 'exp(x)';
-    console.log(createStr());
+let options = {
+    color: 0x343757,
+    // 0x2f508a,
+    //0x303030,
 }
 
-
-function main() {
-
-    // Get a reference to the container element, set options
-    const container = document.querySelector('#World');
-    const options = {color: globals.color};
-
-    // 1. Create an instance of the World class
-    const world = new World( container, globals.renderer, options );
-
-    //2. Introduce any global variables:
-    world.addGlobalParams( globals.params );
-
-    //3. Set the environment
-    world.setEnvironment( environment ) ;
-
-    //4. Fill this world with objects
-    world.addObjects( objects );
-    world.addObjects( lights );
-
-    //5. Set up Post-Processing effects
-    world.addPostprocessor( post );
-
-    // 6. Start the Animation Loop
-    world.start();
-
-}
-
-
+//the function which builds a world from the default template,
+//using these objects
+import { mainFromTemplate } from "./mainFromTemplate.js";
 //call the function to run the app
-main();
+mainFromTemplate(objects, options);

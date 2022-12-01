@@ -206,6 +206,10 @@ class ParametricTube {
         this.geometry.setAttributes(curve);
     }
 
+    setPosition(x,y,z){
+        this.mesh.position.set(x,y,z);
+    }
+
 
 
     addToScene( scene ){

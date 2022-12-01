@@ -25,13 +25,13 @@ class SlopeFieldIntegralCurve{
 
         this.yPrime = yPrime;
         this.iniCond = iniCond;
-        this.N =400.;
+        this.N =1024.;
         this.range=range;
 
         //make the curve into a tube:
         const curveOptions = {
             segments: 1024,
-            radius: 0.05,
+            radius: 0.02,
             tubeRes: 32,
         };
         let fragment = {
@@ -67,9 +67,9 @@ class SlopeFieldIntegralCurve{
         this.tube = new ParametricTube( this.curve, curveOptions, fragment, {},matOptions);
 
         let startPt = this.curve.getPoint(0);
-        this.start.position.set(startPt.x,startPt.y,startPt.z);
+        this.start.geometry.translate(startPt.x,startPt.y,startPt.z);
         let endPt = this.curve.getPoint(1);
-        this.end.position.set(endPt.x,endPt.y,endPt.z);
+        this.end.geometry.translate(endPt.x,endPt.y,endPt.z);
 
     }
 
@@ -104,15 +104,21 @@ class SlopeFieldIntegralCurve{
 
         //reposition the end balls of the curve
         let startPt = this.curve.getPoint(0);
-        this.start.position.set(startPt.x,startPt.y,startPt.z);
+        this.start.geometry.translate(startPt.x,startPt.y,startPt.z);
 
         let endPt = this.curve.getPoint(1);
-        this.end.position.set(endPt.x,endPt.y,endPt.z);
+        this.end.geometry.translate(endPt.x,endPt.y,endPt.z);
 
     }
 
     resetCurve(curve){
         this.tube.resetCurve(curve);
+    }
+
+    setPosition(x,y,z){
+        this.tube.setPosition(x,y,z);
+        this.start.position.set(x,y,z);
+        this.end.position.set(x,y,z);
     }
 
     addToScene( scene ) {
@@ -197,6 +203,8 @@ class SlopeFieldPlotter{
         this.blackboard.addToScene(scene);
         this.integralCurve.addToScene(scene);
     }
+
+
 
     addToUI(ui){
 

@@ -1,14 +1,14 @@
 import { UI } from "./Ui.js";
 import { Loop } from "./Loop.js";
 import { Resizer } from "./Resizer.js";
-import { Environment } from "./Environment.js";
+//import { Environment } from "./Environment.js";
 
 import { createCamera } from "./components/createCamera.js";
 import { createScene } from "./components/createScene.js";
-import { createStats, placeStats } from "./components/createStats.js";
+//import { createStats, placeStats } from "./components/createStats.js";
 import { createControls } from "./components/createControls.js";
 
-import {BoxNoLights} from "../backgrounds/BoxNoLights.js";
+// import {BoxNoLights} from "../backgrounds/BoxNoLights.js";
 
 
 
@@ -34,9 +34,10 @@ class World {
         this.controls = createControls( this.camera, this.renderer.domElement);
         this.loop.add( this.controls );
 
-
-         this.stats = createStats();
-         placeStats( this.stats );
+         //
+         // this.stats = createStats();
+         // placeStats( this.stats );
+        this.stats=null;
 
         this.ui = new UI();
         this.resizer = new Resizer( this.container, this.camera, this.renderer );

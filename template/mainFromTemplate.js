@@ -35,7 +35,7 @@ function mainFromTemplate( objects, options ) {
     world.addObjects( lights );
 
     //5. Set up Post-Processing effects
-    world.addPostprocessor( post );
+   //world.addPostprocessor( post );
 
     // 6. Start the Animation Loop
     world.start();
