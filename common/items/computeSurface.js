@@ -8,8 +8,6 @@ import {LinearFilter, NearestFilter} from "../../3party/three/build/three.module
 
 
 
-
-
 let equations = {
     x: '(b+a*cos(u))*cos(v)',
     y: '(b+a*cos(u))*sin(v)',

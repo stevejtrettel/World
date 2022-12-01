@@ -1,8 +1,8 @@
+//set the stuff for this particular example!
 
-
-//set the objects that will run in this simulation
-import item from "../common/items/computeSurface.js";
+import item from "../common/items/VectorField2DPlotter.js";
 let objects = {...item};
+
 
 let options = {
     color: 0x343757,
@@ -10,8 +10,48 @@ let options = {
     //0x303030,
 }
 
-//the function which builds a world from the default template,
-//using these objects
-import { mainFromTemplate } from "./mainFromTemplate.js";
+
+//import everything except the objects of the scene
+//this uses all the default settings defined in the "template" folder
+
+import { World } from "../common/World/World.js";
+import { globals } from "./src/globals.js";
+import { createEnvironment } from "./src/environment.js";
+import { lights } from "./src/lights.js";
+import { post } from "./src/post.js"
+
+
+function main( objects, options ) {
+
+    // Get a reference to the container element, set options
+    const container = document.querySelector('#World');
+
+    // 1. Create an instance of the World class
+    const world = new World( container, globals.renderer, options );
+
+    //2. Introduce any global variables:
+    world.addGlobalParams( globals.params );
+
+    //3. Set the environment
+    let bkgColor=globals.color;;
+    if(options.hasOwnProperty("color")){
+        bkgColor=options.color;
+    }
+
+    const environment = createEnvironment(bkgColor);
+    world.setEnvironment( environment ) ;
+
+    //4. Fill this world with objects
+    world.addObjects( objects );
+    world.addObjects( lights );
+
+    //5. Set up Post-Processing effects
+    //world.addPostprocessor( post );
+
+    // 6. Start the Animation Loop
+    world.start();
+
+}
+
 //call the function to run the app
-mainFromTemplate(objects, options);
+main(objects, options);

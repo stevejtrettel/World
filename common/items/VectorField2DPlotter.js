@@ -54,7 +54,7 @@ class VectorField2DPlotter{
         let xC = parser.evaluate('xPrime(x,y,t,a,b,c)='.concat(this.params.xPrimeText));
         let yC = parser.evaluate('yPrime(x,y,t,a,b,c)='.concat(this.params.yPrimeText));
 
-        this.vectorFieldEqn = function(pos, params){
+        this.vectorFieldEqn = function(pos, params={time:0,a:0,b:0,c:0}){
             let x = xC(pos.x,pos.y,params.time,params.a,params.b,params.c);
             let y = yC(pos.x,pos.y,params.time,params.a,params.b,params.c);
             return new Vector2(x,y);
@@ -130,7 +130,7 @@ class VectorField2DPlotter{
                 thisObj.params.xPrimeText = value;
                 let xC = parser.evaluate('xPrime(x,y,t,a,b,c)='.concat(thisObj.params.xPrimeText));
                 let yC = parser.evaluate('yPrime(x,y,t,a,b,c)='.concat(thisObj.params.yPrimeText));
-                let eqn = function(pos,params){
+                let eqn = function(pos,params={time:0,a:0,b:0,c:0}){
                     let x = xC(pos.x,pos.y,params.time,params.a,params.b,params.c);
                     let y = yC(pos.x,pos.y,params.time,params.a,params.b,params.c);
                     return new Vector2(x,y);
@@ -148,7 +148,7 @@ class VectorField2DPlotter{
                 thisObj.params.yPrimeText = value;
                 let xC = parser.evaluate('xPrime(x,y,t,a,b,c)='.concat(thisObj.params.xPrimeText));
                 let yC = parser.evaluate('yPrime(x,y,t,a,b,c)='.concat(thisObj.params.yPrimeText));
-                let eqn = function(pos,params){
+                let eqn = function(pos,params={time:0,a:0,b:0,c:0}){
                     let x = xC(pos.x,pos.y,params.time,params.a,params.b,params.c);
                     let y = yC(pos.x,pos.y,params.time,params.a,params.b,params.c);
                     return new Vector2(x,y);
