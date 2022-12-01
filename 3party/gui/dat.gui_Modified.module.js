@@ -2556,6 +2556,8 @@ var GUI = function GUI( pars ) {
 		}
 		this.__closeButton = document.createElement( 'div' );
 		this.__closeButton.innerHTML = GUI.TEXT_CLOSED;
+		// THIS LINE IS ADDED TO MOVE THE "+" SIGN TO THE MIDDLE
+		//this.__closeButton.setAttribute('style','opacity:0.5; text-align:center;');
 		dom.addClass( this.__closeButton, GUI.CLASS_CLOSE_BUTTON );
 		if ( ui.closeOnTop ) {
 

@@ -11,8 +11,6 @@ import { createControls } from "./components/createControls.js";
 // import {BoxNoLights} from "../backgrounds/BoxNoLights.js";
 
 
-
-
 class World {
 
     constructor( container, renderer, options ) {

@@ -1,9 +1,9 @@
-const guiStyle = `.dg ul {
+.dg ul {
     list-style: none;
     margin: 0;
     padding: 0;
     width: 100%;
-    clear: both;
+    clear: both
 }
 
 .dg.ac {
@@ -12,7 +12,7 @@ const guiStyle = `.dg ul {
     left: 0;
     right: 0;
     height: 0;
-    z-index: 0;
+    z-index: 0
 }
 
 .dg:not(.ac).main {
@@ -20,10 +20,11 @@ const guiStyle = `.dg ul {
 }
 
 .dg.main {
-    -webkit-transition: opacity .1s linear;
-    -o-transition: opacity .1s linear;
-    -moz-transition: opacity .1s linear;
-    transition: opacity .1s linear
+    opacity:0,
+    /*-webkit-transition: opacity .1s linear;*/
+    /*-o-transition: opacity .1s linear;*/
+    /*-moz-transition: opacity .1s linear;*/
+    /*transition: opacity .1s linear*/
 }
 
 .dg.main.taller-than-window {
@@ -31,49 +32,41 @@ const guiStyle = `.dg ul {
 }
 
 .dg.main.taller-than-window .close-button {
+    opacity: 0;
     margin-top: -1px;
     border-top: 1px solid #2c2c2c
 }
 
 .dg.main ul.closed .close-button {
-    opacity: 1 !important
+    opacity: 0 !important
 }
 
 .dg.main:hover .close-button, .dg.main .close-button.drag {
-    opacity:1;
+    opacity: 1
 }
 
-            
-            .dg.main .close-button{
-            -webkit-transition:opacity .1s linear;
-            -o-transition:opacity .1s linear;
-            -moz-transition:opacity .1s linear;
-            transition:opacity .1s linear;
-            border:0;
-            line-height:19px;
-            height:20px;
-            padding: 20px 20px 0 0;//set the text +- signs not in direct right
-            cursor:pointer;
-            text-align:right;
-            font-size:25pt;
-            opacity:1;
-            }
+.dg.main .close-button {
+    transition: opacity .1s linear;
+    border: 0;
+    line-height: 19px;
+    height: 20px;
+    cursor: pointer;
+    text-align: center;
+    opacity:0;
+    background-color:rgba(0,0,0,0);
+}
 
 .dg.main .close-button.close-top {
-    opacity:0.5;//make + sign only partly transparent
     position: relative;
 }
 
 .dg.main .close-button.close-bottom {
-    position: absolute;
-    opacity:0.5;//make - sign partly transparent
+    position: absolute
 }
 
 .dg.main .close-button:hover {
-    // THIS IS WHERE WE MAKE THE OPEN BUTTON INVISIBLE!
-    background-color: rgba(0,0,0,0);
-    font-weight:900;
-    opacity:1;//when hover: make it completely opaque
+    opacity:0;
+    background-color: #111
 }
 
 .dg.a {
@@ -108,13 +101,7 @@ const guiStyle = `.dg ul {
 }
 
 .dg li {
-    -webkit-transition: height .1s ease-out;
-    -o-transition: height .1s ease-out;
-    -moz-transition: height .1s ease-out;
     transition: height .1s ease-out;
-    -webkit-transition: overflow .1s linear;
-    -o-transition: overflow .1s linear;
-    -moz-transition: overflow .1s linear;
     transition: overflow .1s linear
 }
 
@@ -139,7 +126,7 @@ const guiStyle = `.dg ul {
 .dg .closed li:not(.title), .dg .closed ul li, .dg .closed ul li > * {
     height: 0;
     overflow: hidden;
-    border: 0;
+    border: 0
 }
 
 .dg .cr {
@@ -399,7 +386,7 @@ const guiStyle = `.dg ul {
 }
 
 .dg .c .slider-fg {
-    background: #5084bc;
+    background: #000;
     max-width: 100%
 }
 
@@ -410,10 +397,5 @@ const guiStyle = `.dg ul {
 .dg .c .slider:hover .slider-fg {
     background: #5084bc
 }
-`;
 
 
-let openControls = '☰';
-let closeControls ='⊠';
-
-export { guiStyle, openControls, closeControls };

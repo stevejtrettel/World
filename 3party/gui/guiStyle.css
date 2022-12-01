@@ -20,10 +20,11 @@
 }
 
 .dg.main {
-    -webkit-transition: opacity .1s linear;
-    -o-transition: opacity .1s linear;
-    -moz-transition: opacity .1s linear;
-    transition: opacity .1s linear
+    opacity:0,
+    /*-webkit-transition: opacity .1s linear;*/
+    /*-o-transition: opacity .1s linear;*/
+    /*-moz-transition: opacity .1s linear;*/
+    /*transition: opacity .1s linear*/
 }
 
 .dg.main.taller-than-window {
@@ -37,7 +38,7 @@
 }
 
 .dg.main ul.closed .close-button {
-    opacity: 1 !important
+    opacity: 0 !important
 }
 
 .dg.main:hover .close-button, .dg.main .close-button.drag {
@@ -67,6 +68,7 @@
 }
 
 .dg.main .close-button:hover {
+    opacity:0;
     background-color: #111
 }
 
