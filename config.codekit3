@@ -53,6 +53,18 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/3party\/gui\/guiStyle-min.css" : {
+      "aP" : 1,
+      "bl" : 0,
+      "ci" : 0,
+      "co" : 0,
+      "ft" : 16,
+      "ma" : 0,
+      "oA" : 0,
+      "oAP" : "\/3party\/gui\/guiStyle-min-min.css",
+      "oF" : 0,
+      "pg" : 0
+    },
     "\/3party\/gui\/guiStyle.css" : {
       "aP" : 1,
       "bl" : 0,
@@ -10624,6 +10636,28 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/common\/components\/ColorVision\/coloredBarGraph.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/ColorVision\/coloredBarGraph-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/ColorVision\/em-waves.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/ColorVision\/em-waves-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/common\/components\/ComplexAnalysis\/NewtonFractal.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -10712,6 +10746,17 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/common\/components\/VectorCalculus\/FunctionSlice1D.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/components\/VectorCalculus\/FunctionSlice1D-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/common\/components\/VectorCalculus\/GradientField2D.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -10775,6 +10820,17 @@
       "oA" : 1,
       "oAP" : "\/common\/components\/VectorCalculus\/ScalarLineIntegral-min.js",
       "oF" : 1,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/VectorCalculus\/Vector.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/VectorCalculus\/Vector-min.js",
+      "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
@@ -11050,6 +11106,28 @@
       "oA" : 1,
       "oAP" : "\/common\/items\/BlackHoleGeodesics-min.js",
       "oF" : 1,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/color-vision\/LightWave.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/color-vision\/LightWave-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/color-vision\/spectrum.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/color-vision\/spectrum-min.js",
+      "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
@@ -11592,6 +11670,39 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/common\/items\/VectorCalculus\/CrossProduct.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/VectorCalculus\/CrossProduct-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/VectorCalculus\/ParametricLine.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/items\/VectorCalculus\/ParametricLine-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/VectorCalculus\/VectorComponents.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/VectorCalculus\/VectorComponents-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/common\/items\/VectorField2DPlotter.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -11611,6 +11722,28 @@
       "oA" : 1,
       "oAP" : "\/common\/items\/VectorField3DPlotter-min.js",
       "oF" : 1,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/WaveString-min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/WaveString-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/WaveString.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/items\/WaveString-min.js",
+      "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },

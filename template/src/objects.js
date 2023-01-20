@@ -1,18 +1,18 @@
  import { flows } from "../../common/items/flows.js";
  import { strangeAttractors } from "../../common/items/strangeAttractors.js";
-import { hopfTori } from "../../common/items/hopfTori.js";
-import { knotComplement } from "../../common/items/knotComplements.js";
+import { hopfTori } from "../../common/items/topology/hopfTori.js";
+import { knotComplement } from "../../common/items/topology/knotComplements.js";
 import {tubeTest } from "../../common/items/tubeTest.js";
 import {torus} from "../../common/items/Torus.js";
-import { geo } from "../../common/items/Geodesic.js";
-import { computeSurface } from "../../common/items/computeSurface.js";
+import { geo } from "../../common/items/differential-geometry/Geodesic.js";
+import { computeSurface } from "../../common/items/differential-geometry/computeSurface.js";
 import { pentagramMap } from "../../common/items/pentagramMap.js";
-import { curveAndTorsion } from "../../common/items/curveAndTorsion.js";
+import { curveAndTorsion } from "../../common/items/differential-geometry/curveAndTorsion.js";
 // import { wobbleSphere } from "./components/wobbleSphere.js";
 //import { curveOnTorus } from "./components/torusFundamentalGroup.js";
-import { cuttingCylinder } from "../../common/items/cuttingCylinder.js";
-import { cuttingTorus } from "../../common/items/cuttingTorus.js";
-import { stereoProj } from "../../common/items/stereoProj.js";
+import { cuttingCylinder } from "../../common/items/topology/cuttingCylinder.js";
+import { cuttingTorus } from "../../common/items/topology/cuttingTorus.js";
+import { stereoProj } from "../../common/items/topology/stereoProj.js";
 //import { stereoCube } from "./components/stereoCube.js";
 
 

@@ -18,13 +18,14 @@ import {posNegColor } from "../../utils/colors.js";
 //N is the number of bars in the Riemann sum to be displayed.
 
 
-class RiemannSum{
-    constructor( curve, range, N, thickness=0.15 ){
+class ColoredBarGraph{
+    constructor( curve, colorFunction, range={min:-5,max:5} ){
 
         this.curve = curve;
+        this.colorFunction = colorFunction;
         this.range = range;
-        this.N = N;
-        this.thickness=thickness;
+        this.N = 1000;
+        this.thickness=0.15;
 
         //dummy object to be able to make the matrix for each case:
         this.dummy = new Object3D();
@@ -102,7 +103,7 @@ class RiemannSum{
                 this.value += xScale*yVal;
 
                 //set green for pos and red for neg:
-                let color = posNegColor(yVal);
+                let color = this.colorFunction(xCoord,yVal);
                 this.barGraph.setColorAt(index, color);
 
                 //update the actual matrix at this point!!!
@@ -129,14 +130,6 @@ class RiemannSum{
         this.curve=curve;
     }
 
-    setRange(range){
-        this.range=range;
-    }
-
-    setN(N){
-        this.N=N;
-    }
-
     setVisibility(value){
         this.barGraph.visible=value;
     }
@@ -149,10 +142,8 @@ class RiemannSum{
         this.barGraph.position.set(x,y,z);
     }
 
-
-
 }
 
 
 
-export default RiemannSum;
+export default ColoredBarGraph;

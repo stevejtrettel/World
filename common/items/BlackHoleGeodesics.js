@@ -10,7 +10,7 @@ import {
 
 import {BlackHole} from "../components/BlackHole.js";
 import { State } from "../cpu/components/State.js";
-import IntegralCurveSpray from "../objects/IntegralCurveSpray-Traditional.js";
+import IntegralCurveSpray from "../components/odes/IntegralCurveSpray-Traditional.js";
 
 
 
@@ -86,6 +86,7 @@ const geoSpray = new IntegralCurveSpray(bh.nullIntegrator, identity, iniCondCone
 geoSpray.tick = function(time,dTime){
     geoSpray.update(time);
 }
+geoSpray.addToUI=function(ui){}
 
 
 //

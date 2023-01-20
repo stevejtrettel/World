@@ -1,7 +1,7 @@
 import {Vector3} from "../../3party/three/build/three.module.js";
 import {RungeKutta} from "../cpu/RungeKutta.js";
-import {FlowLine} from "../objects/FlowLine.js";
-import {FlowLineField} from "../objects/FlowLineField.js";
+import {FlowLine} from "../components/odes/FlowLine.js";
+import {FlowLineField} from "../components/odes/FlowLineField.js";
 
 
 const ep = 0.01;
@@ -30,9 +30,16 @@ const diffEq = new RungeKutta( derive, ep);
 let iniState = new Vector3(1,1,1);
 
 let integralCurve = new FlowLine( diffEq, iniState, 10 );
+integralCurve.addToUI=function(ui){};
+integralCurve.tick=function(time,dTime){
+    this.step();
+};
 
 let flowLines = new FlowLineField( diffEq,100, 0.2);
-
+flowLines.addToUI=function(ui){};
+flowLines.tick=function(time,dTime){
+    this.step();
+};
 
 
 

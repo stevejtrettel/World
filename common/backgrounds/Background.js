@@ -6,7 +6,6 @@ class Background extends Scene {
         super();
     }
 
-
     createPMREM(pmrem, options={}) {
        const generatedPMREM = pmrem.fromScene(
             this,
