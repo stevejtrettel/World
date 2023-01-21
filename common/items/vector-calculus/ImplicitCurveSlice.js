@@ -74,7 +74,11 @@ class ImplicitCurveSlice{
         this.surfaceColor= `
             vec3 colorFn(vec2 uv, vec3 xyz){
             
-            float grid = (1.-pow(abs(sin(10.*3.14*uv.x)*sin(10.*3.14*uv.y)),0.1))/10.;
+             
+             float grid1 = (1.-pow(abs(sin(10.*3.14*uv.x)*sin(10.*3.14*uv.y)),0.1))/10.;
+             float grid2 = (1.-pow(abs(sin(50.*3.14*uv.x)*sin(50.*3.14*uv.y)),0.1))/25.;
+             float grid3 = (1.-pow(abs(sin(100.*3.14*uv.x)*sin(100.*3.14*uv.y)),0.1))/50.;
+             float grid = grid1+grid2+grid3;
            
                 float height = xyz.y;
                 if(abs(height-slice)<0.1){

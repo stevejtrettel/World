@@ -11901,7 +11901,7 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/objects\/ParameterizedSurface.js" : {
+    "\/common\/objects\/SurfacePlotter.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,

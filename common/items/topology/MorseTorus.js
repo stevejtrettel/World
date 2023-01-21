@@ -45,14 +45,22 @@ class MorseTorus{
 
        this.surfaceColor= `
             vec3 colorFn(vec2 uv, vec3 xyz){
+            
                 float height = xyz.y;
+            
+                 float grid1 = (1.-pow(abs(sin(3.14*height)),0.1))/10.;
+                 float grid2 = (1.-pow(abs(sin(3.*3.14*height)),0.1))/25.;
+                 float grid3 = (1.-pow(abs(sin(9.*3.14*height)),0.1))/50.;
+                 float grid = grid1+grid2+grid3;
+            
+           
                 if(abs(height-slice)<0.1){
                     return vec3(0.8,0.8,0);
               }
               else if(height-slice<0.){
-                return vec3(0.03,0.03,0.1);
+                return vec3(0.03,0.03,0.1)+vec3(grid);
               }
-              return vec3(0.03,0.1,0.03);
+              return vec3(0.03,0.1,0.03)+vec3(grid);
             }
         `;
 
@@ -99,19 +107,19 @@ class MorseTorus{
         let thisObj = this;
 
         ui.add(thisObj.params,'xEqn').name('x(u,v)=').onFinishChange(function(val){
-            thisObj.params.xEqn = value;
+            thisObj.params.xEqn = val;
             let newEqn = thisObj.buildEquation();
             thisObj.surface.setFunction(newEqn);
         });
 
         ui.add(thisObj.params,'yEqn').name('y(u,v)=').onFinishChange(function(val){
-            thisObj.params.yEqn = value;
+            thisObj.params.yEqn = val;
             let newEqn = thisObj.buildEquation();
             thisObj.surface.setFunction(newEqn);
         });
 
         ui.add(thisObj.params,'zEqn').name('z(u,v)=').onFinishChange(function(val){
-            thisObj.params.zEqn = value;
+            thisObj.params.zEqn = val;
             let newEqn = thisObj.buildEquation();
             thisObj.surface.setFunction(newEqn);
         });
