@@ -19,6 +19,13 @@ let planeMaterial=new MeshPhysicalMaterial({
 });
 
 
+
+let surfaceOptions = {
+    clearcoat:1,
+    roughness:0.4,
+}
+
+
 let pointMaterial = new MeshPhysicalMaterial({
 
 });
@@ -55,27 +62,32 @@ class ImplicitCurveSlice{
 
         this.contourColor = `
             vec3 colorFn(float z){
+              
               if(abs(z-slice)<0.1){
                 return vec3(0.8,0.8,0);
               }
+              
               return vec3(0.03);
             }
         `;
 
         this.surfaceColor= `
             vec3 colorFn(vec2 uv, vec3 xyz){
+            
+            float grid = (1.-pow(abs(sin(10.*3.14*uv.x)*sin(10.*3.14*uv.y)),0.1))/10.;
+           
                 float height = xyz.y;
                 if(abs(height-slice)<0.1){
                     return vec3(0.8,0.8,0);
               }
               else if(height-slice<0.){
-                return vec3(0.03,0.03,0.1);
+                return vec3(0.03,0.03,0.1)+vec3(grid);
               }
-              return vec3(0.03,0.1,0.03);
+              return vec3(0.03,0.1,0.03)+vec3(grid);
             }
         `;
 
-        this.graph = new Graph3D(this.params.eqn,this.range,this.uniforms,this.surfaceColor);
+        this.graph = new Graph3D(this.params.eqn,this.range,this.uniforms,this.surfaceColor,surfaceOptions);
 
         this.contour = new ContourPlot2D(this.params.eqn,this.range,this.uniforms,this.contourColor);
 

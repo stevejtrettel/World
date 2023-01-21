@@ -17,6 +17,11 @@ let planeMaterial=new MeshPhysicalMaterial({
     ior:1,
 });
 
+let surfaceOptions = {
+    clearcoat:1,
+    roughness:0.4,
+}
+
 
 class MorseTorus{
    constructor() {
@@ -51,7 +56,7 @@ class MorseTorus{
             }
         `;
 
-       this.surface = new ParametricSurface(this.buildEquation(),this.range,this.uniforms,this.surfaceColor);
+       this.surface = new ParametricSurface(this.buildEquation(),this.range,this.uniforms,this.surfaceColor,surfaceOptions);
 
        //making the apparatus for showing the slicing:
        let planeGeometry = new PlaneBufferGeometry(20,20);
