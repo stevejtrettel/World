@@ -33,7 +33,7 @@ const defaultColorFn = `
 const defaultMatOptions = {};
 
 
-class ParametricSurface{
+class ParametricSurface {
     constructor(eqn, domain, uniforms, colorFn=defaultColorFn, options = defaultMatOptions) {
 
         this.eqn = eqn;
@@ -90,12 +90,12 @@ class ParametricSurface{
         };
 
         //use Farazz's CustomShaderMaterial class
-       return new CustomShaderMaterial( customMatParameters );
+        return new CustomShaderMaterial( customMatParameters );
     }
 
     //build the main shader component given a function eqn(u,v, params);
     createVertexMain(){
-            return  `
+        return  this.eqn + `
             vec2 rescaleUV( vec2 uv ){
                 float uSpread = uMax-uMin;
                 float u = uSpread*uv.x+uMin;
@@ -107,10 +107,7 @@ class ParametricSurface{
             }    
             vec3 displace( vec2 uv ){
                 uv = rescaleUV(uv);
-                float u = uv.x;
-                float v = uv.y;
-                float res = ${this.eqn};
-                return vec3(u,res,-v);
+                return eqn(uv);
             }
             `;
     }
@@ -118,8 +115,8 @@ class ParametricSurface{
 
     //build the frag shader from the color function color(uv, xyz);
     createFragMain(){
-            return this.colorFn +
-                `
+        return this.colorFn +
+            `
             vec3 fragColor(){
                 return colorFn(vUv, vPosition);
             }`;
@@ -136,13 +133,12 @@ class ParametricSurface{
         this.surface.position.set(x,y,z);
     }
 
-
     addToScene(scene){
         scene.add(this.surface);
     }
 
-    setFunction(fnText){
-        this.eqn = fnText;
+    setFunction(eqn){
+        this.eqn = eqn;
         this.surface.material.dispose();
         this.surface.material = this.compileMaterial();
     }

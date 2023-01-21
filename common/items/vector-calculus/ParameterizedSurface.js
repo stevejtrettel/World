@@ -1,4 +1,4 @@
-import ParametricSurface from "../../components/parametric/ParametricSurface.js";
+import Graph3D from "../../components/vector-calculus/Graph3D.js";
 
 class ParameterizedSurface{
     constructor() {

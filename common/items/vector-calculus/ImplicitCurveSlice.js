@@ -6,7 +6,7 @@ import {
 } from "../../../3party/three/build/three.module.js";
 
 import {Rod} from "../../components/Calculus/Rod.js";
-import ParametricSurface from "../../components/parametric/ParametricSurface.js";
+import Graph3D from "../../components/vector-calculus/Graph3D.js";
 import ContourPlotOld from "../../components/vector-calculus/ContourPlotOld.js";
 import ContourPlot2D from "../../components/vector-calculus/ContourPlot2D.js";
 
@@ -26,7 +26,7 @@ let pointMaterial = new MeshPhysicalMaterial({
 
 
 
-//really everything should be done in terms ParametricSurface
+//really everything should be done in terms Graph3D
 //BUT theres some annoying issue right now, where I can't use two of them in the same object
 //both just draw the first surface even tho they have different shaders :(
 //SO in the mean time - a hack!!!
@@ -75,7 +75,7 @@ class ImplicitCurveSlice{
             }
         `;
 
-        this.graph = new ParametricSurface(this.params.eqn,this.range,this.uniforms,this.surfaceColor);
+        this.graph = new Graph3D(this.params.eqn,this.range,this.uniforms,this.surfaceColor);
 
         this.contour = new ContourPlot2D(this.params.eqn,this.range,this.uniforms,this.contourColor);
 
