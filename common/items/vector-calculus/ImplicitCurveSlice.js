@@ -5,13 +5,10 @@ import {
     Mesh, Vector3, DoubleSide,
 } from "../../../3party/three/build/three.module.js";
 
-
-import Graph3D from "../../components/VectorCalculus/Graph3D.js";
-import ContourPlot2D from "../../components/VectorCalculus/ContourPlot2D.js";
 import {Rod} from "../../components/Calculus/Rod.js";
-
-
-
+import ParametricSurface from "../../components/parametric/ParametricSurface.js";
+import ContourPlotOld from "../../components/vector-calculus/ContourPlotOld.js";
+import ContourPlot2D from "../../components/vector-calculus/ContourPlot2D.js";
 
 let planeMaterial=new MeshPhysicalMaterial({
     side:DoubleSide,
@@ -29,6 +26,11 @@ let pointMaterial = new MeshPhysicalMaterial({
 
 
 
+//really everything should be done in terms ParametricSurface
+//BUT theres some annoying issue right now, where I can't use two of them in the same object
+//both just draw the first surface even tho they have different shaders :(
+//SO in the mean time - a hack!!!
+//we will use contourPlot2D in addition :(
 
 
 
@@ -37,27 +39,47 @@ class ImplicitCurveSlice{
     constructor() {
 
         this.range = {
-            x:{min:-10, max:10},
-            y:{min:-10, max:10}
+            u:{min:-10, max:10},
+            v:{min:-10, max:10}
         };
 
         this.params = {
+            animate:true,
             slice: 0,
-            eqn: 'cos(x)+sin(x*y)',
+            eqn: '2.*(cos(u)+sin(u*v/5.))',
         }
 
         this.uniforms = {
-
+            slice:{type:'float',value:this.params.slice}
         };
 
-        this.uniformString = `
-        
+        this.contourColor = `
+            vec3 colorFn(float z){
+              if(abs(z-slice)<0.1){
+                return vec3(0.8,0.8,0);
+              }
+              return vec3(0.03);
+            }
         `;
 
-        this.graph = new Graph3D();
-        this.contour = new ContourPlot2D(this.params.eqn, this.uniforms, this.uniformString,this.range);
-        this.contour.setPosition(0,-7,0);
+        this.surfaceColor= `
+            vec3 colorFn(vec2 uv, vec3 xyz){
+                float height = xyz.y;
+                if(abs(height-slice)<0.1){
+                    return vec3(0.8,0.8,0);
+              }
+              else if(height-slice<0.){
+                return vec3(0.03,0.03,0.1);
+              }
+              return vec3(0.03,0.1,0.03);
+            }
+        `;
 
+        this.graph = new ParametricSurface(this.params.eqn,this.range,this.uniforms,this.surfaceColor);
+
+        this.contour = new ContourPlot2D(this.params.eqn,this.range,this.uniforms,this.contourColor);
+
+        this.contour.setPosition(0,-7,0);
 
         //making the apparatus for showing the slicing:
         let pointGeometry = new SphereBufferGeometry(0.4);
@@ -79,13 +101,16 @@ class ImplicitCurveSlice{
     }
 
     setSlice(slice){
+
+        this.params.slice=slice;
+
         this.slicePlane.position.set(0,slice,0);
         this.slicePoint.position.set(0,slice,0);
        // this.slicePoint.material.color
 
         //update uniforms to highlight the slice:
-        this.contour.update();
-        this.graph.update();
+        this.contour.update({slice:slice});
+        this.graph.update({slice:slice});
     }
 
 
@@ -93,8 +118,8 @@ class ImplicitCurveSlice{
 
         this.graph.addToScene(scene);
         this.contour.addToScene(scene);
-        this.axis.addToScene(scene);
 
+        this.axis.addToScene(scene);
         scene.add(this.slicePoint);
         scene.add(this.slicePlane);
     }
@@ -103,7 +128,9 @@ class ImplicitCurveSlice{
 
         let thisObj = this;
 
-        ui.add(thisObj.params,'eqn').name('Equation').onChange(function(val){
+        ui.add(thisObj.params,'animate').name('Animate');
+
+        ui.add(thisObj.params,'eqn').name('Equation').onFinishChange(function(val){
             thisObj.contour.setFunction(val);
             thisObj.graph.setFunction(val);
         });
@@ -117,7 +144,10 @@ class ImplicitCurveSlice{
     }
 
     tick(time,dTime){
-
+        if(this.params.animate ){
+                let val = 5. * Math.sin(time / 3.);
+                this.setSlice(val);
+        }
     }
 }
 

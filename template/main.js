@@ -1,6 +1,6 @@
 //set the stuff for this particular example!
 
-import item from "../common/items/differential-geometry/curveAndTorsion.js";
+import item from "../common/items/vector-calculus/ImplicitCurveSlice.js";
 let objects = {...item};
 
 

@@ -10735,13 +10735,13 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/VectorCalculus\/ContourPlot2D.js" : {
+    "\/common\/components\/VectorCalculus\/ContourPlotOld.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/VectorCalculus\/ContourPlot2D-min.js",
+      "oAP" : "\/common\/components\/VectorCalculus\/ContourPlotOld-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -11901,7 +11901,7 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/objects\/ParametricSurface.js" : {
+    "\/common\/objects\/ParameterizedSurface.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,

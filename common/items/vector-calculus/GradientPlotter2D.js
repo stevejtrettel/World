@@ -1,6 +1,6 @@
 
 import GradientField2D from "../../components/VectorCalculus/GradientField2D.js";
-import ContourPlot2D from "../../components/VectorCalculus/ContourPlot2D.js";
+import ContourPlot2D from "../../components/VectorCalculus/ContourPlotOld.js";
 
 //using GLOBAL object math.parser: this is from the 3rd party math file loaded in the html
 const parser = math.parser();
