@@ -1,6 +1,6 @@
 //set the stuff for this particular example!
 
-import item from "../common/items/vector-calculus/SurfacePlotter.js";
+import item from "../common/items/ModulusFunction.js";
 let objects = {...item};
 
 
