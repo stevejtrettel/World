@@ -660,7 +660,7 @@
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 0,
+      "oA" : 1,
       "oAP" : "\/3party\/three\/examples\/jsm\/deprecated\/Geometry-min.js",
       "oF" : 0,
       "sC" : 3,
@@ -10405,277 +10405,277 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/CollisionAlgorithm\/AmbientSpace\/AmbientSpace.js" : {
+    "\/common\/components\/collision-algorithm\/AmbientSpace\/AmbientSpace.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/CollisionAlgorithm\/AmbientSpace\/AmbientSpace-min.js",
+      "oAP" : "\/common\/components\/collision-algorithm\/AmbientSpace\/AmbientSpace-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/CollisionAlgorithm\/AmbientSpace\/Components\/Geometry.js" : {
+    "\/common\/components\/collision-algorithm\/AmbientSpace\/Components\/Geometry.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/CollisionAlgorithm\/AmbientSpace\/Components\/Geometry-min.js",
+      "oAP" : "\/common\/components\/collision-algorithm\/AmbientSpace\/Components\/Geometry-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/CollisionAlgorithm\/AmbientSpace\/Components\/Model.js" : {
+    "\/common\/components\/collision-algorithm\/AmbientSpace\/Components\/Model.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/CollisionAlgorithm\/AmbientSpace\/Components\/Model-min.js",
+      "oAP" : "\/common\/components\/collision-algorithm\/AmbientSpace\/Components\/Model-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/CollisionAlgorithm\/AmbientSpace\/Components\/Obstacle.js" : {
+    "\/common\/components\/collision-algorithm\/AmbientSpace\/Components\/Obstacle.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/CollisionAlgorithm\/AmbientSpace\/Components\/Obstacle-min.js",
+      "oAP" : "\/common\/components\/collision-algorithm\/AmbientSpace\/Components\/Obstacle-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/CollisionAlgorithm\/AmbientSpace\/ExampleSpaces\/Euclidean.js" : {
+    "\/common\/components\/collision-algorithm\/AmbientSpace\/ExampleSpaces\/Euclidean.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/CollisionAlgorithm\/AmbientSpace\/ExampleSpaces\/Euclidean-min.js",
+      "oAP" : "\/common\/components\/collision-algorithm\/AmbientSpace\/ExampleSpaces\/Euclidean-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/CollisionAlgorithm\/AmbientSpace\/ExampleSpaces\/HypSpaceCoords.js" : {
+    "\/common\/components\/collision-algorithm\/AmbientSpace\/ExampleSpaces\/HypSpaceCoords.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 0,
-      "oAP" : "\/common\/components\/CollisionAlgorithm\/AmbientSpace\/ExampleSpaces\/HypSpaceCoords-min.js",
+      "oAP" : "\/common\/components\/collision-algorithm\/AmbientSpace\/ExampleSpaces\/HypSpaceCoords-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/CollisionAlgorithm\/AmbientSpace\/ExampleSpaces\/HypSpacePoincareBall.js" : {
+    "\/common\/components\/collision-algorithm\/AmbientSpace\/ExampleSpaces\/HypSpacePoincareBall.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/CollisionAlgorithm\/AmbientSpace\/ExampleSpaces\/HypSpacePoincareBall-min.js",
+      "oAP" : "\/common\/components\/collision-algorithm\/AmbientSpace\/ExampleSpaces\/HypSpacePoincareBall-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/CollisionAlgorithm\/AmbientSpace\/ExampleSpaces\/InhomogeneousNeg.js" : {
+    "\/common\/components\/collision-algorithm\/AmbientSpace\/ExampleSpaces\/InhomogeneousNeg.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/CollisionAlgorithm\/AmbientSpace\/ExampleSpaces\/InhomogeneousNeg-min.js",
+      "oAP" : "\/common\/components\/collision-algorithm\/AmbientSpace\/ExampleSpaces\/InhomogeneousNeg-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/CollisionAlgorithm\/AmbientSpace\/ExampleSpaces\/InhomogeneousPos.js" : {
+    "\/common\/components\/collision-algorithm\/AmbientSpace\/ExampleSpaces\/InhomogeneousPos.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/CollisionAlgorithm\/AmbientSpace\/ExampleSpaces\/InhomogeneousPos-min.js",
+      "oAP" : "\/common\/components\/collision-algorithm\/AmbientSpace\/ExampleSpaces\/InhomogeneousPos-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/CollisionAlgorithm\/AmbientSpace\/ExampleSpaces\/SphericalCoords.js" : {
+    "\/common\/components\/collision-algorithm\/AmbientSpace\/ExampleSpaces\/SphericalCoords.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 0,
-      "oAP" : "\/common\/components\/CollisionAlgorithm\/AmbientSpace\/ExampleSpaces\/SphericalCoords-min.js",
+      "oAP" : "\/common\/components\/collision-algorithm\/AmbientSpace\/ExampleSpaces\/SphericalCoords-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/CollisionAlgorithm\/AmbientSpace\/ExampleSpaces\/SphericalStereoProj.js" : {
+    "\/common\/components\/collision-algorithm\/AmbientSpace\/ExampleSpaces\/SphericalStereoProj.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/CollisionAlgorithm\/AmbientSpace\/ExampleSpaces\/SphericalStereoProj-min.js",
+      "oAP" : "\/common\/components\/collision-algorithm\/AmbientSpace\/ExampleSpaces\/SphericalStereoProj-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/CollisionAlgorithm\/Computation\/DataList.js" : {
+    "\/common\/components\/collision-algorithm\/Computation\/DataList.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/CollisionAlgorithm\/Computation\/DataList-min.js",
+      "oAP" : "\/common\/components\/collision-algorithm\/Computation\/DataList-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/CollisionAlgorithm\/Computation\/dState.js" : {
+    "\/common\/components\/collision-algorithm\/Computation\/dState.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/CollisionAlgorithm\/Computation\/dState-min.js",
+      "oAP" : "\/common\/components\/collision-algorithm\/Computation\/dState-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/CollisionAlgorithm\/Computation\/RungeKutta.js" : {
+    "\/common\/components\/collision-algorithm\/Computation\/RungeKutta.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/CollisionAlgorithm\/Computation\/RungeKutta-min.js",
+      "oAP" : "\/common\/components\/collision-algorithm\/Computation\/RungeKutta-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/CollisionAlgorithm\/Computation\/State.js" : {
+    "\/common\/components\/collision-algorithm\/Computation\/State.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/CollisionAlgorithm\/Computation\/State-min.js",
+      "oAP" : "\/common\/components\/collision-algorithm\/Computation\/State-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/CollisionAlgorithm\/ConfigurationSpace\/ConfigurationSpace.js" : {
+    "\/common\/components\/collision-algorithm\/ConfigurationSpace\/ConfigurationSpace.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/CollisionAlgorithm\/ConfigurationSpace\/ConfigurationSpace-min.js",
+      "oAP" : "\/common\/components\/collision-algorithm\/ConfigurationSpace\/ConfigurationSpace-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/CollisionAlgorithm\/ConfigurationSpace\/Simulation.js" : {
+    "\/common\/components\/collision-algorithm\/ConfigurationSpace\/Simulation.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/CollisionAlgorithm\/ConfigurationSpace\/Simulation-min.js",
+      "oAP" : "\/common\/components\/collision-algorithm\/ConfigurationSpace\/Simulation-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/CollisionAlgorithm\/setup.js" : {
+    "\/common\/components\/collision-algorithm\/setup.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/CollisionAlgorithm\/setup-min.js",
+      "oAP" : "\/common\/components\/collision-algorithm\/setup-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/CollisionAlgorithm\/utils\/random.js" : {
+    "\/common\/components\/collision-algorithm\/utils\/random.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/CollisionAlgorithm\/utils\/random-min.js",
+      "oAP" : "\/common\/components\/collision-algorithm\/utils\/random-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/CollisionAlgorithm\/Visualization\/Comet.js" : {
+    "\/common\/components\/collision-algorithm\/Visualization\/Comet.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/CollisionAlgorithm\/Visualization\/Comet-min.js",
+      "oAP" : "\/common\/components\/collision-algorithm\/Visualization\/Comet-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/CollisionAlgorithm\/Visualization\/RenderSim.js" : {
+    "\/common\/components\/collision-algorithm\/Visualization\/RenderSim.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/CollisionAlgorithm\/Visualization\/RenderSim-min.js",
+      "oAP" : "\/common\/components\/collision-algorithm\/Visualization\/RenderSim-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/ColorVision\/coloredBarGraph.js" : {
+    "\/common\/components\/color-vision\/coloredBarGraph.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/components\/color-vision\/coloredBarGraph-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/color-vision\/em-waves.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/components\/color-vision\/em-waves-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/complex-analysis\/NewtonFractal.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/components\/complex-analysis\/NewtonFractal-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/complex-analysis\/NewtonFractal2.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/ColorVision\/coloredBarGraph-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/components\/ColorVision\/em-waves.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/components\/ColorVision\/em-waves-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/components\/ComplexAnalysis\/NewtonFractal.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/components\/ComplexAnalysis\/NewtonFractal-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/components\/ComplexAnalysis\/NewtonFractal2.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/components\/ComplexAnalysis\/NewtonFractal2-min.js",
+      "oAP" : "\/common\/components\/complex-analysis\/NewtonFractal2-min.js",
       "oF" : 1,
       "sC" : 3,
       "tS" : 0
@@ -10713,156 +10713,266 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/EucGeometry\/ArchimedesCylinderCurve.js" : {
+    "\/common\/components\/euc-geometry\/ArchimedesCylinderCurve.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/EucGeometry\/ArchimedesCylinderCurve-min.js",
+      "oAP" : "\/common\/components\/euc-geometry\/ArchimedesCylinderCurve-min.js",
       "oF" : 1,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/EucGeometry\/ArchimedesSphereCurve.js" : {
+    "\/common\/components\/euc-geometry\/ArchimedesSphereCurve.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/EucGeometry\/ArchimedesSphereCurve-min.js",
+      "oAP" : "\/common\/components\/euc-geometry\/ArchimedesSphereCurve-min.js",
       "oF" : 1,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/VectorCalculus\/ContourPlotOld.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/components\/VectorCalculus\/ContourPlotOld-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/components\/VectorCalculus\/FunctionSlice1D.js" : {
+    "\/common\/components\/odes\/FlowLine.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 0,
-      "oAP" : "\/common\/components\/VectorCalculus\/FunctionSlice1D-min.js",
+      "oAP" : "\/common\/components\/odes\/FlowLine-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/VectorCalculus\/GradientField2D.js" : {
+    "\/common\/components\/odes\/FlowLineField.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/components\/odes\/FlowLineField-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/odes\/IntegralCurve-Traditional.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/components\/odes\/IntegralCurve-Traditional-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/odes\/IntegralCurve.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/components\/odes\/IntegralCurve-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/odes\/IntegralCurveSpray-Traditional.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/components\/odes\/IntegralCurveSpray-Traditional-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/odes\/IntegralCurveSpray.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/components\/odes\/IntegralCurveSpray-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/parametric\/ParametricSurface.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/VectorCalculus\/GradientField2D-min.js",
+      "oAP" : "\/common\/components\/parametric\/ParametricSurface-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/VectorCalculus\/IteratedIntegral.js" : {
+    "\/common\/components\/parametric\/SpaceCurve.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/components\/parametric\/SpaceCurve-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/vector-calculus\/ContourPlot2D.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/VectorCalculus\/IteratedIntegral-min.js",
+      "oAP" : "\/common\/components\/vector-calculus\/ContourPlot2D-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/vector-calculus\/ContourPlotOld.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/vector-calculus\/ContourPlotOld-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/vector-calculus\/FunctionSlice1D.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/components\/vector-calculus\/FunctionSlice1D-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/vector-calculus\/GradientField2D.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/vector-calculus\/GradientField2D-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/vector-calculus\/Graph3D.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/vector-calculus\/Graph3D-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/vector-calculus\/IteratedIntegral.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/vector-calculus\/IteratedIntegral-min.js",
       "oF" : 1,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/VectorCalculus\/ParametricCurve.js" : {
+    "\/common\/components\/vector-calculus\/ParametricCurve.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/components\/VectorCalculus\/ParametricCurve-min.js",
+      "oA" : 0,
+      "oAP" : "\/common\/components\/vector-calculus\/ParametricCurve-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/VectorCalculus\/RiemannSum2D.js" : {
+    "\/common\/components\/vector-calculus\/RiemannSum2D.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/components\/VectorCalculus\/RiemannSum2D-min.js",
+      "oA" : 0,
+      "oAP" : "\/common\/components\/vector-calculus\/RiemannSum2D-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/VectorCalculus\/ScalarFunction.js" : {
+    "\/common\/components\/vector-calculus\/ScalarFunction.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/VectorCalculus\/ScalarFunction-min.js",
+      "oAP" : "\/common\/components\/vector-calculus\/ScalarFunction-min.js",
       "oF" : 1,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/VectorCalculus\/ScalarLineIntegral.js" : {
+    "\/common\/components\/vector-calculus\/ScalarLineIntegral.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/VectorCalculus\/ScalarLineIntegral-min.js",
+      "oAP" : "\/common\/components\/vector-calculus\/ScalarLineIntegral-min.js",
       "oF" : 1,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/VectorCalculus\/Vector.js" : {
+    "\/common\/components\/vector-calculus\/Vector.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/components\/VectorCalculus\/Vector-min.js",
+      "oA" : 0,
+      "oAP" : "\/common\/components\/vector-calculus\/Vector-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/VectorCalculus\/VectorField2D.js" : {
+    "\/common\/components\/vector-calculus\/VectorField2D.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/components\/VectorCalculus\/VectorField2D-min.js",
+      "oA" : 0,
+      "oAP" : "\/common\/components\/vector-calculus\/VectorField2D-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/VectorCalculus\/VectorField3D.js" : {
+    "\/common\/components\/vector-calculus\/VectorField3D.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/components\/VectorCalculus\/VectorField3D-min.js",
+      "oA" : 0,
+      "oAP" : "\/common\/components\/vector-calculus\/VectorField3D-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/VectorCalculus\/VectorLineIntegral.js" : {
+    "\/common\/components\/vector-calculus\/VectorLineIntegral.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/VectorCalculus\/VectorLineIntegral-min.js",
+      "oAP" : "\/common\/components\/vector-calculus\/VectorLineIntegral-min.js",
       "oF" : 1,
       "sC" : 3,
       "tS" : 0
@@ -10918,6 +11028,28 @@
       "mi" : 1,
       "oA" : 1,
       "oAP" : "\/common\/cpu\/RungeKuttaParams-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/depreciated\/ParametricSurface.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/depreciated\/ParametricSurface-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/depreciated\/Surface.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/depreciated\/Surface-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -11087,17 +11219,6 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/items\/AreaFunctionPlotter.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/items\/AreaFunctionPlotter-min.js",
-      "oF" : 1,
-      "sC" : 3,
-      "tS" : 0
-    },
     "\/common\/items\/BlackHoleGeodesics.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -11106,6 +11227,138 @@
       "oA" : 1,
       "oAP" : "\/common\/items\/BlackHoleGeodesics-min.js",
       "oF" : 1,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/calculus\/AreaFunctionPlotter.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/calculus\/AreaFunctionPlotter-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/calculus\/CylinderShellPlotter.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/calculus\/CylinderShellPlotter-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/calculus\/DerivativePlotter.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/calculus\/DerivativePlotter-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/calculus\/DiskAndWasherPlotter.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/calculus\/DiskAndWasherPlotter-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/calculus\/DiskRiemannSumPlotter.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/calculus\/DiskRiemannSumPlotter-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/calculus\/FTCPlotter.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/calculus\/FTCPlotter-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/calculus\/NewtonsMethodPlotter.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/calculus\/NewtonsMethodPlotter-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/calculus\/RiemannSumPlotter.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/calculus\/RiemannSumPlotter-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/calculus\/RiemannSumSequencePlotter.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/calculus\/RiemannSumSequencePlotter-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/calculus\/SecantLinePlotter.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/calculus\/SecantLinePlotter-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/calculus\/SphereAndCylinder.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/calculus\/SphereAndCylinder-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/calculus\/SphereAndCylinder2.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/calculus\/SphereAndCylinder2-min.js",
+      "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
@@ -11142,17 +11395,6 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/items\/computeSurface.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/items\/computeSurface-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
     "\/common\/items\/CTC.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -11164,80 +11406,47 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/items\/curveAndTorsion.js" : {
+    "\/common\/items\/differential-geometry\/computeSurface.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/items\/curveAndTorsion-min.js",
+      "oA" : 0,
+      "oAP" : "\/common\/items\/differential-geometry\/computeSurface-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/items\/cuttingCylinder.js" : {
+    "\/common\/items\/differential-geometry\/curveAndTorsion.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/items\/cuttingCylinder-min.js",
+      "oA" : 0,
+      "oAP" : "\/common\/items\/differential-geometry\/curveAndTorsion-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/items\/cuttingTorus.js" : {
+    "\/common\/items\/differential-geometry\/GaussianSurface.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/items\/cuttingTorus-min.js",
+      "oA" : 0,
+      "oAP" : "\/common\/items\/differential-geometry\/GaussianSurface-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/items\/CylinderShellPlotter.js" : {
+    "\/common\/items\/differential-geometry\/Geodesic.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/items\/CylinderShellPlotter-min.js",
-      "oF" : 1,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/items\/DerivativePlotter.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/items\/DerivativePlotter-min.js",
-      "oF" : 1,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/items\/DiskAndWasherPlotter.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/items\/DiskAndWasherPlotter-min.js",
-      "oF" : 1,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/items\/DiskRiemannSumPlotter.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/items\/DiskRiemannSumPlotter-min.js",
-      "oF" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/differential-geometry\/Geodesic-min.js",
+      "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
@@ -11296,6 +11505,28 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/common\/items\/euclidean-geometry\/pythagorean-3d-min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/euclidean-geometry\/pythagorean-3d-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/euclidean-geometry\/Pythagorean3d.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/items\/euclidean-geometry\/Pythagorean3d-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/common\/items\/eucSpring.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -11314,72 +11545,6 @@
       "mi" : 1,
       "oA" : 1,
       "oAP" : "\/common\/items\/flows-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/items\/FTCPlotter.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/items\/FTCPlotter-min.js",
-      "oF" : 1,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/items\/FubiniSumPlotter.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/items\/FubiniSumPlotter-min.js",
-      "oF" : 1,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/items\/GaussianSurface.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/items\/GaussianSurface-min.js",
-      "oF" : 1,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/items\/Geodesic.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/items\/Geodesic-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/items\/GradientPlotter2D.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/items\/GradientPlotter2D-min.js",
-      "oF" : 1,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/items\/hopfTori.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/items\/hopfTori-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -11406,17 +11571,6 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/items\/knotComplements.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/items\/knotComplements-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
     "\/common\/items\/NewtonFractalPlotter.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -11424,17 +11578,6 @@
       "mi" : 1,
       "oA" : 1,
       "oAP" : "\/common\/items\/NewtonFractalPlotter-min.js",
-      "oF" : 1,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/items\/NewtonsMethodPlotter.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/items\/NewtonsMethodPlotter-min.js",
       "oF" : 1,
       "sC" : 3,
       "tS" : 0
@@ -11450,6 +11593,39 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/common\/items\/odes\/PopulationDynamics.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/odes\/PopulationDynamics-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/odes\/SlopeFieldPlotter.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/odes\/SlopeFieldPlotter-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/odes\/WaveString.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/odes\/WaveString-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/common\/items\/pentagramMap.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -11458,94 +11634,6 @@
       "oA" : 1,
       "oAP" : "\/common\/items\/pentagramMap-min.js",
       "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/items\/PopulationDynamics.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/items\/PopulationDynamics-min.js",
-      "oF" : 1,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/items\/RiemannSum2DPlotter.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/items\/RiemannSum2DPlotter-min.js",
-      "oF" : 1,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/items\/RiemannSumPlotter.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/items\/RiemannSumPlotter-min.js",
-      "oF" : 1,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/items\/RiemannSumSequencePlotter.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/items\/RiemannSumSequencePlotter-min.js",
-      "oF" : 1,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/items\/SecantLinePlotter.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/items\/SecantLinePlotter-min.js",
-      "oF" : 1,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/items\/SlopeFieldPlotter.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/items\/SlopeFieldPlotter-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/items\/SphereAndCylinder.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/items\/SphereAndCylinder-min.js",
-      "oF" : 1,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/items\/SphereAndCylinder2.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/items\/SphereAndCylinder2-min.js",
-      "oF" : 1,
       "sC" : 3,
       "tS" : 0
     },
@@ -11593,28 +11681,6 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/items\/stereoCube.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/items\/stereoCube-min.js",
-      "oF" : 1,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/items\/stereoProj.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/items\/stereoProj-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
     "\/common\/items\/strangeAttractors.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -11637,6 +11703,105 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/common\/items\/topology\/cuttingCylinder.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/topology\/cuttingCylinder-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/topology\/cuttingTorus.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/topology\/cuttingTorus-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/topology\/hopfTori.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/topology\/hopfTori-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/topology\/knotComplements.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/topology\/knotComplements-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/topology\/MorseTorus.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/topology\/MorseTorus-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/topology\/stereoCube.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/topology\/stereoCube-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/topology\/stereoProj.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/topology\/stereoProj-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/topology\/torusFundamentalGroup.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/topology\/torusFundamentalGroup-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/topology\/wobbleSphere.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/topology\/wobbleSphere-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/common\/items\/Torus.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -11645,17 +11810,6 @@
       "oA" : 1,
       "oAP" : "\/common\/items\/Torus-min.js",
       "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/items\/torusFundamentalGroup.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/items\/torusFundamentalGroup-min.js",
-      "oF" : 1,
       "sC" : 3,
       "tS" : 0
     },
@@ -11670,47 +11824,102 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/items\/VectorCalculus\/CrossProduct.js" : {
+    "\/common\/items\/vector-calculus\/CrossProduct.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 0,
-      "oAP" : "\/common\/items\/VectorCalculus\/CrossProduct-min.js",
+      "oAP" : "\/common\/items\/vector-calculus\/CrossProduct-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/items\/VectorCalculus\/ParametricLine.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/items\/VectorCalculus\/ParametricLine-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/items\/VectorCalculus\/VectorComponents.js" : {
+    "\/common\/items\/vector-calculus\/FubiniSumPlotter.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 0,
-      "oAP" : "\/common\/items\/VectorCalculus\/VectorComponents-min.js",
+      "oAP" : "\/common\/items\/vector-calculus\/FubiniSumPlotter-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/items\/VectorField2DPlotter.js" : {
+    "\/common\/items\/vector-calculus\/GradientPlotter2D.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/items\/VectorField2DPlotter-min.js",
-      "oF" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/vector-calculus\/GradientPlotter2D-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/vector-calculus\/ImplicitCurveSlice.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/vector-calculus\/ImplicitCurveSlice-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/vector-calculus\/ParametricLine.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/vector-calculus\/ParametricLine-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/vector-calculus\/RiemannSum2DPlotter.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/vector-calculus\/RiemannSum2DPlotter-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/vector-calculus\/SurfacePlotter.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/vector-calculus\/SurfacePlotter-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/vector-calculus\/VectorComponents.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/vector-calculus\/VectorComponents-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/vector-calculus\/VectorField2DPlotter.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/vector-calculus\/VectorField2DPlotter-min.js",
+      "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
@@ -11721,39 +11930,6 @@
       "mi" : 1,
       "oA" : 1,
       "oAP" : "\/common\/items\/VectorField3DPlotter-min.js",
-      "oF" : 1,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/items\/WaveString-min.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 0,
-      "oAP" : "\/common\/items\/WaveString-min-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/items\/WaveString.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/items\/WaveString-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/items\/wobbleSphere.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/items\/wobbleSphere-min.js",
       "oF" : 1,
       "sC" : 3,
       "tS" : 0
@@ -11802,6 +11978,17 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/common\/materials\/ParametricTube.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/materials\/ParametricTube-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/common\/math\/functions_singleVar.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -11809,127 +11996,6 @@
       "mi" : 1,
       "oA" : 1,
       "oAP" : "\/common\/math\/functions_singleVar-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/math\/Surface.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/math\/Surface-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/objects\/baseObject.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/objects\/baseObject-min.js",
-      "oF" : 1,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/objects\/FlowLine.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/objects\/FlowLine-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/objects\/FlowLineField.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/objects\/FlowLineField-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/objects\/IntegralCurve-Traditional.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/objects\/IntegralCurve-Traditional-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/objects\/IntegralCurve.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/objects\/IntegralCurve-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/objects\/IntegralCurveSpray-Traditional.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/objects\/IntegralCurveSpray-Traditional-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/objects\/IntegralCurveSpray.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/objects\/IntegralCurveSpray-min.js",
-      "oF" : 1,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/objects\/SurfacePlotter.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/objects\/Graph3D-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/objects\/ParametricTube.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/objects\/ParametricTube-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/objects\/SpaceCurve.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/objects\/SpaceCurve-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0

@@ -85,9 +85,9 @@ class ImplicitCurveSlice{
                     return vec3(0.8,0.8,0);
               }
               else if(height-slice<0.){
-                return vec3(0.03,0.03,0.1)+vec3(grid);
+                return vec3(0.08,0.08,0.2)+vec3(grid);
               }
-              return vec3(0.03,0.1,0.03)+vec3(grid);
+              return vec3(0.08,0.2,0.08)+vec3(grid);
             }
         `;
 
