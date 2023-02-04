@@ -42,7 +42,7 @@ let pointMaterial = new MeshPhysicalMaterial({
 
 
 
-class ImplicitCurveSlice{
+class LevelSetSlice {
     constructor() {
 
         this.range = {
@@ -67,7 +67,7 @@ class ImplicitCurveSlice{
                 return vec3(0.8,0.8,0);
               }
               
-              return vec3(0.03);
+              return vec3(0.03,vUv);
             }
         `;
 
@@ -170,6 +170,6 @@ class ImplicitCurveSlice{
 
 
 
-let ex = new ImplicitCurveSlice();
+let ex = new LevelSetSlice();
 
 export default {ex};

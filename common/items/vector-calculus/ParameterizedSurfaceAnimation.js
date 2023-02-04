@@ -7,7 +7,7 @@ let surfaceOptions = {
 
 
 
-class SurfacePlotter {
+class ParameterizedSurfaceAnimation {
     constructor() {
         this.range = {
             u:{min:0, max:6.29},
@@ -15,6 +15,10 @@ class SurfacePlotter {
         };
 
         this.params = {
+            uMin:0,
+            uMax:6.29,
+            vMin:0,
+            vMax:6.29,
             animate:false,
             homotopy: 1,
             xEqn: "(1.25 *(1.-v/(2.*3.14159))*cos(2.*v)*(1.+cos(u))+cos(2.*v))",
@@ -99,6 +103,27 @@ class SurfacePlotter {
             thisObj.surface.setFunction(newEqn);
         });
 
+        let dFolder = ui.addFolder('Domain');
+
+        dFolder.add(thisObj.params, 'uMin',-10,10,0.01).onChange(function(val){
+            thisObj.range.u.min=val;
+            thisObj.surface.setDomain(thisObj.range);
+        });
+        dFolder.add(thisObj.params, 'uMax',-10,10,0.01).onChange(function(val){
+            thisObj.range.u.max=val;
+            thisObj.surface.setDomain(thisObj.range);
+
+        });
+        dFolder.add(thisObj.params, 'vMin',-10,10,0.01).onChange(function(val){
+            thisObj.range.v.min=val;
+            thisObj.surface.setDomain(thisObj.range);
+        });
+        dFolder.add(thisObj.params, 'vMax',-10,10,0.01).onChange(function(val){
+            thisObj.range.v.max=val;
+            thisObj.surface.setDomain(thisObj.range);
+        });
+
+
         let pFolder = ui.addFolder('Parameters');
 
         pFolder.add(thisObj.params, 'a',-1,1,0.01).onChange(function(val){
@@ -132,5 +157,5 @@ class SurfacePlotter {
 
 
 
-let ex = new SurfacePlotter();
+let ex = new ParameterizedSurfaceAnimation();
 export default {ex};

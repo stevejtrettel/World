@@ -11521,7 +11521,7 @@
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 1,
+      "oA" : 0,
       "oAP" : "\/common\/items\/euclidean-geometry\/Pythagorean3d-min.js",
       "oF" : 0,
       "sC" : 3,
@@ -11568,6 +11568,17 @@
       "oA" : 1,
       "oAP" : "\/common\/items\/hyperbolicCollisions-min.js",
       "oF" : 1,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/ModulusFunction.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/ModulusFunction-min.js",
+      "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
@@ -11857,13 +11868,24 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/items\/vector-calculus\/ImplicitCurveSlice.js" : {
+    "\/common\/items\/vector-calculus\/LevelSetSlice.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 0,
-      "oAP" : "\/common\/items\/vector-calculus\/ImplicitCurveSlice-min.js",
+      "oAP" : "\/common\/items\/vector-calculus\/LevelSetSlice-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/vector-calculus\/LevelSets.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/items\/vector-calculus\/LevelSets-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -11890,13 +11912,13 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/items\/vector-calculus\/SurfacePlotter.js" : {
+    "\/common\/items\/vector-calculus\/ParameterizedSurfaceAnimation.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 0,
-      "oAP" : "\/common\/items\/vector-calculus\/SurfacePlotter-min.js",
+      "oAP" : "\/common\/items\/vector-calculus\/ParameterizedSurfaceAnimation-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0

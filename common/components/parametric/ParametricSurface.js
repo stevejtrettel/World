@@ -143,6 +143,16 @@ class ParametricSurface {
         this.surface.material = this.compileMaterial();
     }
 
+    setDomain(domain){
+        this.domain=domain;
+        this.update({
+            uMin:this.domain.u.min,
+            uMax:this.domain.u.max,
+            vMin:this.domain.v.min,
+            vMax:this.domain.v.max,
+        });
+    }
+
     update(uniforms){
         //range over all the uniforms that were added in update
         for( let variable of Object.keys(uniforms)){

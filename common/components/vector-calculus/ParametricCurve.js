@@ -6,7 +6,8 @@ import {
     MeshPhysicalMaterial,
     SphereBufferGeometry,
     Mesh,
-    CatmullRomCurve3, TubeBufferGeometry
+    CatmullRomCurve3,
+    TubeBufferGeometry,
 } from "../../../3party/three/build/three.module.js";
 
 class ParametricCurve{

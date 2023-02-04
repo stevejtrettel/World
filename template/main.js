@@ -1,6 +1,6 @@
 //set the stuff for this particular example!
 
-import item from "../common/items/ModulusFunction.js";
+import item from "../common/items/vector-calculus/ParameterizedSurfaceAnimation.js";
 let objects = {...item};
 
 
