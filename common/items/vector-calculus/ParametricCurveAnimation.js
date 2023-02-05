@@ -79,6 +79,26 @@ class ParametricCurveAnimation {
 
     }
 
+    checkPeriodic(){
+        let start=this.eqn(this.params.sMin,this.params);
+        let end=this.eqn(this.params.sMax,this.params);
+        this.start.position.set(start.x,start.y,start.z);
+        this.end.position.set(end.x,end.y,end.z);
+
+        //to see if the equation is periodic: evaluate at start and end of domain:
+        let diff = new Vector3().subVectors(end,start);
+        if(diff.length()<0.05){
+            this.periodic=true;
+            this.start.visible=false;
+            this.end.visible=false;
+        }
+        else{
+            this.periodic=false;
+            this.start.visible=true;
+            this.end.visible=true;
+        }
+    }
+
 
     buildGLSLEquation(){
 
@@ -105,23 +125,7 @@ class ParametricCurveAnimation {
         }
 
 
-        let start=this.eqn(this.params.sMin,this.params);
-        let end=this.eqn(this.params.sMax,this.params);
-        this.start.position.set(start.x,start.y,start.z);
-        this.end.position.set(end.x,end.y,end.z);
-
-        //to see if the equation is periodic: evaluate at start and end of domain:
-        let diff = new Vector3().subVectors(end,start);
-        if(diff.length()<0.05){
-            this.periodic=true;
-            this.start.visible=false;
-            this.end.visible=false;
-        }
-        else{
-            this.periodic=false;
-            this.start.visible=true;
-            this.end.visible=true;
-        }
+       this.checkPeriodic();
 
     }
 
@@ -165,10 +169,12 @@ class ParametricCurveAnimation {
         dFolder.add(thisObj.params, 'sMin',-10,10,0.01).onChange(function(val){
             thisObj.range.min=val;
             thisObj.curve.setDomain(thisObj.range);
+            thisObj.checkPeriodic();
         });
         dFolder.add(thisObj.params, 'sMax',-10,10,0.01).onChange(function(val){
             thisObj.range.max=val;
             thisObj.curve.setDomain(thisObj.range);
+            thisObj.checkPeriodic();
 
         });
 
@@ -177,12 +183,15 @@ class ParametricCurveAnimation {
 
         pFolder.add(thisObj.params, 'a',-1,1,0.01).onChange(function(val){
             thisObj.curve.update({a:val});
+            thisObj.checkPeriodic();
         });
         pFolder.add(thisObj.params, 'b',-1,1,0.01).onChange(function(val){
             thisObj.curve.update({b:val});
+            thisObj.checkPeriodic();
         });
         pFolder.add(thisObj.params, 'c',-1,1,0.01).onChange(function(val){
             thisObj.curve.update({c:val});
+            thisObj.checkPeriodic();
         });
 
         ui.add(thisObj.params, 'animate').name('Animate');
@@ -195,6 +204,7 @@ class ParametricCurveAnimation {
         this.curve.update({time:time});
 
         if(this.params.animate ){
+            this.vector.setVisibility(true);
             let s;
             if(this.periodic){
                 s=time/2.;
@@ -206,6 +216,9 @@ class ParametricCurveAnimation {
 
             let dir = this.eqn(s,this.params);
             this.vector.setDir(dir);
+        }
+        else{
+            this.vector.setVisibility(false);
         }
     }
 }

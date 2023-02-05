@@ -80,6 +80,10 @@ class Vector{
         this.vec.position.set(pos.x,pos.y,pos.z);
     }
 
+    setVisibility(value){
+        this.vec.visible=value;
+    }
+
 }
 
 
