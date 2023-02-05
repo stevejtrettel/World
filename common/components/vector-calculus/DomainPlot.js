@@ -17,14 +17,14 @@ import {globals} from "../../../template/src/globals.js";
 const defaultColorFn = `
     vec3 colorFn(vec2 uv){
     
-            float grid1 = (1.-pow(abs(sin(10.*3.14*uv.x)*sin(10.*3.14*uv.y)),0.1))/10.;
+             float grid1 = (1.-pow(abs(sin(10.*3.14*uv.x)*sin(10.*3.14*uv.y)),0.1))/10.;
              float grid2 = (1.-pow(abs(sin(50.*3.14*uv.x)*sin(50.*3.14*uv.y)),0.1))/25.;
              float grid3 = (1.-pow(abs(sin(100.*3.14*uv.x)*sin(100.*3.14*uv.y)),0.1))/50.;
              float grid = grid1+grid2+grid3;
              
              vec3 base =  0.6 + 0.4*cos(2.*3.14*uv.xyx+vec3(0,2,4));
              
-     return base + 2.*vec3(grid);
+             return base + 2.*vec3(grid);
     }
 `;
 
@@ -54,7 +54,7 @@ const mainShaderFn = `
         vec2 coords = rescaleUV(uv);
         
         //use the color function
-        vec3 color = colorFn(coords);
+        vec3 color = colorFn(uv);
     
         //return this to the shader
         gl_FragColor = vec4(color,1);

@@ -23,6 +23,9 @@ class ParameterizedSurfacePlotter{
             uMax:6.29,
             vMin:0,
             vMax:6.29,
+            showPos:true,
+            uPos:0.5,
+            vPos:0.5,
             animate:true,
             slice: 0,
             xEqn: "(1.25 *(1.-v/(2.*3.14159))*cos(2.*v)*(1.+cos(u))+cos(2.*v))",
@@ -39,38 +42,54 @@ class ParameterizedSurfacePlotter{
         };
 
         this.uniforms = {
+            showPos:{type:'bool',value:this.params.showPos},
+            uPos:{type:'float', value:this.params.uPos},
+            vPos:{type:'float', value:this.params.vPos},
             slice:{type:'float',value:this.params.slice},
             a:{type:'float',value:this.params.a},
             b:{type:'float',value:this.params.b},
             c:{type:'float',value:this.params.c},
         };
 
-        this.domainColor = `
-             vec3 colorFn(vec2 uv){
-             
-             float grid1 = (1.-pow(abs(sin(10.*3.14*uv.x)*sin(10.*3.14*uv.y)),0.1))/10.;
+
+
+        let colorFnText = `
+        
+         float grid1 = (1.-pow(abs(sin(10.*3.14*uv.x)*sin(10.*3.14*uv.y)),0.1))/10.;
              float grid2 = (1.-pow(abs(sin(50.*3.14*uv.x)*sin(50.*3.14*uv.y)),0.1))/25.;
              float grid3 = (1.-pow(abs(sin(100.*3.14*uv.x)*sin(100.*3.14*uv.y)),0.1))/50.;
              float grid = grid1+grid2+grid3;
              
              vec3 base =  0.6 + 0.4*cos(2.*3.14*uv.xyx+vec3(0,2,4));
+             vec3 final = base + 2.*vec3(grid);
              
-             return base + 2.*vec3(grid);
-            }
+             
+             if(showPos){
+                if(abs(uv.x-uPos)<0.01){
+                    final=vec3(1,0,0);
+                }
+                if(abs(uv.y-vPos)<0.01){
+                    final=vec3(0,0,1);
+                }
+                if(length(uv-vec2(uPos,vPos))<0.02){
+                    final=vec3(0);
+                }
+             }
+             
+             return final;
+        
+        `;
+
+        this.domainColor = `
+           vec3 colorFn(vec2 uv){
+             ${colorFnText}
+           }
         `;
 
         this.surfaceColor= `
-              vec3 colorFn(vec2 uv, vec3 xyz){
-             
-             float grid1 = (1.-pow(abs(sin(10.*3.14*uv.x)*sin(10.*3.14*uv.y)),0.1))/10.;
-             float grid2 = (1.-pow(abs(sin(50.*3.14*uv.x)*sin(50.*3.14*uv.y)),0.1))/25.;
-             float grid3 = (1.-pow(abs(sin(100.*3.14*uv.x)*sin(100.*3.14*uv.y)),0.1))/50.;
-             float grid = grid1+grid2+grid3;
-             
-             vec3 base =  0.6 + 0.4*cos(2.*3.14*uv.xyx+vec3(0,2,4));
-             
-             return base + 2.*vec3(grid);
-            }
+           vec3 colorFn(vec2 uv, vec3 xyz){
+             ${colorFnText}
+           }
         `;
 
         this.surface = new ParametricSurface(this.buildEquation(),this.range,this.uniforms,this.surfaceColor,surfaceOptions);
@@ -138,6 +157,26 @@ class ParameterizedSurfacePlotter{
             let newEqn = thisObj.buildEquation();
             thisObj.surface.setFunction(newEqn);
         });
+
+        let posFolder = ui.addFolder('Position');
+        posFolder.add(thisObj.params,'showPos').name('Position Marker').onChange(function(val){
+            thisObj.params.showPos=val;
+            thisObj.surface.update({showPos:val});
+            thisObj.domainPlot.update({showPos:val});
+        });
+        posFolder.add(thisObj.params, 'uPos',0,1,0.01).name("u").onChange(function(val){
+            thisObj.params.uPos=val;
+            thisObj.surface.update({uPos:val});
+            thisObj.domainPlot.update({uPos:val});
+        });
+        posFolder.add(thisObj.params, 'vPos',0,1,0.01).name("v").onChange(function(val){
+            thisObj.params.vPos=val;
+            thisObj.surface.update({vPos:val});
+            thisObj.domainPlot.update({vPos:val});
+        });
+
+
+
 
         let dFolder = ui.addFolder('Domain');
 
