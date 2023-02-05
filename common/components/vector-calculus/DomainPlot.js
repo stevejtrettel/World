@@ -64,8 +64,9 @@ const mainShaderFn = `
 
 const defaultMatOptions = {};
 
-//This is a copy of ContourPlot2D except that the colorFn depends on the domain and the height.
-//This is a REAL VALUED DOMAIN COLORING FUNCTION
+//This is a copy of ContourPlot2D except that the colorFn depends on the domain ONLY.
+//THIS IS JUST FOR PARAMETRIC SURFACE PLOTS, BUT WE CAN'T USE THE CUSTOMSHADERMATERIAL TWICE FOR SOME REASON.....
+//SO I HAVE TO DO THIS
 class DomainPlot {
     constructor(eqn, domain, uniforms, colorFn=defaultColorFn, options = defaultMatOptions) {
 

@@ -1,6 +1,6 @@
-import bessel from "../shaders/math/bessel.js";
-import { colorConversion } from "../shaders/colors/colorConversion.js";
-import { ParametricMaterial } from "../materials/ParametricMaterial.js";
+import bessel from "../../shaders/math/bessel.js";
+import { colorConversion } from "../../shaders/colors/colorConversion.js";
+import { ParametricMaterial } from "../../materials/ParametricMaterial.js";
 
 
 

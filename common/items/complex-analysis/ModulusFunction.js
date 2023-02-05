@@ -1,5 +1,5 @@
-import ParametricSurface from "../components/parametric/ParametricSurface.js";
-import {DoubleSide} from "../../3party/three/build/three.module.js";
+import ParametricSurface from "../../components/parametric/ParametricSurface.js";
+import {DoubleSide} from "../../../3party/three/build/three.module.js";
 
 class ModulusFunction{
     constructor(){

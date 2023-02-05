@@ -6,7 +6,7 @@ import {tubeTest } from "../../common/items/tubeTest.js";
 import {torus} from "../../common/items/Torus.js";
 import { geo } from "../../common/items/differential-geometry/Geodesic.js";
 import { computeSurface } from "../../common/items/differential-geometry/computeSurface.js";
-import { pentagramMap } from "../../common/items/pentagramMap.js";
+import { pentagramMap } from "../../common/items/odes/pentagramMap.js";
 import { curveAndTorsion } from "../../common/items/differential-geometry/curveAndTorsion.js";
 // import { wobbleSphere } from "./components/wobbleSphere.js";
 //import { curveOnTorus } from "./components/torusFundamentalGroup.js";

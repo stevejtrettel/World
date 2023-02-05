@@ -1,6 +1,6 @@
 
-import { colorConversion } from "../shaders/colors/colorConversion.js";
-import { ParametricMaterial } from "../materials/ParametricMaterial.js";
+import { colorConversion } from "../../shaders/colors/colorConversion.js";
+import { ParametricMaterial } from "../../materials/ParametricMaterial.js";
 
 
 let uniforms = {

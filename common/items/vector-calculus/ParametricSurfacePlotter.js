@@ -7,7 +7,7 @@ let surfaceOptions = {
 
 
 
-class ParameterizedSurfaceAnimation {
+class ParametricSurfacePlotter {
     constructor() {
         this.range = {
             u:{min:0, max:6.29},
@@ -58,20 +58,25 @@ class ParameterizedSurfaceAnimation {
 
         return `vec3 eqn( vec2 uv ){
         
-            float u = uv.x;
-            float v = uv.y;
+            float u = uv.x*homotopy;
+            float v = uv.y*homotopy;
             
             float x = ${this.params.xEqn};
             float y = ${this.params.yEqn};
             float z = ${this.params.zEqn};
             
             
-            vec3 start = vec3(u,0,v);
-            vec3 end = vec3(x,y,z);
-           
-            //return the straight line homotopy between these:
-            vec3 diff = end-start;
-            return start + homotopy*diff;
+            //JUST FOR ANIMATION: OTHERWISE RETURN XYZ
+            //find the "basepoint" so the surface stays fixed in space
+            u=0.;
+            v=0.;
+            float x0 = ${this.params.xEqn};
+            float y0 = ${this.params.yEqn};
+            float z0 = ${this.params.zEqn};
+            
+            //rescale surface
+            return (vec3(x,y,z)-vec3(x0,y0,z0))/homotopy+vec3(x0,y0,z0);
+            
             
        }`;
     }
@@ -150,6 +155,9 @@ class ParameterizedSurfaceAnimation {
             let val = (1+Math.cos(time/2))/2.;
             this.surface.update({homotopy:val});
         }
+        else{
+            this.surface.update({homotopy:1});
+        }
     }
 }
 
@@ -157,5 +165,5 @@ class ParameterizedSurfaceAnimation {
 
 
 
-let ex = new ParameterizedSurfaceAnimation();
+let ex = new ParametricSurfacePlotter();
 export default {ex};

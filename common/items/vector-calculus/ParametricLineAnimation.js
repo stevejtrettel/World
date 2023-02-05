@@ -8,7 +8,7 @@ let dirColor = new Color().setHSL(0.2,0.5,0.5);
 let sumColor = new Color().setHSL(0.35,0.5,0.5);
 let lineColor = new Color().setHSL(0.65,0.5,0.7);
 
-class ParametricLine{
+class ParametricLineAnimation {
     constructor(pt, dir) {
 
         this.params = {
@@ -138,5 +138,5 @@ class ParametricLine{
 
 
 
-let ex = new ParametricLine(new Vector3(0,1,2),new Vector3(1,-2,-1));
+let ex = new ParametricLineAnimation(new Vector3(0,1,2),new Vector3(1,-2,-1));
 export default {ex};

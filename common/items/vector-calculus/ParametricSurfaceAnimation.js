@@ -15,22 +15,21 @@ let surfaceOptions = {
 }
 
 
-class ParameterizedSurfacePlotter{
+class ParametricSurfaceAnimation {
     constructor() {
 
         this.params = {
             uMin:0,
             uMax:6.29,
-            vMin:0,
-            vMax:6.29,
+            vMin:-6.75,
+            vMax:3.75,
             showPos:true,
             uPos:0.5,
             vPos:0.5,
             animate:true,
-            slice: 0,
-            xEqn: "(1.25 *(1.-v/(2.*3.14159))*cos(2.*v)*(1.+cos(u))+cos(2.*v))",
-            yEqn: "(10.*v/(2.*3.14159)+(1.-v/(2.*3.14159))*sin(u))-5.",
-            zEqn: "-(1.25 *(1.-v/(2.*3.14159))*sin(2.*v)*(1.+cos(u))+sin(2.*v))",
+            xEqn: "(2.+sin(v))*cos(u)",
+            yEqn: "v",
+            zEqn: "(2.+sin(v))*sin(u)",
             a:0,
             b:0,
             c:0,
@@ -45,7 +44,6 @@ class ParameterizedSurfacePlotter{
             showPos:{type:'bool',value:this.params.showPos},
             uPos:{type:'float', value:this.params.uPos},
             vPos:{type:'float', value:this.params.vPos},
-            slice:{type:'float',value:this.params.slice},
             a:{type:'float',value:this.params.a},
             b:{type:'float',value:this.params.b},
             c:{type:'float',value:this.params.c},
@@ -66,10 +64,10 @@ class ParameterizedSurfacePlotter{
              
              if(showPos){
                 if(abs(uv.x-uPos)<0.01){
-                    final=vec3(1,0,0);
+                    final=vec3(0.7,0.05,0.1);
                 }
                 if(abs(uv.y-vPos)<0.01){
-                    final=vec3(0,0,1);
+                    final=vec3(0.1,0.05,0.7);
                 }
                 if(length(uv-vec2(uPos,vPos))<0.02){
                     final=vec3(0);
@@ -119,15 +117,6 @@ class ParameterizedSurfacePlotter{
     }
 
 
-    setSlice(slice){
-
-        this.params.slice=slice;
-
-        //update uniforms to highlight the slice:
-        this.domainPlot.update({slice:slice});
-        this.surface.update({slice:slice});
-    }
-
 
     addToScene(scene){
 
@@ -146,14 +135,17 @@ class ParameterizedSurfacePlotter{
             thisObj.surface.setFunction(newEqn);
         });
 
-        ui.add(thisObj.params,'yEqn').name('y(u,v)=').onFinishChange(function(val){
-            thisObj.params.yEqn = val;
+
+        // RENAMING Y AND Z BECAUSE VECTOR CALC
+
+        ui.add(thisObj.params,'zEqn').name('y(u,v)=').onFinishChange(function(val){
+            thisObj.params.zEqn = val
             let newEqn = thisObj.buildEquation();
             thisObj.surface.setFunction(newEqn);
         });
 
-        ui.add(thisObj.params,'zEqn').name('z(u,v)=').onFinishChange(function(val){
-            thisObj.params.zEqn = val
+        ui.add(thisObj.params,'yEqn').name('z(u,v)=').onFinishChange(function(val){
+            thisObj.params.yEqn = val;
             let newEqn = thisObj.buildEquation();
             thisObj.surface.setFunction(newEqn);
         });
@@ -214,22 +206,17 @@ class ParameterizedSurfacePlotter{
             thisObj.surface.update({c:val});
         });
 
-        let hFolder = ui.addFolder('Homotopy');
 
-        hFolder.add(thisObj.params, 'animate').name('Animate');
-
-        ui.add(thisObj.params, 'slice',-5,5,0.01).name('Slice').onChange(function(val){
-            thisObj.setSlice(val);
-        });
-
-
+        ui.add(thisObj.params, 'animate');
 
     }
 
     tick(time,dTime){
         if(this.params.animate ){
-            let val = 5. * Math.sin(time / 3.);
-            this.setSlice(val);
+            this.params.uPos = (Math.sin(time)+1)/2.;
+            this.params.vPos = (Math.sin(time/3)+1)/2.;
+            this.surface.update({uPos:this.params.uPos, vPos:this.params.vPos});
+            this.domainPlot.update({uPos:this.params.uPos, vPos:this.params.vPos});
         }
     }
 }
@@ -237,6 +224,6 @@ class ParameterizedSurfacePlotter{
 
 
 
-let ex = new ParameterizedSurfacePlotter();
+let ex = new ParametricSurfaceAnimation();
 
 export default {ex};

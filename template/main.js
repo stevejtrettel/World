@@ -1,6 +1,6 @@
 //set the stuff for this particular example!
 
-import item from "../common/items/vector-calculus/ParameterizedSurfacePlotter.js";
+import item from "../common/items/vector-calculus/ParametricCurveAnimation.js";
 let objects = {...item};
 
 
