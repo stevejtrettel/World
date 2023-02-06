@@ -10938,7 +10938,7 @@
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 0,
+      "oA" : 1,
       "oAP" : "\/common\/components\/vector-calculus\/Vector-min.js",
       "oF" : 0,
       "sC" : 3,
@@ -11879,12 +11879,23 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/common\/items\/vector-calculus\/ParametricCurveAnimation.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/vector-calculus\/ParametricCurveAnimation-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/common\/items\/vector-calculus\/ParametricCurvePlotter.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 1,
+      "oA" : 0,
       "oAP" : "\/common\/items\/vector-calculus\/ParametricCurvePlotter-min.js",
       "oF" : 0,
       "sC" : 3,
@@ -11901,12 +11912,34 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/items\/vector-calculus\/ParametricSurfaceAnimation.js" : {
+    "\/common\/items\/vector-calculus\/ParametricPlaneAnimation-min.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 0,
+      "oAP" : "\/common\/items\/vector-calculus\/ParametricPlaneAnimation-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/vector-calculus\/ParametricPlaneAnimation.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/vector-calculus\/ParametricPlaneAnimation-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/vector-calculus\/ParametricSurfaceAnimation.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
       "oAP" : "\/common\/items\/vector-calculus\/ParametricSurfaceAnimation-min.js",
       "oF" : 0,
       "sC" : 3,
