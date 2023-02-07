@@ -10845,6 +10845,17 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/common\/components\/parametric\/ParametricSurfaceCPU.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/parametric\/ParametricSurfaceCPU-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/common\/components\/parametric\/SpaceCurve.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -11303,6 +11314,17 @@
       "mi" : 1,
       "oA" : 0,
       "oAP" : "\/common\/items\/calculus\/DiskRiemannSumPlotter-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/calculus\/EulerFormulaTaylor-min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/calculus\/EulerFormulaTaylor-min-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -11961,7 +11983,7 @@
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 1,
+      "oA" : 0,
       "oAP" : "\/common\/items\/vector-calculus\/ParametricTangent-min.js",
       "oF" : 0,
       "sC" : 3,
@@ -12007,6 +12029,17 @@
       "mi" : 1,
       "oA" : 0,
       "oAP" : "\/common\/items\/vector-calculus\/ParametricSurfacePlotter-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/vector-calculus\/PartialDerivativePlotter.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/items\/vector-calculus\/PartialDerivativePlotter-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0

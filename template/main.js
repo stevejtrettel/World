@@ -1,6 +1,6 @@
 //set the stuff for this particular example!
 
-import item from "../common/items/vector-calculus/ParametricCurveTangent.js";
+import item from "../common/items/vector-calculus/PartialDerivativePlotter.js";
 let objects = {...item};
 
 

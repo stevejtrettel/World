@@ -47,7 +47,6 @@ class ParametricCurveCPU {
             let t = this.rescaleT(i/this.res);
             pts.push(this.curveFn(t,params));
         }
-        console.log(pts);
         this.curvePts = new CatmullRomCurve3(pts);
         return new TubeBufferGeometry(this.curvePts, 2.*this.res,this.radius,16,false);
     }
