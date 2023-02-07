@@ -14,6 +14,7 @@ let defaultColor = new Color().setHSL(0.2,0.5,0.5);
 class Vector{
     constructor(dir, color=defaultColor, size=1) {
 
+        this.size = size;
         this.base = new Vector3(0,0,0);
         this.dir = dir;
         this.length = this.dir.length();
@@ -26,9 +27,9 @@ class Vector{
 
         this.vec = new Group();
 
-        let sphereGeom = new SphereBufferGeometry(0.2,32,16);
-        let cylGeom = new CylinderBufferGeometry(0.1,0.1,this.length,8,1);
-        let arrowGeom = new ConeBufferGeometry(0.2,0.3,16,1);
+        let sphereGeom = new SphereBufferGeometry(0.2*this.size,32,16);
+        let cylGeom = new CylinderBufferGeometry(0.1*this.size,0.1*this.size,this.length,8,1);
+        let arrowGeom = new ConeBufferGeometry(0.2*this.size,0.3,16,1);
 
         this.sphere = new Mesh(sphereGeom,this.mat);
 
@@ -64,7 +65,7 @@ class Vector{
         this.length=this.dir.length();
 
         this.cylinder.geometry.dispose();
-        this.cylinder.geometry = new CylinderBufferGeometry(0.1,0.1,this.length);
+        this.cylinder.geometry = new CylinderBufferGeometry(0.1*this.size,0.1*this.size,this.length);
         this.cylinder.position.set(0,0,this.length/2);
 
         this.arrow.position.set(0,0,this.length);
@@ -74,6 +75,10 @@ class Vector{
 
         //now re-set the position
         this.vec.position.set(pos.x,pos.y,pos.z);
+    }
+
+    setColor(color){
+        this.mat.color = color;
     }
 
     setPos(pos){

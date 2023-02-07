@@ -134,7 +134,7 @@ class ParametricCurve {
 
     //build the frag shader from the color function color(uv, xyz);
     createFragMain(){
-        return this.colorFn +
+        return this.eqn + this.colorFn +
             `
             vec3 fragColor(){
                 return colorFn(vUv.x, vPosition);

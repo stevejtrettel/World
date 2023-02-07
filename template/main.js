@@ -1,6 +1,6 @@
 //set the stuff for this particular example!
 
-import item from "../common/items/CplxPowerSeries.js";
+import item from "../common/items/vector-calculus/ParametricCurveTangent.js";
 let objects = {...item};
 
 

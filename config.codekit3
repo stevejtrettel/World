@@ -10246,7 +10246,7 @@
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/Calculus\/Cylinder-min.js",
+      "oAP" : "\/common\/components\/calculus\/Cylinder-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -10400,7 +10400,7 @@
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/Calculus\/Washer-min.js",
+      "oAP" : "\/common\/components\/calculus\/Washer-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -10713,6 +10713,17 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/common\/components\/differential-geometry\/FrenetFrame.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/differential-geometry\/FrenetFrame-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/common\/components\/euc-geometry\/ArchimedesCylinderCurve.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -10801,6 +10812,17 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/common\/components\/parametric\/ParametricCurve.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/parametric\/ParametricCurve-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/common\/components\/parametric\/ParametricCurveCPU.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -10830,6 +10852,17 @@
       "mi" : 1,
       "oA" : 0,
       "oAP" : "\/common\/components\/parametric\/SpaceCurve-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/RodChain.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/components\/RodChain-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -10897,17 +10930,6 @@
       "oA" : 1,
       "oAP" : "\/common\/components\/vector-calculus\/IteratedIntegral-min.js",
       "oF" : 1,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/components\/vector-calculus\/ParametricCurveCPU.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 0,
-      "oAP" : "\/common\/components\/vector-calculus\/ParametricCurveCPU-min.js",
-      "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
@@ -11285,6 +11307,17 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/common\/items\/calculus\/EulerFormulaTaylor.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/calculus\/EulerFormulaTaylor-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/common\/items\/calculus\/FTCPlotter.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -11395,6 +11428,17 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/common\/items\/CplxPowerSeries.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/CplxPowerSeries-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/common\/items\/CTC.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -11424,6 +11468,17 @@
       "mi" : 1,
       "oA" : 0,
       "oAP" : "\/common\/items\/differential-geometry\/curveAndTorsion-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/differential-geometry\/FrenetFramePlotter.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/differential-geometry\/FrenetFrame-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -11901,6 +11956,17 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/common\/items\/vector-calculus\/ParametricCurveTangent.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/items\/vector-calculus\/ParametricTangent-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/common\/items\/vector-calculus\/ParametricLineAnimation.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -11908,17 +11974,6 @@
       "mi" : 1,
       "oA" : 0,
       "oAP" : "\/common\/items\/vector-calculus\/ParametricLineAnimation-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/items\/vector-calculus\/ParametricPlaneAnimation-min.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 0,
-      "oAP" : "\/common\/items\/vector-calculus\/ParametricPlaneAnimation-min-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
