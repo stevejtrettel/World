@@ -1,6 +1,7 @@
 
-import GradientField2D from "../../components/VectorCalculus/GradientField2D.js";
-import ContourPlot2D from "../../components/VectorCalculus/ContourPlotOld.js";
+import GradientField2D from "../../components/vector-calculus/GradientField2D.js";
+import ContourPlot2D from "../../components/vector-calculus/ContourPlotOld.js";
+import Graph3D from "../../components/vector-calculus/Graph3D.js";
 
 //using GLOBAL object math.parser: this is from the 3rd party math file loaded in the html
 const parser = math.parser();
@@ -37,7 +38,7 @@ class GradientPlotter2D {
         uniform float c;
         `;
 
-        let fn = parser.evaluate('fn(x,y,t,a,b,c)='.concat(this.params.fnText));
+        let fn = parser.evaluate('fn(u,v,t,a,b,c)='.concat(this.params.fnText));
         this.scalarFn = function(pos, params){
             return fn(pos.x,pos.y,params.t,params.a,params.b,params.c);
         }
@@ -48,11 +49,16 @@ class GradientPlotter2D {
         //make the contour plot
         this.contourPlot = new ContourPlot2D(this.params.fnText,this.uniforms,this.uniformsString,this.range);
         this.contourPlot.setPosition(0,-0.1,0);
+
+
+        //make the parametric surface:
+       // this.surface = new Graph3D(this.fnText,this.range);
     }
 
     addToScene(scene){
         this.gradientField.addToScene(scene);
         this.contourPlot.addToScene(scene);
+       // this.surface.addToScene(scene);
     }
 
     addToUI(ui){
@@ -66,7 +72,7 @@ class GradientPlotter2D {
                 thisObj.params.fnText = value;
                 thisObj.params.t=0.;
 
-                let fn = parser.evaluate('fn(x,y,t,a,b,c)='.concat(value));
+                let fn = parser.evaluate('fn(u,v,t,a,b,c)='.concat(value));
 
                 let eqn = function(pos,params){
                     return fn(pos.x,pos.y,params.t,params.a,params.b,params.c);
@@ -109,7 +115,7 @@ class GradientPlotter2D {
 
 
 
-let fn = 'x*y-sin(x-t)*y';
+let fn = 'u*v-sin(u-t)*v';
 
 let range = {
     x:{ min:-10,max:10},

@@ -10801,13 +10801,13 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/parametric\/ParametricCurve.js" : {
+    "\/common\/components\/parametric\/ParametricCurveCPU.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/parametric\/ParametricCurve-min.js",
+      "oAP" : "\/common\/components\/parametric\/ParametricCurveCPU-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -10900,13 +10900,13 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/vector-calculus\/ParametricCurve.js" : {
+    "\/common\/components\/vector-calculus\/ParametricCurveCPU.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 0,
-      "oAP" : "\/common\/components\/vector-calculus\/ParametricCurve-min.js",
+      "oAP" : "\/common\/components\/vector-calculus\/ParametricCurveCPU-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0

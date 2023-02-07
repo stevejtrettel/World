@@ -1,6 +1,6 @@
 import {Vector3} from "../../../3party/three/build/three.module.js";
 
-import ParametricCurve from "../../components/VectorCalculus/ParametricCurve.js";
+import ParametricCurve from "../../components/VectorCalculus/ParametricCurveCPU.js";
 import {BlackBoard} from "../../components/Calculus/Blackboard.js";
 import {GlassPanel} from "../../components/Calculus/GlassPanel.js";
 

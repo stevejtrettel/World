@@ -10,7 +10,7 @@ import {
     TubeBufferGeometry,
 } from "../../../3party/three/build/three.module.js";
 
-class ParametricCurve{
+class ParametricCurveCPU {
     constructor(curve, domain, options={}) {
 
         this.curveFn = curve;
@@ -98,4 +98,4 @@ class ParametricCurve{
 
 
 
-export default ParametricCurve;
+export default ParametricCurveCPU;

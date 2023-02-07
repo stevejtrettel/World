@@ -13,7 +13,7 @@ import {
 
 
 
-import ParametricCurve from "../VectorCalculus/ParametricCurve.js";
+import ParametricCurve from "../VectorCalculus/ParametricCurveCPU.js";
 import {Rod} from "./Rod.js";
 
 class Cylinder {
