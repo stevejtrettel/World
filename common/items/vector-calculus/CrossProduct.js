@@ -1,5 +1,5 @@
 import {Color, MeshPhysicalMaterial, Vector3, Mesh, DoubleSide} from "../../../3party/three/build/three.module.js";
-import {Rod} from "../../components/Calculus/Rod.js";
+import {Rod} from "../../components/basic-shapes/Rod.js";
 
 import Vector from "../../components/VectorCalculus/Vector.js";
 import {ParametricGeometry} from "../../../3party/three/examples/jsm/geometries/ParametricGeometry.js";

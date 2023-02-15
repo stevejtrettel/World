@@ -7,7 +7,7 @@ import {
     Group,
 } from "../../../3party/three/build/three.module.js";
 
-import{ Rod } from "../Calculus/Rod.js";
+import{ Rod } from "../basic-shapes/Rod.js";
 
 //the geometry for a quadrilateral given its vertices
 class RiemannRectangle {

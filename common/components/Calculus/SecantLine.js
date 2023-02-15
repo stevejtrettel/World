@@ -7,7 +7,7 @@ import {
     Mesh,
 } from "../../../3party/three/build/three.module.js";
 
-import { Rod } from "./Rod.js";
+import { Rod } from "../basic-shapes/Rod.js";
 
 
 function secantSlope(f, x, deltaX){

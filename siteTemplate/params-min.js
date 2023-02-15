@@ -1,0 +1,1 @@
+let globalParams={name:"ParametricCurveAnimation",bkgColor:16777215,bkgCube:!0},params={globalParams:globalParams,sMin:-3.14,sMax:3.14,animate:!0,xEqn:"cos(s)",yEqn:"s",zEqn:"sin(s)",a:0,b:0,c:0,homotopy:1,time:0};export default params;

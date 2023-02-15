@@ -5,7 +5,7 @@ import {
     Mesh, Vector3, DoubleSide,
 } from "../../../3party/three/build/three.module.js";
 
-import {Rod} from "../../components/Calculus/Rod.js";
+import {Rod} from "../../components/basic-shapes/Rod.js";
 import Graph3D from "../../components/vector-calculus/Graph3D.js";
 import ContourPlotOld from "../../components/vector-calculus/ContourPlotOld.js";
 import ContourPlot2D from "../../components/vector-calculus/ContourPlot2D.js";

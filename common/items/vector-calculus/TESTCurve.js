@@ -7,7 +7,6 @@ import {
 
 import ParametricCurve from "../../components/parametric/ParametricCurve.js";
 import Vector from "../../components/basic-shapes/Vector.js";
-import {Rod} from "../../components/basic-shapes/Rod.js";
 
 
 let surfaceOptions = {
@@ -15,26 +14,29 @@ let surfaceOptions = {
     roughness:0.4,
 }
 
+let defaultParams = {
+    sMin:-3.14,
+    sMax:3.14,
+    animate:true,
+    xEqn: "(2.+cos(4.*s))*sin(s)",
+    yEqn: "sin(4.*s)",
+    zEqn: "(2.+cos(4.*s))*cos(s)",
+    a:0,
+    b:0,
+    c:0,
+    homotopy: 1,
+    time:0,
+};
+
 
 //using GLOBAL object math.parser: this is from the 3rd party math file loaded in the html
 const parser = math.parser();
 
 
-class ParametricCurveTangent {
-    constructor() {
+class ParametricCurveAnimation {
+    constructor(params=defaultParams) {
 
-        this.params = {
-            sMin:-3.14,
-            sMax:3.14,
-            tangent:1,
-            xEqn: "(2.+cos(4.*s))*sin(s)",
-            yEqn: "sin(4.*s)",
-            zEqn: "(2.+cos(4.*s))*cos(s)",
-            a:0,
-            b:0,
-            c:0,
-            time:0,
-        }
+        this.params = params;
 
         this.periodic=true;
 
@@ -75,16 +77,7 @@ class ParametricCurveTangent {
 
         this.curve = new ParametricCurve(this.buildGLSLEquation(),this.range,this.uniforms,this.curveColor,surfaceOptions);
 
-        let pos = this.eqn(0,);
-        let vel = this.derivative(0);
-        let dir = vel.clone().normalize();
-        let end1 = pos.clone().add(dir.clone().multiplyScalar(-3));
-        let end2 = pos.clone().add(dir.clone().multiplyScalar(3));
-
-        this.positionVector = new Vector(pos,0xffffff,0.5);
-        this.velocityVector = new Vector(vel,0x33B85A,0.85);
-        this.tangentLine = new Rod({end1:end1, end2:end2, radius:0.1});
-        this.tangentLine.setVisibility(false);
+        this.vector = new Vector(this.eqn(0));
 
     }
 
@@ -133,25 +126,15 @@ class ParametricCurveTangent {
             return new Vector3(x,y,z);
         }
 
-        this.checkPeriodic();
 
-        let thisObj=this;
-        this.derivative = function(s,params={time:0,a:0,b:0,c:0}){
-            let epsilon = 0.001;
-            let v0=thisObj.eqn(s-epsilon);
-            let v1=thisObj.eqn(s+epsilon);
-            let diff = new Vector3().subVectors(v1,v0).divideScalar(2.*epsilon);
-            return diff;
-        }
+        this.checkPeriodic();
 
     }
 
 
     addToScene(scene){
         this.curve.addToScene(scene);
-        this.positionVector.addToScene(scene);
-        this.velocityVector.addToScene(scene);
-        this.tangentLine.addToScene(scene);
+        this.vector.addToScene(scene);
         scene.add(this.start);
         scene.add(this.end);
     }
@@ -213,53 +196,38 @@ class ParametricCurveTangent {
             thisObj.checkPeriodic();
         });
 
-        ui.add(thisObj.params,'tangent',{'vector':1,'line':2}).onChange(function(val){
-            if(val==1){
-                thisObj.velocityVector.setVisibility(true);
-                thisObj.tangentLine.setVisibility(false);
-            }
-            else{
-                thisObj.velocityVector.setVisibility(false);
-                thisObj.tangentLine.setVisibility(true);
-            }
-        })
+        ui.add(thisObj.params, 'animate').name('Animate');
+
     }
 
     tick(time,dTime){
 
         this.params.time=time;
         this.curve.update({time:time});
-        let s;
-        if(this.periodic){
-            s=time/2.;
+
+        if(this.params.animate ){
+            this.vector.setVisibility(true);
+            let s;
+            if(this.periodic){
+                s=time/2.;
+            }
+            else{
+                s = (1.-Math.cos(time/3.))/2;
+                s= this.params.sMin+(this.params.sMax-this.params.sMin)*s;
+            }
+
+            let dir = this.eqn(s,this.params);
+            this.vector.setDir(dir);
         }
         else{
-            s = (1.-Math.cos(time/3.))/2;
-            s= this.params.sMin+(this.params.sMax-this.params.sMin)*s;
+            this.vector.setVisibility(false);
         }
-
-
-            let pos = this.eqn(s,this.params);
-            let vel = this.derivative(s,this.params).multiplyScalar(0.5);
-            let dir = vel.clone().normalize();
-            let end1 = pos.clone().add(dir.clone().multiplyScalar(-5));
-            let end2 = pos.clone().add(dir.clone().multiplyScalar(5));
-
-
-            this.positionVector.setDir(pos);
-
-            this.velocityVector.setDir(vel);
-            this.velocityVector.setPos(pos);
-
-            this.tangentLine.resize(end1,end2);
-
-
     }
 }
 
 
 
+export default ParametricCurveAnimation;
 
-
-let ex = new ParametricCurveTangent();
-export default {ex};
+// let ex = new ParametricCurveAnimation();
+// export default {ex};

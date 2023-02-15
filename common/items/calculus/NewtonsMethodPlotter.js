@@ -1,6 +1,6 @@
 import  Graph2D  from '../../components/calculus/Graph2D.js';
 import NewtonsMethod from "../../components/calculus/NewtonsMethod.js";
-import {BlackBoard} from "../../components/calculus/Blackboard.js";
+import {BlackBoard} from "../../components/basic-shapes/Blackboard.js";
 
 
 let parser = math.parser();

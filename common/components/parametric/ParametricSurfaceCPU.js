@@ -15,7 +15,7 @@ let defaultOptions = {
 class ParametricSurfaceCPU{
     constructor(eqn, domain, options ){
 
-        this.res ={u:100,v:100};
+        this.res ={u:options.uRes||100,v:options.vRes||100};
 
         this.params = {};
 
@@ -68,6 +68,10 @@ class ParametricSurfaceCPU{
     update(params){
         this.surf.geometry.dispose();
         this.surf.geometry = this.createGeom(params);
+    }
+
+    setVisibility(value){
+        this.surf.visible=value;
     }
 
 }

@@ -1,8 +1,8 @@
 import {Vector3} from "../../../3party/three/build/three.module.js";
 
 import ParametricCurve from "../../components/VectorCalculus/ParametricCurveCPU.js";
-import {BlackBoard} from "../../components/Calculus/Blackboard.js";
-import {GlassPanel} from "../../components/Calculus/GlassPanel.js";
+import {BlackBoard} from "../../components/basic-shapes/Blackboard.js";
+import {GlassPanel} from "../../components/basic-shapes/GlassPanel.js";
 
 class WaveString{
     constructor() {

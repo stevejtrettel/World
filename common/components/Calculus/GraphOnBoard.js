@@ -1,6 +1,6 @@
 import {getRange} from "../../math/functions_singleVar.js";
 import Graph2D from "./Graph2D.js";
-import {BlackBoard} from "./Blackboard.js";
+import {BlackBoard} from "../basic-shapes/Blackboard.js";
 
 //class to draw a graph on a board, and automatically deal with resizing the range/domain etc
 //required options: f, domain

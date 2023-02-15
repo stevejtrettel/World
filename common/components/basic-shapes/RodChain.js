@@ -1,4 +1,4 @@
-import {Rod} from "./Calculus/Rod.js";
+import {Rod} from "./Rod.js";
 
 
 class RodChain{

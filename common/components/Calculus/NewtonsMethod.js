@@ -1,5 +1,5 @@
 import{ Vector3, Color } from "../../../3party/three/build/three.module.js";
-import { Rod } from "./Rod.js";
+import { Rod } from "../basic-shapes/Rod.js";
 
 //f is a function that takes in x; and parameters
 //x0 is a point:

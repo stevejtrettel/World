@@ -8,7 +8,7 @@ import {
 
 import {Geometry,Face3} from "../../../3party/three/examples/jsm/deprecated/Geometry.js";
 
-import {Rod} from "../../components/calculus/Rod.js";
+import {Rod} from "../../components/basic-shapes/Rod.js";
 
 
 class Pythagorean3d{

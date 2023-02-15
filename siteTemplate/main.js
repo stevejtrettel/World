@@ -1,15 +1,10 @@
 //set the stuff for this particular example!
-
-import item from "../common/items/vector-calculus/PartialDerivativePlotter.js";
-let objects = {...item};
+import Item from "../common/items/vector-calculus/TESTCurve.js";
 
 
 let options = {
-    color: 0x343757,
-    // 0x2f508a,
-    //0x303030,
+    color: 0xffffff,
 }
-
 
 //import everything except the objects of the scene
 //this uses all the default settings defined in the "template" folder
@@ -20,8 +15,7 @@ import { createEnvironment } from "./src/environment.js";
 import { lights } from "./src/lights.js";
 import { post } from "./src/post.js"
 
-
-function main( objects, options ) {
+function main(params) {
 
     // Get a reference to the container element, set options
     const container = document.getElementById('World');
@@ -41,8 +35,12 @@ function main( objects, options ) {
     const environment = createEnvironment(bkgColor);
     world.setEnvironment( environment ) ;
 
+
+    //BUILD THE OBJECT THAT GOES IN THIS WORLD:
+    let object = new Item(params);
+
     //4. Fill this world with objects
-    world.addObjects( objects );
+    world.addObjects( {object:object} );
     world.addObjects( lights );
 
     //5. Set up Post-Processing effects
@@ -53,5 +51,6 @@ function main( objects, options ) {
 
 }
 
-//call the function to run the app
-main(objects, options);
+
+
+export default main;

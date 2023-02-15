@@ -4,7 +4,7 @@ import {
 
 import {SlopeFieldIntegralCurve } from "./SlopeFieldPlotter.js";
 import VectorField2D from "../../components/VectorCalculus/VectorField2D.js";
-import { GlassPanel } from "../../components/Calculus/GlassPanel.js";
+import { GlassPanel } from "../../components/basic-shapes/GlassPanel.js";
 
 //using GLOBAL object math.parser: this is from the 3rd party math file loaded in the html
 const parser = math.parser();

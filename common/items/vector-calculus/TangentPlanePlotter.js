@@ -25,12 +25,15 @@ let surfaceOptions = {
 }
 
 let glassOptions = {
-    clearcoat:1,
+    clearcoat:2,
     transparent:true,
-    transmission:0.95,
-    ior:1.2,
+    transmission:0.9,
+    ior:1.5,
+    color:0xffffff,
     roughness:0,
-    side:DoubleSide
+    side:DoubleSide,
+    uRes:3,
+    vRes:3,
 }
 
 
@@ -43,7 +46,7 @@ class PartialDerivativePlotter {
     constructor() {
 
         this.params = {
-            uMin:-3.14,
+            uMin:0,
             uMax:3.14,
             vMin:-3.14,
             vMax:3.14,
@@ -51,9 +54,9 @@ class PartialDerivativePlotter {
             uPos:0.5,
             vPos:0.5,
             animate:true,
-            xEqn: "u",
-            yEqn: "sin(2.*u)*sin(2.*v)",
-            zEqn: "v",
+            xEqn: "2.*sin(u)*cos(v)",
+            yEqn: "2.*cos(u)",
+            zEqn: "2.*sin(u)*sin(v)",
             a:0,
             b:0,
             c:0,
@@ -66,6 +69,11 @@ class PartialDerivativePlotter {
         this.range = {
             u:{min:this.params.uMin, max:this.params.uMax},
             v:{min:this.params.vMin, max:this.params.vMax}
+        };
+
+        this.tangentRange = {
+            u:{min:-2,max:2},
+            v:{min:-2,max:2}
         };
 
         this.rescaleU=function(u){
@@ -87,35 +95,9 @@ class PartialDerivativePlotter {
         };
 
 
-
-        let colorFnText = `
-        
-         float grid1 = (1.-pow(abs(sin(10.*3.14*uv.x)*sin(10.*3.14*uv.y)),0.1))/10.;
-             float grid2 = (1.-pow(abs(sin(50.*3.14*uv.x)*sin(50.*3.14*uv.y)),0.1))/25.;
-             float grid3 = (1.-pow(abs(sin(100.*3.14*uv.x)*sin(100.*3.14*uv.y)),0.1))/50.;
-             float grid = grid1+grid2+grid3;
-             
-             vec3 base =  0.6 + 0.4*cos(2.*3.14*uv.xyx+vec3(0,2,4));
-             vec3 final = base + 2.*vec3(grid);
-             
-             
-             if(showPos){
-         
-                if(abs(uv.y-vPos)<0.01){
-                    final=vec3(0.1,0.05,0.7);
-                }
-                if(length(uv-vec2(uPos,vPos))<0.02){
-                    final=vec3(0);
-                }
-             }
-             
-             return final;
-        
-        `;
-
         this.domainColor = `
            vec3 colorFn(vec2 uv){
-                     float grid1 = (1.-pow(abs(sin(10.*3.14*uv.x)*sin(10.*3.14*uv.y)),0.1))/10.;
+                      float grid1 = (1.-pow(abs(sin(10.*3.14*uv.x)*sin(10.*3.14*uv.y)),0.1))/10.;
              float grid2 = (1.-pow(abs(sin(50.*3.14*uv.x)*sin(50.*3.14*uv.y)),0.1))/25.;
              float grid3 = (1.-pow(abs(sin(100.*3.14*uv.x)*sin(100.*3.14*uv.y)),0.1))/50.;
              float grid = grid1+grid2+grid3;
@@ -123,16 +105,22 @@ class PartialDerivativePlotter {
              vec3 base =  0.6 + 0.4*cos(2.*3.14*uv.xyx+vec3(0,2,4));
              vec3 final = base + 2.*vec3(grid);
              
-             
-             if(showPos){
-         
-                if(abs(uv.y-vPos)<0.01){
+   
+              //have to flip vPos around
+              //because we have switched y and z for vector calc students:
+              float newV = 1.-vPos;
+              
+              
+                if(abs(uv.x-uPos)<0.01){
+                    final=vec3(0.7,0.05,0.1);
+                }
+                if(abs(uv.y-newV)<0.01){
                     final=vec3(0.1,0.05,0.7);
                 }
-                if(length(uv-vec2(uPos,vPos))<0.02){
+                if(length(uv-vec2(uPos,newV))<0.02){
                     final=vec3(0);
                 }
-             }
+             
              
              return final;
            }
@@ -140,7 +128,8 @@ class PartialDerivativePlotter {
 
         this.surfaceColor= `
            vec3 colorFn(vec2 uv, vec3 xyz){
-                     float grid1 = (1.-pow(abs(sin(10.*3.14*uv.x)*sin(10.*3.14*uv.y)),0.1))/10.;
+
+                      float grid1 = (1.-pow(abs(sin(10.*3.14*uv.x)*sin(10.*3.14*uv.y)),0.1))/10.;
              float grid2 = (1.-pow(abs(sin(50.*3.14*uv.x)*sin(50.*3.14*uv.y)),0.1))/25.;
              float grid3 = (1.-pow(abs(sin(100.*3.14*uv.x)*sin(100.*3.14*uv.y)),0.1))/50.;
              float grid = grid1+grid2+grid3;
@@ -148,7 +137,16 @@ class PartialDerivativePlotter {
              vec3 base =  0.6 + 0.4*cos(2.*3.14*uv.xyx+vec3(0,2,4));
              vec3 final = base + 2.*vec3(grid);
              
-             return final;
+
+                if(abs(uv.x-uPos)<0.005){
+                    final=vec3(0.7,0.05,0.1);
+                }
+                if(abs(uv.y-vPos)<0.005){
+                    final=vec3(0.1,0.05,0.7);
+                }
+   
+            return final;
+             
            }
         `;
 
@@ -158,14 +156,19 @@ class PartialDerivativePlotter {
 
         this.buildJSEquation();
 
-        this.glassSurface = new ParametricSurfaceCPU(this.eqn,this.range,glassOptions);
-        this.uCurve=new ParametricCurveCPU(this.uEqn,this.range.u,{color:0x030175});
+        this.tangentPlane = new ParametricSurfaceCPU(this.tangentEqn,this.tangentRange,glassOptions);
 
         let pos = this.uEqn(this.params.uPos, this.params);
         let deriv = this.uDerivative(this.params.uPos,this.params)
-        let end1 = new Vector3().addVectors(pos,deriv.clone().multiplyScalar(-3));
-        let end2 = new Vector3().addVectors(pos,deriv.clone().multiplyScalar(3));
-        this.uTangent = new Rod({end1:end1,end2:end2,radius:0.05});
+        let end1 = new Vector3().addVectors(pos,deriv.clone().multiplyScalar(this.tangentRange.u.min));
+        let end2 = new Vector3().addVectors(pos,deriv.clone().multiplyScalar(this.tangentRange.u.max));
+        this.uTangent = new Rod({end1:end1,end2:end2,radius:0.05,color:0x41e46d6});
+
+        pos = this.uEqn(this.params.vPos, this.params);
+        deriv = this.uDerivative(this.params.vPos,this.params)
+        end1 = new Vector3().addVectors(pos,deriv.clone().multiplyScalar(this.tangentRange.v.min));
+        end2 = new Vector3().addVectors(pos,deriv.clone().multiplyScalar(this.tangentRange.v.max));
+        this.vTangent = new Rod({end1:end1,end2:end2,radius:0.05,color:0xd61e1e});
 
         let ptMat = new MeshPhysicalMaterial({
             clearcoat:1,
@@ -212,10 +215,10 @@ class PartialDerivativePlotter {
         }
 
         this.uEqn=function(s,params={time:0,a:0,b:0,c:0,uPos:0,vPos:0}){
-            return thisObj.eqn(s,-thisObj.rescaleV(params.vPos),params);
+            return thisObj.eqn(s,thisObj.rescaleV(params.vPos),params);
         }
 
-        this.uDerivative = function(s,params={time:0,a:0,b:0,c:0}){
+        this.uDerivative = function(s,params={time:0,a:0,b:0,c:0,uPos:0,vPos:0}){
             let epsilon = 0.001;
             let v0=thisObj.uEqn(s-epsilon,params);
             let v1=thisObj.uEqn(s+epsilon,params);
@@ -223,6 +226,47 @@ class PartialDerivativePlotter {
             return diff;
         }
 
+        this.vEqn=function(s,params={time:0,a:0,b:0,c:0,uPos:0,vPos:0}){
+            return thisObj.eqn(thisObj.rescaleU(params.uPos),s,params);
+        }
+
+        this.vDerivative = function(s,params={time:0,a:0,b:0,c:0,uPos:0,vPos:0}){
+            let epsilon = 0.001;
+            let v0=thisObj.vEqn(s-epsilon,params);
+            let v1=thisObj.vEqn(s+epsilon,params);
+            let diff = new Vector3().subVectors(v1,v0).divideScalar(2.*epsilon);
+            return diff;
+        }
+
+        this.tangentEqn = function(u,v, params={time:0,a:0,b:0,c:0,uPos:0,vPos:0}){
+            let pos = thisObj.eqn(thisObj.rescaleU(params.uPos),thisObj.rescaleV(params.vPos),params);
+             let du = thisObj.uDerivative(thisObj.rescaleU(params.uPos),params).normalize();
+             let dv = thisObj.vDerivative(thisObj.rescaleV(params.vPos),params).normalize();
+             return pos.addScaledVector(du,u).addScaledVector(dv,v);
+        }
+
+    }
+
+
+    updateTangents(){
+        let trueU = this.rescaleU(this.params.uPos);
+        let pos = this.uEqn(trueU, this.params);
+        let deriv = this.uDerivative(trueU,this.params).normalize();
+        let end1 = new Vector3().addVectors(pos,deriv.clone().multiplyScalar(this.tangentRange.u.min));
+        let end2 = new Vector3().addVectors(pos,deriv.clone().multiplyScalar(this.tangentRange.u.max));
+        this.uTangent.resize(end1,end2);
+
+        let trueV= this.rescaleV(this.params.vPos);
+        pos = this.vEqn(trueV, this.params);
+        deriv = this.vDerivative(trueV,this.params).normalize();
+        end1 = new Vector3().addVectors(pos,deriv.clone().multiplyScalar(this.tangentRange.v.min));
+        end2 = new Vector3().addVectors(pos,deriv.clone().multiplyScalar(this.tangentRange.v.max));
+        this.vTangent.resize(end1,end2);
+
+        this.point.position.set(pos.x,pos.y,pos.z);
+
+        this.tangentPlane.setEqn(this.tangentEqn);
+        this.tangentPlane.update(this.params);
     }
 
 
@@ -231,9 +275,9 @@ class PartialDerivativePlotter {
 
         this.surface.addToScene(scene);
         this.domainPlot.addToScene(scene);
-        this.uCurve.addToScene(scene);
         this.uTangent.addToScene(scene);
-        this.glassSurface.addToScene(scene);
+        this.vTangent.addToScene(scene);
+        this.tangentPlane.addToScene(scene);
         scene.add(this.point);
     }
 
@@ -247,9 +291,7 @@ class PartialDerivativePlotter {
             let newEqn = thisObj.buildGLSLEquation();
             thisObj.surface.setFunction(newEqn);
             thisObj.buildJSEquation();
-            thisObj.glassSurface.setEqn(thisObj.eqn);
-            thisObj.glassSurface.update(thisObj.params);
-            thisObj.uCurve.setCurve(thisObj.uEqn);
+            thisObj.updateTangents();
         });
 
 
@@ -261,9 +303,7 @@ class PartialDerivativePlotter {
             let newEqn = thisObj.buildGLSLEquation();
             thisObj.surface.setFunction(newEqn);
             thisObj.buildJSEquation();
-            thisObj.glassSurface.setEqn(thisObj.eqn);
-            thisObj.glassSurface.update(thisObj.params);
-            thisObj.uCurve.setCurve(thisObj.uEqn);
+            thisObj.updateTangents();
         });
 
         ui.add(thisObj.params,'yEqn').name('z(u,v)=').onFinishChange(function(val){
@@ -272,10 +312,7 @@ class PartialDerivativePlotter {
             let newEqn = thisObj.buildGLSLEquation();
             thisObj.surface.setFunction(newEqn);
             thisObj.buildJSEquation();
-            thisObj.glassSurface.setEqn(thisObj.eqn);
-            thisObj.glassSurface.update(thisObj.params);
-            thisObj.uCurve.setCurve(thisObj.uEqn);s
-
+            thisObj.updateTangents();
         });
 
 
@@ -322,15 +359,7 @@ class PartialDerivativePlotter {
             thisObj.domainPlot.update({uPos:val});
 
             thisObj.buildJSEquation();
-
-            let trueU = thisObj.rescaleU(thisObj.params.uPos);
-            let pos = thisObj.uEqn(trueU, thisObj.params);
-            let deriv = thisObj.uDerivative(trueU,thisObj.params).normalize();
-            let end1 = new Vector3().addVectors(pos,deriv.clone().multiplyScalar(-3));
-            let end2 = new Vector3().addVectors(pos,deriv.clone().multiplyScalar(3));
-            thisObj.uTangent.resize(end1,end2);
-            thisObj.point.position.set(pos.x,pos.y,pos.z);
-
+            thisObj.updateTangents();
         });
 
 
@@ -340,20 +369,9 @@ class PartialDerivativePlotter {
             thisObj.surface.update({vPos:val});
             thisObj.domainPlot.update({vPos:val});
 
-            let newRange = {u:thisObj.range.u,v:{min:thisObj.range.v.min, max:-thisObj.rescaleV(thisObj.params.vPos)}};
-            thisObj.surface.setDomain(newRange);
-
             thisObj.buildJSEquation();
-            thisObj.uCurve.setCurve(thisObj.uEqn);
-            thisObj.uCurve.update(thisObj.params);
+            thisObj.updateTangents();
 
-            let trueU = thisObj.rescaleU(thisObj.params.uPos);
-            let pos = thisObj.uEqn(trueU, thisObj.params);
-            let deriv = thisObj.uDerivative(trueU,thisObj.params).normalize();
-            let end1 = new Vector3().addVectors(pos,deriv.clone().multiplyScalar(-3));
-            let end2 = new Vector3().addVectors(pos,deriv.clone().multiplyScalar(3));
-            thisObj.uTangent.resize(end1,end2);
-            thisObj.point.position.set(pos.x,pos.y,pos.z);
         });
 
         ui.add(thisObj.params, 'animate');
@@ -365,26 +383,15 @@ class PartialDerivativePlotter {
 
             this.buildJSEquation();
 
+
             this.params.uPos = 0.25*Math.sin(time)+0.5;
             this.params.vPos = 0.25*Math.sin(time/3)+0.5;
 
             this.surface.update({uPos:this.params.uPos, vPos:this.params.vPos});
-            let newRange = {u:this.range.u,v:{min:this.range.v.min, max:-this.rescaleV(this.params.vPos)}};
-            this.surface.setDomain(newRange);
-
             this.domainPlot.update({uPos:this.params.uPos, vPos:this.params.vPos});
 
-            this.uCurve.setCurve(this.uEqn);
-            this.uCurve.update(this.params);
+            this.updateTangents();
 
-            let trueU = this.rescaleU(this.params.uPos);
-            let pos = this.uEqn(trueU, this.params);
-            let deriv = this.uDerivative(trueU,this.params).normalize();
-            let end1 = new Vector3().addVectors(pos,deriv.clone().multiplyScalar(-3));
-            let end2 = new Vector3().addVectors(pos,deriv.clone().multiplyScalar(3));
-            this.uTangent.resize(end1,end2);
-
-            this.point.position.set(pos.x,pos.y,pos.z);
         }
     }
 }

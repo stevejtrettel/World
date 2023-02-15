@@ -1,6 +1,6 @@
 import {Vector3} from "../../../3party/three/build/three.module.js";
 
-import Vector from "../vector-calculus/Vector.js";
+import Vector from "../basic-shapes/Vector.js";
 
 
 

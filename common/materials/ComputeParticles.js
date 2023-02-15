@@ -93,10 +93,12 @@ class ComputeParticles {
 
     addToUI( ui ) {
         //make a folder for this compute system:
-        let Folder = ui.addFolder(this.name);
-        for( let variable of Object.keys(this.paramProperties)){
-            //add uniform to folder. update the uniforms on change
-            Folder.add(this.parameters, variable, ...this.paramProperties[variable].range).onChange(val => this.uniforms[variable].value = val);
+        if(Object.keys(this.paramProperties).length != 0) {
+            let Folder = ui.addFolder(this.name);
+            for (let variable of Object.keys(this.paramProperties)) {
+                //add uniform to folder. update the uniforms on change
+                Folder.add(this.parameters, variable, ...this.paramProperties[variable].range).onChange(val => this.uniforms[variable].value = val);
+            }
         }
     }
 

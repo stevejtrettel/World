@@ -1,7 +1,7 @@
 
 import {Vector3,Color} from "../../../3party/three/build/three.module.js";
 
-import Vector from "../../components/vector-calculus/Vector.js";
+import Vector from "../../components/basic-shapes/Vector.js";
 import ParametricSurface from "../../components/parametric/ParametricSurface.js";
 import DomainPlot from "../../components/vector-calculus/DomainPlot.js";
 

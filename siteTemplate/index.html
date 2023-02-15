@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>ThreeJS World</title>
+
+    <!--  CSS -->
+    <link rel="stylesheet" type="text/css" href="../css/main.css" media="screen" />
+
+    <!--  Mathjax-->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script> window.MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+    };
+        </script>
+
+<body>
+
+
+
+<!--Our World Scene goes Here!-->
+<div id="World">
+</div>
+
+<div id="info" >
+
+    <h2>Pre-Title:</h2>
+    <h1>Title of the Program</h1>
+    <p id="moreDetails"><b style = 'font-size:28px'>+</b></p>
+
+    <!--  <i class='fas fa-chevron-down' style='font-size:18px'></i>-->
+    <div id="details" class="hidden">
+        <p>Information about the program.</p>
+    </div>
+
+
+<!--    <div id="statsToggle"><p><b>+</b></p></div>-->
+<!--    <div id="statsFolder"></div>-->
+
+
+
+</div>
+
+
+
+<p id="signature"><a href="http://www.stevejtrettel.site" > stevejtrettel</a> </p>
+
+<!-- Math Parser Engine -->
+<script src="../3party/math.js"></script>
+<!--Perlin Noise Generator-->
+<!--<script src="../3party/perlin .js"></script>-->
+
+<!-- Make the More Details Box Expandable-->
+<script src = "../css/moreDetails.js"></script>
+
+<!-- Our Javscript Program -->
+
+<script  type="module">
+    import params from "./params.js";
+    import main from "./main.js";
+    main(params);
+</script>
+
+<!--<script src="./main.js" type="module"></script>-->
+
+
+
+
+</body>
+</html>

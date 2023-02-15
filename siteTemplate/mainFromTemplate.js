@@ -1,15 +1,3 @@
-//set the stuff for this particular example!
-
-import item from "../common/items/vector-calculus/PartialDerivativePlotter.js";
-let objects = {...item};
-
-
-let options = {
-    color: 0x343757,
-    // 0x2f508a,
-    //0x303030,
-}
-
 
 //import everything except the objects of the scene
 //this uses all the default settings defined in the "template" folder
@@ -21,10 +9,10 @@ import { lights } from "./src/lights.js";
 import { post } from "./src/post.js"
 
 
-function main( objects, options ) {
+function mainFromTemplate( objects, options ) {
 
     // Get a reference to the container element, set options
-    const container = document.getElementById('World');
+    const container = document.querySelector('#World');
 
     // 1. Create an instance of the World class
     const world = new World( container, globals.renderer, options );
@@ -41,17 +29,18 @@ function main( objects, options ) {
     const environment = createEnvironment(bkgColor);
     world.setEnvironment( environment ) ;
 
+
     //4. Fill this world with objects
     world.addObjects( objects );
     world.addObjects( lights );
 
     //5. Set up Post-Processing effects
-    //world.addPostprocessor( post );
+   //world.addPostprocessor( post );
 
     // 6. Start the Animation Loop
     world.start();
 
 }
 
-//call the function to run the app
-main(objects, options);
+
+export { mainFromTemplate };

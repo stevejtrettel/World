@@ -10,7 +10,7 @@ import {
 
 import RungeKuttaParams from "../../cpu/RungeKuttaParams.js";
 import SlopeField from "../../components/Calculus/SlopeField.js";
-import { GlassPanel } from "../../components/Calculus/GlassPanel.js";
+import { GlassPanel } from "../../components/basic-shapes/GlassPanel.js";
 import {colorConversion} from "../../shaders/colors/colorConversion.js";
 import {ParametricTube} from "../../materials/ParametricTube.js";
 

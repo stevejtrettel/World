@@ -1,4 +1,4 @@
-import {BlackBoard} from "../../components/Calculus/Blackboard.js";
+import {BlackBoard} from "../../components/basic-shapes/Blackboard.js";
 
 import{ getRange, differentiate } from "../../math/functions_singleVar.js";
 import {Graph2D} from "../../components/Calculus/Graph2D.js";

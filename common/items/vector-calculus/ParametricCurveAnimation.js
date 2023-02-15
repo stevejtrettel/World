@@ -6,7 +6,7 @@ import {
 } from "../../../3party/three/build/three.module.js";
 
 import ParametricCurve from "../../components/parametric/ParametricCurve.js";
-import Vector from "../../components/vector-calculus/Vector.js";
+import Vector from "../../components/basic-shapes/Vector.js";
 
 
 let surfaceOptions = {
@@ -64,7 +64,7 @@ class ParametricCurveAnimation {
              float grid3 = (1.-pow(abs(sin(100.*3.14*s)),0.1))/50.;
              float grid = grid1+grid2+grid3;
              
-             vec3 base =  0.6 + 0.4*cos(2.*3.14*vec3(s,1.-s,s)+vec3(0,2,4));
+             vec3 base =  0.6 + 0.5*cos(2.*3.14*vec3(s,1.-s,s)+vec3(0,2,4));
              
              return base + 2.*vec3(grid);
             }

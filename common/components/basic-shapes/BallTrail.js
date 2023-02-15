@@ -4,7 +4,7 @@ import {
     Mesh,
     MeshPhysicalMaterial,
     SphereBufferGeometry, TubeBufferGeometry
-} from "../../3party/three/build/three.module.js";
+} from "../../../3party/three/build/three.module.js";
 
 
 

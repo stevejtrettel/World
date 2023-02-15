@@ -1,5 +1,5 @@
 import{ Vector3 } from "../../../3party/three/build/three.module.js";
-import { Rod } from "./Rod.js";
+import { Rod } from "../basic-shapes/Rod.js";
 
 function derivative(f, x){
     const dx = 0.001;

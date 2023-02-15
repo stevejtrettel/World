@@ -119,7 +119,28 @@ const rossler = `
 `;
 
 
-const allAttractors = dadras + chen + aizawa + sprott + thomas + rossler;
+const lorenz = `
+        vec3 lorenz( vec3 p ) {
+                
+                float sigma = 10.+a;
+                float beta = 8./3.+b;
+                float rho = 28.+c;
+            
+                float x = p.x;
+                float y = p.y;
+                float z = p.z;
+                    
+                float vx = sigma*(y-x);
+                float vy = x*(rho-z)-y;
+                float vz = x*y-beta*z;
+                
+                return vec3(vx,vy,vz);
+            }
+`;
+
+
+
+const allAttractors = dadras + chen + aizawa + sprott + thomas + rossler + lorenz;
 
 export {
     dadras,
@@ -128,5 +149,6 @@ export {
     sprott,
     thomas,
     rossler,
+    lorenz,
     allAttractors,
 };
