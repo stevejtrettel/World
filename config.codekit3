@@ -121,6 +121,17 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/3party\/perlinNoise3d.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/3party\/perlinNoise3d-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/3party\/three-csm.m.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -10256,7 +10267,7 @@
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 0,
+      "oA" : 1,
       "oAP" : "\/common\/components\/basic-shapes\/RodChain-min.js",
       "oF" : 0,
       "sC" : 3,
@@ -10982,7 +10993,7 @@
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 0,
+      "oA" : 1,
       "oAP" : "\/common\/components\/vector-calculus\/VectorField2D-min.js",
       "oF" : 0,
       "sC" : 3,
@@ -11318,17 +11329,6 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/items\/calculus\/EulerFormulaTaylor-min.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 0,
-      "oAP" : "\/common\/items\/calculus\/EulerFormulaTaylor-min-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
     "\/common\/items\/calculus\/EulerFormulaTaylor.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -11417,6 +11417,28 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/common\/items\/complex-analysis\/CplxPowerSeries-min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/complex-analysis\/CplxPowerSeries-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/complex-analysis\/CplxPowerSeries.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/complex-analysis\/CplxPowerSeries-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/common\/items\/complex-analysis\/ModulusFunction.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -11447,17 +11469,6 @@
       "oA" : 1,
       "oAP" : "\/common\/items\/complexDomainColor-min.js",
       "oF" : 1,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/items\/CplxPowerSeries.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 0,
-      "oAP" : "\/common\/items\/CplxPowerSeries-min.js",
-      "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
@@ -11686,7 +11697,7 @@
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 0,
+      "oA" : 1,
       "oAP" : "\/common\/items\/odes\/PopulationDynamics-min.js",
       "oF" : 0,
       "sC" : 3,
@@ -12011,6 +12022,17 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/common\/items\/vector-calculus\/ParametricCurveAnimation-min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/vector-calculus\/ParametricCurveAnimation-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/common\/items\/vector-calculus\/ParametricCurveAnimation.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -12093,7 +12115,7 @@
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 1,
+      "oA" : 0,
       "oAP" : "\/common\/items\/vector-calculus\/PartialDerivativePlotter-min.js",
       "oF" : 0,
       "sC" : 3,
@@ -12128,6 +12150,17 @@
       "mi" : 1,
       "oA" : 0,
       "oAP" : "\/common\/items\/vector-calculus\/TangentPlanePlotter-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/vector-calculus\/TESTCurve-min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/vector-calculus\/TESTCurve-min-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0

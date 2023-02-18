@@ -3,7 +3,7 @@ import {
 } from "../../../3party/three/build/three.module.js";
 
 import {SlopeFieldIntegralCurve } from "./SlopeFieldPlotter.js";
-import VectorField2D from "../../components/VectorCalculus/VectorField2D.js";
+import VectorField2D from "../../components/vector-calculus/VectorField2D.js";
 import { GlassPanel } from "../../components/basic-shapes/GlassPanel.js";
 
 //using GLOBAL object math.parser: this is from the 3rd party math file loaded in the html
@@ -28,11 +28,12 @@ class VectorField2DPlotter{
 
             res: res.x,
 
-            a:0.5,
-            b:0.5,
-            c:0.5,
-            d:0.5,
-            e:0.5,
+            a:1,
+            b:1,
+            c:1,
+            d:1,
+            e:0.,
+
 
             xPrimeText: 'x-x*y',
             yPrimeText: '-y+x*y',

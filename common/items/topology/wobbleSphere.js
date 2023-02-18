@@ -6,6 +6,25 @@ import {
     Vector3,
 } from "../../../3party/three/build/three.module.js";
 
+import PerlinNoise3d from "../../../3party/PerlinNoise3d.js";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -18,6 +37,9 @@ class WobbleSphere {
         this.material = new MeshPhysicalMaterial(matOptions);
         this.mesh = new Mesh(this.geometry, this.material);
         this.params = {amplitude: 0.5};
+
+        this.noise = new PerlinNoise3d();
+        this.noise.noiseSeed(0.);
     }
 
 
@@ -41,8 +63,8 @@ class WobbleSphere {
 
                 vector.fromBufferAttribute(position, i);
                 q = vector.clone();
-                noisiness = noise.perlin3(Math.sin(time)*q.x, Math.cos(2.*time)*q.y, Math.cos(time/2.)*q.z);
-                amt = 1 + 0.5 * this.params.amplitude *noisiness;
+                noisiness = this.noise.get((Math.sin(time)+q.x)/15., (Math.cos(time/2.)*q.y)/15., (Math.cos(time/3.)*q.z)/15.);
+                amt = 1 + 15 * this.params.amplitude *noisiness;
                 vector.normalize().multiplyScalar(amt);
                 //set this as the replacement
                 position.array[3*i]=vector.x;
