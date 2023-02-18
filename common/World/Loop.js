@@ -13,9 +13,9 @@ class Loop {
         this.clock = new Clock();
 
         //make the camera updatable:
-        // if( camera.tick ){
-        //     this.updatables.push(camera);
-        // }
+        if( camera.tick ){
+            this.updatables.push(camera);
+        }
     }
 
     start ( stats = null) {

@@ -4,12 +4,29 @@ import item from "../common/items/complex-analysis/ComplexSpiral.js";
 let objects = {...item};
 
 
-let options = {
-    color: 0x343757,
-    // 0x2f508a,
-    //0x303030,
-}
+let globalParams={
+    name:'World',
 
+    environment:{
+        color: 0xffffff,
+        cube: true,
+    },
+
+    camera:{
+        animate:false,
+        fov:55,
+        pos:{x:0,y:1,z:8},
+        look:{x:0,y:0,z:0},
+        posAnimate: (t)=>{return {x:Math.cos(t),y:Math.sin(t),z:5}},
+        lookAnimate: (t)=>{return {x:0,y:Math.sin(t),z:0}},
+    },
+
+    controls:{
+        minDistance:0,
+        maxDistance:100,
+    }
+
+};
 
 //import everything except the objects of the scene
 //this uses all the default settings defined in the "template" folder
@@ -32,13 +49,8 @@ function main( objects, options ) {
     //2. Introduce any global variables:
     world.addGlobalParams( globals.params );
 
-    //3. Set the environment
-    let bkgColor=globals.color;;
-    if(options.hasOwnProperty("color")){
-        bkgColor=options.color;
-    }
 
-    const environment = createEnvironment(bkgColor);
+    const environment = createEnvironment(options.environment.color);
     world.setEnvironment( environment ) ;
 
     //4. Fill this world with objects
@@ -54,4 +66,4 @@ function main( objects, options ) {
 }
 
 //call the function to run the app
-main(objects, options);
+main(objects, globalParams);

@@ -8,8 +8,6 @@ import { createScene } from "./components/createScene.js";
 //import { createStats, placeStats } from "./components/createStats.js";
 import { createControls } from "./components/createControls.js";
 
-// import {BoxNoLights} from "../backgrounds/BoxNoLights.js";
-
 
 class World {
 
@@ -21,15 +19,15 @@ class World {
         this.container.append( this.renderer.domElement );
 
 
-        this.camera = createCamera();
-        this.scene = createScene( options.color );
+        this.camera = createCamera(options.camera);
+        this.scene = createScene( options.environment.color );
         this.loop = new Loop( this.camera, this.scene, this.renderer);
 
         //set up the environment;
         this.environment = null;
 
         //set up the controls
-        this.controls = createControls( this.camera, this.renderer.domElement);
+        this.controls = createControls( this.camera, this.renderer.domElement, options.controls);
         this.loop.add( this.controls );
 
          //

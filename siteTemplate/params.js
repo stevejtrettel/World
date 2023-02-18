@@ -1,12 +1,6 @@
 
-let globalParams={
-    name:'ParametricCurveAnimation',
-    bkgColor:0xffffff,
-    bkgCube:true,
-};
 
-let params = {
-    globalParams: globalParams,
+let itemParams = {
     sMin:-3.14,
     sMax:3.14,
     animate:true,
@@ -21,4 +15,35 @@ let params = {
 }
 
 
-export default params;
+
+let globalParams={
+    name:'World',
+
+    environment:{
+        color: 0xffffff,
+        cube: true,
+    },
+
+    camera:{
+        animate:false,
+        fov:55,
+        pos:{x:0,y:1,z:8},
+        look:{x:0,y:0,z:0},
+        posAnimate: (t)=>{return {x:Math.cos(t),y:Math.sin(t),z:5}},
+        lookAnimate: (t)=>{return {x:0,y:Math.sin(t),z:0}},
+    },
+
+    controls:{
+        minDistance:0,
+        maxDistance:100,
+    }
+
+};
+
+
+
+
+export {
+    globalParams,
+    itemParams
+};

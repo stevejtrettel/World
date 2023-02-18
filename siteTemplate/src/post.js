@@ -1,7 +1,5 @@
-
-
 const post = {
 
 };
 
-export { post };
+export  {post};

@@ -4,9 +4,11 @@ import {
 } from "../../../3party/three/build/three.module.js";
 
 
-function createCamera() {
+let defaultOptions = {fov:55,pos:{x:1,y:0,z:5},look:{x:0,y:0,z:0}};
+
+function createCamera(options=defaultOptions) {
     const camera = new PerspectiveCamera(
-        55, // fov = Field Of View
+        options.fov||55, // fov = Field Of View
         1, // aspect ratio (dummy value)
         0.1, // near clipping plane
         200, // far clipping plane
@@ -14,15 +16,20 @@ function createCamera() {
 
     // move the camera back so we can view the scene
     //camera.position.set(0, 0.1, 0);
-    camera.position.set(0, 8, 10);
-    camera.lookAt(0,0,0);
+    camera.position.set(options.pos.x||0, options.pos.y||8, options.pos.z||10);
+    camera.lookAt(options.look.x||0,options.look.y||0,options.look.z||0);
 
 
     //animation for camera:
-    camera.tick = () => {
-        //default = do nothing here
-        // camera.fov += 0.5;
-        // camera.updateProjectionMatrix();
+    camera.tick = (time,dTime) => {
+        if(options.animate){
+            let pos = options.posAnimate(time);
+            let look = options.lookAnimate(time);
+            console.log(pos);
+            camera.position.set(pos.x,pos.y,pos.z);
+            camera.lookAt(look.x,look.y,look.z);
+            camera.updateProjectionMatrix();
+        }
     };
 
     return camera;
