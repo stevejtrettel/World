@@ -56,7 +56,7 @@ class TangentLine{
         const xStart = this.x-delta;
         const xEnd = this.x+delta;
 
-        this.rod.resetRod(
+        this.rod.resize(
             new Vector3(xStart, this.getPoint(xStart),0),
             new Vector3(xEnd, this.getPoint(xEnd),0)
         );

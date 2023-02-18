@@ -24,7 +24,8 @@ function createEnvironment(color){
 
 
         const environment = {
-            background: new Color().set(0xffffff),
+            background: background,
+                //new Color().set(0xffffff),
             reflection: reflection,
         }
 
