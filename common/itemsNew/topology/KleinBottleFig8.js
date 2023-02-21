@@ -31,6 +31,7 @@ let defaultSettings = {
         uMax:3.1416,
         vMin:-3.1416,
         vMax:3.1416,
+        checkerFreq:0,
     }
 }
 
@@ -52,6 +53,9 @@ let surfaceOptions = {
     roughness:0.4,
 }
 
+
+
+
 const surfaceColor = ` 
     vec3 colorFn(vec2 uv, vec3 xyz){
     
@@ -65,12 +69,20 @@ const surfaceColor = `
          
          float hue=0.7*width;
          //uv.x+2.*uv.x*(1.-uv.x)*uv.y;
-         vec3 base =  hsb2rgb(vec3(hue,0.6,0.5));
-         vec3 final = base + 2.*vec3(grid);
+         vec3 base =  hsb2rgb(vec3(hue,0.7,0.4));
+        
          
          if(cutSlice && height>slice){
               discard;
          }
+        float bdyDist = abs(width-strip);
+        float checkerVal = sin(3.1416*checkerFreq*uv.x)*sin(3.1416*checkerFreq*uv.y);
+        if( checkerFreq>0. && abs(checkerVal)<0.03){
+            base = hsb2rgb(vec3(hue,0.8,0.2));
+        }
+        if(checkerVal<-0.01 && bdyDist>0.02){
+            discard;
+        }
          
          //if you want BOTH mobius strips:
          // if(cutStrip && width>strip/2. && 1.-width>strip/2.){
@@ -78,6 +90,7 @@ const surfaceColor = `
               discard;
          }
               
+            vec3 final = base + 2.*vec3(grid);
              return final;
      }`;
 
@@ -96,6 +109,7 @@ class KleinBottleFig8 extends Item{
 
             slice:{type:'float',value:this.params.slice},
             strip:{type:'float',value:this.params.strip},
+            checkerFreq:{type:'float',value:this.params.checkerFreq},
 
             cutSlice: {type:'bool',value:this.params.cutSlice},
             cutStrip: {type:'bool',value:this.params.cutStrip},
@@ -150,6 +164,10 @@ class KleinBottleFig8 extends Item{
 
             ui.add(thisObj.params, 'strip', 0,1, 0.01).name('Strip').onChange(function(value){
                 thisObj.surface.update({strip:value});
+            });
+
+            ui.add(thisObj.params, 'checkerFreq', 0,100, 1).name('Checkers').onChange(function(value){
+                thisObj.surface.update({checkerFreq:value});
             })
         }
     }
