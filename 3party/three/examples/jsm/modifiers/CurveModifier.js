@@ -1,11 +1,11 @@
 // Original src: https://github.com/zz85/threejs-path-flow
-const CHANNELS = 4;
+const BITS = 3;
 const TEXTURE_WIDTH = 1024;
 const TEXTURE_HEIGHT = 4;
 
 import {
 	DataTexture,
-	RGBAFormat,
+	RGBFormat,
 	FloatType,
 	RepeatWrapping,
 	Mesh,
@@ -13,7 +13,7 @@ import {
 	NearestFilter,
 	DynamicDrawUsage,
 	Matrix4
-} from 'three';
+} from '../../../build/three.module.js';
 
 /**
  * Make a new DataTexture to store the descriptions of the curves.
@@ -22,12 +22,12 @@ import {
  */
 export function initSplineTexture( numberOfCurves = 1 ) {
 
-	const dataArray = new Float32Array( TEXTURE_WIDTH * TEXTURE_HEIGHT * numberOfCurves * CHANNELS );
+	const dataArray = new Float32Array( TEXTURE_WIDTH * TEXTURE_HEIGHT * numberOfCurves * BITS );
 	const dataTexture = new DataTexture(
 		dataArray,
 		TEXTURE_WIDTH,
 		TEXTURE_HEIGHT * numberOfCurves,
-		RGBAFormat,
+		RGBFormat,
 		FloatType
 	);
 
@@ -80,11 +80,10 @@ function setTextureValue( texture, index, x, y, z, o ) {
 
 	const image = texture.image;
 	const { data } = image;
-	const i = CHANNELS * TEXTURE_WIDTH * o; // Row Offset
-	data[ index * CHANNELS + i + 0 ] = x;
-	data[ index * CHANNELS + i + 1 ] = y;
-	data[ index * CHANNELS + i + 2 ] = z;
-	data[ index * CHANNELS + i + 3 ] = 1;
+	const i = BITS * TEXTURE_WIDTH * o; // Row Offset
+	data[ index * BITS + i + 0 ] = x;
+	data[ index * BITS + i + 1 ] = y;
+	data[ index * BITS + i + 2 ] = z;
 
 }
 

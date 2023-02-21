@@ -2,7 +2,7 @@ import {
 	Matrix4,
 	Quaternion,
 	Vector3
-} from 'three';
+} from '../../../build/three.module.js';
 import { MMDParser } from '../libs/mmdparser.module.js';
 
 /**
@@ -157,7 +157,7 @@ function unicodeToShiftjis( str ) {
 
 	if ( u2sTable === undefined ) {
 
-		const encoder = new MMDParser.CharsetEncoder();
+		const encoder = new MMDParser.CharsetEncoder(); // eslint-disable-line no-undef
 		const table = encoder.s2uTable;
 		u2sTable = {};
 
@@ -186,7 +186,7 @@ function unicodeToShiftjis( str ) {
 
 		if ( value === undefined ) {
 
-			throw new Error( 'cannot convert charcode 0x' + code.toString( 16 ) );
+			throw 'cannot convert charcode 0x' + code.toString( 16 );
 
 		} else if ( value > 0xff ) {
 

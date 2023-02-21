@@ -3,9 +3,7 @@ import {
 	Loader,
 	CanvasTexture,
 	NearestFilter
-} from 'three';
-
-import lottie from '../libs/lottie_canvas.module.js';
+} from '../../../build/three.module.js';
 
 class LottieLoader extends Loader {
 
@@ -30,7 +28,7 @@ class LottieLoader extends Loader {
 
 			const data = JSON.parse( text );
 
-			// lottie uses container.offetWidth and offsetHeight
+			// bodymoving uses container.offetWidth and offsetHeight
 			// to define width/height
 
 			const container = document.createElement( 'div' );
@@ -38,7 +36,7 @@ class LottieLoader extends Loader {
 			container.style.height = data.h + 'px';
 			document.body.appendChild( container );
 
-			const animation = lottie.loadAnimation( {
+			const animation = bodymovin.loadAnimation( {
 				container: container,
 				animType: 'canvas',
 				loop: true,

@@ -1,10 +1,12 @@
 import {
+	LinearFilter,
 	MeshBasicMaterial,
 	NearestFilter,
+	RGBAFormat,
 	ShaderMaterial,
 	UniformsUtils,
 	WebGLRenderTarget
-} from 'three';
+} from '../../../build/three.module.js';
 import { Pass, FullScreenQuad } from './Pass.js';
 import { AfterimageShader } from '../shaders/AfterimageShader.js';
 
@@ -14,6 +16,8 @@ class AfterimagePass extends Pass {
 
 		super();
 
+		if ( AfterimageShader === undefined ) console.error( 'THREE.AfterimagePass relies on AfterimageShader' );
+
 		this.shader = AfterimageShader;
 
 		this.uniforms = UniformsUtils.clone( this.shader.uniforms );
@@ -21,14 +25,22 @@ class AfterimagePass extends Pass {
 		this.uniforms[ 'damp' ].value = damp;
 
 		this.textureComp = new WebGLRenderTarget( window.innerWidth, window.innerHeight, {
+
+			minFilter: LinearFilter,
 			magFilter: NearestFilter,
+			format: RGBAFormat
+
 		} );
 
 		this.textureOld = new WebGLRenderTarget( window.innerWidth, window.innerHeight, {
+
+			minFilter: LinearFilter,
 			magFilter: NearestFilter,
+			format: RGBAFormat
+
 		} );
 
-		this.compFsMaterial = new ShaderMaterial( {
+		this.shaderMaterial = new ShaderMaterial( {
 
 			uniforms: this.uniforms,
 			vertexShader: this.shader.vertexShader,
@@ -36,10 +48,10 @@ class AfterimagePass extends Pass {
 
 		} );
 
-		this.compFsQuad = new FullScreenQuad( this.compFsMaterial );
+		this.compFsQuad = new FullScreenQuad( this.shaderMaterial );
 
-		this.copyFsMaterial = new MeshBasicMaterial();
-		this.copyFsQuad = new FullScreenQuad( this.copyFsMaterial );
+		const material = new MeshBasicMaterial();
+		this.copyFsQuad = new FullScreenQuad( material );
 
 	}
 
@@ -80,19 +92,6 @@ class AfterimagePass extends Pass {
 
 		this.textureComp.setSize( width, height );
 		this.textureOld.setSize( width, height );
-
-	}
-
-	dispose() {
-
-		this.textureComp.dispose();
-		this.textureOld.dispose();
-
-		this.compFsMaterial.dispose();
-		this.copyFsMaterial.dispose();
-
-		this.compFsQuad.dispose();
-		this.copyFsQuad.dispose();
 
 	}
 

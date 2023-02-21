@@ -1,6 +1,12 @@
 class VRButton {
 
-	static createButton( renderer ) {
+	static createButton( renderer, options ) {
+
+		if ( options ) {
+
+			console.error( 'THREE.VRButton: The "options" parameter has been removed. Please set the reference space type via renderer.xr.setReferenceSpaceType() instead.' );
+
+		}
 
 		const button = document.createElement( 'button' );
 
@@ -98,16 +104,6 @@ class VRButton {
 
 		}
 
-		function showVRNotAllowed( exception ) {
-
-			disableButton();
-
-			console.warn( 'Exception when trying to call xr.isSessionSupported', exception );
-
-			button.textContent = 'VR NOT ALLOWED';
-
-		}
-
 		function stylizeElement( element ) {
 
 			element.style.position = 'absolute';
@@ -136,13 +132,7 @@ class VRButton {
 
 				supported ? showEnterVR() : showWebXRNotFound();
 
-				if ( supported && VRButton.xrSessionIsGranted ) {
-
-					button.click();
-
-				}
-
-			} ).catch( showVRNotAllowed );
+			} );
 
 			return button;
 
@@ -174,27 +164,6 @@ class VRButton {
 
 	}
 
-	static registerSessionGrantedListener() {
-
-		if ( 'xr' in navigator ) {
-
-			// WebXRViewer (based on Firefox) has a bug where addEventListener
-			// throws a silent exception and aborts execution entirely.
-			if ( /WebXRViewer\//i.test( navigator.userAgent ) ) return;
-
-			navigator.xr.addEventListener( 'sessiongranted', () => {
-
-				VRButton.xrSessionIsGranted = true;
-
-			} );
-
-		}
-
-	}
-
 }
-
-VRButton.xrSessionIsGranted = false;
-VRButton.registerSessionGrantedListener();
 
 export { VRButton };

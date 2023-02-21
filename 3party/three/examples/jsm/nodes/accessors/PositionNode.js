@@ -1,95 +1,152 @@
-import Node from '../core/Node.js';
-import AttributeNode from '../core/AttributeNode.js';
-import VaryingNode from '../core/VaryingNode.js';
-import ModelNode from '../accessors/ModelNode.js';
-import MathNode from '../math/MathNode.js';
-import OperatorNode from '../math/OperatorNode.js';
+import { TempNode } from '../core/TempNode.js';
+import { NodeLib } from '../core/NodeLib.js';
 
-class PositionNode extends Node {
+class PositionNode extends TempNode {
 
-	constructor( scope = PositionNode.LOCAL ) {
+	constructor( scope ) {
 
-		super( 'vec3' );
+		super( 'v3' );
 
-		this.scope = scope;
+		this.scope = scope || PositionNode.LOCAL;
 
 	}
 
-	isGlobal() {
+	getType( ) {
+
+		switch ( this.scope ) {
+
+			case PositionNode.PROJECTION:
+
+				return 'v4';
+
+		}
+
+		return this.type;
+
+	}
+
+	getShared( /* builder */ ) {
+
+		switch ( this.scope ) {
+
+			case PositionNode.LOCAL:
+			case PositionNode.WORLD:
+
+				return false;
+
+		}
 
 		return true;
 
 	}
 
-	getHash( /*builder*/ ) {
+	generate( builder, output ) {
 
-		return `position-${this.scope}`;
+		let result;
 
-	}
+		switch ( this.scope ) {
 
-	generate( builder ) {
+			case PositionNode.LOCAL:
 
-		const scope = this.scope;
+				if ( builder.isShader( 'vertex' ) ) {
 
-		let outputNode = null;
+					result = 'transformed';
 
-		if ( scope === PositionNode.GEOMETRY ) {
+				} else {
 
-			outputNode = new AttributeNode( 'position', 'vec3' );
+					builder.requires.position = true;
 
-		} else if ( scope === PositionNode.LOCAL ) {
+					result = 'vPosition';
 
-			outputNode = new VaryingNode( new PositionNode( PositionNode.GEOMETRY ) );
+				}
 
-		} else if ( scope === PositionNode.WORLD ) {
+				break;
 
-			const vertexPositionNode = new MathNode( MathNode.TRANSFORM_DIRECTION, new ModelNode( ModelNode.WORLD_MATRIX ), new PositionNode( PositionNode.LOCAL ) );
-			outputNode = new VaryingNode( vertexPositionNode );
+			case PositionNode.WORLD:
 
-		} else if ( scope === PositionNode.VIEW ) {
+				if ( builder.isShader( 'vertex' ) ) {
 
-			const vertexPositionNode = new OperatorNode( '*', new ModelNode( ModelNode.VIEW_MATRIX ), new PositionNode( PositionNode.LOCAL ) );
-			outputNode = new VaryingNode( vertexPositionNode );
+					return '( modelMatrix * vec4( transformed, 1.0 ) ).xyz';
 
-		} else if ( scope === PositionNode.VIEW_DIRECTION ) {
+				} else {
 
-			const vertexPositionNode = new MathNode( MathNode.NEGATE, new PositionNode( PositionNode.VIEW ) );
-			outputNode = new MathNode( MathNode.NORMALIZE, new VaryingNode( vertexPositionNode ) );
+					builder.requires.worldPosition = true;
 
-		} else if ( scope === PositionNode.WORLD_DIRECTION ) {
+					result = 'vWPosition';
 
-			const vertexPositionNode = new MathNode( MathNode.NEGATE, new PositionNode( PositionNode.WORLD ) );
-			outputNode = new MathNode( MathNode.NORMALIZE, new VaryingNode( vertexPositionNode ) );
+				}
+
+				break;
+
+			case PositionNode.VIEW:
+
+				result = builder.isShader( 'vertex' ) ? '-mvPosition.xyz' : 'vViewPosition';
+
+				break;
+
+			case PositionNode.PROJECTION:
+
+				result = builder.isShader( 'vertex' ) ? '( projectionMatrix * modelViewMatrix * vec4( position, 1.0 ) )' : 'vec4( 0.0 )';
+
+				break;
 
 		}
 
-		return outputNode.build( builder, this.getNodeType( builder ) );
+		return builder.format( result, this.getType( builder ), output );
 
 	}
 
-	serialize( data ) {
+	copy( source ) {
 
-		super.serialize( data );
+		super.copy( source );
 
-		data.scope = this.scope;
+		this.scope = source.scope;
+
+		return this;
 
 	}
 
-	deserialize( data ) {
+	toJSON( meta ) {
 
-		super.deserialize( data );
+		let data = this.getJSONNode( meta );
 
-		this.scope = data.scope;
+		if ( ! data ) {
+
+			data = this.createJSONNode( meta );
+
+			data.scope = this.scope;
+
+		}
+
+		return data;
 
 	}
 
 }
 
-PositionNode.GEOMETRY = 'geometry';
 PositionNode.LOCAL = 'local';
 PositionNode.WORLD = 'world';
-PositionNode.WORLD_DIRECTION = 'worldDirection';
 PositionNode.VIEW = 'view';
-PositionNode.VIEW_DIRECTION = 'viewDirection';
+PositionNode.PROJECTION = 'projection';
 
-export default PositionNode;
+PositionNode.prototype.nodeType = 'Position';
+
+NodeLib.addKeyword( 'position', function () {
+
+	return new PositionNode();
+
+} );
+
+NodeLib.addKeyword( 'worldPosition', function () {
+
+	return new PositionNode( PositionNode.WORLD );
+
+} );
+
+NodeLib.addKeyword( 'viewPosition', function () {
+
+	return new PositionNode( PositionNode.VIEW );
+
+} );
+
+export { PositionNode };

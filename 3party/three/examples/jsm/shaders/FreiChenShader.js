@@ -1,6 +1,6 @@
 import {
 	Vector2
-} from 'three';
+} from '../../../build/three.module.js';
 
 /**
  * Edge Detection Shader using Frei-Chen filter
@@ -9,7 +9,7 @@ import {
  * aspect: vec2 of (1/width, 1/height)
  */
 
-const FreiChenShader = {
+var FreiChenShader = {
 
 	uniforms: {
 

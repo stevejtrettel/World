@@ -2,7 +2,7 @@ import {
 	PerspectiveCamera,
 	Quaternion,
 	Vector3
-} from 'three';
+} from '../../../build/three.module.js';
 
 /**
  * peppers ghost effect based on http://www.instructables.com/id/Reflective-Prism/?ALLSTEPS
@@ -53,9 +53,9 @@ class PeppersGhostEffect {
 
 		this.render = function ( scene, camera ) {
 
-			if ( scene.matrixWorldAutoUpdate === true ) scene.updateMatrixWorld();
+			scene.updateMatrixWorld();
 
-			if ( camera.parent === null && camera.matrixWorldAutoUpdate === true ) camera.updateMatrixWorld();
+			if ( camera.parent === null ) camera.updateMatrixWorld();
 
 			camera.matrixWorld.decompose( _position, _quaternion, _scale );
 

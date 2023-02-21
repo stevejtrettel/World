@@ -1,56 +1,142 @@
-import Node from './Node.js';
+import { MathUtils } from '../../../../build/three.module.js';
+import { Node } from './Node.js';
 
 class TempNode extends Node {
 
-	constructor( type ) {
+	constructor( type, params = {} ) {
 
 		super( type );
 
-		this.isTempNode = true;
+		this.shared = params.shared !== undefined ? params.shared : true;
+		this.unique = params.unique !== undefined ? params.unique : false;
 
 	}
 
-	hasDependencies( builder ) {
+	build( builder, output, uuid, ns ) {
 
-		return builder.getDataFromNode( this ).dependenciesCount > 1;
+		output = output || this.getType( builder );
 
-	}
+		if ( this.getShared( builder, output ) ) {
 
-	build( builder, output ) {
+			const isUnique = this.getUnique( builder, output );
 
-		const buildStage = builder.getBuildStage();
+			if ( isUnique && this.constructor.uuid === undefined ) {
 
-		if ( buildStage === 'generate' ) {
+				this.constructor.uuid = MathUtils.generateUUID();
 
-			const type = builder.getVectorType( this.getNodeType( builder, output ) );
-			const nodeData = builder.getDataFromNode( this );
+			}
 
-			if ( builder.context.tempRead !== false && nodeData.propertyName !== undefined ) {
+			uuid = builder.getUuid( uuid || this.getUuid(), ! isUnique );
 
-				return builder.format( nodeData.propertyName, type, output );
+			const data = builder.getNodeData( uuid ),
+				type = data.output || this.getType( builder );
 
-			} else if ( builder.context.tempWrite !== false && type !== 'void ' && output !== 'void' && this.hasDependencies( builder ) ) {
+			if ( builder.analyzing ) {
 
-				const snippet = super.build( builder, type );
+				if ( ( data.deps || 0 ) > 0 || this.getLabel() ) {
 
-				const nodeVar = builder.getVarFromNode( this, type );
-				const propertyName = builder.getPropertyName( nodeVar );
+					this.appendDepsNode( builder, data, output );
 
-				builder.addFlowCode( `${propertyName} = ${snippet}` );
+					return this.generate( builder, output, uuid );
 
-				nodeData.snippet = snippet;
-				nodeData.propertyName = propertyName;
+				}
 
-				return builder.format( nodeData.propertyName, type, output );
+				return super.build( builder, output, uuid );
+
+			} else if ( isUnique ) {
+
+				data.name = data.name || super.build( builder, output, uuid );
+
+				return data.name;
+
+			} else if ( ! this.getLabel() && ( ! this.getShared( builder, type ) || ( builder.context.ignoreCache || data.deps === 1 ) ) ) {
+
+				return super.build( builder, output, uuid );
+
+			}
+
+			uuid = this.getUuid( false );
+
+			let name = this.getTemp( builder, uuid );
+
+			if ( name ) {
+
+				return builder.format( name, type, output );
+
+			} else {
+
+				name = TempNode.prototype.generate.call( this, builder, output, uuid, data.output, ns );
+
+				const code = this.generate( builder, type, uuid );
+
+				builder.addNodeCode( name + ' = ' + code + ';' );
+
+				return builder.format( name, type, output );
 
 			}
 
 		}
 
-		return super.build( builder, output );
+		return super.build( builder, output, uuid );
+
+	}
+
+	getShared( builder, output ) {
+
+		return output !== 'sampler2D' && output !== 'samplerCube' && this.shared;
+
+	}
+
+	getUnique( /* builder, output */ ) {
+
+		return this.unique;
+
+	}
+
+	setLabel( name ) {
+
+		this.label = name;
+
+		return this;
+
+	}
+
+	getLabel( /* builder */ ) {
+
+		return this.label;
+
+	}
+
+	getUuid( unique ) {
+
+		let uuid = unique || unique == undefined ? this.constructor.uuid || this.uuid : this.uuid;
+
+		if ( typeof this.scope === 'string' ) uuid = this.scope + '-' + uuid;
+
+		return uuid;
+
+	}
+
+	getTemp( builder, uuid ) {
+
+		uuid = uuid || this.uuid;
+
+		const tempVar = builder.getVars()[ uuid ];
+
+		return tempVar ? tempVar.name : undefined;
+
+	}
+
+	generate( builder, output, uuid, type, ns ) {
+
+		if ( ! this.getShared( builder, output ) ) console.error( 'THREE.TempNode is not shared!' );
+
+		uuid = uuid || this.uuid;
+
+		return builder.getTempVar( uuid, type || this.getType( builder ), ns, this.getLabel() ).name;
 
 	}
 
 }
 
-export default TempNode;
+export { TempNode };

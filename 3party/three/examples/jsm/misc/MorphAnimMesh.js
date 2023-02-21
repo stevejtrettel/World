@@ -2,7 +2,7 @@ import {
 	AnimationClip,
 	AnimationMixer,
 	Mesh
-} from 'three';
+} from '../../../build/three.module.js';
 
 class MorphAnimMesh extends Mesh {
 
@@ -60,9 +60,9 @@ class MorphAnimMesh extends Mesh {
 
 	}
 
-	copy( source, recursive ) {
+	copy( source ) {
 
-		super.copy( source, recursive );
+		super.copy( source );
 
 		this.mixer = new AnimationMixer( this );
 

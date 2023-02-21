@@ -2,7 +2,7 @@
  * Full-screen tone-mapping shader based on http://www.cis.rit.edu/people/faculty/ferwerda/publications/sig02_paper.pdf
  */
 
-const ToneMapShader = {
+var ToneMapShader = {
 
 	uniforms: {
 
@@ -51,7 +51,7 @@ const ToneMapShader = {
 			#endif
 
 			// Calculate the luminance of the current pixel
-			float fLumPixel = luminance( vColor );
+			float fLumPixel = linearToRelativeLuminance( vColor );
 
 			// Apply the modified operator (Eq. 4)
 			float fLumScaled = (fLumPixel * middleGrey) / max( minLuminance, fLumAvg );

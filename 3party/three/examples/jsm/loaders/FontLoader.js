@@ -2,7 +2,7 @@ import {
 	FileLoader,
 	Loader,
 	ShapePath
-} from 'three';
+} from '../../../build/three.module.js';
 
 class FontLoader extends Loader {
 
@@ -19,10 +19,23 @@ class FontLoader extends Loader {
 		const loader = new FileLoader( this.manager );
 		loader.setPath( this.path );
 		loader.setRequestHeader( this.requestHeader );
-		loader.setWithCredentials( this.withCredentials );
+		loader.setWithCredentials( scope.withCredentials );
 		loader.load( url, function ( text ) {
 
-			const font = scope.parse( JSON.parse( text ) );
+			let json;
+
+			try {
+
+				json = JSON.parse( text );
+
+			} catch ( e ) {
+
+				console.warn( 'THREE.FontLoader: typeface.js support is being deprecated. Use typeface.json instead.' );
+				json = JSON.parse( text.substring( 65, text.length - 2 ) );
+
+			}
+
+			const font = scope.parse( json );
 
 			if ( onLoad ) onLoad( font );
 
@@ -44,8 +57,6 @@ class Font {
 
 	constructor( data ) {
 
-		this.isFont = true;
-
 		this.type = 'Font';
 
 		this.data = data;
@@ -59,7 +70,7 @@ class Font {
 
 		for ( let p = 0, pl = paths.length; p < pl; p ++ ) {
 
-			shapes.push( ...paths[ p ].toShapes() );
+			Array.prototype.push.apply( shapes, paths[ p ].toShapes() );
 
 		}
 
@@ -179,5 +190,7 @@ function createPath( char, scale, offsetX, offsetY, data ) {
 	return { offsetX: glyph.ha * scale, path: path };
 
 }
+
+Font.prototype.isFont = true;
 
 export { FontLoader, Font };

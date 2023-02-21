@@ -6,7 +6,7 @@ import {
 	ShaderChunk,
 	Matrix4,
 	Box3
-} from 'three';
+} from '../../../build/three.module.js';
 import { CSMFrustum } from './CSMFrustum.js';
 import { CSMShader } from './CSMShader.js';
 
@@ -16,9 +16,6 @@ const _center = new Vector3();
 const _bbox = new Box3();
 const _uniformArray = [];
 const _logArray = [];
-const _lightOrientationMatrix = new Matrix4();
-const _lightOrientationMatrixInverse = new Matrix4();
-const _up = new Vector3( 0, 1, 0 );
 
 export class CSM {
 
@@ -203,19 +200,14 @@ export class CSM {
 
 		const camera = this.camera;
 		const frustums = this.frustums;
-
-		// for each frustum we need to find its min-max box aligned with the light orientation
-		// the position in _lightOrientationMatrix does not matter, as we transform there and back
-		_lightOrientationMatrix.lookAt( new Vector3(), this.lightDirection, _up );
-		_lightOrientationMatrixInverse.copy( _lightOrientationMatrix ).invert();
-
 		for ( let i = 0; i < frustums.length; i ++ ) {
 
 			const light = this.lights[ i ];
 			const shadowCam = light.shadow.camera;
 			const texelWidth = ( shadowCam.right - shadowCam.left ) / this.shadowMapSize;
 			const texelHeight = ( shadowCam.top - shadowCam.bottom ) / this.shadowMapSize;
-			_cameraToLightMatrix.multiplyMatrices( _lightOrientationMatrixInverse, camera.matrixWorld );
+			light.shadow.camera.updateMatrixWorld( true );
+			_cameraToLightMatrix.multiplyMatrices( light.shadow.camera.matrixWorldInverse, camera.matrixWorld );
 			frustums[ i ].toSpace( _cameraToLightMatrix, _lightSpaceFrustum );
 
 			const nearVerts = _lightSpaceFrustum.vertices.near;
@@ -232,7 +224,7 @@ export class CSM {
 			_center.z = _bbox.max.z + this.lightMargin;
 			_center.x = Math.floor( _center.x / texelWidth ) * texelWidth;
 			_center.y = Math.floor( _center.y / texelHeight ) * texelHeight;
-			_center.applyMatrix4( _lightOrientationMatrix );
+			_center.applyMatrix4( light.shadow.camera.matrixWorld );
 
 			light.position.copy( _center );
 			light.target.position.copy( _center );
@@ -351,7 +343,6 @@ export class CSM {
 
 		for ( let i = 0; i < this.lights.length; i ++ ) {
 
-			this.parent.remove( this.lights[ i ].target );
 			this.parent.remove( this.lights[ i ] );
 
 		}

@@ -1,15 +1,15 @@
-import { NumberInput, LabelElement } from '../../libs/flow.module.js';
-import { BaseNode } from '../core/BaseNode.js';
-import { Vector4 } from 'three';
-import { UniformNode } from 'three/nodes';
+import { ObjectNode, NumberInput, LabelElement } from '../../libs/flow.module.js';
+import { Vector4Node } from '../../renderers/nodes/Nodes.js';
 
-export class Vector4Editor extends BaseNode {
+export class Vector4Editor extends ObjectNode {
 
 	constructor() {
 
-		const node = new UniformNode( new Vector4() );
+		const node = new Vector4Node();
 
-		super( 'Vector 4', 4, node, 350 );
+		super( 'Vector 4', 4, node );
+
+		this.title.setIcon( 'ti ti-box-multiple-4' );
 
 		const onUpdate = () => {
 
@@ -20,12 +20,12 @@ export class Vector4Editor extends BaseNode {
 
 		};
 
-		const fieldX = new NumberInput().setTagColor( 'red' ).onChange( onUpdate );
-		const fieldY = new NumberInput().setTagColor( 'green' ).onChange( onUpdate );
-		const fieldZ = new NumberInput().setTagColor( 'blue' ).onChange( onUpdate );
-		const fieldW = new NumberInput( 1 ).setTagColor( 'white' ).onChange( onUpdate );
+		const fieldX = new NumberInput().onChange( onUpdate );
+		const fieldY = new NumberInput().onChange( onUpdate );
+		const fieldZ = new NumberInput().onChange( onUpdate );
+		const fieldW = new NumberInput().onChange( onUpdate );
 
-		this.add( new LabelElement( 'XYZW' )
+		this.add( new LabelElement( 'Values' )
 			.add( fieldX )
 			.add( fieldY )
 			.add( fieldZ )

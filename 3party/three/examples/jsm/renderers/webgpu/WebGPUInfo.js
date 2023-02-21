@@ -23,7 +23,7 @@ class WebGPUInfo {
 
 		this.render.drawCalls ++;
 
-		if ( object.isMesh || object.isSprite ) {
+		if ( object.isMesh ) {
 
 			this.render.triangles += instanceCount * ( count / 3 );
 

@@ -8,11 +8,11 @@ class ARButton {
 
 			if ( sessionInit.domOverlay === undefined ) {
 
-				const overlay = document.createElement( 'div' );
+				var overlay = document.createElement( 'div' );
 				overlay.style.display = 'none';
 				document.body.appendChild( overlay );
 
-				const svg = document.createElementNS( 'http://www.w3.org/2000/svg', 'svg' );
+				var svg = document.createElementNS( 'http://www.w3.org/2000/svg', 'svg' );
 				svg.setAttribute( 'width', 38 );
 				svg.setAttribute( 'height', 38 );
 				svg.style.position = 'absolute';
@@ -25,7 +25,7 @@ class ARButton {
 				} );
 				overlay.appendChild( svg );
 
-				const path = document.createElementNS( 'http://www.w3.org/2000/svg', 'path' );
+				var path = document.createElementNS( 'http://www.w3.org/2000/svg', 'path' );
 				path.setAttribute( 'd', 'M 12,12 L 28,28 M 28,12 12,28' );
 				path.setAttribute( 'stroke', '#fff' );
 				path.setAttribute( 'stroke-width', 2 );
@@ -133,16 +133,6 @@ class ARButton {
 
 		}
 
-		function showARNotAllowed( exception ) {
-
-			disableButton();
-
-			console.warn( 'Exception when trying to call xr.isSessionSupported', exception );
-
-			button.textContent = 'AR NOT ALLOWED';
-
-		}
-
 		function stylizeElement( element ) {
 
 			element.style.position = 'absolute';
@@ -171,7 +161,7 @@ class ARButton {
 
 				supported ? showStartAR() : showARNotSupported();
 
-			} ).catch( showARNotAllowed );
+			} ).catch( showARNotSupported );
 
 			return button;
 

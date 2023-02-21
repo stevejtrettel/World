@@ -86,7 +86,7 @@ export class GPUStatsPanel extends Stats.Panel {
 					this.activeQueries --;
 
 
-				} else if ( gl.isContextLost() === false ) {
+				} else {
 
 					// otherwise try again the next frame
 					requestAnimationFrame( checkQuery );

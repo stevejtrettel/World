@@ -1,13 +1,11 @@
 class NodeUniform {
 
-	constructor( name, type, node, needsUpdate = undefined ) {
+	constructor( params = {} ) {
 
-		this.isNodeUniform = true;
-
-		this.name = name;
-		this.type = type;
-		this.node = node;
-		this.needsUpdate = needsUpdate;
+		this.name = params.name;
+		this.type = params.type;
+		this.node = params.node;
+		this.needsUpdate = params.needsUpdate;
 
 	}
 
@@ -25,4 +23,4 @@ class NodeUniform {
 
 }
 
-export default NodeUniform;
+export { NodeUniform };

@@ -1,14 +1,13 @@
-import { LabelElement } from '../../libs/flow.module.js';
-import { BaseNode } from '../core/BaseNode.js';
-import { CheckerNode, UVNode } from 'three/nodes';
+import { ObjectNode, LabelElement } from '../../libs/flow.module.js';
+import { CheckerNode, UVNode } from '../../renderers/nodes/Nodes.js';
 
-const defaultUV = new UVNode();
+const DEFAULT_UV = new UVNode();
 
-export class CheckerEditor extends BaseNode {
+export class CheckerEditor extends ObjectNode {
 
 	constructor() {
 
-		const node = new CheckerNode( defaultUV );
+		const node = new CheckerNode( DEFAULT_UV );
 
 		super( 'Checker', 1, node, 200 );
 
@@ -16,7 +15,7 @@ export class CheckerEditor extends BaseNode {
 
 		field.onConnect( () => {
 
-			node.uvNode = field.getLinkedObject() || defaultUV;
+			node.uvNode = field.linkedExtra || DEFAULT_UV;
 
 		} );
 

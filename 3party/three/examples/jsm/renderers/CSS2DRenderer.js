@@ -2,15 +2,13 @@ import {
 	Matrix4,
 	Object3D,
 	Vector3
-} from 'three';
+} from '../../../build/three.module.js';
 
 class CSS2DObject extends Object3D {
 
 	constructor( element = document.createElement( 'div' ) ) {
 
 		super();
-
-		this.isCSS2DObject = true;
 
 		this.element = element;
 
@@ -46,6 +44,8 @@ class CSS2DObject extends Object3D {
 	}
 
 }
+
+CSS2DObject.prototype.isCSS2DObject = true;
 
 //
 
@@ -85,8 +85,8 @@ class CSS2DRenderer {
 
 		this.render = function ( scene, camera ) {
 
-			if ( scene.matrixWorldAutoUpdate === true ) scene.updateMatrixWorld();
-			if ( camera.parent === null && camera.matrixWorldAutoUpdate === true ) camera.updateMatrixWorld();
+			if ( scene.autoUpdate === true ) scene.updateMatrixWorld();
+			if ( camera.parent === null ) camera.updateMatrixWorld();
 
 			_viewMatrix.copy( camera.matrixWorldInverse );
 			_viewProjectionMatrix.multiplyMatrices( camera.projectionMatrix, _viewMatrix );
@@ -113,35 +113,39 @@ class CSS2DRenderer {
 
 			if ( object.isCSS2DObject ) {
 
+				object.onBeforeRender( _this, scene, camera );
+
 				_vector.setFromMatrixPosition( object.matrixWorld );
 				_vector.applyMatrix4( _viewProjectionMatrix );
 
-				const visible = ( object.visible === true ) && ( _vector.z >= - 1 && _vector.z <= 1 ) && ( object.layers.test( camera.layers ) === true );
-				object.element.style.display = ( visible === true ) ? '' : 'none';
+				const element = object.element;
 
-				if ( visible === true ) {
+				if ( /apple/i.test( navigator.vendor ) ) {
 
-					object.onBeforeRender( _this, scene, camera );
+					// https://github.com/mrdoob/three.js/issues/21415
+					element.style.transform = 'translate(-50%,-50%) translate(' + Math.round( _vector.x * _widthHalf + _widthHalf ) + 'px,' + Math.round( - _vector.y * _heightHalf + _heightHalf ) + 'px)';
 
-					const element = object.element;
+				} else {
 
 					element.style.transform = 'translate(-50%,-50%) translate(' + ( _vector.x * _widthHalf + _widthHalf ) + 'px,' + ( - _vector.y * _heightHalf + _heightHalf ) + 'px)';
 
-					if ( element.parentNode !== domElement ) {
-
-						domElement.appendChild( element );
-
-					}
-
-					object.onAfterRender( _this, scene, camera );
-
 				}
+
+				element.style.display = ( object.visible && _vector.z >= - 1 && _vector.z <= 1 ) ? '' : 'none';
 
 				const objectData = {
 					distanceToCameraSquared: getDistanceToSquared( camera, object )
 				};
 
 				cache.objects.set( object, objectData );
+
+				if ( element.parentNode !== domElement ) {
+
+					domElement.appendChild( element );
+
+				}
+
+				object.onAfterRender( _this, scene, camera );
 
 			}
 
@@ -179,12 +183,6 @@ class CSS2DRenderer {
 		function zOrder( scene ) {
 
 			const sorted = filterAndFlatten( scene ).sort( function ( a, b ) {
-
-				if ( a.renderOrder !== b.renderOrder ) {
-
-					return b.renderOrder - a.renderOrder;
-
-				}
 
 				const distanceA = cache.objects.get( a ).distanceToCameraSquared;
 				const distanceB = cache.objects.get( b ).distanceToCameraSquared;

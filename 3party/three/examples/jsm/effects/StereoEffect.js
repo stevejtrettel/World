@@ -1,7 +1,7 @@
 import {
 	StereoCamera,
 	Vector2
-} from 'three';
+} from '../../../build/three.module.js';
 
 class StereoEffect {
 
@@ -25,9 +25,9 @@ class StereoEffect {
 
 		this.render = function ( scene, camera ) {
 
-			if ( scene.matrixWorldAutoUpdate === true ) scene.updateMatrixWorld();
+			scene.updateMatrixWorld();
 
-			if ( camera.parent === null && camera.matrixWorldAutoUpdate === true ) camera.updateMatrixWorld();
+			if ( camera.parent === null ) camera.updateMatrixWorld();
 
 			_stereo.update( camera );
 

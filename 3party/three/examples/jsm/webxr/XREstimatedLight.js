@@ -3,7 +3,7 @@ import {
 	Group,
 	LightProbe,
 	WebGLCubeRenderTarget
-} from 'three';
+} from '../../../build/three.module.js';
 
 class SessionLightProbe {
 
@@ -68,8 +68,6 @@ class SessionLightProbe {
 			if ( cubeMap ) {
 
 				textureProperties.__webglTexture = cubeMap;
-
-				this.xrLight.environment.needsPMREMUpdate = true;
 
 			}
 

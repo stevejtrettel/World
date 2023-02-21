@@ -1,59 +1,52 @@
-import { NodeUpdateType } from './constants.js';
-
 class NodeFrame {
 
-	constructor() {
+	constructor( time ) {
 
-		this.time = 0;
-		this.deltaTime = 0;
+		this.time = time !== undefined ? time : 0;
 
-		this.frameId = 0;
+		this.id = 0;
 
-		this.startTime = null;
+	}
 
-		this.updateMap = new WeakMap();
+	update( delta ) {
 
-		this.renderer = null;
-		this.material = null;
-		this.camera = null;
-		this.object = null;
+		++ this.id;
+
+		this.time += delta;
+		this.delta = delta;
+
+		return this;
+
+	}
+
+	setRenderer( renderer ) {
+
+		this.renderer = renderer;
+
+		return this;
+
+	}
+
+	setRenderTexture( renderTexture ) {
+
+		this.renderTexture = renderTexture;
+
+		return this;
 
 	}
 
 	updateNode( node ) {
 
-		if ( node.updateType === NodeUpdateType.FRAME ) {
+		if ( node.frameId === this.id ) return this;
 
-			if ( this.updateMap.get( node ) !== this.frameId ) {
+		node.updateFrame( this );
 
-				this.updateMap.set( node, this.frameId );
+		node.frameId = this.id;
 
-				node.update( this );
-
-			}
-
-		} else if ( node.updateType === NodeUpdateType.OBJECT ) {
-
-			node.update( this );
-
-		}
-
-	}
-
-	update() {
-
-		this.frameId ++;
-
-		if ( this.lastTime === undefined ) this.lastTime = performance.now();
-
-		this.deltaTime = ( performance.now() - this.lastTime ) / 1000;
-
-		this.lastTime = performance.now();
-
-		this.time += this.deltaTime;
+		return this;
 
 	}
 
 }
 
-export default NodeFrame;
+export { NodeFrame };

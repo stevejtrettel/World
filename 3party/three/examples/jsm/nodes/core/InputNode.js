@@ -1,66 +1,94 @@
-import Node from './Node.js';
-import { getValueType, getValueFromType } from './NodeUtils.js';
+import { TempNode } from './TempNode.js';
 
-class InputNode extends Node {
+class InputNode extends TempNode {
 
-	constructor( value, nodeType = null ) {
+	constructor( type, params ) {
 
-		super( nodeType );
+		params = params || {};
+		params.shared = params.shared !== undefined ? params.shared : false;
 
-		this.isInputNode = true;
+		super( type, params );
 
-		this.value = value;
+		this.readonly = false;
 
 	}
 
-	getNodeType( /*builder*/ ) {
+	setReadonly( value ) {
 
-		if ( this.nodeType === null ) {
+		this.readonly = value;
 
-			return getValueType( this.value );
+		this.hashProperties = this.readonly ? [ 'value' ] : undefined;
+
+		return this;
+
+	}
+
+	getReadonly( /* builder */ ) {
+
+		return this.readonly;
+
+	}
+
+	copy( source ) {
+
+		super.copy( source );
+
+		if ( source.readonly !== undefined ) this.readonly = source.readonly;
+
+		return this;
+
+	}
+
+	createJSONNode( meta ) {
+
+		const data = super.createJSONNode( meta );
+
+		if ( this.readonly === true ) data.readonly = this.readonly;
+
+		return data;
+
+	}
+
+	generate( builder, output, uuid, type, ns, needsUpdate ) {
+
+		uuid = builder.getUuid( uuid || this.getUuid() );
+		type = type || this.getType( builder );
+
+		const data = builder.getNodeData( uuid ),
+			readonly = this.getReadonly( builder ) && this.generateReadonly !== undefined;
+
+		if ( readonly ) {
+
+			return this.generateReadonly( builder, output, uuid, type, ns, needsUpdate );
+
+		} else {
+
+			if ( builder.isShader( 'vertex' ) ) {
+
+				if ( ! data.vertex ) {
+
+					data.vertex = builder.createVertexUniform( type, this, ns, needsUpdate, this.getLabel() );
+
+				}
+
+				return builder.format( data.vertex.name, type, output );
+
+			} else {
+
+				if ( ! data.fragment ) {
+
+					data.fragment = builder.createFragmentUniform( type, this, ns, needsUpdate, this.getLabel() );
+
+				}
+
+				return builder.format( data.fragment.name, type, output );
+
+			}
 
 		}
-
-		return this.nodeType;
-
-	}
-
-	getInputType( builder ) {
-
-		return this.getNodeType( builder );
-
-	}
-
-	serialize( data ) {
-
-		super.serialize( data );
-
-		data.value = this.value;
-
-		if ( this.value && this.value.toArray ) data.value = this.value.toArray();
-
-		data.valueType = getValueType( this.value );
-		data.nodeType = this.nodeType;
-
-	}
-
-	deserialize( data ) {
-
-		super.deserialize( data );
-
-		this.nodeType = data.nodeType;
-		this.value = Array.isArray( data.value ) ? getValueFromType( data.valueType, ...data.value ) : data.value;
-
-		if ( this.value && this.value.fromArray ) this.value = this.value.fromArray( data.value );
-
-	}
-
-	generate( /*builder, output*/ ) {
-
-		console.warn( 'Abstract function.' );
 
 	}
 
 }
 
-export default InputNode;
+export { InputNode };

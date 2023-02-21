@@ -11,7 +11,7 @@ import {
 	Quaternion,
 	SphereGeometry,
 	Vector3
-} from 'three';
+} from '../../../build/three.module.js';
 
 const _q = new Quaternion();
 const _targetPos = new Vector3();
@@ -186,13 +186,19 @@ class CCDIKSolver {
 
 				if ( rotationMin !== undefined ) {
 
-					link.rotation.setFromVector3( _vector.setFromEuler( link.rotation ).max( rotationMin ) );
+					link.rotation.setFromVector3(
+						link.rotation
+							.toVector3( _vector )
+							.max( rotationMin ) );
 
 				}
 
 				if ( rotationMax !== undefined ) {
 
-					link.rotation.setFromVector3( _vector.setFromEuler( link.rotation ).min( rotationMax ) );
+					link.rotation.setFromVector3(
+						link.rotation
+							.toVector3( _vector )
+							.min( rotationMax ) );
 
 				}
 
@@ -217,7 +223,7 @@ class CCDIKSolver {
 	 */
 	createHelper() {
 
-		return new CCDIKHelper( this.mesh, this.iks );
+		return new CCDIKHelper( this.mesh, this.mesh.geometry.userData.MMD.iks );
 
 	}
 
@@ -283,7 +289,7 @@ function setPositionOfBoneToAttributeArray( array, index, bone, matrixWorldInv )
  */
 class CCDIKHelper extends Object3D {
 
-	constructor( mesh, iks = [], sphereSize = 0.25 ) {
+	constructor( mesh, iks = [] ) {
 
 		super();
 
@@ -293,7 +299,7 @@ class CCDIKHelper extends Object3D {
 		this.matrix.copy( mesh.matrixWorld );
 		this.matrixAutoUpdate = false;
 
-		this.sphereGeometry = new SphereGeometry( sphereSize, 16, 8 );
+		this.sphereGeometry = new SphereGeometry( 0.25, 16, 8 );
 
 		this.targetSphereMaterial = new MeshBasicMaterial( {
 			color: new Color( 0xff8888 ),
@@ -393,30 +399,6 @@ class CCDIKHelper extends Object3D {
 
 	}
 
-	/**
-	 * Frees the GPU-related resources allocated by this instance. Call this method whenever this instance is no longer used in your app.
-	 */
-	dispose() {
-
-		this.sphereGeometry.dispose();
-
-		this.targetSphereMaterial.dispose();
-		this.effectorSphereMaterial.dispose();
-		this.linkSphereMaterial.dispose();
-		this.lineMaterial.dispose();
-
-		const children = this.children;
-
-		for ( let i = 0; i < children.length; i ++ ) {
-
-			const child = children[ i ];
-
-			if ( child.isLine ) child.geometry.dispose();
-
-		}
-
-	}
-
 	// private method
 
 	_init() {
@@ -479,4 +461,4 @@ class CCDIKHelper extends Object3D {
 
 }
 
-export { CCDIKSolver, CCDIKHelper };
+export { CCDIKSolver };

@@ -3,7 +3,7 @@ import {
 	Mesh,
 	MeshBasicMaterial,
 	Object3D
-} from 'three';
+} from '../../../build/three.module.js';
 import { LightningStrike } from '../geometries/LightningStrike.js';
 
 /**
@@ -57,8 +57,6 @@ class LightningStorm extends Object3D {
 	constructor( stormParams = {} ) {
 
 		super();
-
-		this.isLightningStorm = true;
 
 		// Parameters
 
@@ -207,9 +205,9 @@ class LightningStorm extends Object3D {
 
 	}
 
-	copy( source, recursive ) {
+	copy( source ) {
 
-		super.copy( source, recursive );
+		super.copy( source );
 
 		this.stormParams.size = source.stormParams.size;
 		this.stormParams.minHeight = source.stormParams.minHeight;
@@ -241,5 +239,7 @@ class LightningStorm extends Object3D {
 	}
 
 }
+
+LightningStorm.prototype.isLightningStorm = true;
 
 export { LightningStorm };

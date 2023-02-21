@@ -7,7 +7,7 @@
  * - "h" and "v" parameters should be set to "1 / width" and "1 / height"
  */
 
-const HorizontalBlurShader = {
+var HorizontalBlurShader = {
 
 	uniforms: {
 

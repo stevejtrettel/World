@@ -1,21 +1,21 @@
-import { SelectInput, Element } from '../../libs/flow.module.js';
-import { BaseNode } from '../core/BaseNode.js';
-import { PositionNode } from 'three/nodes';
+import { ObjectNode, SelectInput, LabelElement } from '../../libs/flow.module.js';
+import { PositionNode } from '../../renderers/nodes/Nodes.js';
 
-export class PositionEditor extends BaseNode {
+export class PositionEditor extends ObjectNode {
 
 	constructor() {
 
 		const node = new PositionNode();
 
-		super( 'Position', 3, node, 200 );
+		super( 'Position', 3, node, 250 );
+
+		this.title.setStyle( 'red' );
 
 		const optionsField = new SelectInput( [
 			{ name: 'Local', value: PositionNode.LOCAL },
 			{ name: 'World', value: PositionNode.WORLD },
-			{ name: 'View', value: PositionNode.VIEW },
-			{ name: 'View Direction', value: PositionNode.VIEW_DIRECTION }
-		], PositionNode.LOCAL ).onChange( () => {
+			{ name: 'View', value: PositionNode.VIEW }
+		] ).onChange( () => {
 
 			node.scope = optionsField.getValue();
 
@@ -23,7 +23,7 @@ export class PositionEditor extends BaseNode {
 
 		} );
 
-		this.add( new Element().add( optionsField ) );
+		this.add( new LabelElement( 'Scope' ).add( optionsField ) );
 
 	}
 

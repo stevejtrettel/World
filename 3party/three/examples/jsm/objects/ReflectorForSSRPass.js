@@ -1,8 +1,11 @@
 import {
 	Color,
+	LinearFilter,
+	MathUtils,
 	Matrix4,
 	Mesh,
 	PerspectiveCamera,
+	RGBFormat,
 	ShaderMaterial,
 	UniformsUtils,
 	Vector2,
@@ -11,17 +14,14 @@ import {
 	DepthTexture,
 	UnsignedShortType,
 	NearestFilter,
-	Plane,
-	HalfFloatType
-} from 'three';
+	Plane
+} from '../../../build/three.module.js';
 
 class ReflectorForSSRPass extends Mesh {
 
 	constructor( geometry, options = {} ) {
 
 		super( geometry );
-
-		this.isReflectorForSSRPass = true;
 
 		this.type = 'ReflectorForSSRPass';
 
@@ -104,11 +104,19 @@ class ReflectorForSSRPass extends Mesh {
 		}
 
 		const parameters = {
+			minFilter: LinearFilter,
+			magFilter: LinearFilter,
+			format: RGBFormat,
 			depthTexture: useDepthTexture ? depthTexture : null,
-			type: HalfFloatType
 		};
 
 		const renderTarget = new WebGLRenderTarget( textureWidth, textureHeight, parameters );
+
+		if ( ! MathUtils.isPowerOfTwo( textureWidth ) || ! MathUtils.isPowerOfTwo( textureHeight ) ) {
+
+			renderTarget.texture.generateMipmaps = false;
+
+		}
 
 		const material = new ShaderMaterial( {
 			transparent: useDepthTexture,
@@ -200,6 +208,10 @@ class ReflectorForSSRPass extends Mesh {
 			textureMatrix.multiply( virtualCamera.matrixWorldInverse );
 			textureMatrix.multiply( scope.matrixWorld );
 
+			// Render
+
+			renderTarget.texture.encoding = renderer.outputEncoding;
+
 			// scope.visible = false;
 
 			const currentRenderTarget = renderer.getRenderTarget();
@@ -248,6 +260,8 @@ class ReflectorForSSRPass extends Mesh {
 	}
 
 }
+
+ReflectorForSSRPass.prototype.isReflectorForSSRPass = true;
 
 ReflectorForSSRPass.ReflectorShader = {
 

@@ -5,7 +5,7 @@ import {
 	SphericalHarmonics3,
 	Vector3,
 	sRGBEncoding
-} from 'three';
+} from '../../../build/three.module.js';
 
 class LightProbeGenerator {
 

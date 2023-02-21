@@ -4,20 +4,15 @@ const DEFAULT_HAND_PROFILE_PATH = 'https://cdn.jsdelivr.net/npm/@webxr-input-pro
 
 class XRHandMeshModel {
 
-	constructor( handModel, controller, path, handedness, loader = null ) {
+	constructor( handModel, controller, path, handedness ) {
 
 		this.controller = controller;
 		this.handModel = handModel;
 
 		this.bones = [];
 
-		if ( loader === null ) {
-
-			loader = new GLTFLoader();
-			loader.setPath( path || DEFAULT_HAND_PROFILE_PATH );
-
-		}
-
+		const loader = new GLTFLoader();
+		loader.setPath( path || DEFAULT_HAND_PROFILE_PATH );
 		loader.load( `${handedness}.glb`, gltf => {
 
 			const object = gltf.scene.children[ 0 ];
@@ -95,9 +90,13 @@ class XRHandMeshModel {
 
 					const position = XRJoint.position;
 
-					bone.position.copy( position );
-					bone.quaternion.copy( XRJoint.quaternion );
-					// bone.scale.setScalar( XRJoint.jointRadius || defaultRadius );
+					if ( bone ) {
+
+						bone.position.copy( position );
+						bone.quaternion.copy( XRJoint.quaternion );
+						// bone.scale.setScalar( XRJoint.jointRadius || defaultRadius );
+
+					}
 
 				}
 

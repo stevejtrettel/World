@@ -7,21 +7,20 @@ import {
 	DstAlphaFactor,
 	DstColorFactor,
 	FloatType,
+	LinearFilter,
 	MathUtils,
 	MeshNormalMaterial,
 	NearestFilter,
 	NoBlending,
-	RedFormat,
-	LuminanceFormat,
-	DepthStencilFormat,
-	UnsignedInt248Type,
+	RGBAFormat,
 	RepeatWrapping,
 	ShaderMaterial,
 	UniformsUtils,
+	UnsignedShortType,
 	Vector3,
 	WebGLRenderTarget,
 	ZeroFactor
-} from 'three';
+} from '../../../build/three.module.js';
 import { Pass, FullScreenQuad } from './Pass.js';
 import { SimplexNoise } from '../math/SimplexNoise.js';
 import { SSAOShader } from '../shaders/SSAOShader.js';
@@ -62,26 +61,40 @@ class SSAOPass extends Pass {
 		// beauty render target
 
 		const depthTexture = new DepthTexture();
-		depthTexture.format = DepthStencilFormat;
-		depthTexture.type = UnsignedInt248Type;
+		depthTexture.type = UnsignedShortType;
 
-		this.beautyRenderTarget = new WebGLRenderTarget( this.width, this.height );
+		this.beautyRenderTarget = new WebGLRenderTarget( this.width, this.height, {
+			minFilter: LinearFilter,
+			magFilter: LinearFilter,
+			format: RGBAFormat
+		} );
 
 		// normal render target with depth buffer
 
 		this.normalRenderTarget = new WebGLRenderTarget( this.width, this.height, {
 			minFilter: NearestFilter,
 			magFilter: NearestFilter,
+			format: RGBAFormat,
 			depthTexture: depthTexture
 		} );
 
 		// ssao render target
 
-		this.ssaoRenderTarget = new WebGLRenderTarget( this.width, this.height );
+		this.ssaoRenderTarget = new WebGLRenderTarget( this.width, this.height, {
+			minFilter: LinearFilter,
+			magFilter: LinearFilter,
+			format: RGBAFormat
+		} );
 
 		this.blurRenderTarget = this.ssaoRenderTarget.clone();
 
 		// ssao material
+
+		if ( SSAOShader === undefined ) {
+
+			console.error( 'THREE.SSAOPass: The pass relies on SSAOShader.' );
+
+		}
 
 		this.ssaoMaterial = new ShaderMaterial( {
 			defines: Object.assign( {}, SSAOShader.defines ),
@@ -177,8 +190,6 @@ class SSAOPass extends Pass {
 	}
 
 	render( renderer, writeBuffer /*, readBuffer, deltaTime, maskActive */ ) {
-
-		if ( renderer.capabilities.isWebGL2 === false ) this.noiseTexture.format = LuminanceFormat;
 
 		// render beauty
 
@@ -371,22 +382,35 @@ class SSAOPass extends Pass {
 
 		const width = 4, height = 4;
 
+		if ( SimplexNoise === undefined ) {
+
+			console.error( 'THREE.SSAOPass: The pass relies on SimplexNoise.' );
+
+		}
+
 		const simplex = new SimplexNoise();
 
 		const size = width * height;
-		const data = new Float32Array( size );
+		const data = new Float32Array( size * 4 );
 
 		for ( let i = 0; i < size; i ++ ) {
+
+			const stride = i * 4;
 
 			const x = ( Math.random() * 2 ) - 1;
 			const y = ( Math.random() * 2 ) - 1;
 			const z = 0;
 
-			data[ i ] = simplex.noise3d( x, y, z );
+			const noise = simplex.noise3d( x, y, z );
+
+			data[ stride ] = noise;
+			data[ stride + 1 ] = noise;
+			data[ stride + 2 ] = noise;
+			data[ stride + 3 ] = 1;
 
 		}
 
-		this.noiseTexture = new DataTexture( data, width, height, RedFormat, FloatType );
+		this.noiseTexture = new DataTexture( data, width, height, RGBAFormat, FloatType );
 		this.noiseTexture.wrapS = RepeatWrapping;
 		this.noiseTexture.wrapT = RepeatWrapping;
 		this.noiseTexture.needsUpdate = true;

@@ -5,9 +5,10 @@ import {
 	Float32BufferAttribute,
 	Group,
 	Loader,
+	LoaderUtils,
 	Mesh,
 	MeshPhongMaterial
-} from 'three';
+} from '../../../build/three.module.js';
 import * as fflate from '../libs/fflate.module.js';
 
 /**
@@ -85,7 +86,7 @@ class AMFLoader extends Loader {
 
 				try {
 
-					zip = fflate.unzipSync( new Uint8Array( data ) );
+					zip = fflate.unzipSync( new Uint8Array( data ) ); // eslint-disable-line no-undef
 
 				} catch ( e ) {
 
@@ -100,7 +101,7 @@ class AMFLoader extends Loader {
 
 				for ( file in zip ) {
 
-					if ( file.toLowerCase().slice( - 4 ) === '.amf' ) {
+					if ( file.toLowerCase().substr( - 4 ) === '.amf' ) {
 
 						break;
 
@@ -113,7 +114,7 @@ class AMFLoader extends Loader {
 
 			}
 
-			const fileText = new TextDecoder().decode( view );
+			const fileText = LoaderUtils.decodeText( view );
 			const xmlData = new DOMParser().parseFromString( fileText, 'application/xml' );
 
 			if ( xmlData.documentElement.nodeName.toLowerCase() !== 'amf' ) {

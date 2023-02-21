@@ -3,7 +3,7 @@ import {
 	Object3D,
 	Quaternion,
 	Vector3
-} from 'three';
+} from '../../../build/three.module.js';
 
 /**
  * Based on http://www.emagix.net/academic/mscs-project/item/camera-sync-with-css3-and-webgl-threejs
@@ -18,8 +18,6 @@ class CSS3DObject extends Object3D {
 	constructor( element = document.createElement( 'div' ) ) {
 
 		super();
-
-		this.isCSS3DObject = true;
 
 		this.element = element;
 		this.element.style.position = 'absolute';
@@ -56,13 +54,13 @@ class CSS3DObject extends Object3D {
 
 }
 
+CSS3DObject.prototype.isCSS3DObject = true;
+
 class CSS3DSprite extends CSS3DObject {
 
 	constructor( element ) {
 
 		super( element );
-
-		this.isCSS3DSprite = true;
 
 		this.rotation2D = 0;
 
@@ -79,6 +77,8 @@ class CSS3DSprite extends CSS3DObject {
 	}
 
 }
+
+CSS3DSprite.prototype.isCSS3DSprite = true;
 
 //
 
@@ -132,8 +132,8 @@ class CSS3DRenderer {
 
 			}
 
-			if ( scene.matrixWorldAutoUpdate === true ) scene.updateMatrixWorld();
-			if ( camera.parent === null && camera.matrixWorldAutoUpdate === true ) camera.updateMatrixWorld();
+			if ( scene.autoUpdate === true ) scene.updateMatrixWorld();
+			if ( camera.parent === null ) camera.updateMatrixWorld();
 
 			let tx, ty;
 
@@ -239,62 +239,57 @@ class CSS3DRenderer {
 
 			if ( object.isCSS3DObject ) {
 
-				const visible = ( object.visible === true ) && ( object.layers.test( camera.layers ) === true );
-				object.element.style.display = ( visible === true ) ? '' : 'none';
+				object.onBeforeRender( _this, scene, camera );
 
-				if ( visible === true ) {
+				let style;
 
-					object.onBeforeRender( _this, scene, camera );
+				if ( object.isCSS3DSprite ) {
 
-					let style;
+					// http://swiftcoder.wordpress.com/2008/11/25/constructing-a-billboard-matrix/
 
-					if ( object.isCSS3DSprite ) {
+					_matrix.copy( camera.matrixWorldInverse );
+					_matrix.transpose();
 
-						// http://swiftcoder.wordpress.com/2008/11/25/constructing-a-billboard-matrix/
+					if ( object.rotation2D !== 0 ) _matrix.multiply( _matrix2.makeRotationZ( object.rotation2D ) );
 
-						_matrix.copy( camera.matrixWorldInverse );
-						_matrix.transpose();
+					object.matrixWorld.decompose( _position, _quaternion, _scale );
+					_matrix.setPosition( _position );
+					_matrix.scale( _scale );
 
-						if ( object.rotation2D !== 0 ) _matrix.multiply( _matrix2.makeRotationZ( object.rotation2D ) );
+					_matrix.elements[ 3 ] = 0;
+					_matrix.elements[ 7 ] = 0;
+					_matrix.elements[ 11 ] = 0;
+					_matrix.elements[ 15 ] = 1;
 
-						object.matrixWorld.decompose( _position, _quaternion, _scale );
-						_matrix.setPosition( _position );
-						_matrix.scale( _scale );
+					style = getObjectCSSMatrix( _matrix );
 
-						_matrix.elements[ 3 ] = 0;
-						_matrix.elements[ 7 ] = 0;
-						_matrix.elements[ 11 ] = 0;
-						_matrix.elements[ 15 ] = 1;
+				} else {
 
-						style = getObjectCSSMatrix( _matrix );
-
-					} else {
-
-						style = getObjectCSSMatrix( object.matrixWorld );
-
-					}
-
-					const element = object.element;
-					const cachedObject = cache.objects.get( object );
-
-					if ( cachedObject === undefined || cachedObject.style !== style ) {
-
-						element.style.transform = style;
-
-						const objectData = { style: style };
-						cache.objects.set( object, objectData );
-
-					}
-
-					if ( element.parentNode !== cameraElement ) {
-
-						cameraElement.appendChild( element );
-
-					}
-
-					object.onAfterRender( _this, scene, camera );
+					style = getObjectCSSMatrix( object.matrixWorld );
 
 				}
+
+				const element = object.element;
+				const cachedObject = cache.objects.get( object );
+
+				if ( cachedObject === undefined || cachedObject.style !== style ) {
+
+					element.style.transform = style;
+
+					const objectData = { style: style };
+					cache.objects.set( object, objectData );
+
+				}
+
+				element.style.display = object.visible ? '' : 'none';
+
+				if ( element.parentNode !== cameraElement ) {
+
+					cameraElement.appendChild( element );
+
+				}
+
+				object.onAfterRender( _this, scene, camera );
 
 			}
 

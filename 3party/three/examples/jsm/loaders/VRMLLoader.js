@@ -24,6 +24,8 @@ import {
 	Points,
 	PointsMaterial,
 	Quaternion,
+	RGBAFormat,
+	RGBFormat,
 	RepeatWrapping,
 	Scene,
 	ShapeUtils,
@@ -31,7 +33,7 @@ import {
 	TextureLoader,
 	Vector2,
 	Vector3
-} from 'three';
+} from '../../../build/three.module.js';
 import chevrotain from '../libs/chevrotain.module.min.js';
 
 
@@ -40,6 +42,14 @@ class VRMLLoader extends Loader {
 	constructor( manager ) {
 
 		super( manager );
+
+		// dependency check
+
+		if ( typeof chevrotain === 'undefined' ) { // eslint-disable-line no-undef
+
+			throw Error( 'THREE.VRMLLoader: External library chevrotain.min.js required.' );
+
+		}
 
 	}
 
@@ -120,7 +130,7 @@ class VRMLLoader extends Loader {
 
 		function createTokens() {
 
-			const createToken = chevrotain.createToken;
+			const createToken = chevrotain.createToken; // eslint-disable-line no-undef
 
 			// from http://gun.teipir.gr/VRML-amgem/spec/part1/concepts.html#SyntaxBasics
 
@@ -195,7 +205,7 @@ class VRMLLoader extends Loader {
 			const Comment = createToken( {
 				name: 'Comment',
 				pattern: /#.*/,
-				group: chevrotain.Lexer.SKIPPED
+				group: chevrotain.Lexer.SKIPPED // eslint-disable-line no-undef
 			} );
 
 			// commas, blanks, tabs, newlines and carriage returns are whitespace characters wherever they appear outside of string fields
@@ -203,7 +213,7 @@ class VRMLLoader extends Loader {
 			const WhiteSpace = createToken( {
 				name: 'WhiteSpace',
 				pattern: /[ ,\s]/,
-				group: chevrotain.Lexer.SKIPPED
+				group: chevrotain.Lexer.SKIPPED // eslint-disable-line no-undef
 			} );
 
 			const tokens = [
@@ -250,17 +260,19 @@ class VRMLLoader extends Loader {
 
 			// the visitor is created dynmaically based on the given base class
 
-			class VRMLToASTVisitor extends BaseVRMLVisitor {
+			function VRMLToASTVisitor() {
 
-				constructor() {
+				BaseVRMLVisitor.call( this );
 
-					super();
+				this.validateVisitor();
 
-					this.validateVisitor();
+			}
 
-				}
+			VRMLToASTVisitor.prototype = Object.assign( Object.create( BaseVRMLVisitor.prototype ), {
 
-				vrml( ctx ) {
+				constructor: VRMLToASTVisitor,
+
+				vrml: function ( ctx ) {
 
 					const data = {
 						version: this.visit( ctx.version ),
@@ -290,15 +302,15 @@ class VRMLLoader extends Loader {
 
 					return data;
 
-				}
+				},
 
-				version( ctx ) {
+				version: function ( ctx ) {
 
 					return ctx.Version[ 0 ].image;
 
-				}
+				},
 
-				node( ctx ) {
+				node: function ( ctx ) {
 
 					const data = {
 						name: ctx.NodeName[ 0 ].image,
@@ -327,9 +339,9 @@ class VRMLLoader extends Loader {
 
 					return data;
 
-				}
+				},
 
-				field( ctx ) {
+				field: function ( ctx ) {
 
 					const data = {
 						name: ctx.Identifier[ 0 ].image,
@@ -360,33 +372,33 @@ class VRMLLoader extends Loader {
 
 					return data;
 
-				}
+				},
 
-				def( ctx ) {
+				def: function ( ctx ) {
 
 					return ( ctx.Identifier || ctx.NodeName )[ 0 ].image;
 
-				}
+				},
 
-				use( ctx ) {
+				use: function ( ctx ) {
 
 					return { USE: ( ctx.Identifier || ctx.NodeName )[ 0 ].image };
 
-				}
+				},
 
-				singleFieldValue( ctx ) {
-
-					return processField( this, ctx );
-
-				}
-
-				multiFieldValue( ctx ) {
+				singleFieldValue: function ( ctx ) {
 
 					return processField( this, ctx );
 
-				}
+				},
 
-				route( ctx ) {
+				multiFieldValue: function ( ctx ) {
+
+					return processField( this, ctx );
+
+				},
+
+				route: function ( ctx ) {
 
 					const data = {
 						FROM: ctx.RouteIdentifier[ 0 ].image,
@@ -397,7 +409,7 @@ class VRMLLoader extends Loader {
 
 				}
 
-			}
+			} );
 
 			function processField( scope, ctx ) {
 
@@ -617,7 +629,6 @@ class VRMLLoader extends Loader {
 
 			switch ( nodeName ) {
 
-				case 'Anchor':
 				case 'Group':
 				case 'Transform':
 				case 'Collision':
@@ -699,6 +710,7 @@ class VRMLLoader extends Loader {
 					build = buildWorldInfoNode( node );
 					break;
 
+				case 'Anchor':
 				case 'Billboard':
 
 				case 'Inline':
@@ -786,15 +798,7 @@ class VRMLLoader extends Loader {
 						parseFieldChildren( fieldValues, object );
 						break;
 
-					case 'description':
-						// field not supported
-						break;
-
 					case 'collide':
-						// field not supported
-						break;
-
-					case 'parameter':
 						// field not supported
 						break;
 
@@ -817,10 +821,6 @@ class VRMLLoader extends Loader {
 						break;
 
 					case 'proxy':
-						// field not supported
-						break;
-
-					case 'url':
 						// field not supported
 						break;
 
@@ -1265,7 +1265,6 @@ class VRMLLoader extends Loader {
 					color.r = value;
 					color.g = value;
 					color.b = value;
-					color.a = 1;
 					break;
 
 				case TEXTURE_TYPE.INTENSITY_ALPHA:
@@ -1282,7 +1281,6 @@ class VRMLLoader extends Loader {
 					color.r = parseInt( '0x' + hex.substring( 2, 4 ) );
 					color.g = parseInt( '0x' + hex.substring( 4, 6 ) );
 					color.b = parseInt( '0x' + hex.substring( 6, 8 ) );
-					color.a = 1;
 					break;
 
 				case TEXTURE_TYPE.RGBA:
@@ -1350,9 +1348,11 @@ class VRMLLoader extends Loader {
 						const height = fieldValues[ 1 ];
 						const num_components = fieldValues[ 2 ];
 
+						const useAlpha = ( num_components === 2 || num_components === 4 );
 						const textureType = getTextureType( num_components );
 
-						const data = new Uint8Array( 4 * width * height );
+						const size = ( ( useAlpha === true ) ? 4 : 3 ) * ( width * height );
+						const data = new Uint8Array( size );
 
 						const color = { r: 0, g: 0, b: 0, a: 0 };
 
@@ -1360,16 +1360,28 @@ class VRMLLoader extends Loader {
 
 							parseHexColor( fieldValues[ j ], textureType, color );
 
-							const stride = k * 4;
+							if ( useAlpha === true ) {
 
-							data[ stride + 0 ] = color.r;
-							data[ stride + 1 ] = color.g;
-							data[ stride + 2 ] = color.b;
-							data[ stride + 3 ] = color.a;
+								const stride = k * 4;
+
+								data[ stride + 0 ] = color.r;
+								data[ stride + 1 ] = color.g;
+								data[ stride + 2 ] = color.b;
+								data[ stride + 3 ] = color.a;
+
+							} else {
+
+								const stride = k * 3;
+
+								data[ stride + 0 ] = color.r;
+								data[ stride + 1 ] = color.g;
+								data[ stride + 2 ] = color.b;
+
+							}
 
 						}
 
-						texture = new DataTexture( data, width, height );
+						texture = new DataTexture( data, width, height, ( useAlpha === true ) ? RGBAFormat : RGBFormat );
 						texture.needsUpdate = true;
 						texture.__type = textureType; // needed for material modifications
 						break;
@@ -3205,7 +3217,7 @@ class VRMLLexer {
 
 	constructor( tokens ) {
 
-		this.lexer = new chevrotain.Lexer( tokens );
+		this.lexer = new chevrotain.Lexer( tokens ); // eslint-disable-line no-undef
 
 	}
 
@@ -3227,7 +3239,7 @@ class VRMLLexer {
 
 }
 
-const CstParser = chevrotain.CstParser;
+const CstParser = chevrotain.CstParser;// eslint-disable-line no-undef
 
 class VRMLParser extends CstParser {
 

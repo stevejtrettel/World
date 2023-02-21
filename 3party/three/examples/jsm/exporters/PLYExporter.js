@@ -1,8 +1,7 @@
 import {
 	Matrix3,
-	Vector3,
-	Color
-} from 'three';
+	Vector3
+} from '../../../build/three.module.js';
 
 /**
  * https://github.com/gkjohnson/ply-exporter-js
@@ -19,17 +18,31 @@ import {
 
 class PLYExporter {
 
-	parse( object, onDone, options = {} ) {
+	parse( object, onDone, options ) {
+
+		if ( onDone && typeof onDone === 'object' ) {
+
+			console.warn( 'THREE.PLYExporter: The options parameter is now the third argument to the "parse" function. See the documentation for the new API.' );
+			options = onDone;
+			onDone = undefined;
+
+		}
 
 		// Iterate over the valid meshes in the object
 		function traverseMeshes( cb ) {
 
 			object.traverse( function ( child ) {
 
-				if ( child.isMesh === true || child.isPoints ) {
+				if ( child.isMesh === true ) {
 
 					const mesh = child;
 					const geometry = mesh.geometry;
+
+					if ( geometry.isBufferGeometry !== true ) {
+
+						throw new Error( 'THREE.PLYExporter: Geometry is not of type THREE.BufferGeometry.' );
+
+					}
 
 					if ( geometry.hasAttribute( 'position' ) === true ) {
 
@@ -53,7 +66,6 @@ class PLYExporter {
 		options = Object.assign( defaultOptions, options );
 
 		const excludeAttributes = options.excludeAttributes;
-		let includeIndices = true;
 		let includeNormals = false;
 		let includeColors = false;
 		let includeUVs = false;
@@ -62,13 +74,18 @@ class PLYExporter {
 		// and cache the BufferGeometry
 		let vertexCount = 0;
 		let faceCount = 0;
-
 		object.traverse( function ( child ) {
 
 			if ( child.isMesh === true ) {
 
 				const mesh = child;
 				const geometry = mesh.geometry;
+
+				if ( geometry.isBufferGeometry !== true ) {
+
+					throw new Error( 'THREE.PLYExporter: Geometry is not of type THREE.BufferGeometry.' );
+
+				}
 
 				const vertices = geometry.getAttribute( 'position' );
 				const normals = geometry.getAttribute( 'normal' );
@@ -91,29 +108,11 @@ class PLYExporter {
 
 				if ( colors !== undefined ) includeColors = true;
 
-			} else if ( child.isPoints ) {
-
-				const mesh = child;
-				const geometry = mesh.geometry;
-
-				const vertices = geometry.getAttribute( 'position' );
-				const normals = geometry.getAttribute( 'normal' );
-				const colors = geometry.getAttribute( 'color' );
-
-				vertexCount += vertices.count;
-
-				if ( normals !== undefined ) includeNormals = true;
-
-				if ( colors !== undefined ) includeColors = true;
-
-				includeIndices = false;
-
 			}
 
 		} );
 
-		const tempColor = new Color();
-		includeIndices = includeIndices && excludeAttributes.indexOf( 'index' ) === - 1;
+		const includeIndices = excludeAttributes.indexOf( 'index' ) === - 1;
 		includeNormals = includeNormals && excludeAttributes.indexOf( 'normal' ) === - 1;
 		includeColors = includeColors && excludeAttributes.indexOf( 'color' ) === - 1;
 		includeUVs = includeUVs && excludeAttributes.indexOf( 'uv' ) === - 1;
@@ -226,7 +225,9 @@ class PLYExporter {
 
 				for ( let i = 0, l = vertices.count; i < l; i ++ ) {
 
-					vertex.fromBufferAttribute( vertices, i );
+					vertex.x = vertices.getX( i );
+					vertex.y = vertices.getY( i );
+					vertex.z = vertices.getZ( i );
 
 					vertex.applyMatrix4( mesh.matrixWorld );
 
@@ -246,7 +247,9 @@ class PLYExporter {
 
 						if ( normals != null ) {
 
-							vertex.fromBufferAttribute( normals, i );
+							vertex.x = normals.getX( i );
+							vertex.y = normals.getY( i );
+							vertex.z = normals.getZ( i );
 
 							vertex.applyMatrix3( normalMatrixWorld ).normalize();
 
@@ -285,7 +288,7 @@ class PLYExporter {
 							output.setFloat32( vOffset, uvs.getY( i ), options.littleEndian );
 							vOffset += 4;
 
-						} else {
+						} else if ( includeUVs !== false ) {
 
 							output.setFloat32( vOffset, 0, options.littleEndian );
 							vOffset += 4;
@@ -302,17 +305,13 @@ class PLYExporter {
 
 						if ( colors != null ) {
 
-							tempColor
-								.fromBufferAttribute( colors, i )
-								.convertLinearToSRGB();
-
-							output.setUint8( vOffset, Math.floor( tempColor.r * 255 ) );
+							output.setUint8( vOffset, Math.floor( colors.getX( i ) * 255 ) );
 							vOffset += 1;
 
-							output.setUint8( vOffset, Math.floor( tempColor.g * 255 ) );
+							output.setUint8( vOffset, Math.floor( colors.getY( i ) * 255 ) );
 							vOffset += 1;
 
-							output.setUint8( vOffset, Math.floor( tempColor.b * 255 ) );
+							output.setUint8( vOffset, Math.floor( colors.getZ( i ) * 255 ) );
 							vOffset += 1;
 
 						} else {
@@ -406,7 +405,9 @@ class PLYExporter {
 				// form each line
 				for ( let i = 0, l = vertices.count; i < l; i ++ ) {
 
-					vertex.fromBufferAttribute( vertices, i );
+					vertex.x = vertices.getX( i );
+					vertex.y = vertices.getY( i );
+					vertex.z = vertices.getZ( i );
 
 					vertex.applyMatrix4( mesh.matrixWorld );
 
@@ -422,7 +423,9 @@ class PLYExporter {
 
 						if ( normals != null ) {
 
-							vertex.fromBufferAttribute( normals, i );
+							vertex.x = normals.getX( i );
+							vertex.y = normals.getY( i );
+							vertex.z = normals.getZ( i );
 
 							vertex.applyMatrix3( normalMatrixWorld ).normalize();
 
@@ -448,7 +451,7 @@ class PLYExporter {
 								uvs.getX( i ) + ' ' +
 								uvs.getY( i );
 
-						} else {
+						} else if ( includeUVs !== false ) {
 
 							line += ' 0 0';
 
@@ -461,14 +464,10 @@ class PLYExporter {
 
 						if ( colors != null ) {
 
-							tempColor
-								.fromBufferAttribute( colors, i )
-								.convertLinearToSRGB();
-
 							line += ' ' +
-								Math.floor( tempColor.r * 255 ) + ' ' +
-								Math.floor( tempColor.g * 255 ) + ' ' +
-								Math.floor( tempColor.b * 255 );
+								Math.floor( colors.getX( i ) * 255 ) + ' ' +
+								Math.floor( colors.getY( i ) * 255 ) + ' ' +
+								Math.floor( colors.getZ( i ) * 255 );
 
 						} else {
 

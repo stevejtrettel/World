@@ -1,13 +1,13 @@
 import {
 	Matrix4,
 	Vector2
-} from 'three';
+} from '../../../build/three.module.js';
 /**
  * References:
  * https://lettier.github.io/3d-game-shaders-for-beginners/screen-space-reflection.html
  */
 
-const SSRShader = {
+var SSRShader = {
 
 	defines: {
 		MAX_STEP: 0,
@@ -231,7 +231,7 @@ const SSRShader = {
 
 };
 
-const SSRDepthShader = {
+var SSRDepthShader = {
 
 	defines: {
 		'PERSPECTIVE_CAMERA': 1
@@ -298,7 +298,7 @@ const SSRDepthShader = {
 
 };
 
-const SSRBlurShader = {
+var SSRBlurShader = {
 
 	uniforms: {
 

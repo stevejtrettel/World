@@ -1,6 +1,6 @@
 import {
 	WireframeGeometry
-} from 'three';
+} from '../../../build/three.module.js';
 import { LineSegmentsGeometry } from '../lines/LineSegmentsGeometry.js';
 
 class WireframeGeometry2 extends LineSegmentsGeometry {
@@ -8,8 +8,6 @@ class WireframeGeometry2 extends LineSegmentsGeometry {
 	constructor( geometry ) {
 
 		super();
-
-		this.isWireframeGeometry2 = true;
 
 		this.type = 'WireframeGeometry2';
 
@@ -20,5 +18,7 @@ class WireframeGeometry2 extends LineSegmentsGeometry {
 	}
 
 }
+
+WireframeGeometry2.prototype.isWireframeGeometry2 = true;
 
 export { WireframeGeometry2 };

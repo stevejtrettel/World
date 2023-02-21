@@ -3,7 +3,7 @@ import {
 	Float32BufferAttribute,
 	OrthographicCamera,
 	Mesh
-} from 'three';
+} from '../../../build/three.module.js';
 
 class Pass {
 
@@ -30,8 +30,6 @@ class Pass {
 		console.error( 'THREE.Pass: .render() must be implemented in derived pass.' );
 
 	}
-
-	dispose() {}
 
 }
 

@@ -1,14 +1,16 @@
-import { ColorInput, SliderInput, LabelElement } from '../../libs/flow.module.js';
-import { BaseNode } from '../core/BaseNode.js';
-import { MeshStandardNodeMaterial } from 'three/nodes';
+import { ObjectNode, ColorInput, SliderInput, LabelElement } from '../../libs/flow.module.js';
+import { MeshStandardNodeMaterial } from '../../renderers/nodes/Nodes.js';
+import * as THREE from '../../../../build/three.module.js';
 
-export class StandardMaterialEditor extends BaseNode {
+export class StandardMaterialEditor extends ObjectNode {
 
 	constructor() {
 
 		const material = new MeshStandardNodeMaterial();
 
-		super( 'Standard Material', 1, material );
+		super( 'Standard Material', 0, material );
+
+		this.title.setStyle( 'blue' );
 
 		this.setWidth( 300 );
 
@@ -16,9 +18,6 @@ export class StandardMaterialEditor extends BaseNode {
 		const opacity = new LabelElement( 'opacity' ).setInput( 1 );
 		const metalness = new LabelElement( 'metalness' ).setInput( 1 );
 		const roughness = new LabelElement( 'roughness' ).setInput( 1 );
-		const emissive = new LabelElement( 'emissive' ).setInput( 3 );
-		const normal = new LabelElement( 'normal' ).setInput( 3 );
-		const position = new LabelElement( 'position' ).setInput( 3 );
 
 		color.add( new ColorInput( material.color.getHex() ).onChange( ( input ) => {
 
@@ -50,25 +49,16 @@ export class StandardMaterialEditor extends BaseNode {
 		opacity.onConnect( () => this.update(), true );
 		metalness.onConnect( () => this.update(), true );
 		roughness.onConnect( () => this.update(), true );
-		emissive.onConnect( () => this.update(), true );
-		normal.onConnect( () => this.update(), true );
-		position.onConnect( () => this.update(), true );
 
 		this.add( color )
 			.add( opacity )
 			.add( metalness )
-			.add( roughness )
-			.add( emissive )
-			.add( normal )
-			.add( position );
+			.add( roughness );
 
 		this.color = color;
 		this.opacity = opacity;
 		this.metalness = metalness;
 		this.roughness = roughness;
-		this.emissive = emissive;
-		this.normal = normal;
-		this.position = position;
 
 		this.material = material;
 
@@ -78,25 +68,30 @@ export class StandardMaterialEditor extends BaseNode {
 
 	update() {
 
-		const { material, color, opacity, emissive, roughness, metalness, normal, position } = this;
+		const { material, color, opacity, roughness, metalness } = this;
 
-		color.setEnabledInputs( ! color.getLinkedObject() );
-		opacity.setEnabledInputs( ! opacity.getLinkedObject() );
-		roughness.setEnabledInputs( ! roughness.getLinkedObject() );
-		metalness.setEnabledInputs( ! metalness.getLinkedObject() );
+		color.setEnabledInputs( ! color.linkedExtra );
+		opacity.setEnabledInputs( ! opacity.linkedExtra );
+		roughness.setEnabledInputs( ! roughness.linkedExtra );
+		metalness.setEnabledInputs( ! metalness.linkedExtra );
 
-		material.colorNode = color.getLinkedObject();
-		material.opacityNode = opacity.getLinkedObject();
-		material.metalnessNode = metalness.getLinkedObject();
-		material.roughnessNode = roughness.getLinkedObject();
-		material.emissiveNode = emissive.getLinkedObject();
-		material.normalNode = normal.getLinkedObject();
+		material.colorNode = color.linkedExtra;
 
-		material.positionNode = position.getLinkedObject();
+		material.opacityNode = opacity.linkedExtra || null;
+
+		material.metalnessNode = metalness.linkedExtra;
+		material.roughnessNode = roughness.linkedExtra;
 
 		material.dispose();
 
 		this.updateTransparent();
+
+		// TODO: Fix on NodeMaterial System
+		material.customProgramCacheKey = () => {
+
+			return THREE.MathUtils.generateUUID();
+
+		};
 
 	}
 
@@ -104,14 +99,9 @@ export class StandardMaterialEditor extends BaseNode {
 
 		const { material, opacity } = this;
 
-		const transparent = opacity.getLinkedObject() || material.opacity < 1 ? true : false;
-		const needsUpdate = transparent !== material.transparent;
-
-		material.transparent = transparent;
+		material.transparent = opacity.linkedExtra || material.opacity < 1 ? true : false;
 
 		opacity.setIcon( material.transparent ? 'ti ti-layers-intersect' : 'ti ti-layers-subtract' );
-
-		if ( needsUpdate === true ) material.dispose();
 
 	}
 

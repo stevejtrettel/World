@@ -1,6 +1,6 @@
 import {
 	WebGLRenderTarget
-} from 'three';
+} from '../../../build/three.module.js';
 import { SSAARenderPass } from './SSAARenderPass.js';
 
 /**
@@ -28,7 +28,7 @@ class TAARenderPass extends SSAARenderPass {
 
 	render( renderer, writeBuffer, readBuffer, deltaTime ) {
 
-		if ( this.accumulate === false ) {
+		if ( ! this.accumulate ) {
 
 			super.render( renderer, writeBuffer, readBuffer, deltaTime );
 
@@ -39,21 +39,21 @@ class TAARenderPass extends SSAARenderPass {
 
 		const jitterOffsets = _JitterVectors[ 5 ];
 
-		if ( this.sampleRenderTarget === undefined ) {
+		if ( ! this.sampleRenderTarget ) {
 
 			this.sampleRenderTarget = new WebGLRenderTarget( readBuffer.width, readBuffer.height, this.params );
 			this.sampleRenderTarget.texture.name = 'TAARenderPass.sample';
 
 		}
 
-		if ( this.holdRenderTarget === undefined ) {
+		if ( ! this.holdRenderTarget ) {
 
 			this.holdRenderTarget = new WebGLRenderTarget( readBuffer.width, readBuffer.height, this.params );
 			this.holdRenderTarget.texture.name = 'TAARenderPass.hold';
 
 		}
 
-		if ( this.accumulateIndex === - 1 ) {
+		if ( this.accumulate && this.accumulateIndex === - 1 ) {
 
 			super.render( renderer, this.holdRenderTarget, readBuffer, deltaTime );
 
@@ -127,15 +127,6 @@ class TAARenderPass extends SSAARenderPass {
 		}
 
 		renderer.autoClear = autoClear;
-
-	}
-
-	dispose() {
-
-		super.dispose();
-
-		if ( this.sampleRenderTarget !== undefined ) this.sampleRenderTarget.dispose();
-		if ( this.holdRenderTarget !== undefined ) this.holdRenderTarget.dispose();
 
 	}
 

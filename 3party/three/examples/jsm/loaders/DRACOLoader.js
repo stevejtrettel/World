@@ -3,7 +3,7 @@ import {
 	BufferGeometry,
 	FileLoader,
 	Loader
-} from 'three';
+} from '../../../build/three.module.js';
 
 const _taskCache = new WeakMap();
 
@@ -73,12 +73,21 @@ class DRACOLoader extends Loader {
 
 		loader.load( url, ( buffer ) => {
 
-			this.decodeDracoFile( buffer, onLoad ).catch( onError );
+			const taskConfig = {
+				attributeIDs: this.defaultAttributeIDs,
+				attributeTypes: this.defaultAttributeTypes,
+				useUniqueIDs: false
+			};
+
+			this.decodeGeometry( buffer, taskConfig )
+				.then( onLoad )
+				.catch( onError );
 
 		}, onProgress, onError );
 
 	}
 
+	/** @deprecated Kept for backward-compatibility with previous DRACOLoader versions. */
 	decodeDracoFile( buffer, callback, attributeIDs, attributeTypes ) {
 
 		const taskConfig = {
@@ -87,11 +96,28 @@ class DRACOLoader extends Loader {
 			useUniqueIDs: !! attributeIDs
 		};
 
-		return this.decodeGeometry( buffer, taskConfig ).then( callback );
+		this.decodeGeometry( buffer, taskConfig ).then( callback );
 
 	}
 
 	decodeGeometry( buffer, taskConfig ) {
+
+		// TODO: For backward-compatibility, support 'attributeTypes' objects containing
+		// references (rather than names) to typed array constructors. These must be
+		// serialized before sending them to the worker.
+		for ( const attribute in taskConfig.attributeTypes ) {
+
+			const type = taskConfig.attributeTypes[ attribute ];
+
+			if ( type.BYTES_PER_ELEMENT !== undefined ) {
+
+				taskConfig.attributeTypes[ attribute ] = type.name;
+
+			}
+
+		}
+
+		//
 
 		const taskKey = JSON.stringify( taskConfig );
 
@@ -350,12 +376,6 @@ class DRACOLoader extends Loader {
 		}
 
 		this.workerPool.length = 0;
-
-		if ( this.workerSourceURL !== '' ) {
-
-			URL.revokeObjectURL( this.workerSourceURL );
-
-		}
 
 		return this;
 

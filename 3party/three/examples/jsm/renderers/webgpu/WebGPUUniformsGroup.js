@@ -7,8 +7,6 @@ class WebGPUUniformsGroup extends WebGPUUniformBuffer {
 
 		super( name );
 
-		this.isUniformsGroup = true;
-
 		// the order of uniforms in this array must match the order of uniforms in the shader
 
 		this.uniforms = [];
@@ -90,7 +88,7 @@ class WebGPUUniformsGroup extends WebGPUUniformBuffer {
 
 		}
 
-		return Math.ceil( offset / GPUChunkSize ) * GPUChunkSize;
+		return offset;
 
 	}
 
@@ -295,5 +293,7 @@ function arraysEqual( a, b, offset ) {
 	return true;
 
 }
+
+WebGPUUniformsGroup.prototype.isUniformsGroup = true;
 
 export default WebGPUUniformsGroup;

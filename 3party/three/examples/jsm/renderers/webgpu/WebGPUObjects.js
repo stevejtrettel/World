@@ -15,11 +15,15 @@ class WebGPUObjects {
 		const updateMap = this.updateMap;
 		const frame = this.info.render.frame;
 
-		if ( this.geometries.has( geometry ) === false || updateMap.get( geometry ) !== frame ) {
+		if ( geometry.isBufferGeometry !== true ) {
 
-			const material = object.material;
+			throw 'THREE.WebGPURenderer: This renderer only supports THREE.BufferGeometry for geometries.';
 
-			this.geometries.update( geometry, material.wireframe === true );
+		}
+
+		if ( updateMap.get( geometry ) !== frame ) {
+
+			this.geometries.update( geometry );
 
 			updateMap.set( geometry, frame );
 

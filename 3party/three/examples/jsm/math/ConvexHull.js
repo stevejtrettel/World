@@ -3,7 +3,7 @@ import {
 	Plane,
 	Triangle,
 	Vector3
-} from 'three';
+} from '../../../build/three.module.js';
 
 /**
  * Ported from: https://github.com/maurizzzio/quickhull3d/ by Mauricio Poppe (https://github.com/maurizzzio)
@@ -46,21 +46,27 @@ class ConvexHull {
 
 	setFromPoints( points ) {
 
-		// The algorithm needs at least four points.
+		if ( Array.isArray( points ) !== true ) {
 
-		if ( points.length >= 4 ) {
-
-			this.makeEmpty();
-
-			for ( let i = 0, l = points.length; i < l; i ++ ) {
-
-				this.vertices.push( new VertexNode( points[ i ] ) );
-
-			}
-
-			this.compute();
+			console.error( 'THREE.ConvexHull: Points parameter is not an array.' );
 
 		}
+
+		if ( points.length < 4 ) {
+
+			console.error( 'THREE.ConvexHull: The algorithm needs at least four points.' );
+
+		}
+
+		this.makeEmpty();
+
+		for ( let i = 0, l = points.length; i < l; i ++ ) {
+
+			this.vertices.push( new VertexNode( points[ i ] ) );
+
+		}
+
+		this.compute();
 
 		return this;
 
@@ -78,17 +84,26 @@ class ConvexHull {
 
 			if ( geometry !== undefined ) {
 
-				const attribute = geometry.attributes.position;
+				if ( geometry.isGeometry ) {
 
-				if ( attribute !== undefined ) {
+					console.error( 'THREE.ConvexHull no longer supports Geometry. Use THREE.BufferGeometry instead.' );
+					return;
 
-					for ( let i = 0, l = attribute.count; i < l; i ++ ) {
+				} else if ( geometry.isBufferGeometry ) {
 
-						const point = new Vector3();
+					const attribute = geometry.attributes.position;
 
-						point.fromBufferAttribute( attribute, i ).applyMatrix4( node.matrixWorld );
+					if ( attribute !== undefined ) {
 
-						points.push( point );
+						for ( let i = 0, l = attribute.count; i < l; i ++ ) {
+
+							const point = new Vector3();
+
+							point.fromBufferAttribute( attribute, i ).applyMatrix4( node.matrixWorld );
+
+							points.push( point );
+
+						}
 
 					}
 
@@ -122,7 +137,7 @@ class ConvexHull {
 
 	intersectRay( ray, target ) {
 
-		// based on "Fast Ray-Convex Polyhedron Intersection" by Eric Haines, GRAPHICS GEMS II
+		// based on "Fast Ray-Convex Polyhedron Intersection"  by Eric Haines, GRAPHICS GEMS II
 
 		const faces = this.faces;
 
@@ -156,7 +171,7 @@ class ConvexHull {
 
 			if ( vD > 0 ) {
 
-				// plane faces away from the ray, so this plane is a back-face
+				//  plane faces away from the ray, so this plane is a back-face
 
 				tFar = Math.min( t, tFar );
 
@@ -263,7 +278,7 @@ class ConvexHull {
 
 	}
 
-	// Removes all the visible vertices that a given face is able to see which are stored in the 'assigned' vertex list
+	// Removes all the visible vertices that a given face is able to see which are stored in the 'assigned' vertext list
 
 	removeAllVerticesFromFace( face ) {
 
@@ -1268,4 +1283,4 @@ class VertexList {
 
 }
 
-export { ConvexHull, Face, HalfEdge, VertexNode, VertexList };
+export { ConvexHull };

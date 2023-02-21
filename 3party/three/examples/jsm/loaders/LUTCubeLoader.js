@@ -5,11 +5,12 @@ import {
 	FileLoader,
 	Vector3,
 	DataTexture,
-	Data3DTexture,
+	DataTexture3D,
+	RGBFormat,
 	UnsignedByteType,
 	ClampToEdgeWrapping,
 	LinearFilter,
-} from 'three';
+} from '../../../build/three.module.js';
 
 export class LUTCubeLoader extends Loader {
 
@@ -76,7 +77,7 @@ export class LUTCubeLoader extends Loader {
 					// more precision than can be captured with Uint8Array.
 					const sizeToken = split[ 1 ];
 					size = parseFloat( sizeToken );
-					data = new Uint8Array( size * size * size * 4 );
+					data = new Uint8Array( size * size * size * 3 );
 					break;
 				case 'DOMAIN_MIN':
 					domainMin.x = parseFloat( split[ 1 ] );
@@ -106,8 +107,7 @@ export class LUTCubeLoader extends Loader {
 					data[ currIndex + 0 ] = r * 255;
 					data[ currIndex + 1 ] = g * 255;
 					data[ currIndex + 2 ] = b * 255;
-					data[ currIndex + 3 ] = 255;
-					currIndex += 4;
+					currIndex += 3;
 
 			}
 
@@ -117,6 +117,7 @@ export class LUTCubeLoader extends Loader {
 		texture.image.data = data;
 		texture.image.width = size;
 		texture.image.height = size * size;
+		texture.format = RGBFormat;
 		texture.type = UnsignedByteType;
 		texture.magFilter = LinearFilter;
 		texture.minFilter = LinearFilter;
@@ -125,11 +126,12 @@ export class LUTCubeLoader extends Loader {
 		texture.generateMipmaps = false;
 		texture.needsUpdate = true;
 
-		const texture3D = new Data3DTexture();
+		const texture3D = new DataTexture3D();
 		texture3D.image.data = data;
 		texture3D.image.width = size;
 		texture3D.image.height = size;
 		texture3D.image.depth = size;
+		texture3D.format = RGBFormat;
 		texture3D.type = UnsignedByteType;
 		texture3D.magFilter = LinearFilter;
 		texture3D.minFilter = LinearFilter;

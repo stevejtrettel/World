@@ -1,48 +1,114 @@
-import TempNode from '../core/Node.js';
+import { TempNode } from '../core/TempNode.js';
+import { NodeUtils } from '../core/NodeUtils.js';
+
+const inputs = NodeUtils.elements;
 
 class JoinNode extends TempNode {
 
-	constructor( nodes = [], nodeType = null ) {
+	constructor( x, y, z, w ) {
 
-		super( nodeType );
+		super( 'f' );
 
-		this.nodes = nodes;
+		this.x = x;
+		this.y = y;
+		this.z = z;
+		this.w = w;
 
 	}
 
-	getNodeType( builder ) {
+	getNumElements() {
 
-		if ( this.nodeType !== null ) {
+		let i = inputs.length;
 
-			return builder.getVectorType( this.nodeType );
+		while ( i -- ) {
+
+			if ( this[ inputs[ i ] ] !== undefined ) {
+
+				++ i;
+
+				break;
+
+			}
 
 		}
 
-		return builder.getTypeFromLength( this.nodes.reduce( ( count, cur ) => count + builder.getTypeLength( cur.getNodeType( builder ) ), 0 ) );
+		return Math.max( i, 2 );
+
+	}
+
+	getType( builder ) {
+
+		return builder.getTypeFromLength( this.getNumElements() );
 
 	}
 
 	generate( builder, output ) {
 
-		const type = this.getNodeType( builder );
-		const nodes = this.nodes;
+		const type = this.getType( builder ),
+			length = this.getNumElements(),
+			outputs = [];
 
-		const snippetValues = [];
+		for ( let i = 0; i < length; i ++ ) {
 
-		for ( const input of nodes ) {
+			const elm = this[ inputs[ i ] ];
 
-			const inputSnippet = input.build( builder );
-
-			snippetValues.push( inputSnippet );
+			outputs.push( elm ? elm.build( builder, 'f' ) : '0.0' );
 
 		}
 
-		const snippet = `${ builder.getType( type ) }( ${ snippetValues.join( ', ' ) } )`;
+		const code = ( length > 1 ? builder.getConstructorFromLength( length ) : '' ) + '( ' + outputs.join( ', ' ) + ' )';
 
-		return builder.format( snippet, type, output );
+		return builder.format( code, type, output );
+
+	}
+
+	copy( source ) {
+
+		super.copy( source );
+
+		for ( const prop in source.inputs ) {
+
+			this[ prop ] = source.inputs[ prop ];
+
+		}
+
+		return this;
+
+	}
+
+	toJSON( meta ) {
+
+		let data = this.getJSONNode( meta );
+
+		if ( ! data ) {
+
+			data = this.createJSONNode( meta );
+
+			data.inputs = {};
+
+			const length = this.getNumElements();
+
+			for ( let i = 0; i < length; i ++ ) {
+
+				const elm = this[ inputs[ i ] ];
+
+				if ( elm ) {
+
+					data.inputs[ inputs[ i ] ] = elm.toJSON( meta ).uuid;
+
+				}
+
+			}
+
+
+		}
+
+		return data;
 
 	}
 
 }
 
-export default JoinNode;
+JoinNode.prototype.nodeType = 'Join';
+
+export { JoinNode };

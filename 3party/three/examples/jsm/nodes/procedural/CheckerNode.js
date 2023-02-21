@@ -1,34 +1,75 @@
-import TempNode from '../core/TempNode.js';
-import { ShaderNode, uv, add, mul, floor, mod, sign } from '../shadernode/ShaderNodeBaseElements.js';
-
-const checkerShaderNode = new ShaderNode( ( inputs ) => {
-
-	const uv = mul( inputs.uv, 2.0 );
-
-	const cx = floor( uv.x );
-	const cy = floor( uv.y );
-	const result = mod( add( cx, cy ), 2.0 );
-
-	return sign( result );
-
-} );
+import { TempNode } from '../core/TempNode.js';
+import { FunctionNode } from '../core/FunctionNode.js';
+import { UVNode } from '../accessors/UVNode.js';
 
 class CheckerNode extends TempNode {
 
-	constructor( uvNode = uv() ) {
+	constructor( uv ) {
 
-		super( 'float' );
+		super( 'f' );
 
-		this.uvNode = uvNode;
+		this.uv = uv || new UVNode();
 
 	}
 
-	generate( builder ) {
+	generate( builder, output ) {
 
-		return checkerShaderNode.call( { uv: this.uvNode } ).build( builder );
+		const snoise = builder.include( CheckerNode.Nodes.checker );
+
+		return builder.format( snoise + '( ' + this.uv.build( builder, 'v2' ) + ' )', this.getType( builder ), output );
+
+	}
+
+	copy( source ) {
+
+		super.copy( source );
+
+		this.uv = source.uv;
+
+		return this;
+
+	}
+
+	toJSON( meta ) {
+
+		let data = this.getJSONNode( meta );
+
+		if ( ! data ) {
+
+			data = this.createJSONNode( meta );
+
+			data.uv = this.uv.toJSON( meta ).uuid;
+
+		}
+
+		return data;
 
 	}
 
 }
 
-export default CheckerNode;
+CheckerNode.Nodes = ( function () {
+
+	// https://github.com/mattdesl/glsl-checker/blob/master/index.glsl
+
+	const checker = new FunctionNode( /* glsl */`
+		float checker( vec2 uv ) {
+
+			float cx = floor( uv.x );
+			float cy = floor( uv.y );
+			float result = mod( cx + cy, 2.0 );
+
+			return sign( result );
+
+		}`
+	);
+
+	return {
+		checker: checker
+	};
+
+} )();
+
+CheckerNode.prototype.nodeType = 'Noise';
+
+export { CheckerNode };

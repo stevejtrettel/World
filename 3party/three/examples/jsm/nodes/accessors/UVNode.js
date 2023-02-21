@@ -1,41 +1,67 @@
-import AttributeNode from '../core/AttributeNode.js';
+import { TempNode } from '../core/TempNode.js';
+import { NodeLib } from '../core/NodeLib.js';
 
-class UVNode extends AttributeNode {
+class UVNode extends TempNode {
 
-	constructor( index = 0 ) {
+	constructor( index ) {
 
-		super( null, 'vec2' );
+		super( 'v2', { shared: false } );
 
-		this.isUVNode = true;
-
-		this.index = index;
-
-	}
-
-	getAttributeName( /*builder*/ ) {
-
-		const index = this.index;
-
-		return 'uv' + ( index > 0 ? index + 1 : '' );
+		this.index = index || 0;
 
 	}
 
-	serialize( data ) {
+	generate( builder, output ) {
 
-		super.serialize( data );
+		builder.requires.uv[ this.index ] = true;
 
-		data.index = this.index;
+		const uvIndex = this.index > 0 ? this.index + 1 : '';
+		const result = builder.isShader( 'vertex' ) ? 'uv' + uvIndex : 'vUv' + uvIndex;
+
+		return builder.format( result, this.getType( builder ), output );
 
 	}
 
-	deserialize( data ) {
+	copy( source ) {
 
-		super.deserialize( data );
+		super.copy( source );
 
-		this.index = data.index;
+		this.index = source.index;
+
+		return this;
+
+	}
+
+	toJSON( meta ) {
+
+		let data = this.getJSONNode( meta );
+
+		if ( ! data ) {
+
+			data = this.createJSONNode( meta );
+
+			data.index = this.index;
+
+		}
+
+		return data;
 
 	}
 
 }
 
-export default UVNode;
+UVNode.prototype.nodeType = 'UV';
+
+NodeLib.addKeyword( 'uv', function () {
+
+	return new UVNode();
+
+} );
+
+NodeLib.addKeyword( 'uv2', function () {
+
+	return new UVNode( 1 );
+
+} );
+
+export { UVNode };

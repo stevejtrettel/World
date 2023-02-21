@@ -32,6 +32,7 @@
  *
  **/
 
+import { LoaderUtils } from '../../../../build/three.module.js';
 import { LWO2Parser } from './LWO2Parser.js';
 import { LWO3Parser } from './LWO3Parser.js';
 
@@ -907,8 +908,6 @@ function DataViewReader( buffer ) {
 
 	this.dv = new DataView( buffer );
 	this.offset = 0;
-	this._textDecoder = new TextDecoder();
-	this._bytes = new Uint8Array( buffer );
 
 }
 
@@ -1066,34 +1065,35 @@ DataViewReader.prototype = {
 
 		if ( size === 0 ) return;
 
-		const start = this.offset;
-
-		let result;
-		let length;
+		// note: safari 9 doesn't support Uint8Array.indexOf; create intermediate array instead
+		var a = [];
 
 		if ( size ) {
 
-			length = size;
-			result = this._textDecoder.decode( new Uint8Array( this.dv.buffer, start, size ) );
+			for ( var i = 0; i < size; i ++ ) {
+
+				a[ i ] = this.getUint8();
+
+			}
 
 		} else {
 
-			// use 1:1 mapping of buffer to avoid redundant new array creation.
-			length = this._bytes.indexOf( 0, start ) - start;
+			var currentChar;
+			var len = 0;
 
-			result = this._textDecoder.decode( new Uint8Array( this.dv.buffer, start, length ) );
+			while ( currentChar !== 0 ) {
 
-			// account for null byte in length
-			length ++;
+				currentChar = this.getUint8();
+				if ( currentChar !== 0 ) a.push( currentChar );
+				len ++;
 
-			// if string with terminating nullbyte is uneven, extra nullbyte is added, skip that too
-			length += length % 2;
+			}
+
+			if ( ! isEven( len + 1 ) ) this.getUint8(); // if string with terminating nullbyte is uneven, extra nullbyte is added
 
 		}
 
-		this.skip( length );
-
-		return result;
+		return LoaderUtils.decodeText( new Uint8Array( a ) );
 
 	},
 
@@ -1211,7 +1211,7 @@ function stringOffset( string ) {
 // printBuffer( this.reader.dv.buffer, this.reader.offset, length );
 function printBuffer( buffer, from, to ) {
 
-	console.log( new TextDecoder().decode( new Uint8Array( buffer, from, to ) ) );
+	console.log( LoaderUtils.decodeText( new Uint8Array( buffer, from, to ) ) );
 
 }
 

@@ -5,9 +5,6 @@ class LineGeometry extends LineSegmentsGeometry {
 	constructor() {
 
 		super();
-
-		this.isLineGeometry = true;
-
 		this.type = 'LineGeometry';
 
 	}
@@ -16,10 +13,10 @@ class LineGeometry extends LineSegmentsGeometry {
 
 		// converts [ x1, y1, z1,  x2, y2, z2, ... ] to pairs format
 
-		const length = array.length - 3;
-		const points = new Float32Array( 2 * length );
+		var length = array.length - 3;
+		var points = new Float32Array( 2 * length );
 
-		for ( let i = 0; i < length; i += 3 ) {
+		for ( var i = 0; i < length; i += 3 ) {
 
 			points[ 2 * i ] = array[ i ];
 			points[ 2 * i + 1 ] = array[ i + 1 ];
@@ -41,10 +38,10 @@ class LineGeometry extends LineSegmentsGeometry {
 
 		// converts [ r1, g1, b1,  r2, g2, b2, ... ] to pairs format
 
-		const length = array.length - 3;
-		const colors = new Float32Array( 2 * length );
+		var length = array.length - 3;
+		var colors = new Float32Array( 2 * length );
 
-		for ( let i = 0; i < length; i += 3 ) {
+		for ( var i = 0; i < length; i += 3 ) {
 
 			colors[ 2 * i ] = array[ i ];
 			colors[ 2 * i + 1 ] = array[ i + 1 ];
@@ -64,9 +61,18 @@ class LineGeometry extends LineSegmentsGeometry {
 
 	fromLine( line ) {
 
-		const geometry = line.geometry;
+		var geometry = line.geometry;
 
-		this.setPositions( geometry.attributes.position.array ); // assumes non-indexed
+		if ( geometry.isGeometry ) {
+
+			console.error( 'THREE.LineGeometry no longer supports Geometry. Use THREE.BufferGeometry instead.' );
+			return;
+
+		} else if ( geometry.isBufferGeometry ) {
+
+			this.setPositions( geometry.attributes.position.array ); // assumes non-indexed
+
+		}
 
 		// set colors, maybe
 
@@ -75,5 +81,7 @@ class LineGeometry extends LineSegmentsGeometry {
 	}
 
 }
+
+LineGeometry.prototype.isLineGeometry = true;
 
 export { LineGeometry };

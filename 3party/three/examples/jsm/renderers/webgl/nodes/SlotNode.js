@@ -1,17 +1,13 @@
-import { Node } from 'three/nodes';
+import Node from '../../nodes/core/Node.js';
 
 class SlotNode extends Node {
 
-	constructor( params ) {
+	constructor( node, name, nodeType ) {
 
-		super( params.nodeType );
+		super( nodeType );
 
-		this.node = null;
-		this.source = null;
-		this.target = null;
-		this.inclusionType = 'replace';
-
-		Object.assign( this, params );
+		this.node = node;
+		this.name = name;
 
 	}
 

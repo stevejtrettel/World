@@ -1,23 +1,22 @@
-import { Element, LabelElement, NumberInput, SelectInput } from '../../libs/flow.module.js';
-import { UniformNode, OperatorNode } from 'three/nodes';
-import { BaseNode } from '../core/BaseNode.js';
+import { ObjectNode, SelectInput, LabelElement } from '../../libs/flow.module.js';
+import { OperatorNode, FloatNode } from '../../renderers/nodes/Nodes.js';
 
-export class OperatorEditor extends BaseNode {
+const NULL_VALUE = new FloatNode();
+
+export class OperatorEditor extends ObjectNode {
 
 	constructor() {
 
-		const NULL_VALUE = new UniformNode( 0 );
-
 		const node = new OperatorNode( '+', NULL_VALUE, NULL_VALUE );
 
-		super( 'Operator', 1, node, 150 );
+		super( 'Operator', 1, node, 250 );
 
 		const opInput = new SelectInput( [
-			{ name: 'Addition ( + )', value: '+' },
-			{ name: 'Subtraction ( - )', value: '-' },
-			{ name: 'Multiplication ( * )', value: '*' },
-			{ name: 'Division ( / )', value: '/' }
-		], '+' );
+			{ name: '+ Addition', value: '+' },
+			{ name: '- Subtraction', value: '-' },
+			{ name: '* Multiplication', value: '*' },
+			{ name: '/ Division', value: '/' }
+		] );
 
 		opInput.onChange( ( data ) => {
 
@@ -30,31 +29,19 @@ export class OperatorEditor extends BaseNode {
 		const aElement = new LabelElement( 'A' ).setInput( 3 );
 		const bElement = new LabelElement( 'B' ).setInput( 3 );
 
+		aElement.onConnect( () => {
 
-		aElement.add( new NumberInput().onChange( ( field ) => {
-
-			node.aNode.value = field.getValue();
-
-		} ) ).onConnect( ( elmt ) => {
-
-			elmt.setEnabledInputs( ! elmt.getLinkedObject() );
-			node.aNode = elmt.getLinkedObject() || NULL_VALUE;
+			node.aNode = aElement.linkedExtra || NULL_VALUE;
 
 		} );
 
-		bElement.add( new NumberInput().onChange( ( field ) => {
+		bElement.onConnect( () => {
 
-			node.bNode.value = field.getValue();
-
-		} ) ).onConnect( ( elmt ) => {
-
-			elmt.setEnabledInputs( ! elmt.getLinkedObject() );
-			node.bNode = elmt.getLinkedObject() || NULL_VALUE;
+			node.bNode = bElement.linkedExtra || NULL_VALUE;
 
 		} );
 
-
-		this.add( new Element().add( opInput ) )
+		this.add( new LabelElement( 'Operator' ).add( opInput ) )
 			.add( aElement )
 			.add( bElement );
 

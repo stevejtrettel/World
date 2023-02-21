@@ -1,11 +1,13 @@
 import {
+	LinearFilter,
 	LinearMipmapLinearFilter,
 	MeshBasicMaterial,
 	NoBlending,
+	RGBAFormat,
 	ShaderMaterial,
 	UniformsUtils,
 	WebGLRenderTarget
-} from 'three';
+} from '../../../build/three.module.js';
 import { Pass, FullScreenQuad } from './Pass.js';
 import { CopyShader } from '../shaders/CopyShader.js';
 import { LuminosityShader } from '../shaders/LuminosityShader.js';
@@ -33,6 +35,8 @@ class AdaptiveToneMappingPass extends Pass {
 		this.previousLuminanceRT = null;
 		this.currentLuminanceRT = null;
 
+		if ( CopyShader === undefined ) console.error( 'THREE.AdaptiveToneMappingPass relies on CopyShader' );
+
 		const copyShader = CopyShader;
 
 		this.copyUniforms = UniformsUtils.clone( copyShader.uniforms );
@@ -46,6 +50,9 @@ class AdaptiveToneMappingPass extends Pass {
 			depthTest: false
 
 		} );
+
+		if ( LuminosityShader === undefined )
+			console.error( 'THREE.AdaptiveToneMappingPass relies on LuminosityShader' );
 
 		this.materialLuminance = new ShaderMaterial( {
 
@@ -113,6 +120,9 @@ class AdaptiveToneMappingPass extends Pass {
 			defines: Object.assign( {}, this.adaptLuminanceShader.defines ),
 			blending: NoBlending
 		} );
+
+		if ( ToneMapShader === undefined )
+			console.error( 'THREE.AdaptiveToneMappingPass relies on ToneMapShader' );
 
 		this.materialToneMap = new ShaderMaterial( {
 
@@ -205,19 +215,19 @@ class AdaptiveToneMappingPass extends Pass {
 
 		}
 
+		const pars = { minFilter: LinearFilter, magFilter: LinearFilter, format: RGBAFormat }; // was RGB format. changed to RGBA format. see discussion in #8415 / #8450
 
-		this.luminanceRT = new WebGLRenderTarget( this.resolution, this.resolution );
+		this.luminanceRT = new WebGLRenderTarget( this.resolution, this.resolution, pars );
 		this.luminanceRT.texture.name = 'AdaptiveToneMappingPass.l';
 		this.luminanceRT.texture.generateMipmaps = false;
 
-		this.previousLuminanceRT = new WebGLRenderTarget( this.resolution, this.resolution );
+		this.previousLuminanceRT = new WebGLRenderTarget( this.resolution, this.resolution, pars );
 		this.previousLuminanceRT.texture.name = 'AdaptiveToneMappingPass.pl';
 		this.previousLuminanceRT.texture.generateMipmaps = false;
 
 		// We only need mipmapping for the current luminosity because we want a down-sampled version to sample in our adaptive shader
-
-		const pars = { minFilter: LinearMipmapLinearFilter, generateMipmaps: true };
-
+		pars.minFilter = LinearMipmapLinearFilter;
+		pars.generateMipmaps = true;
 		this.currentLuminanceRT = new WebGLRenderTarget( this.resolution, this.resolution, pars );
 		this.currentLuminanceRT.texture.name = 'AdaptiveToneMappingPass.cl';
 

@@ -1,6 +1,6 @@
 import {
 	Object3D
-} from 'three';
+} from '../../../build/three.module.js';
 
 import {
 	XRHandPrimitiveModel
@@ -83,13 +83,10 @@ class XRHandModelFactory {
 
 			}
 
-			controller.visible = true;
-
 		} );
 
 		controller.addEventListener( 'disconnected', () => {
 
-			controller.visible = false;
 			// handModel.motionController = null;
 			// handModel.remove( scene );
 			// scene = null;

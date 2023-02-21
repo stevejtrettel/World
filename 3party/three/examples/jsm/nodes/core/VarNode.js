@@ -1,103 +1,66 @@
-import Node from './Node.js';
-import OperatorNode from '../math/OperatorNode.js';
+import { Node } from './Node.js';
 
 class VarNode extends Node {
 
-	constructor( node, name = null ) {
+	constructor( type, value ) {
 
-		super();
+		super( type );
 
-		this.node = node;
-		this.name = name;
+		this.value = value;
 
 	}
 
-	op( op, ...params ) {
+	getType( builder ) {
 
-		this.node = new OperatorNode( op, this.node, ...params );
+		return builder.getTypeByFormat( this.type );
+
+	}
+
+	generate( builder, output ) {
+
+		const varying = builder.getVar( this.uuid, this.type );
+
+		if ( this.value && builder.isShader( 'vertex' ) ) {
+
+			builder.addNodeCode( varying.name + ' = ' + this.value.build( builder, this.getType( builder ) ) + ';' );
+
+		}
+
+		return builder.format( varying.name, this.getType( builder ), output );
+
+	}
+
+	copy( source ) {
+
+		super.copy( source );
+
+		this.type = source.type;
+		this.value = source.value;
 
 		return this;
 
 	}
 
-	assign( ...params ) {
+	toJSON( meta ) {
 
-		return this.op( '=', ...params );
+		let data = this.getJSONNode( meta );
 
-	}
+		if ( ! data ) {
 
-	add( ...params ) {
+			data = this.createJSONNode( meta );
 
-		return this.op( '+', ...params );
+			data.type = this.type;
 
-	}
-
-	sub( ...params ) {
-
-		return this.op( '-', ...params );
-
-	}
-
-	mul( ...params ) {
-
-		return this.op( '*', ...params );
-
-	}
-
-	div( ...params ) {
-
-		return this.op( '/', ...params );
-
-	}
-
-	isGlobal() {
-
-		return true;
-
-	}
-
-	getHash( builder ) {
-
-		return this.name || super.getHash( builder );
-
-	}
-
-	getNodeType( builder ) {
-
-		return this.node.getNodeType( builder );
-
-	}
-
-	generate( builder ) {
-
-		const node = this.node;
-		const name = this.name;
-
-		if ( name === null && node.isTempNode === true ) {
-
-			return node.build( builder );
+			if ( this.value ) data.value = this.value.toJSON( meta ).uuid;
 
 		}
 
-		const type = builder.getVectorType( this.getNodeType( builder ) );
-
-		const snippet = node.build( builder, type );
-		const nodeVar = builder.getVarFromNode( this, type );
-
-		if ( name !== null ) {
-
-			nodeVar.name = name;
-
-		}
-
-		const propertyName = builder.getPropertyName( nodeVar );
-
-		builder.addFlowCode( `${propertyName} = ${snippet}` );
-
-		return propertyName;
+		return data;
 
 	}
 
 }
 
-export default VarNode;
+VarNode.prototype.nodeType = 'Var';
+
+export { VarNode };

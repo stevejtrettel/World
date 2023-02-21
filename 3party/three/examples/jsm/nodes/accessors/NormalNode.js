@@ -1,85 +1,139 @@
-import Node from '../core/Node.js';
-import AttributeNode from '../core/AttributeNode.js';
-import VaryingNode from '../core/VaryingNode.js';
-import ModelNode from '../accessors/ModelNode.js';
-import CameraNode from '../accessors/CameraNode.js';
-import OperatorNode from '../math/OperatorNode.js';
-import MathNode from '../math/MathNode.js';
+import { TempNode } from '../core/TempNode.js';
+import { NodeLib } from '../core/NodeLib.js';
 
-class NormalNode extends Node {
+class NormalNode extends TempNode {
 
-	constructor( scope = NormalNode.LOCAL ) {
+	constructor( scope ) {
 
-		super( 'vec3' );
+		super( 'v3' );
 
-		this.scope = scope;
+		this.scope = scope || NormalNode.VIEW;
 
 	}
 
-	isGlobal() {
+	getShared() {
 
-		return true;
+		// if shared is false, TempNode will not create temp variable (for optimization)
 
-	}
-
-	getHash( /*builder*/ ) {
-
-		return `normal-${this.scope}`;
+		return this.scope === NormalNode.WORLD;
 
 	}
 
-	generate( builder ) {
+	build( builder, output, uuid, ns ) {
 
-		const scope = this.scope;
+		const contextNormal = builder.context[ this.scope + 'Normal' ];
 
-		let outputNode = null;
+		if ( contextNormal ) {
 
-		if ( scope === NormalNode.GEOMETRY ) {
-
-			outputNode = new AttributeNode( 'normal', 'vec3' );
-
-		} else if ( scope === NormalNode.LOCAL ) {
-
-			outputNode = new VaryingNode( new NormalNode( NormalNode.GEOMETRY ) );
-
-		} else if ( scope === NormalNode.VIEW ) {
-
-			const vertexNode = new OperatorNode( '*', new ModelNode( ModelNode.NORMAL_MATRIX ), new NormalNode( NormalNode.LOCAL ) );
-			outputNode = new MathNode( MathNode.NORMALIZE, new VaryingNode( vertexNode ) );
-
-		} else if ( scope === NormalNode.WORLD ) {
-
-			// To use INVERSE_TRANSFORM_DIRECTION only inverse the param order like this: MathNode( ..., Vector, Matrix );
-			const vertexNode = new MathNode( MathNode.TRANSFORM_DIRECTION, new NormalNode( NormalNode.VIEW ), new CameraNode( CameraNode.VIEW_MATRIX ) );
-			outputNode = new MathNode( MathNode.NORMALIZE, new VaryingNode( vertexNode ) );
+			return contextNormal.build( builder, output, uuid, ns );
 
 		}
 
-		return outputNode.build( builder, this.getNodeType( builder ) );
+		return super.build( builder, output, uuid );
 
 	}
 
-	serialize( data ) {
+	generate( builder, output ) {
 
-		super.serialize( data );
+		let result;
 
-		data.scope = this.scope;
+		switch ( this.scope ) {
+
+			case NormalNode.VIEW:
+
+				if ( builder.isShader( 'vertex' ) ) result = 'transformedNormal';
+				else result = 'geometryNormal';
+
+				break;
+
+			case NormalNode.LOCAL:
+
+				if ( builder.isShader( 'vertex' ) ) {
+
+					result = 'objectNormal';
+
+				} else {
+
+					builder.requires.normal = true;
+
+					result = 'vObjectNormal';
+
+				}
+
+				break;
+
+			case NormalNode.WORLD:
+
+				if ( builder.isShader( 'vertex' ) ) {
+
+					result = 'inverseTransformDirection( transformedNormal, viewMatrix ).xyz';
+
+				} else {
+
+					builder.requires.worldNormal = true;
+
+					result = 'vWNormal';
+
+				}
+
+				break;
+
+		}
+
+		return builder.format( result, this.getType( builder ), output );
 
 	}
 
-	deserialize( data ) {
+	copy( source ) {
 
-		super.deserialize( data );
+		super.copy( source );
 
-		this.scope = data.scope;
+		this.scope = source.scope;
+
+		return this;
+
+	}
+
+	toJSON( meta ) {
+
+		let data = this.getJSONNode( meta );
+
+		if ( ! data ) {
+
+			data = this.createJSONNode( meta );
+
+			data.scope = this.scope;
+
+		}
+
+		return data;
 
 	}
 
 }
 
-NormalNode.GEOMETRY = 'geometry';
 NormalNode.LOCAL = 'local';
-NormalNode.VIEW = 'view';
 NormalNode.WORLD = 'world';
+NormalNode.VIEW = 'view';
 
-export default NormalNode;
+NormalNode.prototype.nodeType = 'Normal';
+
+NodeLib.addKeyword( 'viewNormal', function () {
+
+	return new NormalNode( NormalNode.VIEW );
+
+} );
+
+NodeLib.addKeyword( 'localNormal', function () {
+
+	return new NormalNode( NormalNode.NORMAL );
+
+} );
+
+NodeLib.addKeyword( 'worldNormal', function () {
+
+	return new NormalNode( NormalNode.WORLD );
+
+} );
+
+export { NormalNode };

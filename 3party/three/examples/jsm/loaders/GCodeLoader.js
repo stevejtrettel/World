@@ -1,12 +1,13 @@
 import {
 	BufferGeometry,
+	Euler,
 	FileLoader,
 	Float32BufferAttribute,
 	Group,
 	LineBasicMaterial,
 	LineSegments,
 	Loader
-} from 'three';
+} from '../../../build/three.module.js';
 
 /**
  * GCodeLoader is used to load gcode files usually used for 3D printing or CNC applications.
@@ -188,6 +189,7 @@ class GCodeLoader extends Loader {
 				line.y = args.y !== undefined ? args.y : line.y;
 				line.z = args.z !== undefined ? args.z : line.z;
 				line.e = args.e !== undefined ? args.e : line.e;
+				state = line;
 
 			} else {
 
@@ -250,7 +252,7 @@ class GCodeLoader extends Loader {
 
 		}
 
-		object.rotation.set( - Math.PI / 2, 0, 0 );
+		object.quaternion.setFromEuler( new Euler( - Math.PI / 2, 0, 0 ) );
 
 		return object;
 

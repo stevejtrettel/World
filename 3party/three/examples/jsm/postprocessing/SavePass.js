@@ -1,8 +1,10 @@
 import {
+	LinearFilter,
+	RGBFormat,
 	ShaderMaterial,
 	UniformsUtils,
 	WebGLRenderTarget
-} from 'three';
+} from '../../../build/three.module.js';
 import { Pass, FullScreenQuad } from './Pass.js';
 import { CopyShader } from '../shaders/CopyShader.js';
 
@@ -11,6 +13,8 @@ class SavePass extends Pass {
 	constructor( renderTarget ) {
 
 		super();
+
+		if ( CopyShader === undefined ) console.error( 'THREE.SavePass relies on CopyShader' );
 
 		const shader = CopyShader;
 
@@ -30,7 +34,7 @@ class SavePass extends Pass {
 
 		if ( this.renderTarget === undefined ) {
 
-			this.renderTarget = new WebGLRenderTarget(); // will be resized later
+			this.renderTarget = new WebGLRenderTarget( window.innerWidth, window.innerHeight, { minFilter: LinearFilter, magFilter: LinearFilter, format: RGBFormat } );
 			this.renderTarget.texture.name = 'SavePass.rt';
 
 		}
@@ -52,22 +56,6 @@ class SavePass extends Pass {
 		renderer.setRenderTarget( this.renderTarget );
 		if ( this.clear ) renderer.clear();
 		this.fsQuad.render( renderer );
-
-	}
-
-	setSize( width, height ) {
-
-		this.renderTarget.setSize( width, height );
-
-	}
-
-	dispose() {
-
-		this.renderTarget.dispose();
-
-		this.material.dispose();
-
-		this.fsQuad.dispose();
 
 	}
 

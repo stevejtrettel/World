@@ -1,17 +1,20 @@
 import {
 	Color,
 	FrontSide,
+	LinearFilter,
+	MathUtils,
 	Matrix4,
 	Mesh,
 	PerspectiveCamera,
 	Plane,
+	RGBFormat,
 	ShaderMaterial,
 	UniformsLib,
 	UniformsUtils,
 	Vector3,
 	Vector4,
 	WebGLRenderTarget
-} from 'three';
+} from '../../../build/three.module.js';
 
 /**
  * Work based on :
@@ -25,8 +28,6 @@ class Water extends Mesh {
 	constructor( geometry, options = {} ) {
 
 		super( geometry );
-
-		this.isWater = true;
 
 		const scope = this;
 
@@ -63,7 +64,19 @@ class Water extends Mesh {
 
 		const mirrorCamera = new PerspectiveCamera();
 
-		const renderTarget = new WebGLRenderTarget( textureWidth, textureHeight );
+		const parameters = {
+			minFilter: LinearFilter,
+			magFilter: LinearFilter,
+			format: RGBFormat
+		};
+
+		const renderTarget = new WebGLRenderTarget( textureWidth, textureHeight, parameters );
+
+		if ( ! MathUtils.isPowerOfTwo( textureWidth ) || ! MathUtils.isPowerOfTwo( textureHeight ) ) {
+
+			renderTarget.texture.generateMipmaps = false;
+
+		}
 
 		const mirrorShader = {
 
@@ -325,5 +338,7 @@ class Water extends Mesh {
 	}
 
 }
+
+Water.prototype.isWater = true;
 
 export { Water };

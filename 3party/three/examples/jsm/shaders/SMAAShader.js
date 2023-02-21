@@ -1,6 +1,6 @@
 import {
 	Vector2
-} from 'three';
+} from '../../../build/three.module.js';
 
 /**
  * WebGL port of Subpixel Morphological Antialiasing (SMAA) v2.8

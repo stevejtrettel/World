@@ -1,17 +1,16 @@
-import { LabelElement } from '../../libs/flow.module.js';
-import { BaseNode } from '../core/BaseNode.js';
-import { MathNode, UniformNode } from 'three/nodes';
+import { ObjectNode, LabelElement } from '../../libs/flow.module.js';
+import { MathNode, FloatNode } from '../../renderers/nodes/Nodes.js';
 
-const NULL_VALUE = new UniformNode( 0 );
-const ONE_VALUE = new UniformNode( 1 );
+const NULL_VALUE = new FloatNode();
+const ONE_VALUE = new FloatNode( 1 );
 
-export class BlendEditor extends BaseNode {
+export class BlendEditor extends ObjectNode {
 
 	constructor() {
 
 		const node = new MathNode( MathNode.MIX, NULL_VALUE, NULL_VALUE, ONE_VALUE );
 
-		super( 'Blend', 3, node, 200 );
+		super( 'Blend', 3, node );
 
 		const aElement = new LabelElement( 'Base' ).setInput( 3 );
 		const bElement = new LabelElement( 'Blend' ).setInput( 3 );
@@ -19,19 +18,19 @@ export class BlendEditor extends BaseNode {
 
 		aElement.onConnect( () => {
 
-			node.aNode = aElement.getLinkedObject() || NULL_VALUE;
+			node.aNode = aElement.linkedExtra || NULL_VALUE;
 
 		} );
 
 		bElement.onConnect( () => {
 
-			node.bNode = bElement.getLinkedObject() || NULL_VALUE;
+			node.bNode = bElement.linkedExtra || NULL_VALUE;
 
 		} );
 
 		cElement.onConnect( () => {
 
-			node.cNode = cElement.getLinkedObject() || ONE_VALUE;
+			node.cNode = cElement.linkedExtra || ONE_VALUE;
 
 		} );
 

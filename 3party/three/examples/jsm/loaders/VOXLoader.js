@@ -1,6 +1,6 @@
 import {
 	BufferGeometry,
-	Data3DTexture,
+	DataTexture3D,
 	FileLoader,
 	Float32BufferAttribute,
 	Loader,
@@ -9,7 +9,7 @@ import {
 	MeshStandardMaterial,
 	NearestFilter,
 	RedFormat
-} from 'three';
+} from '../../../build/three.module.js';
 
 class VOXLoader extends Loader {
 
@@ -107,12 +107,12 @@ class VOXLoader extends Loader {
 
 			for ( let j = 0; j < 4; j ++ ) {
 
-				id += String.fromCharCode( data.getUint8( i ++ ) );
+				id += String.fromCharCode( data.getUint8( i ++, true ) );
 
 			}
 
 			const chunkSize = data.getUint32( i, true ); i += 4;
-			i += 4; // childChunks
+			data.getUint32( i, true ); i += 4; // childChunks
 
 			if ( id === 'SIZE' ) {
 
@@ -266,7 +266,7 @@ class VOXMesh extends Mesh {
 
 }
 
-class VOXData3DTexture extends Data3DTexture {
+class VOXDataTexture3D extends DataTexture3D {
 
 	constructor( chunk ) {
 
@@ -302,4 +302,4 @@ class VOXData3DTexture extends Data3DTexture {
 
 }
 
-export { VOXLoader, VOXMesh, VOXData3DTexture };
+export { VOXLoader, VOXMesh, VOXDataTexture3D };

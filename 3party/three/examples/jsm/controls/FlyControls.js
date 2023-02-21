@@ -2,7 +2,7 @@ import {
 	EventDispatcher,
 	Quaternion,
 	Vector3
-} from 'three';
+} from '../../../build/three.module.js';
 
 const _changeEvent = { type: 'change' };
 
@@ -11,6 +11,13 @@ class FlyControls extends EventDispatcher {
 	constructor( object, domElement ) {
 
 		super();
+
+		if ( domElement === undefined ) {
+
+			console.warn( 'THREE.FlyControls: The second parameter "domElement" is now mandatory.' );
+			domElement = document;
+
+		}
 
 		this.object = object;
 		this.domElement = domElement;
@@ -36,7 +43,7 @@ class FlyControls extends EventDispatcher {
 
 		this.tmpQuaternion = new Quaternion();
 
-		this.status = 0;
+		this.mouseStatus = 0;
 
 		this.moveState = { up: 0, down: 0, left: 0, right: 0, forward: 0, back: 0, pitchUp: 0, pitchDown: 0, yawLeft: 0, yawRight: 0, rollLeft: 0, rollRight: 0 };
 		this.moveVector = new Vector3( 0, 0, 0 );
@@ -112,11 +119,11 @@ class FlyControls extends EventDispatcher {
 
 		};
 
-		this.pointerdown = function ( event ) {
+		this.mousedown = function ( event ) {
 
 			if ( this.dragToLook ) {
 
-				this.status ++;
+				this.mouseStatus ++;
 
 			} else {
 
@@ -133,9 +140,9 @@ class FlyControls extends EventDispatcher {
 
 		};
 
-		this.pointermove = function ( event ) {
+		this.mousemove = function ( event ) {
 
-			if ( ! this.dragToLook || this.status > 0 ) {
+			if ( ! this.dragToLook || this.mouseStatus > 0 ) {
 
 				const container = this.getContainerDimensions();
 				const halfWidth = container.size[ 0 ] / 2;
@@ -150,11 +157,11 @@ class FlyControls extends EventDispatcher {
 
 		};
 
-		this.pointerup = function ( event ) {
+		this.mouseup = function ( event ) {
 
 			if ( this.dragToLook ) {
 
-				this.status --;
+				this.mouseStatus --;
 
 				this.moveState.yawLeft = this.moveState.pitchDown = 0;
 
@@ -245,25 +252,26 @@ class FlyControls extends EventDispatcher {
 		this.dispose = function () {
 
 			this.domElement.removeEventListener( 'contextmenu', contextmenu );
-			this.domElement.removeEventListener( 'pointerdown', _pointerdown );
-			this.domElement.removeEventListener( 'pointermove', _pointermove );
-			this.domElement.removeEventListener( 'pointerup', _pointerup );
+			this.domElement.removeEventListener( 'mousedown', _mousedown );
+			this.domElement.removeEventListener( 'mousemove', _mousemove );
+			this.domElement.removeEventListener( 'mouseup', _mouseup );
 
 			window.removeEventListener( 'keydown', _keydown );
 			window.removeEventListener( 'keyup', _keyup );
 
 		};
 
-		const _pointermove = this.pointermove.bind( this );
-		const _pointerdown = this.pointerdown.bind( this );
-		const _pointerup = this.pointerup.bind( this );
+		const _mousemove = this.mousemove.bind( this );
+		const _mousedown = this.mousedown.bind( this );
+		const _mouseup = this.mouseup.bind( this );
 		const _keydown = this.keydown.bind( this );
 		const _keyup = this.keyup.bind( this );
 
 		this.domElement.addEventListener( 'contextmenu', contextmenu );
-		this.domElement.addEventListener( 'pointerdown', _pointerdown );
-		this.domElement.addEventListener( 'pointermove', _pointermove );
-		this.domElement.addEventListener( 'pointerup', _pointerup );
+
+		this.domElement.addEventListener( 'mousemove', _mousemove );
+		this.domElement.addEventListener( 'mousedown', _mousedown );
+		this.domElement.addEventListener( 'mouseup', _mouseup );
 
 		window.addEventListener( 'keydown', _keydown );
 		window.addEventListener( 'keyup', _keyup );

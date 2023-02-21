@@ -5,7 +5,7 @@ import {
 	ShaderMaterial,
 	UniformsUtils,
 	Vector3
-} from 'three';
+} from '../../../build/three.module.js';
 
 /**
  * Based on "A Practical Analytic Model for Daylight"
@@ -38,11 +38,11 @@ class Sky extends Mesh {
 
 		super( new BoxGeometry( 1, 1, 1 ), material );
 
-		this.isSky = true;
-
 	}
 
 }
+
+Sky.prototype.isSky = true;
 
 Sky.SkyShader = {
 
