@@ -9,7 +9,7 @@ import {
 
 import {colorConversion} from "../../shaders/colors/colorConversion.js";
 import TextureShader from "../../gpu/components/TextureShader.js";
-import {globals} from "../../../template/src/globals.js";
+import {globals} from "../../World/globals.js";
 
 
 //need to make a function vec3 fragColor();

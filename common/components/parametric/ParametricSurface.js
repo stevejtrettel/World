@@ -34,12 +34,12 @@ const defaultMatOptions = {};
 
 
 class ParametricSurface {
-    constructor(eqn, domain, uniforms, colorFn=defaultColorFn, options = defaultMatOptions) {
+    constructor(eqn, domain, uniforms, colorFn=defaultColorFn, options = defaultMatOptions, res=[1024,1024]) {
 
         this.eqn = eqn;
         this.domain = domain;
         this.colorFn = colorFn;
-        this.res = [1024,1024];
+        this.res = res;
 
         //get the desired material properties
         this.options = options;

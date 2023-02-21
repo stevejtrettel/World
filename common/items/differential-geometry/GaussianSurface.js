@@ -1,7 +1,7 @@
 import { Vector2, Vector3 } from "../../../3party/three/build/three.module.js";
 
 
-import{ globals } from "../../../template/src/globals.js";
+import{ globals } from "../../World/globals.js";
 import { ComputeSystem } from "../../gpu/ComputeSystem.js";
 import {ComputeMaterial} from "../../materials/ComputeMaterial.js";
 import { colorConversion } from "../../shaders/colors/colorConversion.js";

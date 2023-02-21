@@ -1,4 +1,4 @@
-import { globals } from "../../../template/src/globals.js";
+import { globals } from "../../World/globals.js";
 import {
     DoubleSide,
     LinearFilter,

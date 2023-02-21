@@ -1,6 +1,6 @@
 import { Vector3 } from "../../3party/three/build/three.module.js";
 
-import {globals} from "../../template/src/globals.js";
+import {globals} from "../World/globals.js";
 
 import{ VerletCollision } from "../gpu/VerletCollision.js";
 import {VerletDissipative } from "../gpu/VerletDissipative.js";

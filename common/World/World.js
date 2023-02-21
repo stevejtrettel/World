@@ -5,19 +5,21 @@ import { Resizer } from "./Resizer.js";
 
 import { createCamera } from "./components/createCamera.js";
 import { createScene } from "./components/createScene.js";
-//import { createStats, placeStats } from "./components/createStats.js";
+import { createStats, placeStats } from "./components/createStats.js";
 import { createControls } from "./components/createControls.js";
+import {createPMREM, createRenderer} from "./components/createRenderer.js";
 
 
 class World {
 
-    constructor( container, renderer, options ) {
+    constructor( container, options ) {
 
         this.container = container;
-        this.renderer = renderer;
+        this.renderer = createRenderer(options.renderer={});
+        this.pmrem = createPMREM(this.renderer);
+
         //the renderer creates a canvas element: append it to the html
         this.container.append( this.renderer.domElement );
-
 
         this.camera = createCamera(options.camera);
         this.scene = createScene( options.environment.color );
@@ -30,10 +32,14 @@ class World {
         this.controls = createControls( this.camera, this.renderer.domElement, options.controls);
         this.loop.add( this.controls );
 
-         //
-         // this.stats = createStats();
-         // placeStats( this.stats );
-        this.stats=null;
+
+        if(options.stats) {
+            this.stats = createStats();
+            placeStats(this.stats);
+        }
+        else {
+            this.stats = null;
+        }
 
         this.ui = new UI();
         this.resizer = new Resizer( this.container, this.camera, this.renderer );
@@ -46,7 +52,6 @@ class World {
 
     addGlobalParams () {
         //takes in a list of global parameters to add to UI
-
     }
 
 

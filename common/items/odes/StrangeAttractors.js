@@ -1,7 +1,7 @@
 import { ComputeSystem } from "../../gpu/ComputeSystem.js";
 import { ComputeParticles} from "../../materials/ComputeParticles.js";
 
-import { globals } from "../../../template/src/globals.js";
+import { globals } from "../../World/globals.js";
 import { randomFns } from "../../shaders/math/random.js";
 import { allAttractors } from "../../shaders/odes/attractors.js";
 import {rk4_vec3 as rk4} from "../../shaders/odes/rk4.js";

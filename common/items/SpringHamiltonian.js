@@ -1,5 +1,5 @@
 
-import {globals} from "../../template/src/globals.js";
+import {globals} from "../World/globals.js";
 
 import {VerletHamiltonian } from "../gpu/VerletHamiltonian.js";
 import { CSSpheres } from "../gpu/displays/CSSpheres.js";

@@ -10,7 +10,7 @@ import {
 	UniformsUtils,
 	Vector2,
 	Vector4
-} from '../../../build/three.module.js';
+} from 'three';
 import { Reflector } from '../objects/Reflector.js';
 import { Refractor } from '../objects/Refractor.js';
 
@@ -26,6 +26,8 @@ class Water extends Mesh {
 	constructor( geometry, options = {} ) {
 
 		super( geometry );
+
+		this.isWater = true;
 
 		this.type = 'Water';
 
@@ -200,8 +202,6 @@ class Water extends Mesh {
 	}
 
 }
-
-Water.prototype.isWater = true;
 
 Water.WaterShader = {
 

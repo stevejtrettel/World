@@ -2,7 +2,7 @@ import {
     WebGLRenderer,
     sRGBEncoding,
     CineonToneMapping,
-    ACESFilmicToneMapping,
+    ACESFilmicToneMapping, PMREMGenerator,
 } from "../../../3party/three/build/three.module.js";
 
 
@@ -27,4 +27,11 @@ function createRenderer ( ) {
 
 }
 
-export { createRenderer };
+
+function createPMREM(renderer){
+    let  pmremGen = new PMREMGenerator(renderer);
+    pmremGen.compileCubemapShader();
+    return pmremGen;
+}
+
+export { createRenderer, createPMREM };

@@ -36,7 +36,7 @@ import {
 	RGB_PVRTC_2BPPV1_Format,
 	RGB_ETC1_Format,
 	RGB_ETC2_Format
-} from '../../../build/three.module.js';
+} from 'three';
 import { MMDToonShader } from '../shaders/MMDToonShader.js';
 import { TGALoader } from '../loaders/TGALoader.js';
 import { MMDParser } from '../libs/mmdparser.module.js';
@@ -336,13 +336,7 @@ class MMDLoader extends Loader {
 
 		if ( this.parser === null ) {
 
-			if ( typeof MMDParser === 'undefined' ) {
-
-				throw new Error( 'THREE.MMDLoader: Import MMDParser https://github.com/takahirox/mmd-parser' );
-
-			}
-
-			this.parser = new MMDParser.Parser(); // eslint-disable-line no-undef
+			this.parser = new MMDParser.Parser();
 
 		}
 
@@ -1140,7 +1134,7 @@ class MaterialBuilder {
 
 			if ( data.metadata.format === 'pmd' ) {
 
-				// map, envMap
+				// map, matcap
 
 				if ( material.fileName ) {
 
@@ -1148,7 +1142,7 @@ class MaterialBuilder {
 					const fileNames = fileName.split( '*' );
 
 					// fileNames[ 0 ]: mapFileName
-					// fileNames[ 1 ]: envMapFileName( optional )
+					// fileNames[ 1 ]: matcapFileName( optional )
 
 					params.map = this._loadTexture( fileNames[ 0 ], textures );
 
@@ -1156,12 +1150,12 @@ class MaterialBuilder {
 
 						const extension = fileNames[ 1 ].slice( - 4 ).toLowerCase();
 
-						params.envMap = this._loadTexture(
+						params.matcap = this._loadTexture(
 							fileNames[ 1 ],
 							textures
 						);
 
-						params.combine = extension === '.sph'
+						params.matcapCombine = extension === '.sph'
 							? MultiplyOperation
 							: AddOperation;
 
@@ -1208,7 +1202,7 @@ class MaterialBuilder {
 
 				}
 
-				// envMap TODO: support m.envFlag === 3
+				// matcap TODO: support m.envFlag === 3
 
 				if ( material.envTextureIndex !== - 1 && ( material.envFlag === 1 || material.envFlag == 2 ) ) {
 
@@ -2080,6 +2074,10 @@ class MMDToonMaterial extends ShaderMaterial {
 
 		super();
 
+		this.isMMDToonMaterial = true;
+
+		this.type = 'MMDToonMaterial';
+
 		this._matcapCombine = AddOperation;
 		this.emissiveIntensity = 1.0;
 		this.normalMapType = TangentSpaceNormalMap;
@@ -2133,7 +2131,6 @@ class MMDToonMaterial extends ShaderMaterial {
 		// merged from MeshToon/Phong/MatcapMaterial
 		const exposePropertyNames = [
 			'specular',
-			'shininess',
 			'opacity',
 			'diffuse',
 
@@ -2164,7 +2161,6 @@ class MMDToonMaterial extends ShaderMaterial {
 
 			'alphaMap',
 
-			'envMap',
 			'reflectivity',
 			'refractionRatio',
 		];
@@ -2187,6 +2183,25 @@ class MMDToonMaterial extends ShaderMaterial {
 			} );
 
 		}
+
+		// Special path for shininess to handle zero shininess properly
+		this._shininess = 30;
+		Object.defineProperty( this, 'shininess', {
+
+			get: function () {
+
+				return this._shininess;
+
+			},
+
+			set: function ( value ) {
+
+				this._shininess = value;
+				this.uniforms.shininess.value = Math.max( this._shininess, 1e-4 ); // To prevent pow( 0.0, 0.0 )
+
+			},
+
+		} );
 
 		Object.defineProperty(
 			this,
@@ -2218,7 +2233,5 @@ class MMDToonMaterial extends ShaderMaterial {
 	}
 
 }
-
-MMDToonMaterial.prototype.isMMDToonMaterial = true;
 
 export { MMDLoader };

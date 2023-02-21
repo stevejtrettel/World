@@ -1,4 +1,4 @@
-import{ globals } from "../../../template/src/globals.js";
+import{ globals } from "../../World/globals.js";
 import { ComputeSystem } from "../../gpu/ComputeSystem.js";
 import { CSQuad } from "../../gpu/displays/CSQuad.js";
 import {ComputeMaterial} from "../../materials/ComputeMaterial.js";

@@ -1,7 +1,7 @@
 import {
 	ShaderMaterial,
 	UniformsUtils
-} from '../../../build/three.module.js';
+} from 'three';
 import { Pass, FullScreenQuad } from './Pass.js';
 import { CopyShader } from '../shaders/CopyShader.js';
 
@@ -10,8 +10,6 @@ class TexturePass extends Pass {
 	constructor( map, opacity ) {
 
 		super();
-
-		if ( CopyShader === undefined ) console.error( 'THREE.TexturePass relies on CopyShader' );
 
 		const shader = CopyShader;
 
@@ -52,6 +50,14 @@ class TexturePass extends Pass {
 		this.fsQuad.render( renderer );
 
 		renderer.autoClear = oldAutoClear;
+
+	}
+
+	dispose() {
+
+		this.material.dispose();
+
+		this.fsQuad.dispose();
 
 	}
 
