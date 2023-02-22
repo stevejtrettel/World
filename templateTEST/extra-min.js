@@ -1,0 +1,1 @@
+import{MeshNormalMaterial,SphereGeometry,Mesh}from"../3party/three/build/three.module";class SphereObj{constructor(){let e=new SphereGeometry(1,32,16),r=new MeshNormalMaterial;this.mesh=new Mesh(e,r)}addToScene(e){e.add(this.mesh)}}export default SphereObj;

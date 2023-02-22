@@ -7,7 +7,7 @@
       "uuidString" : "C9F666BF-AF51-4122-BD68-51F409970018"
     }
   ],
-  "creatorBuild" : "34434",
+  "creatorBuild" : "34448",
   "files" : {
     "\/.gitattributes" : {
       "cB" : 0,
@@ -153,6 +153,14 @@
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
+    },
+    "\/3party\/three\/build\/three.cjs" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/3party\/three\/build\/three.cjs",
+      "oF" : 0
     },
     "\/3party\/three\/build\/three.js" : {
       "bF" : 0,
@@ -6520,6 +6528,17 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/3party\/three\/src\/core\/UniformsGroup.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/3party\/three\/src\/core\/UniformsGroup-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/3party\/three\/src\/extras\/core\/Curve.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -6769,6 +6788,17 @@
       "mi" : 1,
       "oA" : 1,
       "oAP" : "\/3party\/three\/src\/geometries\/BoxGeometry-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/3party\/three\/src\/geometries\/CapsuleGeometry.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/3party\/three\/src\/geometries\/CapsuleGeometry-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -7708,6 +7738,17 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/3party\/three\/src\/math\/ColorManagement.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/3party\/three\/src\/math\/ColorManagement-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/3party\/three\/src\/math\/Cylindrical.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -8588,6 +8629,28 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/3party\/three\/src\/renderers\/shaders\/ShaderChunk\/iridescence_fragment.glsl.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/3party\/three\/src\/renderers\/shaders\/ShaderChunk\/iridescence_fragment.glsl-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/3party\/three\/src\/renderers\/shaders\/ShaderChunk\/iridescence_pars_fragment.glsl.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/3party\/three\/src\/renderers\/shaders\/ShaderChunk\/iridescence_pars_fragment.glsl-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/3party\/three\/src\/renderers\/shaders\/ShaderChunk\/lightmap_fragment.glsl.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -8643,13 +8706,24 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/3party\/three\/src\/renderers\/shaders\/ShaderChunk\/lights_lambert_vertex.glsl.js" : {
+    "\/3party\/three\/src\/renderers\/shaders\/ShaderChunk\/lights_lambert_fragment.glsl.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/3party\/three\/src\/renderers\/shaders\/ShaderChunk\/lights_lambert_vertex.glsl-min.js",
+      "oAP" : "\/3party\/three\/src\/renderers\/shaders\/ShaderChunk\/lights_lambert_fragment.glsl-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/3party\/three\/src\/renderers\/shaders\/ShaderChunk\/lights_lambert_pars_fragment.glsl.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/3party\/three\/src\/renderers\/shaders\/ShaderChunk\/lights_lambert_pars_fragment.glsl-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -8837,6 +8911,17 @@
       "mi" : 1,
       "oA" : 1,
       "oAP" : "\/3party\/three\/src\/renderers\/shaders\/ShaderChunk\/metalnessmap_pars_fragment.glsl-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/3party\/three\/src\/renderers\/shaders\/ShaderChunk\/morphcolor_vertex.glsl.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/3party\/three\/src\/renderers\/shaders\/ShaderChunk\/morphcolor_vertex.glsl-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -9255,6 +9340,17 @@
       "mi" : 1,
       "oA" : 1,
       "oAP" : "\/3party\/three\/src\/renderers\/shaders\/ShaderLib\/background.glsl-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/3party\/three\/src\/renderers\/shaders\/ShaderLib\/backgroundCube.glsl.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/3party\/three\/src\/renderers\/shaders\/ShaderLib\/backgroundCube.glsl-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -9765,6 +9861,17 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/3party\/three\/src\/renderers\/webgl\/WebGLUniformsGroups.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/3party\/three\/src\/renderers\/webgl\/WebGLUniformsGroups-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/3party\/three\/src\/renderers\/webgl\/WebGLUtils.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -9787,6 +9894,28 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/3party\/three\/src\/renderers\/WebGL3DRenderTarget.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/3party\/three\/src\/renderers\/WebGL3DRenderTarget-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/3party\/three\/src\/renderers\/WebGLArrayRenderTarget.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/3party\/three\/src\/renderers\/WebGLArrayRenderTarget-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/3party\/three\/src\/renderers\/WebGLCubeRenderTarget.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -9805,17 +9934,6 @@
       "mi" : 1,
       "oA" : 1,
       "oAP" : "\/3party\/three\/src\/renderers\/WebGLMultipleRenderTargets-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/3party\/three\/src\/renderers\/WebGLMultisampleRenderTarget.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/3party\/three\/src\/renderers\/WebGLMultisampleRenderTarget-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -9908,6 +10026,17 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/3party\/three\/src\/textures\/CompressedArrayTexture.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/3party\/three\/src\/textures\/CompressedArrayTexture-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/3party\/three\/src\/textures\/CompressedTexture.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -9930,6 +10059,28 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/3party\/three\/src\/textures\/Data3DTexture.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/3party\/three\/src\/textures\/Data3DTexture-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/3party\/three\/src\/textures\/DataArrayTexture.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/3party\/three\/src\/textures\/DataArrayTexture-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/3party\/three\/src\/textures\/DataTexture.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -9937,28 +10088,6 @@
       "mi" : 1,
       "oA" : 1,
       "oAP" : "\/3party\/three\/src\/textures\/DataTexture-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/3party\/three\/src\/textures\/DataTexture2DArray.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/3party\/three\/src\/textures\/DataTexture2DArray-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/3party\/three\/src\/textures\/DataTexture3D.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/3party\/three\/src\/textures\/DataTexture3D-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -9981,6 +10110,17 @@
       "mi" : 1,
       "oA" : 1,
       "oAP" : "\/3party\/three\/src\/textures\/FramebufferTexture-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/3party\/three\/src\/textures\/Source.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/3party\/three\/src\/textures\/Source-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -10334,7 +10474,7 @@
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/Calculus\/DiskRiemannSum-min.js",
+      "oAP" : "\/common\/components\/calculus\/DiskRiemannSum-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -10361,13 +10501,13 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/Calculus\/GraphOnBoard.js" : {
+    "\/common\/components\/calculus\/GraphOnBoard.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/Calculus\/GraphOnBoard-min.js",
+      "oAP" : "\/common\/components\/calculus\/GraphOnBoard-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -10389,7 +10529,7 @@
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/Calculus\/RiemannSum-min.js",
+      "oAP" : "\/common\/components\/calculus\/RiemannSum-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -10746,13 +10886,13 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/Depreciated\/RiemannSum.js" : {
+    "\/common\/components\/depreciated\/RiemannSum.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/Depreciated\/RiemannSum-min.js",
+      "oAP" : "\/common\/components\/depreciated\/RiemannSum-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -11043,57 +11183,277 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/cpu\/components\/State.js" : {
+    "\/common\/compute\/cpu\/components\/State.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/cpu\/components\/State-min.js",
+      "oAP" : "\/common\/compute\/cpu\/components\/State-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/cpu\/components\/TNB.js" : {
+    "\/common\/compute\/cpu\/components\/TNB.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/cpu\/components\/TNB-min.js",
+      "oAP" : "\/common\/compute\/cpu\/components\/TNB-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/cpu\/Integrator.js" : {
+    "\/common\/compute\/cpu\/Integrator.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/cpu\/Integrator-min.js",
+      "oAP" : "\/common\/compute\/cpu\/Integrator-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/cpu\/RungeKutta.js" : {
+    "\/common\/compute\/cpu\/RungeKutta.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/cpu\/RungeKutta-min.js",
+      "oAP" : "\/common\/compute\/cpu\/RungeKutta-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/cpu\/RungeKuttaParams.js" : {
+    "\/common\/compute\/cpu\/RungeKuttaParams.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/cpu\/RungeKuttaParams-min.js",
+      "oAP" : "\/common\/compute\/cpu\/RungeKuttaParams-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/compute\/gpu\/components\/ComputeRTs.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/compute\/gpu\/components\/ComputeRTs-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/compute\/gpu\/components\/ComputeShader.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/compute\/gpu\/components\/ComputeShader-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/compute\/gpu\/components\/createParticleMesh.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/compute\/gpu\/components\/createParticleMesh-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/compute\/gpu\/components\/FullScreenQuad.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/compute\/gpu\/components\/FullScreenQuad-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/compute\/gpu\/components\/TextureShader.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/compute\/gpu\/components\/TextureShader-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/compute\/gpu\/components\/UnitSquare.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/compute\/gpu\/components\/UnitSquare-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/compute\/gpu\/ComputeStructure.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/compute\/gpu\/ComputeStructure-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/compute\/gpu\/ComputeSystem.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/compute\/gpu\/ComputeSystem-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/compute\/gpu\/displays\/CSDisplay.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/compute\/gpu\/displays\/CSDisplay-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/compute\/gpu\/displays\/CSParticle.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/compute\/gpu\/displays\/CSParticle-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/compute\/gpu\/displays\/CSQuad.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/compute\/gpu\/displays\/CSQuad-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/compute\/gpu\/displays\/CSSpheres.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/compute\/gpu\/displays\/CSSpheres-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/compute\/gpu\/VerletCollision.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/compute\/gpu\/VerletCollision-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/compute\/gpu\/VerletDissipative.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/compute\/gpu\/VerletDissipative-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/compute\/gpu\/VerletHamiltonian.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/compute\/gpu\/VerletHamiltonian-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/compute\/materials\/ComputeMaterial.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/compute\/materials\/ComputeMaterial-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/compute\/materials\/ComputeParticles.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/compute\/materials\/ComputeParticles-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/compute\/materials\/createCSMShaders.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/compute\/materials\/createCSMShaders-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/compute\/materials\/ParametricMaterial.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/compute\/materials\/ParametricMaterial-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/compute\/materials\/ParametricTube.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/compute\/materials\/ParametricTube-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -11116,171 +11476,6 @@
       "mi" : 1,
       "oA" : 0,
       "oAP" : "\/common\/depreciated\/Surface-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/gpu\/components\/ComputeRTs.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/gpu\/components\/ComputeRTs-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/gpu\/components\/ComputeShader.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/gpu\/components\/ComputeShader-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/gpu\/components\/createParticleMesh.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/gpu\/components\/createParticleMesh-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/gpu\/components\/FullScreenQuad.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/gpu\/components\/FullScreenQuad-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/gpu\/components\/TextureShader.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/gpu\/components\/TextureShader-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/gpu\/components\/UnitSquare.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/gpu\/components\/UnitSquare-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/gpu\/ComputeStructure.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/gpu\/ComputeStructure-min.js",
-      "oF" : 1,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/gpu\/ComputeSystem.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/gpu\/ComputeSystem-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/gpu\/displays\/CSDisplay.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/gpu\/displays\/CSDisplay-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/gpu\/displays\/CSParticle.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/gpu\/displays\/CSParticle-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/gpu\/displays\/CSQuad.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/gpu\/displays\/CSQuad-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/gpu\/displays\/CSSpheres.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/gpu\/displays\/CSSpheres-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/gpu\/VerletCollision.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/gpu\/VerletCollision-min.js",
-      "oF" : 1,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/gpu\/VerletDissipative.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/gpu\/VerletDissipative-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/gpu\/VerletHamiltonian.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/gpu\/VerletHamiltonian-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -11560,6 +11755,17 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/common\/items\/differential-geometry\/GaussianSurface-min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/differential-geometry\/GaussianSurface-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/common\/items\/differential-geometry\/GaussianSurface.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -11736,13 +11942,13 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/items\/odes\/strangeAttractors.js" : {
+    "\/common\/items\/odes\/StrangeAttractors.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/items\/odes\/strangeAttractors-min.js",
+      "oAP" : "\/common\/items\/odes\/StrangeAttractors-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -12308,6 +12514,72 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/common\/itemsNew\/Item.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/itemsNew\/Item-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/itemsNew\/topology\/BoysSurface.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/itemsNew\/topology\/BoysSurface-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/itemsNew\/topology\/KleinBottle.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/itemsNew\/topology\/KleinBottle-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/itemsNew\/topology\/KleinBottleFig8.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/itemsNew\/topology\/KleinBottleFig8-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/itemsNew\/topology\/MorseFunctionPlotter.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/itemsNew\/topology\/MorseFunctionPlotter-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/itemsNew\/topology\/SudaneseMobius.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/itemsNew\/topology\/SudaneseMobius-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/common\/itemsNew\/vector-calculus\/ParametricCurvePlotter.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -12326,72 +12598,6 @@
       "mi" : 1,
       "oA" : 1,
       "oAP" : "\/common\/itemsNew\/vector-calculus\/ParametricSurfacePlotter-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/materials\/ComputeMaterial.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/materials\/ComputeMaterial-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/materials\/ComputeParticles.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/materials\/ComputeParticles-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/materials\/createCSMShaders.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/materials\/createCSMShaders-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/materials\/ParametricMaterial.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/materials\/ParametricMaterial-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/materials\/ParametricTube.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 0,
-      "oAP" : "\/common\/materials\/ParametricTube-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/math\/functions_singleVar.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/common\/math\/functions_singleVar-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -12781,13 +12987,46 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/utils\/random.js" : {
+    "\/common\/utils\/math\/functions_singleVar.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/utils\/random-min.js",
+      "oAP" : "\/common\/utils\/math\/functions_singleVar-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/utils\/math\/projectR4.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/utils\/math\/projectR4-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/utils\/math\/random.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/utils\/math\/random-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/utils\/math\/rotateR4.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/utils\/math\/rotateR4-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -12880,17 +13119,6 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/World\/Render-min.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 0,
-      "oAP" : "\/common\/World\/Render-min-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
     "\/common\/World\/Resizer.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -12973,28 +13201,6 @@
       "mi" : 1,
       "oA" : 0,
       "oAP" : "\/template\/main-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/template\/params-min.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 0,
-      "oAP" : "\/template\/params-min-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/template\/params.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 0,
-      "oAP" : "\/template\/params-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -13113,6 +13319,66 @@
       "mi" : 1,
       "oA" : 0,
       "oAP" : "\/templateModule\/src\/post-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/templateTEST\/extra-min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/templateTEST\/extra-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/templateTEST\/extra.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/templateTEST\/extra-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/templateTEST\/index.html" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/templateTEST\/index.html",
+      "oF" : 0
+    },
+    "\/templateTEST\/main-min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/templateTEST\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/templateTEST\/main-min.js.map" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/templateTEST\/main-min.js.map",
+      "oF" : 0
+    },
+    "\/templateTEST\/main.js" : {
+      "bF" : 3,
+      "ft" : 64,
+      "ma" : 1,
+      "mi" : 0,
+      "oA" : 0,
+      "oAP" : "\/templateTEST\/main-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -13645,6 +13911,10 @@
         "active" : 0,
         "optionString" : "'always', {exceptAfterSingleLine: false}"
       },
+      "logical-assignment-operators" : {
+        "active" : 0,
+        "optionString" : "'always',  {'enforceForIfStatements': false}"
+      },
       "max-classes-per-file" : {
         "active" : 0,
         "optionString" : "{'ignoreExpressions': false, 'max': 1}"
@@ -13805,6 +14075,9 @@
       "no-empty-pattern" : {
         "active" : 1
       },
+      "no-empty-static-block" : {
+        "active" : 0
+      },
       "no-eq-null" : {
         "active" : 0
       },
@@ -13943,6 +14216,9 @@
         "active" : 0
       },
       "no-new-func" : {
+        "active" : 0
+      },
+      "no-new-native-nonconstructor" : {
         "active" : 0
       },
       "no-new-object" : {
@@ -14759,7 +15035,7 @@
       },
       "comments" : {
         "active" : 0,
-        "flagValue" : -1
+        "flagValue" : 1
       },
       "comparisons" : {
         "active" : 1,
