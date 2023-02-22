@@ -8,11 +8,11 @@ import {
     Mesh
 } from "../../../3party/three/build/three.module.js";
 
-import RungeKuttaParams from "../../cpu/RungeKuttaParams.js";
+import RungeKuttaParams from "../../compute/cpu/RungeKuttaParams.js";
 import SlopeField from "../../components/Calculus/SlopeField.js";
 import { GlassPanel } from "../../components/basic-shapes/GlassPanel.js";
 import {colorConversion} from "../../shaders/colors/colorConversion.js";
-import {ParametricTube} from "../../materials/ParametricTube.js";
+import {ParametricTube} from "../../compute/materials/ParametricTube.js";
 
 
 //using GLOBAL object math.parser: this is from the 3rd party math file loaded in the html

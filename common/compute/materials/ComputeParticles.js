@@ -5,7 +5,7 @@ import {
     Points,
     ShaderMaterial,
     Vector2
-} from "../../3party/three/build/three.module.js";
+} from "../../../3party/three/build/three.module.js";
 
 import { createParticleMesh } from "../gpu/components/createParticleMesh.js";
 

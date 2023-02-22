@@ -4,7 +4,7 @@ import {
     Float32BufferAttribute,
     Mesh,
     SmoothShading
-} from "../../3party/three/build/three.module.js";
+} from "../../../3party/three/build/three.module.js";
 
 import {
     createFragmentCSM,
@@ -13,7 +13,7 @@ import {
 } from "./createCSMShaders.js";
 
 import {UnitSquare} from "../gpu/components/UnitSquare.js";
-import {CustomShaderMaterial} from "../../3party/three-csm.m.js";
+import {CustomShaderMaterial} from "../../../3party/three-csm.m.js";
 
 
 //make a geometry which has segments many things long and tubeRes things high

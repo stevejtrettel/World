@@ -1,4 +1,4 @@
-import {getRange} from "../../math/functions_singleVar.js";
+import {getRange} from "../../utils/math/functions_singleVar.js";
 import Graph2D from "./Graph2D.js";
 import {BlackBoard} from "../basic-shapes/Blackboard.js";
 

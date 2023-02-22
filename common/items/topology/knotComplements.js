@@ -6,7 +6,7 @@ import { diffGeoS3 } from "../../shaders/geometry/diffGeoS3.js";
 
 import { colorConversion } from "../../shaders/colors/colorConversion.js";
 
-import { ParametricMaterial } from "../../materials/ParametricMaterial.js";
+import { ParametricMaterial } from "../../compute/materials/ParametricMaterial.js";
 
 
 

@@ -1,7 +1,7 @@
 import {globals} from "../World/globals.js";
 
-import {VerletDissipative} from "../gpu/VerletDissipative.js";
-import {ComputeMaterial} from "../materials/ComputeMaterial.js";
+import {VerletDissipative} from "../compute/gpu/VerletDissipative.js";
+import {ComputeMaterial} from "../compute/materials/ComputeMaterial.js";
 
 import { colorConversion } from "../shaders/colors/colorConversion.js";
 

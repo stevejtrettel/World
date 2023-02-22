@@ -1,7 +1,7 @@
 import {globals} from "../World/globals.js";
 
-import {VerletDissipative} from "../gpu/VerletDissipative.js";
-import { CSSpheres } from "../gpu/displays/CSSpheres.js";
+import {VerletDissipative} from "../compute/gpu/VerletDissipative.js";
+import { CSSpheres } from "../compute/gpu/displays/CSSpheres.js";
 
 import { setIJ, onEdges, fetch } from "../shaders/springs/setup.js";
 import {SpringStruct} from "../shaders/springs/Spring.js";

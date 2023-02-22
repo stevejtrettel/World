@@ -1,5 +1,5 @@
 import {Vector3} from "../../3party/three/build/three.module.js";
-import {RungeKutta} from "../cpu/RungeKutta.js";
+import {RungeKutta} from "../compute/cpu/RungeKutta.js";
 import {FlowLine} from "../components/odes/FlowLine.js";
 import {FlowLineField} from "../components/odes/FlowLineField.js";
 

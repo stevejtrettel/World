@@ -1,7 +1,7 @@
 import {CustomShaderMaterial} from "../../../3party/three-csm.m.js";
-import {createVertexCSM,createFragmentCSM} from "../../materials/createCSMShaders.js";
+import {createVertexCSM,createFragmentCSM} from "../../compute/materials/createCSMShaders.js";
 import {complex} from "../../shaders/math/complex.js";
-import {UnitSquare} from "../../gpu/components/UnitSquare.js";
+import {UnitSquare} from "../../compute/gpu/components/UnitSquare.js";
 import {DoubleSide, Mesh} from "../../../3party/three/build/three.module.js";
 
 

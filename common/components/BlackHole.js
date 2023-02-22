@@ -8,12 +8,12 @@ import{
 
 import{
     RungeKutta,
-} from "../cpu/RungeKutta.js";
+} from "../compute/cpu/RungeKutta.js";
 
 import{
     State,
     dState
-} from "../cpu/components/State.js";
+} from "../compute/cpu/components/State.js";
 
 
 //set up the integrator for the light-like geodesics.

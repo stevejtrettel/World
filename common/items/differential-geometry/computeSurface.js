@@ -1,7 +1,7 @@
 import{ globals } from "../../World/globals.js";
-import { ComputeSystem } from "../../gpu/ComputeSystem.js";
-import { CSQuad } from "../../gpu/displays/CSQuad.js";
-import {ComputeMaterial} from "../../materials/ComputeMaterial.js";
+import { ComputeSystem } from "../../compute/gpu/ComputeSystem.js";
+import { CSQuad } from "../../compute/gpu/displays/CSQuad.js";
+import {ComputeMaterial} from "../../compute/materials/ComputeMaterial.js";
 import { colorConversion } from "../../shaders/colors/colorConversion.js";
 import {LinearFilter, NearestFilter} from "../../../3party/three/build/three.module.js";
 

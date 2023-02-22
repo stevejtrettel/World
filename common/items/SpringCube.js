@@ -2,9 +2,9 @@ import { Vector3 } from "../../3party/three/build/three.module.js";
 
 import {globals} from "../World/globals.js";
 
-import{ VerletCollision } from "../gpu/VerletCollision.js";
-import {VerletDissipative } from "../gpu/VerletDissipative.js";
-import { CSSpheres } from "../gpu/displays/CSSpheres.js";
+import{ VerletCollision } from "../compute/gpu/VerletCollision.js";
+import {VerletDissipative } from "../compute/gpu/VerletDissipative.js";
+import { CSSpheres } from "../compute/gpu/displays/CSSpheres.js";
 
 import { setIJK, onEdges, fetch } from "../shaders/springs/setup.js";
 import {SpringStruct} from "../shaders/springs/Spring.js";

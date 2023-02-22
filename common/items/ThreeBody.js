@@ -8,11 +8,11 @@ import {
 import {
     State,
     dState,
-} from "../cpu/components/State.js";
+} from "../compute/cpu/components/State.js";
 
 import {
     RungeKutta
-} from "../cpu/RungeKutta.js";
+} from "../compute/cpu/RungeKutta.js";
 
 
 //gravitational force AT pos1 from mass2 and pos2

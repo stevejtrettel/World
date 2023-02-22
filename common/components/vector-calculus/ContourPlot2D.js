@@ -1,5 +1,5 @@
-import {createFragmentCSM, createVertexCSM} from "../../materials/createCSMShaders.js";
-import {UnitSquare} from "../../gpu/components/UnitSquare.js";
+import {createFragmentCSM, createVertexCSM} from "../../compute/materials/createCSMShaders.js";
+import {UnitSquare} from "../../compute/gpu/components/UnitSquare.js";
 import {
     BoxBufferGeometry,
     DoubleSide,
@@ -9,7 +9,7 @@ import {
 } from "../../../3party/three/build/three.module.js";
 import {CustomShaderMaterial} from "../../../3party/three-csm.m.js";
 import {colorConversion} from "../../shaders/colors/colorConversion.js";
-import TextureShader from "../../gpu/components/TextureShader.js";
+import TextureShader from "../../compute/gpu/components/TextureShader.js";
 import {globals} from "../../World/globals.js";
 
 

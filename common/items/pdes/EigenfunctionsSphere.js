@@ -1,6 +1,6 @@
 
 import { colorConversion } from "../../shaders/colors/colorConversion.js";
-import { ParametricMaterial } from "../../materials/ParametricMaterial.js";
+import { ParametricMaterial } from "../../compute/materials/ParametricMaterial.js";
 import sphericalHarmonic from "../../shaders/math/sphericalHarmonic.js";
 
 

@@ -10,7 +10,7 @@ import {
 
 import {complex} from "../../shaders/math/complex.js";
 import { colorConversion } from "../../shaders/colors/colorConversion.js";
-import TextureShader from "../../gpu/components/TextureShader.js";
+import TextureShader from "../../compute/gpu/components/TextureShader.js";
 
 
 //USES THE GLOBALS.RENDERER object

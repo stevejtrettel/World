@@ -9,7 +9,7 @@ import {
 } from "../../3party/three/build/three.module.js";
 
 import {BlackHole} from "../components/BlackHole.js";
-import { State } from "../cpu/components/State.js";
+import { State } from "../compute/cpu/components/State.js";
 import IntegralCurveSpray from "../components/odes/IntegralCurveSpray-Traditional.js";
 
 

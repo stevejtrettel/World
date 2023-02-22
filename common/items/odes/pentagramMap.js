@@ -1,11 +1,11 @@
-import { ComputeSystem } from "../../gpu/ComputeSystem.js";
-import { ComputeParticles} from "../../materials/ComputeParticles.js";
+import { ComputeSystem } from "../../compute/gpu/ComputeSystem.js";
+import { ComputeParticles} from "../../compute/materials/ComputeParticles.js";
 
 import { globals } from "../../World/globals.js";
 import { randomFns } from "../../shaders/math/random.js";
 import { rotateR4 } from "../../shaders/geometry/rotateR4.js";
 import {rk4_vec4 as rk4} from "../../shaders/odes/rk4.js";
-import {CSParticle} from "../../gpu/displays/CSParticle.js";
+import {CSParticle} from "../../compute/gpu/displays/CSParticle.js";
 import {colorConversion} from "../../shaders/colors/colorConversion.js";
 import {LinearFilter, NearestFilter} from "../../../3party/three/build/three.module.js";
 

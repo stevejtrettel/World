@@ -1,6 +1,6 @@
 
 import {ComputeSystem} from "./ComputeSystem.js";
-import {setIJ, fetch, onEdges } from "../shaders/springs/setup.js";
+import {setIJ, fetch, onEdges } from "../../shaders/springs/setup.js";
 
 
 //implements the augmentation of standard velocity verlet integration

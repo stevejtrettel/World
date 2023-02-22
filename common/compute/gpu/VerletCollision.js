@@ -1,5 +1,5 @@
 import {ComputeSystem} from "./ComputeSystem.js";
-import {LinearFilter} from "../../3party/three/build/three.module.js";
+import {LinearFilter} from "../../../3party/three/build/three.module.js";
 
 
 //implements the augmentation of standard velocity verlet integration

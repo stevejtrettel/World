@@ -4,7 +4,7 @@ import {
     FloatType,
     NearestFilter,
     RGBAFormat, LinearFilter
-} from "../../../3party/three/build/three.module.js";
+} from "../../../../3party/three/build/three.module.js";
 
 
 

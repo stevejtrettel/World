@@ -3,7 +3,7 @@ import { GraphOnBoard } from "../../components/calculus/GraphOnBoard.js";
 import { SecantLine } from "../../components/calculus/SecantLine.js";
 import { TangentLine } from "../../components/calculus/TangentLine.js";
 
-import { getRange, differentiate } from "../../math/functions_singleVar.js";
+import { getRange, differentiate } from "../../utils/math/functions_singleVar.js";
 import {RiemannRectangle} from "../../components/Depreciated/RiemannRectangle.js";
 
 function setX(percent, domain){

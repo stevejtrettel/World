@@ -1,6 +1,6 @@
 import hydrogenOrbital from "../shaders/math/hydrogenOrbital.js";
 import { colorConversion } from "../shaders/colors/colorConversion.js";
-import { ParametricMaterial } from "../materials/ParametricMaterial.js";
+import { ParametricMaterial } from "../compute/materials/ParametricMaterial.js";
 
 
 

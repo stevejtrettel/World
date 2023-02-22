@@ -1,5 +1,5 @@
 import {MathUtils, Vector3} from "../../../3party/three/build/three.module.js";
-import {randomVec3Ball } from "../../utils/random.js";
+import {randomVec3Ball } from "../../utils/math/random.js";
 
 import { FlowLine } from "./FlowLine.js";
 

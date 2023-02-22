@@ -7,8 +7,8 @@ import {
 
 import { colorConversion } from "../../shaders/colors/colorConversion.js";
 
-import { ParametricMaterial } from "../../materials/ParametricMaterial.js";
-import {ParametricTube} from "../../materials/ParametricTube.js";
+import { ParametricMaterial } from "../../compute/materials/ParametricMaterial.js";
+import {ParametricTube} from "../../compute/materials/ParametricTube.js";
 
 
 let surfaceEqn = {

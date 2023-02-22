@@ -1,7 +1,7 @@
 //A compute system is a collection of ComputeShaders
 // (position,velocity,etc) that all work together
 
-import { Vector2 } from "../../3party/three/build/three.module.js";
+import { Vector2} from "../../../3party/three/build/three.module.js";
 import { ComputeShader } from "./components/ComputeShader.js";
 import {FullScreenQuad} from "./components/FullScreenQuad.js";
 
@@ -17,7 +17,7 @@ import {FullScreenQuad} from "./components/FullScreenQuad.js";
 //uniforms are common to all shaders right now
 
 
-class ComputeStructure {
+class ComputeSystem {
 
     constructor( variables, shaders, uniforms, options, renderer ) {
 
@@ -29,32 +29,28 @@ class ComputeStructure {
         //this is our iterable object
         this.variables = variables;
 
-        //names are the uniforms which get updated from the outside
-        //want as an iterable object, order is irrelevant
-        this.externalUniforms = Object.keys(uniforms);
-
         //for each of the input uniforms, add it to the shader
         //ADD THESE TO THE UI AS WELL:
         this.uniforms = {};
         this.uniformString = ``;
 
+        //package the uniforms for the UI in a useful way:
+        this.parameters = {};
+        this.paramProperties = uniforms;
 
-        //make a uniform for each of the input uniforms:
-        for( let name of this.externalUniforms){
-            this.createUniform(name, uniforms[name].type, uniforms[name].value);
+        for( let uniform of Object.keys(this.paramProperties)){
+            this.parameters[uniform] = this.paramProperties[uniform].value;
+            this.createUniform(uniform, this.paramProperties[uniform].type, this.paramProperties[uniform].value);
         }
 
-        //make uniforms for frame number and resolution
         this.createUniform('frameNumber' ,'float', 0);
+        this.createUniform('time' ,'float', 0);
+        this.createUniform('dTime' ,'float', 0);
         this.createUniform('res', 'vec2', new Vector2(this.res[0], this.res[1]));
 
-        //make a uniform for each data texture
         for( let variable of this.variables ){
             this.createUniform(variable, 'sampler2D', null);
         }
-
-
-
 
         //build an object to store all computing materials: FUllScreenQuads, and resulting textures:
         //each objects is of the form {pos: QUAD, vel: QUAD, }...etc
@@ -65,16 +61,31 @@ class ComputeStructure {
 
             //build a compute system:
             //add the uniforms after, not during creation, as they are not in the shaders
-            this.compute[variable] = new ComputeShader( shaders[variable], {}, this.res, this.renderer );
+            const rtSettings ={
+                res: options.res,
+                filter: options.filter,
+            }
+
+            this.compute[variable] = new ComputeShader( shaders[variable], {}, rtSettings, this.renderer );
             this.compute[variable].addUniforms(this.uniforms, this.uniformString);
+
+            //console.log(this.compute[variable].simulation.material.fragmentShader);
 
             //make a spot to store it's data
             this.data[variable] = null;
 
         }
 
+
         //option to name the ComputeSystem
         this.name = null;
+
+
+        //if we need a reset switch, add one:
+        if(options.resetSwitch){
+            //set the resetSwitch to a function, so when it is clicked we run 'initialize'
+            this.parameters.reset = ()=>this.initialize();
+        }
 
     }
 
@@ -86,22 +97,22 @@ class ComputeStructure {
     }
 
 
-    updateUniforms( externalInput ) {
+    updateUniforms() {
+
+        //the uiUniforms are automatically updated by the UI
+        //do nothing about these
 
         //increase frame number
         this.uniforms.frameNumber.value += 1.;
 
-        //update all the data textures
+        // //update all the data textures
         for( let variable of this.variables ){
             this.uniforms[variable].value = this.data[variable];
         }
+    }
 
-        //for any of our uniforms which appear in the external list:
-        //update its value with the external value:
-        for(let name of this.externalUniforms){
-            this.uniforms[name].value = externalInput[name];
-        }
-
+    recompile(variable){
+        this.compute[variable].recompile();
     }
 
     getData( variable ){
@@ -136,8 +147,39 @@ class ComputeStructure {
         this.name = name;
     }
 
+    addToUI( ui ){
+        //make a folder for this compute system:
+        let Folder = ui.addFolder(`${this.name}`);
+
+        //add the reset switch:
+        if(this.parameters.reset){
+            Folder.add(this.parameters,'reset').name('Reset');
+        }
+
+        //add the parameter variables:
+        for( let variable of Object.keys(this.paramProperties)){
+            //add uniform to folder. update the uniforms on change
+            Folder.add(this.parameters, variable, ...this.paramProperties[variable].range).onChange(val => this.uniforms[variable].value = val);
+        }
+    }
+
+    addToScene( scene ) {
+
+    }
+
+    tick(time, dTime){
+        //if you add the compute shader to the scene it'll run
+        this.run();
+        this.uniforms.time.value = time;
+        this.uniforms.dTime.value = dTime;
+    }
+
+    readPixel(variable, i,j){
+        return this.compute[variable].readPixel(i,j);
+    }
+
 }
 
 
 
-export { ComputeStructure };
+export { ComputeSystem };

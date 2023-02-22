@@ -5,7 +5,7 @@ import {
     AdditiveBlending,
     BufferGeometry,
     BufferAttribute,
-} from "../../../3party/three/build/three.module.js";
+} from "../../../../3party/three/build/three.module.js";
 
 import { createParticleMesh } from "../components/createParticleMesh.js";
 

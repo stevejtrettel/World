@@ -9,8 +9,8 @@ import {
 
 import {rotateR4} from "../../shaders/geometry/rotateR4.js";
 import {projectR4} from "../../shaders/geometry/projectR4.js";
-import {stereographicProjX} from "../../math/projectR4.js";
-import {rotateR4JS} from "../../math/rotateR4.js";
+import {stereographicProjX} from "../../utils/math/projectR4.js";
+import {rotateR4JS} from "../../utils/math/rotateR4.js";
 
 import ParametricSurface from "../../components/parametric/ParametricSurface.js";
 import ParametricCurveCPU from "../../components/parametric/ParametricCurveCPU.js";

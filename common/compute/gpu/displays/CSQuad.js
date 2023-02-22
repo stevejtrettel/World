@@ -3,7 +3,7 @@ import {
     DoubleSide,
     MeshStandardMaterial,
     PlaneBufferGeometry,
-} from "../../../3party/three/build/three.module.js"
+} from "../../../../3party/three/build/three.module.js"
 
 
 import { CSDisplay } from "./CSDisplay.js";

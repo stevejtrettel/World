@@ -4,7 +4,7 @@ import { hopfMapTools, hopfSurface } from "../../shaders/geometry/hopfMap.js";
 
 import { colorConversion } from "../../shaders/colors/colorConversion.js";
 
-import { ParametricMaterial } from "../../materials/ParametricMaterial.js";
+import { ParametricMaterial } from "../../compute/materials/ParametricMaterial.js";
 
 
 

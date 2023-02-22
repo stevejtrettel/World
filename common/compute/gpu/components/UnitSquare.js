@@ -1,7 +1,7 @@
 import {
     BufferGeometry,
     Float32BufferAttribute,
-} from "../../../3party/three/build/three.module.js";
+} from "../../../../3party/three/build/three.module.js";
 
 
 //for ComputeMaterials, or other cases where we need PlaneGeometry

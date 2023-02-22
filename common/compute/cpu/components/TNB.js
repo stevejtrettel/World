@@ -1,7 +1,7 @@
 //the state type for Tangent Normal Binormal frames
 //used in integrating the Frenet Serret Equations:
 
-import{ Vector3 } from "../../../3party/three/build/three.module.js";
+import{ Vector3 } from "../../../../3party/three/build/three.module.js";
 
 
 class TNB {

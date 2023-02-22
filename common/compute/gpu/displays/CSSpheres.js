@@ -3,7 +3,7 @@ import {
     BufferGeometry, InstancedBufferAttribute, InstancedBufferGeometry, Mesh, Points,
     ShaderMaterial, SphereBufferGeometry,
     Vector2
-} from "../../../3party/three/build/three.module.js";
+} from "../../../../3party/three/build/three.module.js";
 
 
 

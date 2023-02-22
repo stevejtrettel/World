@@ -1,6 +1,6 @@
 import { CatmullRomCurve3 } from "../../../3party/three/build/three.module.js";
 import { colorConversion } from "../../shaders/colors/colorConversion.js";
-import { ParametricTube } from "../../materials/ParametricTube.js";
+import { ParametricTube } from "../../compute/materials/ParametricTube.js";
 
 
 import {Vector2} from "../../../3party/three/build/three.module.js";

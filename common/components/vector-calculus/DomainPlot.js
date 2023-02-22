@@ -8,7 +8,7 @@ import {
 } from "../../../3party/three/build/three.module.js";
 
 import {colorConversion} from "../../shaders/colors/colorConversion.js";
-import TextureShader from "../../gpu/components/TextureShader.js";
+import TextureShader from "../../compute/gpu/components/TextureShader.js";
 import {globals} from "../../World/globals.js";
 
 

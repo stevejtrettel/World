@@ -2,14 +2,14 @@ import { Vector2, Vector3 } from "../../../3party/three/build/three.module.js";
 
 
 import{ globals } from "../../World/globals.js";
-import { ComputeSystem } from "../../gpu/ComputeSystem.js";
-import {ComputeMaterial} from "../../materials/ComputeMaterial.js";
+import { ComputeSystem } from "../../compute/gpu/ComputeSystem.js";
+import {ComputeMaterial} from "../../compute/materials/ComputeMaterial.js";
 import { colorConversion } from "../../shaders/colors/colorConversion.js";
 import {LinearFilter, NearestFilter} from "../../../3party/three/build/three.module.js";
 
 import { IntegralCurve } from "../../components/odes/IntegralCurve-Traditional.js";
-import { State, dState } from "../../cpu/components/State.js";
-import { RungeKutta } from "../../cpu/RungeKutta.js";
+import { State, dState } from "../../compute/cpu/components/State.js";
+import { RungeKutta } from "../../compute/cpu/RungeKutta.js";
 import IntegralCurveSpray from "../../components/odes/IntegralCurveSpray-Traditional.js";
 
 

@@ -1,4 +1,4 @@
-import {Vector3,Vector4} from "../../3party/three/build/three.module.js";
+import {Vector3,Vector4} from "../../../3party/three/build/three.module.js";
 
 
 function orthographicProj(p){

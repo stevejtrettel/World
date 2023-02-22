@@ -1,9 +1,9 @@
 
 import {globals} from "../World/globals.js";
 
-import {VerletHamiltonian } from "../gpu/VerletHamiltonian.js";
-import { CSSpheres } from "../gpu/displays/CSSpheres.js";
-import { CSQuad } from "../gpu/displays/CSQuad.js";
+import {VerletHamiltonian } from "../compute/gpu/VerletHamiltonian.js";
+import { CSSpheres } from "../compute/gpu/displays/CSSpheres.js";
+import { CSQuad } from "../compute/gpu/displays/CSQuad.js";
 
 import { setIJ, onEdges, fetch } from "../shaders/springs/setup.js";
 import { SpringStruct } from "../shaders/springs/Spring.js";

@@ -1,4 +1,4 @@
-import {Matrix4,Vector4} from "../../3party/three/build/three.module.js";
+import {Matrix4,Vector4} from "../../../3party/three/build/three.module.js";
 
 function rotateR4JS(p, x, y, u){
     let cS = Math.cos(y);
