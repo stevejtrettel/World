@@ -1,5 +1,0 @@
-const post = {
-
-};
-
-export  {post};

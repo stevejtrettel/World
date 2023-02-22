@@ -1,6 +1,6 @@
 //set the stuff for this particular example!
 
-import item from "../common/items/complex-analysis/ComplexSpiral.js";
+import item from "../common/items/complex-analysis/CplxPowerSeries.js";
 let objects = {...item};
 
 
