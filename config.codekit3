@@ -138,7 +138,7 @@
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/3party\/perlinNoise3d-min.js",
+      "oAP" : "\/3party\/PerlinNoise3d-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -10468,13 +10468,13 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/Calculus\/DiskRiemannSum.js" : {
+    "\/common\/components\/calculus\/DiskRiemannSum.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/calculus\/DiskRiemannSum-min.js",
+      "oAP" : "\/common\/components\/Calculus\/DiskRiemannSum-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -10507,7 +10507,7 @@
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/calculus\/GraphOnBoard-min.js",
+      "oAP" : "\/common\/components\/Calculus\/GraphOnBoard-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -10523,13 +10523,13 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/Calculus\/RiemannSum.js" : {
+    "\/common\/components\/calculus\/RiemannSum.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/calculus\/RiemannSum-min.js",
+      "oAP" : "\/common\/components\/Calculus\/RiemannSum-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -10578,13 +10578,13 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/Calculus\/TangentLine.js" : {
+    "\/common\/components\/calculus\/TangentLine.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/calculus\/TangentLine-min.js",
+      "oAP" : "\/common\/components\/Calculus\/TangentLine-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -10820,7 +10820,7 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/color-vision\/coloredBarGraph.js" : {
+    "\/common\/components\/color-vision\/ColoredBarGraph.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
@@ -10892,7 +10892,7 @@
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/depreciated\/RiemannSum-min.js",
+      "oAP" : "\/common\/components\/Depreciated\/RiemannSum-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -11608,28 +11608,6 @@
       "mi" : 1,
       "oA" : 0,
       "oAP" : "\/common\/items\/calculus\/SecantLinePlotter-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/items\/color-vision\/LightWave.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 0,
-      "oAP" : "\/common\/items\/color-vision\/LightWave-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/items\/color-vision\/spectrum.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 0,
-      "oAP" : "\/common\/items\/color-vision\/spectrum-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -12514,6 +12492,28 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/common\/itemsNew\/colorvision\/LightWave.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/itemsNew\/colorvision\/LightWave-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/itemsNew\/colorvision\/Spectrum.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/itemsNew\/colorvision\/spectrum-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/common\/itemsNew\/Item.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -12574,7 +12574,7 @@
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 1,
+      "oA" : 0,
       "oAP" : "\/common\/itemsNew\/topology\/SudaneseMobius-min.js",
       "oF" : 0,
       "sC" : 3,

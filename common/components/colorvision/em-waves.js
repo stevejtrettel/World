@@ -21,7 +21,7 @@ function waveColor(freq,amp,val){
     //make it different for positive and negative areas:
     let hue,sat,lightness;
 
-    hue = freq/14;
+    hue = freq;
     sat = amp/1.5*Math.abs(val/amp);
     lightness=Math.abs(val/amp)/2;
 

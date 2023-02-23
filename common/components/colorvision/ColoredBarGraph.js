@@ -19,12 +19,12 @@ import {posNegColor } from "../../utils/colors.js";
 
 
 class ColoredBarGraph{
-    constructor( curve, colorFunction, range={min:-5,max:5} ){
+    constructor( curve, colorFunction, range={min:-5,max:5}, N=1000 ){
 
         this.curve = curve;
         this.colorFunction = colorFunction;
         this.range = range;
-        this.N = 1000;
+        this.N = N;
         this.thickness=0.15;
 
         //dummy object to be able to make the matrix for each case:
@@ -125,6 +125,10 @@ class ColoredBarGraph{
 
     //all of these need to be followed by "update"
     //after the switch has been made:
+
+    setN(N){
+        this.N=N;
+    }
 
     setCurve(curve){
         this.curve=curve;

@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import Item from "../common/itemsNew/topology/SudaneseMobius.js";
+import Item from "../common/itemsNew/colorvision/SpectrumWave.js";
 import example from "../common/items/vector-calculus/CrossProduct.js"
 
 

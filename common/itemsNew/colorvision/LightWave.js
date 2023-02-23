@@ -1,14 +1,19 @@
-import EMWave from "../../components/ColorVision/em-waves.js";
+import EMWave from "../../components/colorvision/em-waves.js";
+
+
+let defaultParams = {
+    freq: 3,
+    amp: 1,
+    t: 0,
+}
+
+
 
 
 class LightWave{
-    constructor() {
+    constructor(params = defaultParams) {
 
-        this.params = {
-            freq: 3,
-            amp: 1,
-            t: 0,
-        }
+        this.params = params;
 
         this.em = new EMWave(this.params.freq,this.params.amp);
     }
@@ -38,7 +43,4 @@ class LightWave{
 }
 
 
-
-let light = new LightWave();
-
-export default {light};
+export default LightWave;
