@@ -1,12 +1,13 @@
 import {Color} from "../../../3party/three/build/three.module.js";
-import ColoredBarGraph from "../../components/colorvision/ColoredBarGraph.js";
-import EMWave from "../../components/colorvision/em-waves.js";
+import Spectrum from "../../components/colorvision/Spectrum.js";
+import EMWave from "../../components/colorvision/EMWave.js";
 
 
+//the spectral curve takes values in (0,1):
+//0 is red, and 1 is blue (should we show outside of this range YES??)
 let defaultParams = {
-    domain:{min:-2,max:2},
     spectralCurve: function(f){
-        return 3.*Math.exp(-f*f/20.);
+        return 3.*Math.exp(-15.*(f-0.5)*(f-0.5));
     },
     currentPos:0,
 };
@@ -15,10 +16,11 @@ let defaultParams = {
 class SpectrumWave{
     constructor(params=defaultParams){
         this.params=params;
-        this.domain = params.domain;
+
+        this.N=100;
 
         //rescale the spectral curve to take in data from (0,1) instead of domain:
-        this.curve = this.rescaleCurve(this.params.spectralCurve);
+        this.curve = this.params.spectralCurve;
 
         this.waveData = {
             freq: 3,
@@ -26,8 +28,12 @@ class SpectrumWave{
             t: 0,
         };
 
-        this.createSpectrum();
-        this.createWave();
+
+        this.spectrum = new Spectrum(this.curve,100);
+        this.spectrum.setPosition(0,-2,0);
+
+        this.wave = new EMWave(3,1);
+        this.wave.setPosition(0,3,0);
     }
 
 
@@ -48,41 +54,18 @@ class SpectrumWave{
     }
 
 
-    createSpectrum(){
-
-        let thisObj=this;
-
-        function spectralColor(x,y){
-
-            //freq is rescaled between 0 and 1
-            let freq = (x+thisObj.domain.min)/(thisObj.domain.max-thisObj.domain.min);
-            let hue = 0.7*freq-0.3;
-            let saturation=0.7;
-            let lightness= 0.5;
-
-            return new Color().setHSL(hue,saturation,lightness);
-        }
-
-        this.spectrum = new ColoredBarGraph(this.curve,spectralColor,this.domain);
-        this.spectrum.setPosition(0,-2,0);
-    }
-
-    createWave(){
-
-        this.wave = new EMWave(3,1);
-        this.wave.setPosition(0,3,0);
-    }
-
-
-
-
     addToScene(scene){
         this.spectrum.addToScene(scene);
         this.wave.addToScene(scene);
     }
 
     addToUI(ui){
-
+        let thisObj=this;
+        ui.add(thisObj,"N",1,100,1).onChange(function(val) {
+                thisObj.spectrum.setN(val);
+                thisObj.spectrum.update();
+            }
+        )
     }
 
     tick(time,dTime){

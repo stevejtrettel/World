@@ -10831,7 +10831,7 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/color-vision\/em-waves.js" : {
+    "\/common\/components\/color-vision\/EMWave.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,

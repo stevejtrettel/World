@@ -24,7 +24,16 @@ function posNegColor(val){
 }
 
 
+//val is a percentage of the way along the visible spectrum, from 0 to 1
+function spectralColor(x){
+        let hue = x;
+        let sat = 0.5;
+        let light = 0.5;
+        return new Color().setHSL(hue,sat,light);
+}
 
 
 
-export {posNegColor};
+
+
+export {posNegColor, spectralColor};

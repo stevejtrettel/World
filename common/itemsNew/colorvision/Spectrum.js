@@ -45,12 +45,17 @@ class Spectrum{
             //freq is rescaled between 0 and 1
             let freq = (x+thisObj.domain.min)/(thisObj.domain.max-thisObj.domain.min);
             let hue = 0.7*freq-0.3;
+            if(hue<0){
+                hue=0;
+            }
+            if(hue>0.7){
+                hue=0.7
+            }
             let saturation=0.5;
             let lightness= 0.5;
 
             return new Color().setHSL(hue,saturation,lightness);
         }
-
 
         this.bar = new ColoredBarGraph(rescaledCurve,spectralColor,this.domain);
     }

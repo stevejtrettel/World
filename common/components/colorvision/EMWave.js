@@ -9,10 +9,7 @@ import {
 } from "../../../3party/three/build/three.module.js";
 
 
-//curve is a function that takes in an x value and parameters
-//curve(x,params);
-//range is an object {min:-3,max:2}
-//N is the number of bars in the Riemann sum to be displayed.
+import { spectralColor } from "../../utils/colors.js";
 
 
 
@@ -32,16 +29,18 @@ function waveColor(freq,amp,val){
         lightness *= 0.5;
     }
 
-
     return new Color().setHSL(hue, sat, lightness);
 }
 
 
-class EMWave{
-    constructor( freq, amp ){
 
-        this.amp = amp;
-        this.freq = freq;
+
+class EMWave{
+
+    constructor( ){
+
+        this.amp = 1;
+        this.freq = 1;
         this.range = {min:-5,max:5};
         this.N = 1000;
         this.thickness=0.15;

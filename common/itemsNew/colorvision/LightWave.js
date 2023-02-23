@@ -1,4 +1,4 @@
-import EMWave from "../../components/colorvision/em-waves.js";
+import EMWave from "../../components/colorvision/EMWave.js";
 
 
 let defaultParams = {
