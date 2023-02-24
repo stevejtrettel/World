@@ -2,7 +2,7 @@ import EMWave from "../../components/colorvision/EMWave.js";
 
 
 let defaultParams = {
-    freq: 3,
+    freq: 0.5,
     amp: 1,
     t: 0,
 }
@@ -25,7 +25,7 @@ class LightWave{
     addToUI(ui){
         let thisObj = this;
 
-        ui.add(this.params, 'freq', 0, 10, 0.01).name('frequency').onChange(function(value){
+        ui.add(this.params, 'freq', 0, 1, 0.01).name('frequency').onChange(function(value){
             thisObj.em.freq=value;
            thisObj.params.freq=value;
     });

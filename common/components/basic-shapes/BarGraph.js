@@ -141,6 +141,11 @@ class BarGraph{
         this.barGraph.position.set(x,y,z);
     }
 
+    setMaterialProperties(properties){
+        this.barGraph.material.dispose();
+        this.barGraph.material=new MeshPhysicalMaterial(properties);
+    }
+
 }
 
 

@@ -37,12 +37,12 @@ class Spectrum{
             return (x-thisObj.domain.min)/spread;
         }
 
-        this.rescaledCurve = function(x){
-            return thisObj.spectralCurve(thisObj.fromDomain(x));
+        this.rescaledCurve = function(x,params){
+            return thisObj.spectralCurve(thisObj.fromDomain(x),params);
         }
 
-        this.rescaledColor = function(x){
-            return spectralColor(thisObj.fromDomain(x));
+        this.rescaledColor = function(x,params){
+            return spectralColor(thisObj.fromDomain(x),params);
         }
 
 
@@ -50,7 +50,6 @@ class Spectrum{
 
     setN(N){
         this.barGraph.setN(N);
-        this.barGraph.update();
     }
 
     addToScene(scene){
