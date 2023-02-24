@@ -16,10 +16,17 @@ let hardCurve = function(f,params={time:0}){
     return Math.max(val,0);
 };
 
+let shiftingSpectrum = function (f,params={time:0}){
+    let x = f-(Math.sin(3.*params.time)+1)/2;
+    x *= 20.;
+    let val = 2.-Math.pow(x,6);
+    return Math.max(val,0.001);
+};
+
 let defaultParams = {
     response: lowFreqResponse,
     color:lowFreqColor,
-    spectrum:hardCurve,
+    spectrum:shiftingSpectrum,
 }
 
 
@@ -59,8 +66,7 @@ class Monochromat {
     }
 
     tick(time,dTime){
-        this.params.time = 0.;
-        //time/10.;
+        this.params.time = time/10.;
         this.spectrum.update(this.params)
         this.cone.update(this.params);
 

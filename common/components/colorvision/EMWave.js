@@ -35,7 +35,7 @@ function waveColor(freq,amp,val){
 
 
 function freqConversion(f){
-    return Math.exp(4.*f);
+    return Math.exp(3.*f);
 }
 
 class EMWave{
@@ -51,7 +51,7 @@ class EMWave{
         this.thickness=0.15;
         this.curve = function(x,params={t:0,freq:this.freq,amp:this.amp}){
             let f = freqConversion(this.freq);
-            return params.amp* Math.sin(f*(x-params.t));
+            return params.amp* Math.sin(f*(x-params.t/3.));
         }
 
         //dummy object to be able to make the matrix for each case:

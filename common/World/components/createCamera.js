@@ -25,7 +25,7 @@ function createCamera(options=defaultOptions) {
         if(options.animate){
             let pos = options.posAnimate(time);
             let look = options.lookAnimate(time);
-            console.log(pos);
+
             camera.position.set(pos.x,pos.y,pos.z);
             camera.lookAt(look.x,look.y,look.z);
             camera.updateProjectionMatrix();

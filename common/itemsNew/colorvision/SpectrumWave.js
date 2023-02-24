@@ -93,6 +93,9 @@ class SpectrumWave{
 
     tick(time,dTime){
 
+        this.N= 100.;
+        this.spectrum.setN(this.N);
+
         //this.waveData.t=time;
         let timeParam = Math.floor(this.N*(1+Math.sin(time))/2.)/this.N;
         let amp = this.curve(timeParam);
@@ -105,8 +108,11 @@ class SpectrumWave{
         let end2 = new Vector3(s,amp,0);
         this.currentPos.resize(end1,end2);
 
+        this.wave.setVisibility(false);
+        this.currentPos.setVisibility(false);
 
         let params = {};
+
         this.spectrum.update(params);
     }
 }

@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import Item from "../common/itemsNew/colorvision/Monochromat.js";
+import Item from "../common/itemsNew/colorvision/SpectrumWave.js";
 import example from "../common/items/vector-calculus/CrossProduct.js"
 
 
@@ -30,8 +30,8 @@ let globalSettings={
         fov:55,
         pos:{x:2,y:4,z:8},
         look:{x:0,y:0,z:0},
-        posAnimate: (t)=>{return {x:Math.cos(t),y:Math.sin(t),z:5}},
-        lookAnimate: (t)=>{return {x:0,y:Math.sin(t),z:0}},
+        posAnimate: (t)=>{return {x:15.*Math.sin(Math.sin(t/5)),y:7,z:15.*Math.cos(Math.sin(t/5))}},
+        lookAnimate: (t)=>{return {x:0,y:-5,z:0}},
     },
 
     controls:{

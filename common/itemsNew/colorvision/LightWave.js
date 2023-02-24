@@ -38,6 +38,10 @@ class LightWave{
 
     tick(time,dTime){
         this.params.t=time;
+        this.params.freq=0.8*(1.+Math.sin(time))/2;
+        this.em.freq=this.params.freq;
+        this.params.amp=1.3+Math.sin(1.17*time);
+        this.em.amp=this.params.amp;
         this.em.update(this.params);
     }
 }
