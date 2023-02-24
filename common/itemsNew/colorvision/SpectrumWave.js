@@ -1,16 +1,30 @@
-import {Color} from "../../../3party/three/build/three.module.js";
+import {Color, Vector3,} from "../../../3party/three/build/three.module.js";
 import Spectrum from "../../components/colorvision/Spectrum.js";
 import EMWave from "../../components/colorvision/EMWave.js";
+import {Rod} from "../../components/basic-shapes/Rod.js";
+
+
+let simpleCurve = function(f){
+    return  3.*Math.exp(-15.*(f-0.5)*(f-0.5));
+}
+let medCurve = function(f) {
+    let val = 3. * Math.exp(-15. * (f - 0.5) * (f - 0.5)) + Math.sin(30. * f) / 8. - 2.5 * Math.exp(-600 * (f - 0.6) * (f - 0.6));
+    return Math.max(val, 0);
+}
+
+let hardCurve = function(f){
+    let val = 3.*Math.exp(-15.*(f-0.5)*(f-0.5))+Math.sin(30.*f)/8.-2.5*Math.exp(-600*(f-0.6)*(f-0.6))-4.*Math.exp(-800*(f-0.3)*(f-0.3))-Math.exp(-600*(f-0.45)*(f-0.45))+2.*Math.exp(-600*(f-0.3)*(f-0.3));
+    return Math.max(val,0);
+};
 
 
 //the spectral curve takes values in (0,1):
 //0 is red, and 1 is blue (should we show outside of this range YES??)
 let defaultParams = {
-    spectralCurve: function(f){
-        return 3.*Math.exp(-15.*(f-0.5)*(f-0.5));
-    },
+    spectralCurve: hardCurve,
     currentPos:0,
 };
+
 
 
 class SpectrumWave{
@@ -34,6 +48,14 @@ class SpectrumWave{
 
         this.wave = new EMWave(3,1);
         this.wave.setPosition(0,3,0);
+
+        this.currentPos = new Rod({
+            end1:new Vector3(0,0,0),
+            end2:new Vector3(0,1,0),
+            color:0xffffff,
+            radius:0.15,
+        });
+        this.currentPos.setPosition(0,-2,0);
     }
 
 
@@ -57,12 +79,13 @@ class SpectrumWave{
     addToScene(scene){
         this.spectrum.addToScene(scene);
         this.wave.addToScene(scene);
+        this.currentPos.addToScene(scene);
     }
 
     addToUI(ui){
         let thisObj=this;
         ui.add(thisObj,"N",1,100,1).onChange(function(val) {
-                thisObj.spectrum.setN(val);
+                thisObj.spectrum.setN(val*val/10.);
                 thisObj.spectrum.update();
             }
         )
@@ -71,11 +94,17 @@ class SpectrumWave{
     tick(time,dTime){
 
         //this.waveData.t=time;
-        let timeParam = 1+Math.sin(time)/2.;
-        this.waveData.freq = 10.*timeParam;
-        this.waveData.amp = this.curve(timeParam);
-        console.log(this.waveData.amp);
-        this.wave.update(this.waveData);
+        let timeParam = Math.floor(this.N*(1+Math.sin(time))/2.)/this.N;
+        let amp = this.curve(timeParam);
+        this.wave.setFreq(timeParam);
+        this.wave.setAmp(amp/1.5);
+        this.wave.update();
+
+        let s = (timeParam-0.5)*10.;
+        let end1 = new Vector3(s,0,0);
+        let end2 = new Vector3(s,amp,0);
+        this.currentPos.resize(end1,end2);
+
 
         let params = {};
         this.spectrum.update(params);

@@ -34,18 +34,24 @@ function waveColor(freq,amp,val){
 
 
 
+function freqConversion(f){
+    return Math.exp(4.*f);
+}
 
 class EMWave{
 
     constructor( ){
 
+        //frequency is between 0 (red) and 1
+        //mapped exponentially to get what we actually see for the wave
         this.amp = 1;
-        this.freq = 1;
+        this.freq = 0.5;
         this.range = {min:-5,max:5};
         this.N = 1000;
         this.thickness=0.15;
         this.curve = function(x,params={t:0,freq:this.freq,amp:this.amp}){
-            return params.amp* Math.sin(params.freq*(x-params.t));
+            let f = freqConversion(this.freq);
+            return params.amp* Math.sin(f*(x-params.t));
         }
 
         //dummy object to be able to make the matrix for each case:
@@ -191,6 +197,10 @@ class EMWave{
 
     setFreq(freq){
         this.freq=freq;
+    }
+
+    setAmp(amp){
+        this.amp=amp;
     }
 
     setRange(range){
