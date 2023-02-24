@@ -13,8 +13,10 @@ let medCurve = function(f) {
 }
 
 let hardCurve = function(f){
-    let val = 3.*Math.exp(-15.*(f-0.5)*(f-0.5))+Math.sin(30.*f)/8.-2.5*Math.exp(-600*(f-0.6)*(f-0.6))-4.*Math.exp(-800*(f-0.3)*(f-0.3))-Math.exp(-600*(f-0.45)*(f-0.45))+2.*Math.exp(-600*(f-0.3)*(f-0.3));
-    return Math.max(val,0);
+    let val = 3.*Math.exp(-15.*(f-0.5)*(f-0.5))+Math.sin(30.*f)/8.-2.5*Math.exp(-600*(f-0.6)*(f-0.6))-4.*Math.exp(-800*(f-0.3)*(f-0.3))
+        val = val-Math.exp(-600*(f-0.45)*(f-0.45))+2.*Math.exp(-600*(f-0.3)*(f-0.3));
+    val = val + Math.exp(-1000*(f-0.05)*(f-0.05));
+    return Math.max(val,0.001);
 };
 
 
@@ -31,7 +33,7 @@ class SpectrumWave{
     constructor(params=defaultParams){
         this.params=params;
 
-        this.N=100;
+        this.N=1000;
 
         //rescale the spectral curve to take in data from (0,1) instead of domain:
         this.curve = this.params.spectralCurve;
@@ -43,7 +45,7 @@ class SpectrumWave{
         };
 
 
-        this.spectrum = new Spectrum(this.curve,100);
+        this.spectrum = new Spectrum(this.curve,this.N);
         this.spectrum.setPosition(0,-2,0);
 
         this.wave = new EMWave(3,1);
@@ -93,11 +95,13 @@ class SpectrumWave{
 
     tick(time,dTime){
 
-        this.N= 100.;
-        this.spectrum.setN(this.N);
+            //
+            // this.N = Math.min(time/2.+ Math.exp(time / 2.) + 5., 1000);
+            // this.spectrum.setN(this.N);
 
-        //this.waveData.t=time;
-        let timeParam = Math.floor(this.N*(1+Math.sin(time))/2.)/this.N;
+
+        this.waveData.t=time/3;
+        let timeParam = Math.floor(this.N*(1+Math.sin(time/3))/2.)/this.N;
         let amp = this.curve(timeParam);
         this.wave.setFreq(timeParam);
         this.wave.setAmp(amp/1.5);
@@ -108,8 +112,8 @@ class SpectrumWave{
         let end2 = new Vector3(s,amp,0);
         this.currentPos.resize(end1,end2);
 
-        this.wave.setVisibility(false);
-        this.currentPos.setVisibility(false);
+        // this.wave.setVisibility(false);
+        // this.currentPos.setVisibility(false);
 
         let params = {};
 
