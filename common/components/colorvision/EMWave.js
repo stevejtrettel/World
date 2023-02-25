@@ -9,7 +9,7 @@ import {
 } from "../../../3party/three/build/three.module.js";
 
 
-import { spectralColor } from "../../utils/colors.js";
+import {spectralColor, spectralHue} from "../../utils/colors.js";
 
 
 
@@ -18,7 +18,7 @@ function waveColor(freq,amp,val){
     //make it different for positive and negative areas:
     let hue,sat,lightness;
 
-    hue = freq;
+    hue = spectralHue(freq);
     sat = amp/1.5*Math.abs(val/amp);
     lightness=Math.abs(val/amp)/2;
 

@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import Item from "../common/itemsNew/colorvision/SpectrumWave.js";
+import Item from "../common/itemsNew/colorvision/PureSinusoids.js";
 import example from "../common/items/vector-calculus/CrossProduct.js"
 
 
@@ -26,7 +26,7 @@ let globalSettings={
     },
 
     camera:{
-        animate:true,
+        animate:false,
         fov:55,
         pos:{x:2,y:4,z:8},
         look:{x:0,y:0,z:0},

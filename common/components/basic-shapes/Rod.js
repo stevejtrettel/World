@@ -35,24 +35,24 @@ class Rod{
                 materialParameters.ior = 1.;
                 materialParameters.transmission = options.transmission;
             }
-            material = new MeshPhysicalMaterial(materialParameters);
+            this.material = new MeshPhysicalMaterial(materialParameters);
         }
 
         let ballRad = 1.5*this.radius;
 
 
-        this.ball1 = new Mesh(sph,material);
+        this.ball1 = new Mesh(sph,this.material);
         this.ball1.scale.set(ballRad,ballRad,ballRad);
         this.ball1.position.set(this.end1.x,this.end1.y,this.end1.z);
 
-        this.ball2 = new Mesh(sph,material);
+        this.ball2 = new Mesh(sph,this.material);
         this.ball2.scale.set(ballRad,ballRad,ballRad);
         this.ball2.position.set(this.end2.x,this.end2.y,this.end2.z);
 
         const curve = new CatmullRomCurve3([this.end1, this.end2]);
         const geom = new TubeBufferGeometry(curve, 1 ,this.radius, 8);
 
-        this.tube = new Mesh(geom, material);
+        this.tube = new Mesh(geom, this.material);
 
         this.group = new Group();
         this.group.add(this.tube);
@@ -66,6 +66,11 @@ class Rod{
 
     setPosition(x,y,z){
        this.group.position.set(x,y,z);
+    }
+
+
+    setColor(color){
+        this.material.color = color;
     }
 
     resize(end1, end2, rad=this.radius){

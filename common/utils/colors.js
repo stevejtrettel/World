@@ -24,16 +24,33 @@ function posNegColor(val){
 }
 
 
+
+
+
+function smoothStep(x){
+    if(x<0){
+        return 0;
+    }
+    if(x>1) {
+        return 1
+    }
+    return 3.*x*x-2.*x*x*x;
+}
+
 //val is a percentage of the way along the visible spectrum, from 0 to 1
 function spectralColor(x){
-        let hue = x;
+        x = smoothStep(1.2*x-0.1);
+        let hue = 0.7*x;
         let sat = 0.5;
         let light = 0.5;
         return new Color().setHSL(hue,sat,light);
 }
 
+function spectralHue(x){
+    x = smoothStep(1.2*x-0.1);
+    return 0.7*x;
+}
 
 
 
-
-export {posNegColor, spectralColor};
+export {posNegColor, spectralColor,spectralHue};
