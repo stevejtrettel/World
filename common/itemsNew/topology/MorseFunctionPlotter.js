@@ -29,17 +29,17 @@ let defaultSettings = {
     params: {
         animate: false,
         mobius:false,
-        slice: 1,
+        slice: 1.5,
         discardTop:true,
-        xEqn: "(3.+a+cos(u/2.)*sin(v)-sin(u/2.)*sin(2.*v))*cos(u)",
-        yEqn: "sin(u/2.)*sin(v)+cos(u/2.)*sin(2.*v)",
-        zEqn: "(3.+a+cos(u/2.)*sin(v)-sin(u/2.)*sin(2.*v))*sin(u)",
+        xEqn: "1.5*(2.+cos(v))*cos(u)",
+        yEqn: "1.5*(2.+cos(v))*sin(u)",
+        zEqn: "1.5*sin(v)",
         uMin:0.,
         uMax:6.29,
-        vMin:-3.14/2,
-        vMax:3.14/2,
-        sliceMin:0,
-        sliceMax:1.,
+        vMin:-3.14,
+        vMax:3.14,
+        sliceMin:-5,
+        sliceMax:5.,
         sliceWidth:0.01,
         a:0,
         //b:0,
@@ -170,7 +170,7 @@ class MorseFunctionPlotter{
             this.uniforms.a={type:'float', value:this.params.c};
         }
 
-        this.surfaceColor=defaultColor;
+        this.surfaceColor=landscapeColor;
         if(this.settings.config.landscapeColor){
             this.surfaceColor=landscapeColor;
         }

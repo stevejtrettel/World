@@ -5,7 +5,7 @@ import {Rod} from "../../components/basic-shapes/Rod.js";
 
 
 let simpleCurve = function(f){
-    return  3.*Math.exp(-15.*(f-0.5)*(f-0.5));
+    return  3.*Math.exp(-305.*(f-0.3)*(f-0.35))+0.1;
 }
 let medCurve = function(f) {
     let val = 3. * Math.exp(-15. * (f - 0.5) * (f - 0.5)) + Math.sin(30. * f) / 8. - 2.5 * Math.exp(-600 * (f - 0.6) * (f - 0.6));
@@ -113,7 +113,8 @@ class SpectrumWave{
         this.currentPos.resize(end1,end2);
 
         // this.wave.setVisibility(false);
-        // this.currentPos.setVisibility(false);
+        this.currentPos.setVisibility(false);
+        this.spectrum.setVisibility(false);
 
         let params = {};
 

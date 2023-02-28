@@ -37,10 +37,12 @@ class MorseTorus{
            xEqn: "1.5*(2.+cos(v))*cos(u)",
            yEqn: "1.5*(2.+cos(v))*sin(u)",
            zEqn: "1.5*sin(v)",
+           cutTop:true,
        }
 
        this.uniforms = {
-           slice:{type:'float',value:this.params.slice}
+           slice:{type:'float',value:this.params.slice},
+           cutTop:{type:'bool',value:this.params.cutTop}
        };
 
        this.surfaceColor= `
@@ -53,6 +55,9 @@ class MorseTorus{
                  float grid3 = (1.-pow(abs(sin(9.*3.14*height)),0.1))/50.;
                  float grid = grid1+grid2+grid3;
             
+                if(cutTop && (height-slice)>0.){
+                    discard;
+                }
            
                 if(abs(height-slice)<0.1){
                     return vec3(0.8,0.8,0);
@@ -130,7 +135,9 @@ class MorseTorus{
             thisObj.setSlice(val);
         });
 
-
+        ui.add(thisObj.params, 'cutTop').name('Remove Top').onChange(function(val){
+           thisObj.surface.update({cutTop:val});
+        });
 
     }
 
@@ -144,5 +151,4 @@ class MorseTorus{
 
 
 
-let ex = new MorseTorus();
-export default {ex};
+export default MorseTorus;

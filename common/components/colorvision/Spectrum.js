@@ -52,6 +52,10 @@ class Spectrum{
         this.barGraph.setN(N);
     }
 
+    setVisibility(value){
+        this.barGraph.setVisibility(value);
+    }
+
     addToScene(scene){
         this.barGraph.addToScene(scene);
     }
