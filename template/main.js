@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import Item from "../common/itemsNew/colorvision/Trichromat.js";
+import Item from "../common/itemsNew/vector-calculus/IntegralCartesianRectangle.js"
 import example from "../common/items/vector-calculus/CrossProduct.js"
 
 
@@ -21,7 +21,7 @@ let globalSettings={
 
     environment:{
         color: 0xffffff,
-            ///0x292b36,
+            //0x292b36,
         cube: true,
     },
 
