@@ -1,6 +1,9 @@
-
+import {getRange} from "../../utils/math/functions_singleVar.js";
 import {ParametricGeometry} from "../../../3party/three/examples/jsm/geometries/ParametricGeometry.js";
 import {DoubleSide, Mesh, MeshPhysicalMaterial} from "../../../3party/three/build/three.module.js";
+
+
+const parser = math.parser();
 
 let defaultParams = {
     wallMaterial:new MeshPhysicalMaterial({
@@ -25,7 +28,7 @@ let defaultParams = {
     })
 }
 
-class CartesianVolume{
+class CartesianVarVolume {
     constructor(eqn,domain,parameters=defaultParams) {
 
         this.eqn = eqn;
@@ -46,7 +49,7 @@ class CartesianVolume{
 
     createEqns(){
 
-        //rescale r and t
+        //rescale x and y
         let domain = this.domain;
         let eqn = this.eqn;
 
@@ -54,48 +57,55 @@ class CartesianVolume{
             return domain.x.min + x * (domain.x.max-domain.x.min);
         }
 
-        let rescaleY = function(y){
-            return domain.y.min + y * (domain.y.max-domain.y.min);
-        }
+        let yMin = parser.evaluate('yMin(x)='.concat(domain.y.min));
+        let yMax = parser.evaluate('yMax(x)='.concat(domain.y.max));
+        this.yMin=yMin;
+        this.yMax=yMax;
 
+        let absMinY=getRange(yMin,domain.x).min;
+        let absMaxY=getRange(yMax,domain.x).max;
+
+        let rescaleY = function(x,y){
+            return yMin(x) + y * (yMax(x)-yMin(x));
+        }
 
         this.f = function(x,y,dest){
             x = rescaleX(x);
-            y = rescaleY(y);
+            y = rescaleY(x,y);
             let z = eqn(x,y);
             dest.set(x,z,-y);
         }
 
         this.floorEqn = function(x,y,dest){
-            x = domain.x.min + x * (domain.x.max-domain.x.min+2.)-1;
-            y = domain.y.min + y * (domain.y.max-domain.y.min+2.)-1;
+            x = domain.x.min + x * (domain.x.max-domain.x.min+2.)-1.
+            y = absMinY + y * (absMaxY-absMinY+2.)-1.;
             dest.set(x,0,-y);
         }
 
         this.leftEqn = function(x,s,dest){
             x = rescaleX(x);
-            let y = domain.y.min;
+            let y = yMin(x);
             let z = eqn(x,y);
             dest.set(x,z*s,-y);
         }
 
         this.rightEqn = function(x,s,dest){
             x = rescaleX(x);
-            let y = domain.y.max;
+            let y = yMax(x);
             let z = eqn(x,y);
             dest.set(x,z*s,-y);
         }
 
         this.frontEqn = function(y,s,dest){
-            y = rescaleY(y);
             let x = domain.x.min;
+            y = rescaleY(x,y);
             let z = eqn(x,y);
             dest.set(x,z*s,-y);
         }
 
         this.backEqn = function(y,s,dest){
-            y = rescaleY(y);
             let x = domain.x.max;
+            y = rescaleY(x,y);
             let z = eqn(x,y);
             dest.set(x,z*s,-y);
         }
@@ -109,7 +119,7 @@ class CartesianVolume{
         let right = new ParametricGeometry(this.rightEqn,32,2);
         let front = new ParametricGeometry(this.frontEqn, 32,2);
         let back = new ParametricGeometry(this.backEqn,32,2);
-        let floor = new ParametricGeometry(this.floorEqn,32,32);
+        let floor = new ParametricGeometry(this.floorEqn,2,2);
 
         return {
             top:top,
@@ -170,4 +180,4 @@ class CartesianVolume{
 }
 
 
-export default CartesianVolume;
+export default CartesianVarVolume;

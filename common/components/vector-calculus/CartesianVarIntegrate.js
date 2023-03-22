@@ -11,7 +11,7 @@ let surfMat = new MeshPhysicalMaterial({
     color:0x9d52bf,
 });
 
-class CartesianYIntegrate{
+class CartesianVarIntegrate {
     constructor(eqn,domain,slice=0.5) {
         this.eqn=eqn;
         this.domain=domain;
@@ -147,4 +147,4 @@ class CartesianYIntegrate{
 }
 
 
-export default CartesianYIntegrate;
+export default CartesianVarIntegrate;

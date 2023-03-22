@@ -12,7 +12,7 @@ let sliceMat = new MeshPhysicalMaterial({
 
 const parser = math.parser();
 
-class CartesianXSlice{
+class CartesianVarSlice {
    constructor(eqn,domain,slice) {
        this.eqn=eqn;
        this.domain=domain;
@@ -122,4 +122,4 @@ class CartesianXSlice{
 }
 
 
-export default CartesianXSlice;
+export default CartesianVarSlice;

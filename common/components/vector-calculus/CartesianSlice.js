@@ -4,14 +4,13 @@ import {Rod} from "../basic-shapes/Rod.js";
 import {ParametricGeometry} from "../../../3party/three/examples/jsm/geometries/ParametricGeometry.js";
 
 
-
 let sliceMat = new MeshPhysicalMaterial({
     side:DoubleSide,
     color:0xde871d,
 });
 
 
-class PolarSlice{
+class CartesianSlice{
     constructor(eqn,domain,slice,sliceVar) {
         this.eqn=eqn;
         this.domain=domain;
@@ -33,8 +32,15 @@ class PolarSlice{
             color:0xe3af12
         });
 
+        this.bottom = new Rod({
+            end1:this.bottom1,
+            end2:this.bottom2,
+            radius:0.05,
+            color:0xe3af12
+        });
+
         this.top = new ParametricCurveCPU(this.topCurve, this.currentDomain,{color:0xe3af12});
-        this.bottom = new ParametricCurveCPU(this.bottomCurve, this.currentDomain,{color:0xe3af12});
+
         this.surface = new Mesh(this.sliceGeom,sliceMat);
     }
 
@@ -51,64 +57,58 @@ class PolarSlice{
         let domain=this.domain;
         let eqn = this.eqn;
 
-        let rescaleR = function(r){
-            return domain.r.min + r * (domain.r.max-domain.r.min);
+        let rescaleX = function(x){
+            return domain.x.min + x * (domain.x.max-domain.x.min);
         }
-        let rescaleT = function(t){
-            return domain.t.min + t * (domain.t.max-domain.t.min);
+        let rescaleY = function(y){
+            return domain.y.min + y * (domain.y.max-domain.y.min);
         }
 
 
-        if(this.sliceVar=='t'){
+        if(this.sliceVar=='y'){
 
-            this.currentDomain = this.domain.t;
-            let rescaleSlice = rescaleR(this.slice);
+            this.currentDomain = this.domain.y;
+            let rescaleSlice = rescaleX(this.slice);
 
-            this.topCurve = function(t,params={}){
-                let x = rescaleSlice * Math.cos(t);
-                let y = rescaleSlice *Math.sin(t);
-                let z = eqn(rescaleSlice,t);
+            this.topCurve = function(y,params={}){
+                let x = rescaleSlice ;
+                let z = eqn(rescaleSlice,y);
                 return new Vector3(x,z,-y);
             }
 
-            this.bottomCurve = function(t,params={}){
-                let x = rescaleSlice * Math.cos(t);
-                let y = rescaleSlice *Math.sin(t);
+            this.bottomCurve = function(y,params={}){
+                let x =  rescaleSlice;
                 return new Vector3(x,0,-y);
             }
 
-            this.sliceEqn = function(t,s,dest){
-                t = rescaleT(t);
-                let z = eqn(rescaleSlice,t);
-                let x = rescaleSlice * Math.cos(t);
-                let y = rescaleSlice *Math.sin(t);
+            this.sliceEqn = function(y,s,dest){
+                y = rescaleY(y);
+                let z = eqn(rescaleSlice,y);
+                let x = rescaleSlice;
                 dest.set(x,z*s,-y);
             }
         }
 
-        if(this.sliceVar=='r'){
+        if(this.sliceVar=='x'){
 
-            this.currentDomain = this.domain.r;
-            let rescaleSlice = rescaleT(this.slice);
+            this.currentDomain = this.domain.x;
+            let rescaleSlice = rescaleY(this.slice);
 
-            this.topCurve = function(r,params={}){
-                let x =  r * Math.cos(rescaleSlice);
-                let y =  r * Math.sin(rescaleSlice);
-                let z = eqn(r,rescaleSlice);
+            this.topCurve = function(x,params={}){
+                let y =  rescaleSlice;
+                let z = eqn(x,rescaleSlice);
                 return new Vector3(x,z,-y);
             }
 
-            this.bottomCurve = function(r,params={}){
-                let x =  r * Math.cos(rescaleSlice);
-                let y =  r * Math.sin(rescaleSlice);
+            this.bottomCurve = function(x,params={}){
+                let y =  rescaleSlice;
                 return new Vector3(x,0,-y);
             }
 
-            this.sliceEqn = function(r,s,dest){
-                r = rescaleR(r);
-                let z = eqn(r,rescaleSlice);
-                let x = r * Math.cos(rescaleSlice);
-                let y = r * Math.sin(rescaleSlice);
+            this.sliceEqn = function(x,s,dest){
+                x = rescaleX(x);
+                let y = rescaleSlice;
+                let z = eqn(x,y);
                 dest.set(x,z*s,-y);
             }
 
@@ -124,24 +124,13 @@ class PolarSlice{
 
     updateGeometries(){
 
-        let rad1=0.05;
-        let rad2=0.05;
-
-        if(this.sliceVar=='r'){
-            rad1 *= this.domain.r.min;
-            rad2 *= this.domain.r.max;
-        }
-
-        this.side1.resize(this.bottom1,this.top1,rad1);
-        this.side2.resize(this.bottom2,this.top2,rad2);
+        this.side1.resize(this.bottom1,this.top1);
+        this.side2.resize(this.bottom2,this.top2);
+        this.bottom.resize(this.bottom1,this.bottom2);
 
         this.top.setCurve(this.topCurve);
         this.top.setDomain(this.currentDomain);
         this.top.update();
-
-        this.bottom.setCurve(this.bottomCurve);
-        this.bottom.setDomain(this.currentDomain);
-        this.bottom.update();
 
         this.surface.geometry.dispose();
         this.surface.geometry = this.sliceGeom;
@@ -182,4 +171,4 @@ class PolarSlice{
 }
 
 
-export default PolarSlice;
+export default CartesianSlice;

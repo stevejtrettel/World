@@ -1,15 +1,15 @@
-import CartesianVolume from "../../components/vector-calculus/CartesianVolume.js";
-import CartesianXSlice from "../../components/vector-calculus/CartesianXSlice.js";
-import CartesianYIntegrate from "../../components/vector-calculus/CartesianYIntegrate.js";
+import CartesianVarVolume from "../../components/vector-calculus/CartesianVarVolume.js";
+import CartesianVarSlice from "../../components/vector-calculus/CartesianVarSlice.js";
+import CartesianVarIntegrate from "../../components/vector-calculus/CartesianVarIntegrate.js";
 
 const parser = math.parser();
 
 let defaultParams = {
 
-    eqnTxt: 'x^2+y^2',
+    eqnTxt: '(x^2+y^2)/3',
     domain:{
         x:{min:-2,max:2},
-        y:{min:'x^2-4', max:'4-x^2'}
+        y:{min:'-3+sin(3*x)/2', max:'x/3'}
     },
     slice: 0.25,
 }
@@ -26,9 +26,9 @@ class CartesianIntegralGeneral {
 
         this.slice=params.slice;
 
-        this.volume = new CartesianVolume(this.eqn,this.domain);
-        this.xSlice = new CartesianXSlice(this.eqn,this.domain,params.slice);
-        this.yIntegral = new CartesianYIntegrate(this.eqn,this.domain,params.slice);
+        this.volume = new CartesianVarVolume(this.eqn,this.domain);
+        this.xSlice = new CartesianVarSlice(this.eqn,this.domain,params.slice);
+        this.yIntegral = new CartesianVarIntegrate(this.eqn,this.domain,params.slice);
 
     }
 

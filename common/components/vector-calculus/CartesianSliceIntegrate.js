@@ -10,7 +10,7 @@ let surfMat = new MeshPhysicalMaterial({
     color:0x9d52bf,
 });
 
-class PolarSliceIntegrate{
+class CartesianSliceIntegrate{
     constructor(eqn,domain,slice=0.5,sliceVar) {
         this.eqn=eqn;
         this.domain=domain;
@@ -58,92 +58,100 @@ class PolarSliceIntegrate{
 
     createEqns(){
 
-        let offset = 5.;
+        let offset = 3.;
 
         let domain=this.domain;
         let eqn = this.eqn;
 
-        let rescaleR = function(r){
-            return domain.r.min + r * (domain.r.max-domain.r.min);
+        let rescaleX = function(x){
+            return domain.x.min + x * (domain.x.max-domain.x.min);
         }
-        let rescaleT = function(t){
-            return domain.t.min + t * (domain.t.max-domain.t.min);
+        let rescaleY = function(y){
+            return domain.y.min + y * (domain.y.max-domain.y.min);
         }
 
         let integral,rescaleSlice;
 
-        if(this.sliceVar=='t') {
+        if(this.sliceVar=='y') {
 
-            this.currentDomain=this.domain.r;
+            this.currentDomain=this.domain.x;
+            rescaleSlice = rescaleX(this.slice);
 
-            rescaleSlice = rescaleR(this.slice);
-
-            integral = function (r) {
+            integral = function (x) {
                 let z = 0.;
-                let N = 50;
-                let spread = r * (domain.t.max - domain.t.min);
-                let dt = spread / N;
+                let N = 30;
+                let spread = (domain.y.max - domain.y.min);
+                let dy = spread / N;
                 for (let i = 0; i < N; i++) {
-                    let ti = rescaleT(i / N);
-                    let dz = eqn(r, ti) * dt;
+                    let yi = rescaleY(i / N);
+                    let dz = eqn(x, yi) * dy;
                     z = z + dz;
                 }
                 return z / 2.;
             };
 
-            this.integralCurve = function (r, params = {}) {
-                return new Vector3(r, integral(r), -domain.r.max - offset);
+            this.integralCurve = function(x,params={}){
+                return new Vector3(x, integral(x),-domain.y.max-offset);
             }
 
-            this.surfEqn = function (r, s, dest) {
-                r = rescaleR(r);
-                let z = integral(r);
-                dest.set(r, z * s, -domain.r.max - offset);
+            this.surfEqn = function(x,s,dest){
+                x = rescaleX(x);
+                let z = integral(x);
+                dest.set(x,z*s,-domain.y.max-offset);
             }
+
+            this.surfGeometry = new ParametricGeometry(this.surfEqn,32,2);
+
+            this.bottom1 = new Vector3(this.currentDomain.min,0,-domain.y.max-offset);
+            this.bottom2 = new Vector3(this.currentDomain.max,0,-domain.y.max-offset);
+            this.top1 = this.integralCurve(this.currentDomain.min);
+            this.top2 = this.integralCurve(this.currentDomain.max);
+
+            this.sliceBottom = new Vector3(rescaleSlice,0,-domain.y.max-offset);
+            this.sliceTop = new Vector3(rescaleSlice, integral(rescaleSlice),-domain.y.max-offset);
 
         }
 
-        else if(this.sliceVar=='r') {
+        else if(this.sliceVar=='x') {
 
-            this.currentDomain=this.domain.t;
+            this.currentDomain=this.domain.y;
 
-            rescaleSlice = rescaleT(this.slice);
+            rescaleSlice = rescaleY(this.slice);
 
-            integral = function(t){
+            integral = function(y){
                 let z=0.;
                 let N=30;
-                let spread = (domain.r.max-domain.r.min);
-                let dt = spread/N;
+                let spread = (domain.x.max-domain.x.min);
+                let dx = spread/N;
                 for(let i=0;i<N;i++){
-                    let ri = rescaleR(i/N);
-                    let dz = ri*eqn(ri,t)*dt;
+                    let xi = rescaleX(i/N);
+                    let dz = eqn(xi,y)*dx;
                     z = z + dz;
                 }
                 return z/2.;
             };
 
-            this.integralCurve = function(t,params={}){
-                return new Vector3(t, integral(t),-domain.r.max-offset);
+            this.integralCurve = function(y,params={}){
+                return new Vector3(domain.x.min-offset, integral(y),-y);
             }
 
-            this.surfEqn = function(t,s,dest){
-                t = rescaleT(t);
-                let z = integral(t);
-                dest.set(t,z*s,-domain.r.max-offset);
+            this.surfEqn = function(y,s,dest){
+                y = rescaleY(y);
+                let z = integral(y);
+                dest.set(domain.x.min-offset,z*s,-y);
             }
+
+            this.surfGeometry = new ParametricGeometry(this.surfEqn,32,2);
+
+            this.bottom1 = new Vector3(domain.x.min-offset,0,-this.currentDomain.min);
+            this.bottom2 = new Vector3(domain.x.min-offset,0,-this.currentDomain.max);
+            this.top1 = this.integralCurve(this.currentDomain.min);
+            this.top2 = this.integralCurve(this.currentDomain.max);
+
+            this.sliceBottom = new Vector3(domain.x.min-offset,0,-rescaleSlice);
+            this.sliceTop = new Vector3(domain.x.min-offset, integral(rescaleSlice),-rescaleSlice);
 
         }
-
-
-        this.surfGeometry = new ParametricGeometry(this.surfEqn,32,2);
-
-        this.bottom1 = new Vector3(this.currentDomain.min,0,-domain.r.max-offset);
-        this.bottom2 = new Vector3(this.currentDomain.max,0,-domain.r.max-offset);
-        this.top1 = this.integralCurve(this.currentDomain.min);
-        this.top2 = this.integralCurve(this.currentDomain.max);
-
-        this.sliceBottom = new Vector3(rescaleSlice,0,-domain.r.max-offset);
-        this.sliceTop = new Vector3(rescaleSlice, integral(rescaleSlice),-domain.r.max-offset);
 
 
     }
@@ -198,4 +206,4 @@ class PolarSliceIntegrate{
 }
 
 
-export default PolarSliceIntegrate;
+export default CartesianSliceIntegrate;
