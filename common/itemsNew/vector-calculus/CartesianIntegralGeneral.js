@@ -15,7 +15,7 @@ let defaultParams = {
 }
 
 
-class IntegralCartesianGeneral {
+class CartesianIntegralGeneral {
     constructor(params=defaultParams) {
 
         this.params = params;
@@ -81,4 +81,4 @@ class IntegralCartesianGeneral {
 }
 
 
-export default IntegralCartesianGeneral;
+export default CartesianIntegralGeneral;

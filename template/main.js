@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import Item from "../common/itemsNew/vector-calculus/IntegralCartesianRectangle.js"
+import Item from "../common/itemsNew/vector-calculus/PolarIntegralPlotter.js"
 import example from "../common/items/vector-calculus/CrossProduct.js"
 
 

@@ -16,7 +16,7 @@ let defaultParams = {
 }
 
 
-class IntegralCartesianRectangle {
+class CartesianIntegralRectangle {
     constructor(params=defaultParams) {
 
         this.params = params;
@@ -82,4 +82,4 @@ class IntegralCartesianRectangle {
 }
 
 
-export default IntegralCartesianRectangle;
+export default CartesianIntegralRectangle;
