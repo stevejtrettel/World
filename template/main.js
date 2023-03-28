@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import Item from "../common/itemsNew/vector-calculus/CartesianIntegralGeneral.js"
+import Item from "../common/items/complex-analysis/CExp.js"
 import example from "../common/items/vector-calculus/CrossProduct.js"
 
 
