@@ -5,7 +5,6 @@ import {CustomShaderMaterial} from "../../../3party/three-csm.m.js";
 import {colorConversion} from "../../shaders/colors/colorConversion.js";
 
 
-
 const defaultEqn = `
     vec3 eqn( vec2 uv ){
         float u = uv.x;

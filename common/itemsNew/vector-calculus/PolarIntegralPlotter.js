@@ -25,7 +25,7 @@ class PolarIntegralPlotter {
         this.eqn = parser.evaluate('f(r,t)='.concat(this.eqnTxt));
 
         this.slice=params.slice;
-        this.sliceVar='r';
+        this.sliceVar='t';
 
         this.volume = new PolarVolume(this.eqn,this.domain);
 

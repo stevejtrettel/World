@@ -20,8 +20,7 @@ let globalSettings={
     stats:false,
 
     environment:{
-        color: 0xffffff,
-            //0x292b36,
+        color: 0x292b36,
         cube: true,
     },
 

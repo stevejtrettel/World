@@ -10369,6 +10369,17 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/common\/components\/basic-shapes\/BarGraph.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/basic-shapes\/BarGraph-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/common\/components\/basic-shapes\/Blackboard.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -10820,24 +10831,35 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/color-vision\/ColoredBarGraph.js" : {
+    "\/common\/components\/colorvision\/ConeCell.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 0,
-      "oAP" : "\/common\/components\/color-vision\/coloredBarGraph-min.js",
+      "oA" : 1,
+      "oAP" : "\/common\/components\/colorvision\/ConeCell-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/color-vision\/EMWave.js" : {
+    "\/common\/components\/colorvision\/EMWave.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 0,
-      "oAP" : "\/common\/components\/color-vision\/em-waves-min.js",
+      "oA" : 1,
+      "oAP" : "\/common\/components\/colorvision\/EMWave-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/colorvision\/Spectrum.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/colorvision\/Spectrum-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -11062,6 +11084,72 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/common\/components\/vector-calculus\/CartesianSlice.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/vector-calculus\/CartesianSlice-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/vector-calculus\/CartesianSliceIntegrate.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/vector-calculus\/CartesianSliceIntegrate-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/vector-calculus\/CartesianVarIntegrate.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/vector-calculus\/CartesianVarIntegrate-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/vector-calculus\/CartesianVarSlice.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/vector-calculus\/CartesianVarSlice-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/vector-calculus\/CartesianVarVolume.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/vector-calculus\/CartesianVarVolume-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/vector-calculus\/CartesianVolume.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/vector-calculus\/CartesianVolume-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/common\/components\/vector-calculus\/ContourPlot2D.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -11125,6 +11213,39 @@
       "oA" : 1,
       "oAP" : "\/common\/components\/vector-calculus\/IteratedIntegral-min.js",
       "oF" : 1,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/vector-calculus\/PolarSlice.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/vector-calculus\/PolarSlice-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/vector-calculus\/PolarSliceIntegrate.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/vector-calculus\/PolarSliceIntegrate-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/vector-calculus\/PolarVolume.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/vector-calculus\/PolarVolume-min.js",
+      "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
@@ -11612,6 +11733,17 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/common\/items\/complex-analysis\/CExp.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/items\/complex-analysis\/CExp-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/common\/items\/complex-analysis\/ComplexSpiral.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -11663,6 +11795,17 @@
       "mi" : 1,
       "oA" : 0,
       "oAP" : "\/common\/items\/complex-analysis\/ModulusFunction-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/complex-analysis\/ModulusPlot.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/complex-analysis\/ModulusSine-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -12492,6 +12635,28 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/common\/itemsNew\/colorvision\/Dichromat.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/itemsNew\/colorvision\/Dichromat-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/itemsNew\/colorvision\/LightDetector.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/itemsNew\/colorvision\/LightDetector-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/common\/itemsNew\/colorvision\/LightWave.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -12503,13 +12668,68 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/itemsNew\/colorvision\/Spectrum.js" : {
+    "\/common\/itemsNew\/colorvision\/LMS.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 0,
-      "oAP" : "\/common\/itemsNew\/colorvision\/spectrum-min.js",
+      "oAP" : "\/common\/itemsNew\/colorvision\/LMS-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/itemsNew\/colorvision\/ManVsDog.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/itemsNew\/colorvision\/ManVsDog-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/itemsNew\/colorvision\/Monochromat.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/itemsNew\/colorvision\/Monochromat-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/itemsNew\/colorvision\/PureSinusoids.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/itemsNew\/colorvision\/PureSinusoids-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/itemsNew\/colorvision\/SpectrumWave.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/itemsNew\/colorvision\/SpectrumWave-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/itemsNew\/colorvision\/Trichromat.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/itemsNew\/colorvision\/Trichromat-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -12580,6 +12800,28 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/common\/itemsNew\/vector-calculus\/CartesianIntegralGeneral.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/itemsNew\/vector-calculus\/CartesianIntegralGeneral-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/itemsNew\/vector-calculus\/CartesianIntegralPlotter.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/itemsNew\/vector-calculus\/CartesianIntegralPlotter-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/common\/itemsNew\/vector-calculus\/ParametricCurvePlotter.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -12598,6 +12840,28 @@
       "mi" : 1,
       "oA" : 1,
       "oAP" : "\/common\/itemsNew\/vector-calculus\/ParametricSurfacePlotter-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/itemsNew\/vector-calculus\/PolarIntegralPlotter.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/itemsNew\/vector-calculus\/PolarIntegralPlotter-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/itemsNew\/vector-calculus\/PolarRegionPlotter.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/itemsNew\/vector-calculus\/PolarRegionPlotter-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -13195,7 +13459,7 @@
       "tS" : 0
     },
     "\/template\/main.js" : {
-      "bF" : 0,
+      "bF" : 4,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,

@@ -1,11 +1,12 @@
 
 import ParametricSurface from "../../components/parametric/ParametricSurface.js";
 import {DoubleSide} from "../../../3party/three/build/three.module.js";
+import {complex} from "../../shaders/math/complex.js";
 
 let defaultParams = {};
 
 
-class ModulusFunction{
+class ModulusPlot{
     constructor(params=defaultParams){
 
         this.params = {
@@ -29,17 +30,47 @@ class ModulusFunction{
             }
         `;
 
-        this.eqn=`
+        this.eqn=complex+`
         vec3 eqn(vec2 uv){
-            float u = 3.*uv.x;
-            float v = uv.y/1.5;
-            float re = sin(u)*cosh(v);
-            float im = cos(u)*sinh(v);
-            float mag = sqrt(re*re+im*im);
-            return vec3(v,mag-3.,u);
+        
+            if(eqnType==1){
+                float u = 3.*uv.x;
+                float v = uv.y/1.5;
+                float re = sin(u)*cosh(v);
+                float im = cos(u)*sinh(v);
+                float mag = sqrt(re*re+im*im);
+                return vec3(v,mag-3.,u);
+            }
+            else if(eqnType==2){
+                float u =2.*uv.x;
+                float v = 2.*uv.y;
+                vec2 ans = ctan(uv);
+                float mag = length(ans);
+                return vec3(v,mag-3.,u);
+            }
+            else if(eqnType==3){
+                float u =2.*uv.x;
+                float v = 2.*uv.y;
+                float mag = exp(u);
+                return vec3(u,mag-3.,v);
+            }
+            else if(eqnType==4){
+                 float u = uv.x;
+                float v = uv.y;
+                float x1 = 1.+u;
+                float x2 = 1.-u;
+                float mag1 = x1*x1+v*v;
+                float mag2 = x2*x2+v*v;
+                float mag = 1./(mag1*mag2);
+                return vec3(u,mag-3.,v);
+            }
+
+            return vec3(0,0,0);
         }`;
         this.domain={u:{min:-4,max:4},v:{min:-4,max:4}};
-        this.uniforms={};
+        this.uniforms={
+            eqnType:{type:'int',value:1}
+        };
         let surfaceOptions = {
             clearcoat:1,
             side:DoubleSide,
@@ -55,7 +86,9 @@ class ModulusFunction{
     addToUI(ui){
         let thisObj = this;
         ui.add(thisObj.params,"eqnType",
-            { '1/(1-z^2)':1, 'B':2,  'C':3 });
+            { 'sin(z)':1, 'tan(z)':2,  'exp(z)':3,'1/(z^2-1)':4 }).onChange(function(value){
+                thisObj.surface.update(thisObj.params);
+        });
     }
 
     tick(time,dTime){
@@ -63,4 +96,4 @@ class ModulusFunction{
     }
 }
 
-export default ModulusFunction;
+export default ModulusPlot;
