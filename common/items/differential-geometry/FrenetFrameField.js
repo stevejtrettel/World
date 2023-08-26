@@ -227,14 +227,18 @@ class FrenetFrameField {
         this.curve.update({time:time});
         let s;
         if(this.periodic){
-            s=time/2.;
+            s=time/5.;
         }
         else{
             s = (1.-Math.cos(time/3.))/2;
             s= this.params.sMin+(this.params.sMax-this.params.sMin)*s;
         }
 
-        //this.frame.update(s,this.params);
+        let sRange = this.params.sMax-this.params.sMin;
+        for(let i=0; i<this.numFrames; i++){
+            let si = s+this.params.sMin + i/this.numFrames * sRange;
+            this.frames[i].update(si,this.params);
+        }
 
     }
 }
