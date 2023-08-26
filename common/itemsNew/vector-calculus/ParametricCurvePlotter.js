@@ -23,10 +23,10 @@ let defaultParams = {
     showParameters:true,
 
     animate:false,
-    showPosVector:true,
-    showTangVector:true,
+    showPosVector:false,
+    showTangVector:false,
     showTangLine:false,
-    showCurrentPos:true,
+    showCurrentPos:false,
     unitTangent:false,
 
 
@@ -99,6 +99,11 @@ class ParametricCurvePlotter {
              
              vec3 base =  0.6 + 0.4*cos(2.*3.14*vec3(s,1.-s,s)+vec3(0,2,4));
              
+             // float toss = pow(sin(500.*s),11.);
+             // if(toss<-0.5){
+             // discard;
+             // }
+             
              return base + 2.*vec3(grid);
             }
         `;
@@ -106,7 +111,7 @@ class ParametricCurvePlotter {
         //make the JS version of the equation with math parser
         this.buildJSEquation();
 
-        this.curve = new ParametricCurve(this.buildGLSLEquation(),this.range,this.uniforms,this.curveColor,surfaceOptions);
+        this.curve = new ParametricCurve(this.buildGLSLEquation(),this.range,this.uniforms,this.curveColor,surfaceOptions,0.4);
 
         //use the equation to get the data needed for position and velocity vectors
         let pos = this.eqn(0,);

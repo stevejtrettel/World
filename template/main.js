@@ -1,6 +1,6 @@
 //set the stuff for this particular example!
 import Item from "../common/items/complex-analysis/CExp.js"
-import example from "../common/items/vector-calculus/CrossProduct.js"
+import example from "../common/items/differential-geometry/FrenetFrameField.js"
 
 
 
@@ -20,8 +20,9 @@ let globalSettings={
     stats:false,
 
     environment:{
-        color: 0x292b36,
-        cube: true,
+        color: 0xffffff,
+            //0x292b36,
+        cube: false,
     },
 
     camera:{
@@ -60,7 +61,8 @@ function main(globalSettings) {
     let object = new Item();
 
     //4. Fill this world with objects
-    world.addObjects( {object: object} );
+    world.addObjects( example );
+   // world.addObjects( {object: object} );
     world.addObjects( lights );
 
     //5. Set up Post-Processing effects

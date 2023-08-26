@@ -30,6 +30,19 @@ let iniCondLine = function(index, time, spread){
 
 let iniCondCone = function(index,time,spread,totalNum=10){
     let pos = new Vector3(-15,0,0);
+    let vel = new Vector3(5., Math.cos(2*Math.PI*index/totalNum),Math.sin(2*Math.PI*index/totalNum)).normalize().multiplyScalar(Math.sin(time/5)*Math.sin(time/5));
+    return new State(pos,vel);
+}
+
+//5.69 circles twice!!
+let iniCondCone2 = function(index,time,spread,totalNum=10){
+    let pos = new Vector3(-15,0,0);
+    let vel = new Vector3(4, Math.cos(2*Math.PI*index/totalNum),Math.sin(2*Math.PI*index/totalNum)).normalize().multiplyScalar(Math.sin(time/5)*Math.sin(time/5));
+    return new State(pos,vel);
+}
+
+let iniCondCone3 = function(index,time,spread,totalNum=10){
+    let pos = new Vector3(-15,0,0);
     let vel = new Vector3(4.5, Math.cos(2*Math.PI*index/totalNum),Math.sin(2*Math.PI*index/totalNum)).normalize().multiplyScalar(Math.sin(time/5)*Math.sin(time/5));
     return new State(pos,vel);
 }
@@ -87,6 +100,22 @@ geoSpray.tick = function(time,dTime){
     geoSpray.update(time);
 }
 geoSpray.addToUI=function(ui){}
+
+
+
+const geoSpray2 = new IntegralCurveSpray(bh.nullIntegrator, identity, iniCondCone2, optionGenerator, stop, range );
+geoSpray2.tick = function(time,dTime){
+    geoSpray2.update(time);
+}
+geoSpray2.addToUI=function(ui){}
+
+
+const geoSpray3 = new IntegralCurveSpray(bh.nullIntegrator, identity, iniCondCone3, optionGenerator, stop, range );
+geoSpray3.tick = function(time,dTime){
+    geoSpray3.update(time);
+}
+geoSpray3.addToUI=function(ui){}
+
 
 
 //
@@ -159,7 +188,9 @@ let accDisk = new AccretionDisk(2,4,0.2);
 
 export default {
     blackhole: bh,
-    spray: geoSpray,
+    // spray: geoSpray,
+    spray2: geoSpray2,
+    // spray3: geoSpray3,
   //  spray2: geoSpray2,
-    acc: accDisk,
+  //  acc: accDisk,
 };
