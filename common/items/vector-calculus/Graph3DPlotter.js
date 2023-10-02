@@ -6,33 +6,26 @@ let surfaceOptions = {
 }
 
 
-
-
-
-class ParametricSurfacePlotter {
+class Graph3DPlotter {
     constructor() {
         this.range = {
-            u:{min:0, max:6.29},
-            v:{min:0, max:6.29}
+            u:{min:-3.14, max:3.14},
+            v:{min:-3.14, max:3.14}
         };
 
         this.params = {
-            uMin:0,
-            uMax:6.29,
-            vMin:0,
-            vMax:6.29,
-            animate:false,
+            uMin:-3.14,
+            uMax:3.14,
+            vMin:-3.14,
+            vMax:3.14,
             homotopy: 1,
-            xEqn: "(1.25 *(1.-v/(2.*3.14159))*cos(2.*v)*(1.+cos(u))+cos(2.*v))",
-            yEqn: "(10.*v/(2.*3.14159)+(1.-v/(2.*3.14159))*sin(u))-5.",
-            zEqn: "-(1.25 *(1.-v/(2.*3.14159))*sin(2.*v)*(1.+cos(u))+sin(2.*v))",
+            zEqn: "sin(x*y)",
             a:0,
             b:0,
             c:0,
         }
 
         this.uniforms = {
-            homotopy:{type:'float',value:this.params.homotopy},
             a:{type:'float',value:this.params.a},
             b:{type:'float',value:this.params.b},
             c:{type:'float',value:this.params.c},
@@ -60,25 +53,11 @@ class ParametricSurfacePlotter {
 
         return `vec3 eqn( vec2 uv ){
         
-            float u = uv.x*homotopy;
-            float v = uv.y*homotopy;
-            
-            float x = ${this.params.xEqn};
-            float y = ${this.params.yEqn};
+            float x = uv.x;
+            float y = uv.y;
             float z = ${this.params.zEqn};
             
-            
-            //JUST FOR ANIMATION: OTHERWISE RETURN XYZ
-            //find the "basepoint" so the surface stays fixed in space
-            u=0.;
-            v=0.;
-            float x0 = ${this.params.xEqn};
-            float y0 = ${this.params.yEqn};
-            float z0 = ${this.params.zEqn};
-            
-            //rescale surface
-            return (vec3(x,y,z)-vec3(x0,y0,z0))/homotopy+vec3(x0,y0,z0);
-            
+            return vec3(x,z,y);
             
        }`;
     }
@@ -92,19 +71,7 @@ class ParametricSurfacePlotter {
 
         let thisObj = this;
 
-        ui.add(thisObj.params,'xEqn').name('x(u,v)=').onFinishChange(function(val){
-            thisObj.params.xEqn = val;
-            let newEqn = thisObj.buildEquation();
-            thisObj.surface.setFunction(newEqn);
-        });
-
-        ui.add(thisObj.params,'yEqn').name('y(u,v)=').onFinishChange(function(val){
-            thisObj.params.yEqn = val;
-            let newEqn = thisObj.buildEquation();
-            thisObj.surface.setFunction(newEqn);
-        });
-
-        ui.add(thisObj.params,'zEqn').name('z(u,v)=').onFinishChange(function(val){
+        ui.add(thisObj.params,'zEqn').name('z(x,y)=').onFinishChange(function(val){
             thisObj.params.zEqn = val
             let newEqn = thisObj.buildEquation();
             thisObj.surface.setFunction(newEqn);
@@ -143,23 +110,9 @@ class ParametricSurfacePlotter {
             thisObj.surface.update({c:val});
         });
 
-        let hFolder = ui.addFolder('Homotopy');
-
-        hFolder.add(thisObj.params, 'animate').name('Animate');
-        hFolder.add(thisObj.params, 'homotopy',0,1,0.01).name('Homotopy').onChange(function(val){
-                thisObj.surface.update({homotopy:val});
-            });
-
     }
 
     tick(time,dTime){
-        if(this.params.animate ){
-            let val = (1+Math.cos(time/2))/2.;
-            this.surface.update({homotopy:val});
-        }
-        else{
-            this.surface.update({homotopy:1});
-        }
     }
 }
 
@@ -167,5 +120,5 @@ class ParametricSurfacePlotter {
 
 
 
-let ex = new ParametricSurfacePlotter();
+let ex = new Graph3DPlotter();
 export default ex;
