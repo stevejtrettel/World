@@ -3,7 +3,6 @@ import {
     DoubleSide,
     Float32BufferAttribute,
     Mesh,
-    SmoothShading
 } from "../../../3party/three/build/three.module.js";
 
 import {
