@@ -153,6 +153,7 @@ class ParametricSurfacePlotter {
     }
 
     tick(time,dTime){
+        this.surface.update({time:time});
         if(this.params.animate ){
             let val = (1+Math.cos(time/2))/2.;
             this.surface.update({homotopy:val});

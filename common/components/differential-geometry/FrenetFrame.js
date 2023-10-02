@@ -24,11 +24,11 @@ class FrenetFrame{
         this.computeTNB(0);
 
         //initialize the vectors
-        this.T = new Vector(this.tangent, options.tColor||0xffffff,options.size||1);
+        this.T = new Vector(this.tangent.clone().multiplyScalar(options.size), options.tColor||0xffffff,options.size||1);
         this.T.setPos(this.pos);
-        this.N = new Vector(this.normal, options.nColor||0xffffff,0.99*(options.size||1));
+        this.N = new Vector(this.normal.clone().multiplyScalar(options.size), options.nColor||0xffffff,0.99*(options.size||1));
         this.N.setPos(this.pos);
-        this.B = new Vector(this.binormal, options.bColor||0xffffff,0.98*(options.size||1));
+        this.B = new Vector(this.binormal.clone().multiplyScalar(options.size), options.bColor||0xffffff,0.98*(options.size||1));
         this.B.setPos(this.pos);
 
     }
@@ -54,11 +54,11 @@ class FrenetFrame{
     }
 
     resetTNBVectors(){
-        this.T.setDir(this.tangent);
+        this.T.setDir(this.tangent.clone().multiplyScalar(this.options.size));
         this.T.setPos(this.pos);
-        this.N.setDir(this.normal);
+        this.N.setDir(this.normal.clone().multiplyScalar(this.options.size));
         this.N.setPos(this.pos);
-        this.B.setDir(this.binormal);
+        this.B.setDir(this.binormal.clone().multiplyScalar(this.options.size));
         this.B.setPos(this.pos);
     }
 

@@ -40,8 +40,8 @@ let globalParams={
     name:'World',
 
     environment:{
-        color: 0x292b36,
-        cube: true,
+        color: 0xffffff,
+        cube: false,
     },
 
     camera:{

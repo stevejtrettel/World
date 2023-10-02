@@ -173,7 +173,7 @@ function planePos(t,time){
 
     let centerR = new Vector2(Math.cos(3.*time/5),Math.sin(4*time/5)).multiplyScalar(3);
 
-    let r = 1+0.3*Math.cos(3*t)*Math.sin(time)+0.1*Math.cos(5*t)*Math.sin(time/2);
+    let r = 1.5*(1+0.3*Math.cos(3*t)*Math.sin(time)+0.1*Math.cos(5*t)*Math.sin(time/2));
     let x = params.rad*(r+0.5*Math.cos(time/3))*Math.cos(t)+centerR.x;
     let z = params.rad*r*Math.sin(t)+centerR.y;
     let y = -1;
@@ -301,7 +301,7 @@ function createInsideSurfaceGeometry(time) {
         const sph = invStereo(plane);
         const pole = new Vector3(0,2,0);
 
-        const val = straightLine(sph,pole,s);
+        const val = straightLine(sph,pole,0.9*s);
         dest.set(val.x,val.y,val.z);
     }
 
@@ -330,6 +330,22 @@ insideSurface.tick = (time,dTime)=>{
 
 
 
+const topSphereOptions = {
+    clearcoat:1,
+    side: DoubleSide,
+    transmission:0.3,
+    opacity:1,
+    metalness:0.,
+    roughness:0.1,
+    color:0xffffff,
+}
+let topSphereGeom = new SphereBufferGeometry(0.1,32,32);
+let topSphereMat = new MeshPhysicalMaterial(topSphereOptions);
+let topSphere = new Mesh(topSphereGeom,topSphereMat);
+topSphere.position.set(0,2,0);
+topSphere.addToScene =  (scene)=>{scene.add(topSphere)};
+topSphere.addToUI=(ui)=>{};
+topSphere.tick = (time,dTime)=>{};
 
 
 
@@ -343,6 +359,7 @@ let stereoProj = {
     sphereTube:sphereTube,
     surface:surface,
     insideSurface:insideSurface,
+    topSphere: topSphere
 }
 
 

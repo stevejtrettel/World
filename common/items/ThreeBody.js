@@ -56,7 +56,7 @@ class Planet{
         this.pos = options.pos;
         this.vel = options.vel;
         this.mass = options.mass;
-        this.radius = 0.3*Math.pow(this.mass, 0.333);
+        this.radius = 0.75*Math.pow(this.mass, 0.333);
 
         this.trailLength = options.trailLength;
         this.trail = [];
@@ -341,7 +341,7 @@ const pA = {
     pos: new Vector3(0,0,0),
     vel: new Vector3(0,0,0),
     color: 0xffffff,
-    trailLength: 1000,
+    trailLength: 5000,
 }
 
 const pB = {
@@ -349,7 +349,7 @@ const pB = {
     pos: new Vector3(0,3,0),
     vel: new Vector3(0,0,0.5),
     color: 0xd96493,
-    trailLength: 1000,
+    trailLength: 5000,
 }
 
 const pC = {
@@ -357,7 +357,7 @@ const pC = {
     pos: new Vector3(0,0,3),
     vel: new Vector3(0.2,0,0),
     color: 0x32a852,
-    trailLength: 1000,
+    trailLength: 500,
 }
 
 const item = new ThreeBody(pA, pB, pC);

@@ -28,6 +28,19 @@ function surfacePoint(uv,time){
     return new Vector3(x,y,z);
 }
 
+//a slightly larger radius torus
+//for the curve to lie on
+function biggerSurfacePoint(uv,time){
+    let s = uv.x;
+    let t = uv.y;
+
+    let x = (2.+1.1*Math.sin(t))*Math.cos(s);
+    let y = Math.cos(t);
+    let z = (2.+1.1*Math.sin(t))*Math.sin(s);
+
+    return new Vector3(x,y,z);
+}
+
 
 function curvePoint(s, p, q, time){
 
@@ -54,7 +67,7 @@ function createCurve(p,q,time){
     let uv,pos;
     for(let i=0;i<101;i++){
         uv=curvePoint(i/100.,p,q,time);
-        pos=surfacePoint(uv,time);
+        pos=biggerSurfacePoint(uv,time);
         pts.push(pos);
     }
     return new CatmullRomCurve3(pts);
@@ -139,7 +152,8 @@ float coordLines(vec2 freq, vec2 uv){
     float bright = abs( log( coordS ) + log( coordT ) );
     bright = clamp( 0.5  * bright, 0., 1. );
 
-    return bright;
+    //return bright;
+    return 0.;
 }
 `;
 
@@ -167,6 +181,26 @@ vec3 fragColor(){
 
 
 
+let surfColor= `
+           vec3 fragColor(){
+           
+           vec2 uv = vUv;
+
+             float grid1 = (1.-pow(abs(sin(10.*3.14*uv.x)*sin(10.*3.14*uv.y)),0.1))/10.;
+             float grid2 = (1.-pow(abs(sin(50.*3.14*uv.x)*sin(50.*3.14*uv.y)),0.1))/25.;
+             float grid3 = (1.-pow(abs(sin(100.*3.14*uv.x)*sin(100.*3.14*uv.y)),0.1))/50.;
+             float grid = grid1+grid2+grid3;
+             
+             vec3 base =  vec3(0.6,0.6,0.6) + 0.3*cos(2.*3.14*uv.xyx+vec3(0,1,3));
+             vec3 final = base + 2.*vec3(grid);
+   
+            return final;
+             
+           }
+        `;
+
+
+
 let vert = {
     aux: ``,
     displace: displace,
@@ -174,7 +208,7 @@ let vert = {
 
 let frag = {
     aux: fragAux,
-    fragColor: fragColor,
+    fragColor: surfColor,
 }
 
 
@@ -226,6 +260,7 @@ class TorusFundamentalGroup {
 }
 
 
-const item = new TorusFundamentalGroup();
+const example = new TorusFundamentalGroup();
 
-export default { item } ;
+export  { example } ;
+export default TorusFundamentalGroup;
