@@ -1,6 +1,6 @@
 //set the stuff for this particular example!
  import Item from "../common/items/topology/torusFundamentalGroup.js"
-import example from "../common/items/topology/stereoProj.js"
+import example from "../common/items/vector-calculus/GraphTangentPlane.js"
 
 
 
