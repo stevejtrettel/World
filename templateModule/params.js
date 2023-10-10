@@ -41,7 +41,8 @@ let globalParams={
 
     environment:{
         color: 0xffffff,
-        cube: false,
+            ///0xffffff,
+        cube: true,
     },
 
     camera:{

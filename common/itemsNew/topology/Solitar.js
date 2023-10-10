@@ -188,9 +188,9 @@ class Solitar extends Item{
                 thisObj.surface.update({angle:value});
             });
 
-            ui.add(thisObj.params, 'stripeFreq', 0, 100, 1).name(' Checkers').onChange(function (value) {
-                thisObj.surface.update({stripeFreq: value})
-            });
+            // ui.add(thisObj.params, 'stripeFreq', 0, 100, 1).name(' Checkers').onChange(function (value) {
+            //     thisObj.surface.update({stripeFreq: value})
+            // });
 
             ui.add(thisObj.params, 'p', 0, 10, 1).name(' P').onChange(function (value) {
                 thisObj.surface.update({p: value})
@@ -200,7 +200,7 @@ class Solitar extends Item{
                 thisObj.surface.update({q: value})
             });
 
-            ui.add(thisObj.params, 'showSurf', 0, 1, 0.01).name('surfaceAmount').onChange(function (value) {
+            ui.add(thisObj.params, 'showSurf', 0, 1, 0.01).name('Visibility').onChange(function (value) {
                 thisObj.surface.update({showSurf: value/4.})
             });
 

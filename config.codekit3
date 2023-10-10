@@ -11084,6 +11084,50 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/common\/components\/thurston-videos\/Environment.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/thurston-videos\/Environment-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/thurston-videos\/Objects.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/thurston-videos\/Objects-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/thurston-videos\/Path.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/thurston-videos\/Path-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/thurston-videos\/RodChain.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/thurston-videos\/RodChain-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/common\/components\/vector-calculus\/CartesianSlice.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -11777,24 +11821,13 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/items\/complex-analysis\/ModulusFunction-min.js" : {
+    "\/common\/items\/complex-analysis\/ModulusPlot-min.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 0,
-      "oAP" : "\/common\/items\/complex-analysis\/ModulusFunction-min-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/items\/complex-analysis\/ModulusFunction.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 0,
-      "oAP" : "\/common\/items\/complex-analysis\/ModulusFunction-min.js",
+      "oAP" : "\/common\/items\/complex-analysis\/ModulusPlot-min-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -11861,6 +11894,17 @@
       "mi" : 1,
       "oA" : 1,
       "oAP" : "\/common\/items\/differential-geometry\/curveAndTorsion-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/differential-geometry\/FrenetFrameField.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/differential-geometry\/FrenetFrameField-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -12277,7 +12321,7 @@
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 1,
+      "oA" : 0,
       "oAP" : "\/common\/items\/topology\/stereoProj-min.js",
       "oF" : 0,
       "sC" : 3,
@@ -12367,6 +12411,17 @@
       "mi" : 1,
       "oA" : 0,
       "oAP" : "\/common\/items\/vector-calculus\/GradientPlotter2D-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/vector-calculus\/Graph3DPlotter.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/vector-calculus\/Graph3DPlotter-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -12739,8 +12794,30 @@
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 0,
+      "oA" : 1,
       "oAP" : "\/common\/itemsNew\/Item-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/itemsNew\/thurston-videos\/cylinder-map.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/itemsNew\/thurston-videos\/cylinder-map-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/itemsNew\/thurston-videos\/LightTrajectory.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/itemsNew\/thurston-videos\/LightTrajectory-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -12752,6 +12829,17 @@
       "mi" : 1,
       "oA" : 0,
       "oAP" : "\/common\/itemsNew\/topology\/BoysSurface-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/itemsNew\/topology\/H2H2Sphere.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/itemsNew\/topology\/H2H2Sphere-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -12785,6 +12873,17 @@
       "mi" : 1,
       "oA" : 1,
       "oAP" : "\/common\/itemsNew\/topology\/MorseFunctionPlotter-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/itemsNew\/topology\/Solitar.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/itemsNew\/topology\/Solitar-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
