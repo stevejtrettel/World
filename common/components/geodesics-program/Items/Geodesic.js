@@ -37,7 +37,7 @@ class Geodesic{
     //hopefully if we reset the compute system's internals, it'll auto update here
     //otherwise we'll need a "reset compute" method
 
-    
+
     update(){
 
     }
