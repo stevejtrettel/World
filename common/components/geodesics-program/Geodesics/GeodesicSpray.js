@@ -1,7 +1,16 @@
 
-
+//the params here should match those of GeodesicStripes
+//so that they can use the same parameters in the UI
 class GeodesicSpray{
-    constructor() {
+    constructor(params) {
+
+    }
+
+    addToScene(){
+
+    }
+
+    update(){
 
     }
 

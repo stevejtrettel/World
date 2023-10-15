@@ -4,6 +4,14 @@
 class Surface{
     constructor() {
     }
+
+    addToScene(){
+
+    }
+
+    update(){
+
+    }
 }
 
 
