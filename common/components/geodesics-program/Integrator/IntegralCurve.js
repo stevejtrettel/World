@@ -9,8 +9,8 @@
 import {
     CatmullRomCurve3,
     MeshPhysicalMaterial,
-    SphereBufferGeometry,
-    TubeBufferGeometry,
+    SphereGeometry,
+    TubeGeometry,
     Mesh,
 } from "../../../../3party/three/build/three.module.js";
 
@@ -49,17 +49,17 @@ class IntegralCurve{
         //initialize the objects:
         //starting and ending spheres are unit radius as we will rescale them when we build the tube:
         this.start=new Mesh(
-            new SphereBufferGeometry(1,32,16),
+            new SphereGeometry(1,32,16),
             curveMaterial
         );
         this.end= new Mesh(
-            new SphereBufferGeometry(1,32,16),
+            new SphereGeometry(1,32,16),
             curveMaterial
         );
 
         //what we do for the geometry of this.tube won't matter as we are going to throw it away right away:
         this.tube = new Mesh(
-            new TubeBufferGeometry(
+            new TubeGeometry(
                 this.curve,
                 8,
                 this.curveParams.radius,
@@ -99,7 +99,7 @@ class IntegralCurve{
         let sphRad = rad*1.5;
             //multiply by this.curveParams.endSizeFactor;
 
-        this.tube.geometry=new TubeBufferGeometry(
+        this.tube.geometry=new TubeGeometry(
             this.curve,
             8,
             rad,

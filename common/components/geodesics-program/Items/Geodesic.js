@@ -1,9 +1,8 @@
-import IntegralCurve from "../Integrators/IntegralCurve.js";
+import IntegralCurve from "../Integrator/IntegralCurve.js";
 
 
 //essentially a wrapper for IntegralCurve that takes in a compute class
 //and pulls out the acceleration to build the integrator
-import Integrator from "../Integrators/Integrator";
 
 const defaultParams = {
     length:5,

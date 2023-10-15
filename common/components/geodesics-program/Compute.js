@@ -1,8 +1,8 @@
-import State from "./Integrators/State.js";
-import dState from "./Integrators/dState.js";
-import {Vector2,Vector3} from "../../../3party/three/build/three.js";
-import Integrator from "./Integrators/Integrator";
+import State from "./Integrator/State.js";
+import dState from "./Integrator/dState.js";
+import Integrator from "./Integrator/Integrator.js";
 
+import {Vector2,Vector3} from "../../../3party/three/build/three.module.js";
 
 // a class to do all the computations for the surface we might need:
 // it takes in the parameterization and the domain
@@ -122,11 +122,6 @@ class Compute {
         this.ep = 0.1;
         this.geodesicIntegrator = new Integrator(this.acceleration,this.ep);
     }
-
-
-
-
-
 
     update(params){
         //update all the parameters we need here

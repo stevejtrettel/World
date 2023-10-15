@@ -1,8 +1,10 @@
-import Surface from "./Items/Surface.js";
-import Geodesic from "./Geodesics/Geodesic.js";
-import GeodesicSpray from "./Geodesics/GeodesicSpray.js";
-import Compute from "./Compute.js";
+import {Vector2} from "../../../3party/three/build/three.module.js";
 
+import Surface from "./Items/Surface.js";
+import Geodesic from "./Items/Geodesic.js";
+import GeodesicSpray from "./Items/GeodesicSpray.js";
+import Compute from "./Compute.js";
+import State from "./Integrator/State.js";
 
 const defaultParams = {};
 
@@ -11,7 +13,7 @@ class WoodCut{
         this.compute = new Compute();
         this.surface = new Surface(this.compute);
 
-        const iniState = new State();
+        const iniState = new State(new Vector2(0,0),new Vector2(1,1));
         this.geodesic = new Geodesic(this.compute,iniState);
        // this.spray = new GeodesicSpray();
 
@@ -24,11 +26,9 @@ class WoodCut{
     }
 
     addToUI(ui){
-
     }
 
     tick(time,dTime){
-
     }
 
 }
