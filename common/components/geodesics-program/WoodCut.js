@@ -1,21 +1,26 @@
-import Surface from "./Surface/Surface.js";
+import Surface from "./Items/Surface.js";
+import Geodesic from "./Geodesics/Geodesic.js";
 import GeodesicSpray from "./Geodesics/GeodesicSpray.js";
-
+import Compute from "./Compute.js";
 
 
 const defaultParams = {};
 
 class WoodCut{
     constructor(params=defaultParams) {
+        this.compute = new Compute();
+        this.surface = new Surface(this.compute);
 
-        this.surface = new Surface();
-        this.spray = new GeodesicSpray();
+        const iniState = new State();
+        this.geodesic = new Geodesic(this.compute,iniState);
+       // this.spray = new GeodesicSpray();
 
     }
 
     addToScene(scene){
         this.surface.addToScene(scene);
-        this.spray.addToScene(scene);
+        this.geodesic.addToScene(scene);
+       // this.spray.addToScene(scene);
     }
 
     addToUI(ui){
