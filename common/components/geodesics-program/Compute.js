@@ -78,52 +78,52 @@ class Compute {
 
 
     takeDerivatives(){
-        //this builds the partial derivative functions
-        //this.Fu, this.Fv
-        //and the second partials this.Fuu, this.Fvv. this.Fuv
-
         let F = this.F;
-        //build the functions that are the first derivatives:
-        this.Fu = function(u,v){
-            return -2*u*F(u,v);
-        }
-        this.Fv = function(u,v){
-            return - 2*v*F(u,v);
-        }
 
-        //now build the second derivatives:
-        this.Fuu = function(u,v){
-            return (4*u*u-2)*F(u,v);
-        }
-        this.Fvv = function(u,v){
-            return (4*v*v-2)*F(u,v);
-        }
-        this.Fuv = function(u,v){
-            return 4*u*v*F(u,v);
+        this.derivatives = function(u,v){
+
+            let ep = 0.0001;
+
+            let f00 = F(u,v);
+
+            let fp0 = F(u+ep, v);
+            let fn0 = F(u-ep, v);
+            let f0p = F(u,v+ep);
+            let f0n = F(u,v-ep);
+
+            let fpp = F(u+ep,v+ep);
+            let fpn = F(u+ep, v-ep);
+            let fnp = F(u-ep, v+ep);
+            let fnn = F(u-ep, v-ep);
+
+            return {
+                fu: (fp0-fn0)/(2*ep),
+                fv: (f0p-f0n)/(2*ep),
+                fuu: (-fp0+2*f00-fn0)/(ep*ep),
+                fvv: (-f0p+2*f00-f0n)/(ep*ep),
+                fuv: (fpp - fpn - fnp + fnn)/(4*ep*ep)
+            };
         }
     }
 
     //computes the geodesic acceleration
     //this is a function state -> dState
     buildAcceleration(){
-        let f = this.F;
-        let fu = this.Fu;
-        let fv = this.Fv;
-        let fuu = this.Fuu;
-        let fuv = this.Fuv;
-        let fvv = this.Fvv;
+
+        let derivatives = this.derivatives;
 
         this.acceleration = function(state){
             let u = state.pos.x;
             let v = state.pos.y;
             let uP = state.vel.x;
             let vP = state.pos.y;
+            let D = derivatives(u,v);
 
-            let numerator=vP*vP*fvv(u,v)+2*uP*vP*fuv(u,v)+uP*uP*fuu(u,v);
-            let denominator=1+fuu(u,v)*fuu(u,v)+fvv(u,v)*fvv(u,v);
+            let numerator=vP*vP*D.fvv + 2*uP*vP*D.fuv + uP*uP*D.fuu;
+            let denominator=1 + D.fuu*D.fuu + D.fvv*D.fvv;
             let coef = numerator/denominator;
 
-            let acc = new Vector2(fu(u,v),fv(u,v));
+            let acc = new Vector2(D.fu,D.fv);
             acc.multiplyScalar(-coef);
 
             return  new dState(state.vel, acc);

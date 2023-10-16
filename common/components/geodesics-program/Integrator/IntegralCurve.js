@@ -117,7 +117,7 @@ class IntegralCurve{
     findBoundary(state){
         //the state is just outside the region, but last step was inside:
         let dist=0.;
-        let testDist = 0.1;
+        let testDist = 0.25;
         let pos = state.pos.clone();
         //need to go backwards, so negate velocity
         let vel = state.vel.clone().normalize().multiplyScalar(-1);

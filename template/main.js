@@ -16,7 +16,7 @@ import  {lights}  from "./src/lights.js";
 let globalSettings={
     name:'World',
 
-    stats:false,
+    stats:true,
 
     environment:{
         color: 0x212121,
