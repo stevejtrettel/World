@@ -16,9 +16,11 @@ class Compute {
         //things we should take as input!
         //this.F, this.domain, this.params
         this.F = function(u,v){
-            return Math.exp(-(u*u+v*v));
+            return 1/(u*u+v*v+0.5);
+            //return Math.cos(3.*Math.sqrt(u*u+v*v))/3.;
+            //1/(u*u+v*v+0.5);
         }
-        this.domain = {u:{min:-2,max:2}, v:{min:-2,max:2}};
+        this.domain = {u:{min:-4,max:4}, v:{min:-4,max:4}};
         this.params = {};
 
         //the parametric function (so we can pass it off)
@@ -119,8 +121,8 @@ class Compute {
             let vP = state.pos.y;
             let D = derivatives(u,v);
 
-            let numerator=vP*vP*D.fvv + 2*uP*vP*D.fuv + uP*uP*D.fuu;
-            let denominator=1 + D.fuu*D.fuu + D.fvv*D.fvv;
+            let numerator = vP*vP*D.fvv + 2*uP*vP*D.fuv + uP*uP*D.fuu;
+            let denominator = 1 + D.fuu*D.fuu + D.fvv*D.fvv;
             let coef = numerator/denominator;
 
             let acc = new Vector2(D.fu,D.fv);

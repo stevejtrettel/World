@@ -47,7 +47,7 @@ class GeodesicStripes {
         let uRange = uMax - uMin;
 
         for (let i = 0; i < this.params.N; i++) {
-            let pos = new Vector2(0.01+uMin + i * 0.99* uRange / this.params.N, vMin);
+            let pos = new Vector2(0.01+uMin + i * 0.99* uRange / this.params.N, vMin );
             this.iniStates[i]=new State(pos, vel);
         }
     }

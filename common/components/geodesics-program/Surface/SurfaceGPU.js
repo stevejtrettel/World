@@ -28,7 +28,7 @@ class SurfaceGPU{
             roughness:0.5,
         }
 
-        const plotGeometry = new ParametricGeometry(compute.parametricSurface,50,50);
+        const plotGeometry = new ParametricGeometry(compute.parametricSurface,100,100);
 
         //next: build the shader material
         let plotShaderMaterial = this.compileMaterial();
