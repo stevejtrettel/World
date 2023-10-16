@@ -6,18 +6,21 @@ import IntegralCurve from "../Integrator/IntegralCurve.js";
 
 const defaultParams = {
     length:5,
-    stop: function(u,v){return false;},
+    //stop: function(u,v){return false;},
     color: 0xffffff,
-    radius: 0.15,
+    radius: 0.05,
     res: 100,
 }
 
 
 class Geodesic{
     constructor(compute,iniState, params=defaultParams) {
+
         this.compute = compute;
         this.iniState = iniState;
+
         this.params = params;
+        this.params.stop = this.compute.outsideDomain;
 
         this.ep = params.ep || 0.1;
 
@@ -25,7 +28,9 @@ class Geodesic{
             this.compute.geodesicIntegrator,
             this.compute.parameterization,
             this.iniState,
-            this.params);
+            this.params
+        );
+
     }
 
     addToScene(scene){

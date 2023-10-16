@@ -23,7 +23,7 @@ let globalSettings={
             //0x212121,
             //0x292b36,
             //0xffffff,
-        cube: false,
+        cube: true,
     },
 
     camera:{

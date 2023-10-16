@@ -30,6 +30,8 @@ class Compute {
 
     }
 
+
+
     buildParameterization(){
         //this creates the components:
         //this.parameterization (u,v)->Vector3
@@ -60,6 +62,17 @@ class Compute {
             let V = rescaleV(v);
             let res = parameterization(U,V);
             dest.set(res.x,res.y,res.z);
+        }
+
+        //function that returns if we are in the domain (useful for cutting off geodesics, etc)
+        this.outsideDomain = function(u,v){
+            if(u<domU.min || u>domU.max){
+                return true;
+            }
+            if(v<domV.min || v>domV.max){
+                return true;
+            }
+            return false;
         }
     }
 

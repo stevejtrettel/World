@@ -61,9 +61,9 @@ class IntegralCurve{
         this.tube = new Mesh(
             new TubeGeometry(
                 this.curve,
-                8,
+                100,
                 this.curveParams.radius,
-                this.curveParams.res),
+                8),
             curveMaterial
         );
 
@@ -73,17 +73,16 @@ class IntegralCurve{
     _integrate(iniState){
 
         let pts = [];
-        let p;
+        let p,uv;
         let currentState = iniState.clone();
 
         for(let i=0; i<this.N; i++){
 
-            p = this.parameterization( currentState.pos.clone() );
+            uv = currentState.pos.clone();
+            p = this.parameterization( uv.x, uv.y );
             pts.push( p.clone() );
+            if(this.stop(uv.x,uv.y)){break;}
 
-            if(this.stop(currentState)){
-                break;
-            }
             currentState = this.integrator.step( currentState );
         }
         this.curve = new CatmullRomCurve3(pts);
@@ -101,9 +100,10 @@ class IntegralCurve{
 
         this.tube.geometry=new TubeGeometry(
             this.curve,
-            8,
+            100,
             rad,
-            this.curveParams.res);
+            8
+        );
 
         //reset position and size of end sphere
         let startPt = this.curve.getPoint(0);

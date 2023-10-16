@@ -1,4 +1,4 @@
-import {Mesh,MeshPhysicalMaterial} from "../../../../3party/three/build/three.module.js";
+import {DoubleSide, Mesh, MeshPhysicalMaterial} from "../../../../3party/three/build/three.module.js";
 import {ParametricGeometry} from "../../../../3party/three/examples/jsm/geometries/ParametricGeometry.js";
 
 class Surface{
@@ -7,10 +7,14 @@ class Surface{
 
         //plot the parametric surface:
         const plotMaterial = new MeshPhysicalMaterial({
-            color: 0xffffff
-        })
-        const plotGeometry = new ParametricGeometry(compute.parametricGeoFn,50,50)
-        this.plot = new Mesh();
+            color: 0xeb4034,
+            side: DoubleSide,
+            clearcoat:0.5,
+            roughness:0.3,
+        });
+
+        const plotGeometry = new ParametricGeometry(compute.parametricSurface,50,50)
+        this.plot = new Mesh(plotGeometry, plotMaterial);
     }
 
     addToScene(scene){

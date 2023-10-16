@@ -13,7 +13,7 @@ class WoodCut{
         this.compute = new Compute();
         this.surface = new Surface(this.compute);
 
-        const iniState = new State(new Vector2(0,0),new Vector2(1,1));
+        const iniState = new State(new Vector2(2,-1),new Vector2(-1,0));
         this.geodesic = new Geodesic(this.compute,iniState);
        // this.spray = new GeodesicSpray();
 
