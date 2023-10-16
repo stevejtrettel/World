@@ -10,26 +10,21 @@ const varyings = `
     varying vec2 vUv;
     varying vec3 vPosition;
     //for some reason varying vNormal is already defined for us
-    
-    //there are other BLANK varyings that I have made available to every material
-    //it would be better to replace this with a createVarying command or something...
-    varying float vFloat;
-    varying vec2 vVec2;
-    varying vec3 vVec3;
-    varying vec4 vVec4;
-    //if you use any of these, you have to define them when you make the "displace" function
 `;
 
+//dont change any of the positions: we are doing this part on the CPU with ParametricMaterial
 const newPos = `
     vec2 uv = position.xy;
     vec3 newPos = position.xyz;
 `;
 
+//also don't change the normal vector!
 const newNormal = `
     vec3 newNormal = normal.xyz;
 `;
 
 
+//set the varyings (they probably already were this, because we didn't change anything!)
 const varyingValues = `
     vUv = uv;
     vPosition = newPos;

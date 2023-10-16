@@ -17,7 +17,7 @@ class WoodCut{
 
         const iniState = new State(new Vector2(2,-1),new Vector2(-1,0));
         this.geodesic = new Geodesic(this.compute,iniState);
-        this.stripes = new GeodesicStripes(this.compute, iniState);
+        this.stripes = new GeodesicStripes(this.compute);
 
     }
 
@@ -31,6 +31,9 @@ class WoodCut{
     }
 
     tick(time,dTime){
+        let iniState = new State(new Vector2(2,-1),new Vector2(-1,Math.cos(time)/3.));
+        this.geodesic.update({iniState:iniState});
+        this.stripes.update({time:time});
     }
 
 }

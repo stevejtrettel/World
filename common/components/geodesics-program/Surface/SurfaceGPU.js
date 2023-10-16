@@ -3,8 +3,6 @@ import {DoubleSide, Mesh, MeshPhysicalMaterial} from "../../../../3party/three/b
 import {CustomShaderMaterial} from "../../../../3party/three-csm.m.js";
 import {ParametricGeometry} from "../../../../3party/three/examples/jsm/geometries/ParametricGeometry.js";
 
-
-import {colorConversion} from "../../../shaders/colors/colorConversion.js";
 import {createFragmentCSM,createVertexCSM} from "./shaders/createCSMShaders.js";
 
 
@@ -53,7 +51,7 @@ class SurfaceGPU{
             }`;
 
         this.vertex = createVertexCSM( );
-        this.fragment = createFragmentCSM( '', colorConversion, fragMain );
+        this.fragment = createFragmentCSM( '', '', fragMain );
 
 
         //make the custom material with the vertex shader, and using the fragment shader
