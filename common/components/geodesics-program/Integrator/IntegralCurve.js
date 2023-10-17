@@ -68,14 +68,14 @@ class IntegralCurve{
 
             uv = currentState.pos.clone();
 
-            if(this.stop(uv.x,uv.y)){
-                //if we have passed the end of the domain:
-                //time to search out the actual endpoint, and make that our last point!
-                uv=this.findBoundary(currentState);
-                p = this.parameterization(uv.x, uv.y);
-                pts.push(p.clone());
-                break;
-            }
+            // if(this.stop(uv.x,uv.y)){
+            //     //if we have passed the end of the domain:
+            //     //time to search out the actual endpoint, and make that our last point!
+            //     uv=this.findBoundary(currentState);
+            //     p = this.parameterization(uv.x, uv.y);
+            //     pts.push(p.clone());
+            //     break;
+            // }
 
             //otherwise, just carry on as usual:
             p = this.parameterization( uv.x, uv.y );

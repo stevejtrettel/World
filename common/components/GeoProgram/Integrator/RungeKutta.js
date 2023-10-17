@@ -1,21 +1,8 @@
-
-//base class for a numerical integrator to be extended
-class Integrator {
-    constructor (derive, ep){
-        this.derive=derive;
-        this.ep=ep;
-    }
-
-    derive( state ){ }
-
-    step( state ) { }
-
-}
+import Integrator from "./Integrator.js";
 
 //derive is a function taking a state to dState
 //items fed into RungeKutta need to have the following methods available:
 //.add, .multiplyScalar, .clone
-
 class RungeKutta extends Integrator {
 
     constructor(derive,ep){

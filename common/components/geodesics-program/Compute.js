@@ -19,7 +19,8 @@ class Compute {
             //return 1/(u*u+v*v+0.5);
             //return Math.cos(3.*Math.sqrt(u*u+v*v))/5.;
             //return Math.sin(u)*Math.sin(v)/1.5;
-            return 2.*Math.exp(-(u*u+v*v));
+           // return 0.75*Math.exp(-(u*u+v*v));
+            return (u*u+v*v)/5.;
 
         }
         this.domain = {u:{min:-4,max:4}, v:{min:-4,max:4}};
@@ -86,7 +87,7 @@ class Compute {
 
         this.derivatives = function(u,v){
 
-            let ep = 0.0001;
+            let ep = 0.001;
 
             let f00 = F(u,v);
 
@@ -100,14 +101,14 @@ class Compute {
             let fnp = F(u-ep,v+ep);
             let fnn = F(u-ep,v-ep);
             //
-            return {
-                fu: (fp0-fn0)/(2*ep),
-                fv: (f0p-f0n)/(2*ep),
-                fuu: (-fp0+2*f00-fn0)/(ep*ep),
-                fvv: (-f0p+2*f00-f0n)/(ep*ep),
-                fuv: (fpp - fpn - fnp + fnn)/(4*ep*ep)
-            };
-
+            // return {
+            //     fu: (fp0-fn0)/(2*ep),
+            //     fv: (f0p-f0n)/(2*ep),
+            //     fuu: (-fp0+2*f00-fn0)/(ep*ep),
+            //     fvv: (-f0p+2*f00-f0n)/(ep*ep),
+            //     fuv: (fpp - fpn - fnp + fnn)/(4*ep*ep)
+            // };
+            //
             // return {
             //     fu: -2*u*F(u,v),
             //     fv: -2*v*F(u,v),
@@ -115,6 +116,14 @@ class Compute {
             //     fvv:(-2+4*v*v)*F(u,v),
             //     fuv: 4*u*v*F(u,v)
             // };
+
+            return {
+                fu: 2*u,
+                fv: 2*v,
+                fuv: 0,
+                fuu:2,
+                fvv:2
+            };
         }
     }
 

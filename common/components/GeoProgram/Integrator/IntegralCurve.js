@@ -3,10 +3,7 @@ import {
     MeshPhysicalMaterial,
     TubeBufferGeometry,
     Mesh, SphereBufferGeometry
-} from "../../../3party/three/build/three.module.js";
-
-
-
+} from "../../../../3party/three/build/three.module.js";
 
 const defaultOptions = {
     length:10,
@@ -111,9 +108,9 @@ class IntegralCurve {
     }
 
     addToScene( scene ) {
-       scene.add(this.tube);
-       scene.add(this.start);
-       scene.add(this.end);
+        scene.add(this.tube);
+        scene.add(this.start);
+        scene.add(this.end);
     }
 
 
@@ -126,4 +123,4 @@ class IntegralCurve {
 
 
 
-export { IntegralCurve }
+export default IntegralCurve;

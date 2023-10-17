@@ -2,6 +2,7 @@ import {Vector2} from "../../../../3party/three/build/three.module.js";
 import Geodesic from "./Geodesic.js";
 import State from "../Integrator/State.js";
 
+
 let defaultCurveOptions = {
     length:5,
     color: 0xffffff,
@@ -20,9 +21,9 @@ let defaultParams = {
 //so that they can use the same parameters in the UI
 //can we just feed in the whole UI commands here?
 class GeodesicSpray {
-    constructor(compute, params=defaultParams) {
+    constructor(surface, params=defaultParams) {
 
-        this.compute = compute;
+        this.surface = surface;
         this.params = params;
 
         //CHANGE THIS: but for now have the curve parameters all just given by default:
@@ -53,7 +54,7 @@ class GeodesicSpray {
     buildGeodesics() {
         let geodesic;
         for (let i = 0; i < this.params.N; i++) {
-            geodesic = new Geodesic(this.compute, this.iniStates[i], this.params, this.curveOptions);
+            geodesic = new Geodesic(this.surface, this.iniStates[i],  this.curveOptions);
             this.spray[i]=geodesic;
         }
     }

@@ -1,8 +1,8 @@
 //set the stuff for this particular example!
  //import Item from "../common/items/topology/torusFundamentalGroup.js"
 
-//import Item from "../common/components/geodesics-program/WoodCut.js";
-import example from "../common/items/FiveBody.js";
+import example from "../common/components/GeoProgram/WoodCut.js";
+//import example from "../common/items/FiveBody.js";
 //import everything except the objects of the scene
 //this uses all the default settings defined in the "template" folder
 import { World } from "../common/World/World.js";
@@ -59,7 +59,7 @@ function main(globalSettings) {
     world.setEnvironment( environment ) ;
 
     //BUILD THE OBJECT THAT GOES IN THIS WORLD:
-   // let object = new Item();
+    //let object = new Item();
     //let object = example;
 
     //4. Fill this world with objects

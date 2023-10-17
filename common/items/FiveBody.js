@@ -135,7 +135,7 @@ class FiveBody{
             return new dState( vel, acc );
         };
 
-        const ep=0.002;
+        const ep=0.0005;
         this.integrator= new RungeKutta(this.derive, ep);
 
     }
@@ -284,7 +284,7 @@ const pA = {
 
 const pB = {
     mass:0.5,
-    pos: new Vector3(0,3,0),
+    pos: new Vector3(0,5,0),
     vel: new Vector3(0,0,0.5),
     color: 0xd96493,
     trailLength: 2000,
@@ -292,7 +292,7 @@ const pB = {
 
 const pC = {
     mass:0.3,
-    pos: new Vector3(0,0,3),
+    pos: new Vector3(0,1,2.7),
     vel: new Vector3(0.2,0,0),
     color: 0x32a852,
     trailLength: 2000,
@@ -300,7 +300,7 @@ const pC = {
 
 const pD = {
     mass:0.4,
-    pos: new Vector3(3,0,0),
+    pos: new Vector3(3.1,0,1),
     vel: new Vector3(0.1,-0.2,0),
     color: 0xb88c40,
     trailLength: 2000,
@@ -308,7 +308,7 @@ const pD = {
 
 const pE = {
     mass:0.7,
-    pos: new Vector3(1,2,1),
+    pos: new Vector3(1,2.5,1),
     vel: new Vector3(-0.2,0,0.3),
     color: 0x4a2a5c,
     trailLength: 2000,

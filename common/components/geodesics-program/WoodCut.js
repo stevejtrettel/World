@@ -16,15 +16,17 @@ class WoodCut{
         this.surface = new SurfaceGPU(this.compute);
 
         const iniState = new State(new Vector2(2,-1),new Vector2(-1,0));
-        this.geodesic = new Geodesic(this.compute,iniState);
-        this.stripes = new GeodesicStripes(this.compute);
+       // this.geodesic = new Geodesic(this.compute,iniState);
+       // this.stripes = new GeodesicStripes(this.compute);
+        this.spray = new GeodesicSpray(this.compute);
 
     }
 
     addToScene(scene){
         this.surface.addToScene(scene);
-        this.geodesic.addToScene(scene);
-        this.stripes.addToScene(scene);
+        //this.geodesic.addToScene(scene);
+        //this.stripes.addToScene(scene);
+        this.spray.addToScene(scene);
     }
 
     addToUI(ui){
@@ -32,8 +34,9 @@ class WoodCut{
 
     tick(time,dTime){
         let iniState = new State(new Vector2(2,-1),new Vector2(-1,Math.cos(time)));
-        this.geodesic.update({iniState:iniState});
-        this.stripes.update({time:time});
+       // this.geodesic.update({iniState:iniState});
+       // this.stripes.update({time:time});
+        this.spray.update({time:time});
     }
 
 }
