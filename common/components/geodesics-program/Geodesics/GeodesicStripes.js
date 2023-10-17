@@ -11,7 +11,7 @@ let defaultCurveOptions = {
 
 
 let defaultParams = {
-    N:20,
+    N:50,
     time:0,
 }
 

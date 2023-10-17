@@ -41,13 +41,9 @@ class Integrator {
         total.add(k4);//scale factor 1
         total.multiplyScalar(1/6);
 
-
         //move ahead one step
         let nextState = state.clone().add(total);
-
         return nextState;
-
-
     }
 
 }

@@ -6,8 +6,7 @@ import {
 
 
 
-
-function randomVec3Sphere( Radius ){
+function randomVec3Sphere( Radius=1 ){
     let theta = MathUtils.randFloat(0,6.29);
     let z = MathUtils.randFloat(-1,1);
 
@@ -19,9 +18,7 @@ function randomVec3Sphere( Radius ){
 
 
 
-
-
-function randomVec3Ball( Radius ){
+function randomVec3Ball( Radius=1 ){
 
     let pt = randomVec3Sphere( Radius );
 

@@ -16,9 +16,11 @@ class Compute {
         //things we should take as input!
         //this.F, this.domain, this.params
         this.F = function(u,v){
-            return 1/(u*u+v*v+0.5);
-            //return Math.cos(3.*Math.sqrt(u*u+v*v))/3.;
-            //1/(u*u+v*v+0.5);
+            //return 1/(u*u+v*v+0.5);
+            //return Math.cos(3.*Math.sqrt(u*u+v*v))/5.;
+            //return Math.sin(u)*Math.sin(v)/1.5;
+            return 2.*Math.exp(-(u*u+v*v));
+
         }
         this.domain = {u:{min:-4,max:4}, v:{min:-4,max:4}};
         this.params = {};
@@ -94,10 +96,10 @@ class Compute {
             let f0n = F(u,v-ep);
 
             let fpp = F(u+ep,v+ep);
-            let fpn = F(u+ep, v-ep);
-            let fnp = F(u-ep, v+ep);
-            let fnn = F(u-ep, v-ep);
-
+            let fpn = F(u+ep,v-ep);
+            let fnp = F(u-ep,v+ep);
+            let fnn = F(u-ep,v-ep);
+            //
             return {
                 fu: (fp0-fn0)/(2*ep),
                 fv: (f0p-f0n)/(2*ep),
@@ -105,6 +107,14 @@ class Compute {
                 fvv: (-f0p+2*f00-f0n)/(ep*ep),
                 fuv: (fpp - fpn - fnp + fnn)/(4*ep*ep)
             };
+
+            // return {
+            //     fu: -2*u*F(u,v),
+            //     fv: -2*v*F(u,v),
+            //     fuu: (-2+4*u*u)*F(u,v),
+            //     fvv:(-2+4*v*v)*F(u,v),
+            //     fuv: 4*u*v*F(u,v)
+            // };
         }
     }
 

@@ -9,7 +9,7 @@ class Background extends Scene {
     createPMREM(pmrem, options={}) {
        const generatedPMREM = pmrem.fromScene(
             this,
-            options.sigma||0.015,
+            options.sigma||0.01,
             options.near||1,
             options.far||100
         );

@@ -1,9 +1,8 @@
 //set the stuff for this particular example!
  //import Item from "../common/items/topology/torusFundamentalGroup.js"
-//import example from "../common/items/vector-calculus/GraphTangentPlane.js"
-import Item from "../common/components/geodesics-program/WoodCut.js";
 
-
+//import Item from "../common/components/geodesics-program/WoodCut.js";
+import example from "../common/items/FiveBody.js";
 //import everything except the objects of the scene
 //this uses all the default settings defined in the "template" folder
 import { World } from "../common/World/World.js";
@@ -16,10 +15,11 @@ import  {lights}  from "./src/lights.js";
 let globalSettings={
     name:'World',
 
-    stats:true,
+    stats:false,
 
     environment:{
-        color: 0x212121,
+        color: 0x0a0d12,
+        //0x212121,
             //0x212121,
             //0x292b36,
             //0xffffff,
@@ -59,12 +59,12 @@ function main(globalSettings) {
     world.setEnvironment( environment ) ;
 
     //BUILD THE OBJECT THAT GOES IN THIS WORLD:
-    let object = new Item();
+   // let object = new Item();
     //let object = example;
 
     //4. Fill this world with objects
     //world.addObjects( example );
-    world.addObjects( {object: object} );
+    world.addObjects( {object: example} );
     world.addObjects( lights );
 
     //5. Set up Post-Processing effects

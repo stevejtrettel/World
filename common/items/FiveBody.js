@@ -26,17 +26,21 @@ import Planet from "../components/basic-shapes/Planet.js";
 
 //store position, velocity, or acceleration for three bodies
 //need to be able to implement add, sub, multiplyScalar, clonje
-class ThreeBodyData{
-    constructor(dataA, dataB, dataC){
+class FiveBodyData{
+    constructor(dataA, dataB, dataC,dataD, dataE){
         this.a=dataA;
         this.b=dataB;
         this.c=dataC;
+        this.d=dataD;
+        this.e=dataE;
     }
 
     add( dat ){
         this.a.add(dat.a);
         this.b.add(dat.b);
         this.c.add(dat.c);
+        this.d.add(dat.d);
+        this.e.add(dat.e);
         return this;
     }
 
@@ -44,6 +48,8 @@ class ThreeBodyData{
         this.a.sub(dat.a);
         this.b.sub(dat.b);
         this.c.sub(dat.c);
+        this.d.sub(dat.d);
+        this.e.sub(dat.e);
         return this;
     }
 
@@ -51,13 +57,17 @@ class ThreeBodyData{
         this.a.multiplyScalar(k);
         this.b.multiplyScalar(k);
         this.c.multiplyScalar(k);
+        this.d.multiplyScalar(k);
+        this.e.multiplyScalar(k);
     }
 
     clone(){
-        return new ThreeBodyData(
+        return new FiveBodyData(
             this.a.clone(),
             this.b.clone(),
-            this.c.clone()
+            this.c.clone(),
+            this.d.clone(),
+            this.e.clone()
         );
     }
 
@@ -65,9 +75,9 @@ class ThreeBodyData{
 
 
 
-class ThreeBody{
+class FiveBody{
 
-    constructor(a,b,c){
+    constructor(a,b,c,d,e){
 
         this.speed=0.3;
 
@@ -75,10 +85,12 @@ class ThreeBody{
         this.a = new Planet(a);
         this.b = new Planet(b);
         this.c = new Planet(c);
+        this.d = new Planet(d);
+        this.e = new Planet(e);
 
         //set up the state in state space
-        let pos = new ThreeBodyData(this.a.pos,this.b.pos,this.c.pos);
-        let vel = new ThreeBodyData(this.a.vel,this.b.vel,this.c.vel);
+        let pos = new FiveBodyData(this.a.pos,this.b.pos,this.c.pos,this.d.pos,this.e.pos);
+        let vel = new FiveBodyData(this.a.vel,this.b.vel,this.c.vel,this.d.vel,this.e.vel);
         this.state=new State(pos,vel);
 
 
@@ -87,15 +99,30 @@ class ThreeBody{
 
             let forceAB=gravForce(state.pos.a, this.a.mass, state.pos.b, this.b.mass);
             let forceAC=gravForce(state.pos.a, this.a.mass, state.pos.c, this.c.mass);
-            let forceBC=gravForce(state.pos.b, this.b.mass, state.pos.c, this.c.mass);
+            let forceAD=gravForce(state.pos.a, this.a.mass, state.pos.d, this.d.mass);
+            let forceAE=gravForce(state.pos.a, this.a.mass, state.pos.e, this.e.mass);
 
-            let forceA = forceAB.clone().add(forceAC);
-            let forceB = forceAB.clone().multiplyScalar(-1).add(forceBC);
-            let forceC = forceAC.clone().multiplyScalar(-1).sub(forceBC);
-            let acc = new ThreeBodyData(
+            let forceBC=gravForce(state.pos.b, this.b.mass, state.pos.c, this.c.mass);
+            let forceBD=gravForce(state.pos.b, this.b.mass, state.pos.d, this.d.mass);
+            let forceBE=gravForce(state.pos.b, this.b.mass, state.pos.e, this.e.mass);
+
+            let forceCD=gravForce(state.pos.c, this.c.mass, state.pos.d, this.d.mass);
+            let forceCE=gravForce(state.pos.c, this.c.mass, state.pos.e, this.e.mass);
+
+            let forceDE=gravForce(state.pos.d, this.d.mass, state.pos.e, this.e.mass);
+
+            let forceA = new Vector3().add(forceAB).add(forceAC).add(forceAD).add(forceAE);
+            let forceB = new Vector3().add(forceAB.clone().multiplyScalar(-1)).add(forceBC).add(forceBD).add(forceBE);
+            let forceC = new Vector3().add(forceAC.clone().multiplyScalar(-1)).add(forceBC.clone().multiplyScalar(-1)).add(forceCD).add(forceCE);
+            let forceD = new Vector3().add(forceAD.clone().multiplyScalar(-1)).add(forceBD.clone().multiplyScalar(-1)).add(forceCD.clone().multiplyScalar(-1)).add(forceDE);
+            let forceE = new Vector3().add(forceAE.clone().multiplyScalar(-1)).add(forceBE.clone().multiplyScalar(-1)).add(forceCE.clone().multiplyScalar(-1)).add(forceDE.clone().multiplyScalar(-1));
+
+            let acc = new FiveBodyData(
                 forceA.multiplyScalar(1/this.a.mass),
                 forceB.multiplyScalar(1/this.b.mass),
-                forceC.multiplyScalar(1/this.c.mass)
+                forceC.multiplyScalar(1/this.c.mass),
+                forceD.multiplyScalar(1/this.d.mass),
+                forceE.multiplyScalar(1/this.e.mass)
             );
 
             return acc;
@@ -111,14 +138,10 @@ class ThreeBody{
         const ep=0.002;
         this.integrator= new RungeKutta(this.derive, ep);
 
-
-        //variables to remember planet initial conditions:
-        this.stateA = new State(this.a.pos.clone(),this.a.vel.clone());
-        this.stateB = new State(this.b.pos.clone(),this.b.vel.clone());
-        this.stateC = new State(this.c.pos.clone(),this.c.vel.clone());
-
     }
 
+
+    //need to update this still - this is threebody!
     detectCollision(){
         let ab = this.a.pos.distanceTo(this.b.pos);
         let ac = this.a.pos.distanceTo(this.c.pos);
@@ -141,78 +164,50 @@ class ThreeBody{
         this.a.addToScene( scene );
         this.b.addToScene( scene );
         this.c.addToScene( scene );
+        this.d.addToScene( scene );
+        this.e.addToScene( scene );
     }
 
     addToUI( ui ){
 
         let massFolder = ui.addFolder('Masses');
-        console.log('made it');
+
         let ThreeB = this;
         let planetA=this.a;
         let planetB=this.b;
         let planetC=this.c;
+        let planetD=this.d;
+        let planetE=this.e;
 
         let params = {
             massA:planetA.mass,
             massB:planetB.mass,
             massC:planetC.mass,
+            massD:planetD.mass,
+            massE:planetE.mass,
             speed:ThreeB.speed,
 
             reset: function()
             {
-
-
                 planetA.reset();
                 planetB.reset();
-                // //rig it up so that the center of mass is at the origin, when choosing planetC position
-                //  let com = planetA.pos.clone().multiplyScalar(planetA.mass);
-                //  com.add(planetB.pos.clone().multiplyScalar(planetB.mass));
-                //  planetC.pos = com.multiplyScalar(-1/planetC.mass);
-                //  planetC.resetTrail();
-                // // //rig it up so that there is no velocity about the center of mass:
-                //  let totVel = planetA.vel.clone().add(planetB.vel);
-                //  planetC.vel = totVel.multiplyScalar(-1);
                 planetC.reset();
-
-
-                ThreeB.stateA = new State(planetA.pos.clone(), planetA.vel.clone());
-                ThreeB.stateB = new State(planetB.pos.clone(), planetB.vel.clone());
-                ThreeB.stateB = new State(planetC.pos.clone(), planetC.vel.clone());
+                planetD.reset();
+                planetE.reset();
 
                 //set up the state in state space
-                let pos = new ThreeBodyData(planetA.pos,planetB.pos,planetC.pos);
-                let vel = new ThreeBodyData(planetA.vel,planetB.vel,planetC.vel);
+                let pos = new FiveBodyData(planetA.pos,planetB.pos,planetC.pos,planetD.pos,planetE.pos);
+                let vel = new FiveBodyData(planetA.vel,planetB.vel,planetC.vel,planetD.vel,planetE.vel);
                 ThreeB.state=new State(pos,vel);
             },
 
-            replay: function()
-            {
-                planetA.pos = ThreeB.stateA.pos.clone();
-                planetA.vel = ThreeB.stateA.vel.clone();
-
-                planetB.pos = ThreeB.stateB.pos.clone();
-                planetB.vel = ThreeB.stateB.vel.clone();
-
-                planetC.pos = ThreeB.stateC.pos.clone();
-                planetC.vel = ThreeB.stateC.vel.clone();
-
-                planetA.resetTrail();
-                planetB.resetTrail();
-                planetC.resetTrail();
-
-                //set up the state in state space
-                let pos = new ThreeBodyData(planetA.pos,planetB.pos,planetC.pos);
-                let vel = new ThreeBodyData(planetA.vel,planetB.vel,planetC.vel);
-                ThreeB.state=new State(pos,vel);
-
-            },
         }
 
 
 
         massFolder.add(params, 'massA', 0.01, 5, 0.01).name('a').onChange(function(value){
-           planetA.setMass(value);
-            });
+            planetA.setMass(value);
+        });
 
 
         massFolder.add(params, 'massB', 0.01, 5, 0.01).name('b').onChange(function(value){
@@ -224,14 +219,21 @@ class ThreeBody{
             planetC.setMass(value);
         });
 
+        massFolder.add(params, 'massD', 0.01, 5, 0.01).name('d').onChange(function(value){
+            planetD.setMass(value);
+        });
+
+
+        massFolder.add(params, 'massE', 0.01, 5, 0.01).name('e').onChange(function(value){
+            planetE.setMass(value);
+        });
+
         ui.add(params, 'speed', 0.01,1,0.01).name('Speed').onChange(function(value){
             ThreeB.speed=value;
         });
 
 
         ui.add(params, 'reset');
-
-        ui.add(params, 'replay');
 
     }
 
@@ -245,10 +247,14 @@ class ThreeBody{
         this.a.updatePos(newPos.a);
         this.b.updatePos(newPos.b);
         this.c.updatePos(newPos.c);
+        this.d.updatePos(newPos.d);
+        this.e.updatePos(newPos.e);
 
         this.a.redrawTrail();
         this.b.redrawTrail();
         this.c.redrawTrail();
+        this.d.redrawTrail();
+        this.e.redrawTrail();
     }
 
     tick(time,dTime){
@@ -292,10 +298,26 @@ const pC = {
     trailLength: 2000,
 }
 
-const example = new ThreeBody(pA, pB, pC);
+const pD = {
+    mass:0.4,
+    pos: new Vector3(3,0,0),
+    vel: new Vector3(0.1,-0.2,0),
+    color: 0xb88c40,
+    trailLength: 2000,
+}
+
+const pE = {
+    mass:0.7,
+    pos: new Vector3(1,2,1),
+    vel: new Vector3(-0.2,0,0.3),
+    color: 0x4a2a5c,
+    trailLength: 2000,
+}
+
+const example = new FiveBody(pA, pB, pC, pD, pE);
 
 // export {
-//     ThreeBody
+//     FiveBody
 // };
 
 export default example;

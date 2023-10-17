@@ -938,5 +938,4 @@ const boundaryGeom = new SphereBufferGeometry(4,64,32);
 
 let viz = new Visualize(sim, proj, boundaryGeom);
 
-
-export default {viz};
+export default viz;
