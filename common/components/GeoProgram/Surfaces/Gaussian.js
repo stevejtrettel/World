@@ -10,8 +10,8 @@ class Gaussian extends Surface {
         super.setFunctionDerivatives();
 
         //parameters to help choose gaussian
-        const a = 2;
-        const b = 5;
+        const a = 1;
+        const b = 2;
 
         let F = function (u, v) {
             return  a*Math.exp(-b*(u * u + v * v));
