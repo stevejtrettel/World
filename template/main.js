@@ -1,8 +1,8 @@
 //set the stuff for this particular example!
  //import Item from "../common/items/topology/torusFundamentalGroup.js"
 
-import example from "../common/components/GeoProgram/WoodCut.js";
-//import example from "../common/items/FiveBody.js";
+import example from "../common/components/GeoProgram/example.js";
+//import example from "../common/items/FiveBody.js";s
 //import everything except the objects of the scene
 //this uses all the default settings defined in the "template" folder
 import { World } from "../common/World/World.js";
@@ -64,7 +64,7 @@ function main(globalSettings) {
 
     //4. Fill this world with objects
     //world.addObjects( example );
-    world.addObjects( {object: example} );
+    world.addObjects( {example:example} );
     world.addObjects( lights );
 
     //5. Set up Post-Processing effects

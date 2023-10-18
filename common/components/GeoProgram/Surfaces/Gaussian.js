@@ -1,4 +1,3 @@
-import {Vector3} from "../../../../3party/three/build/three.module.js";
 
 import Surface from "./Surface.js";
 
@@ -10,8 +9,12 @@ class Gaussian extends Surface {
     setFunctionDerivatives() {
         super.setFunctionDerivatives();
 
+        //parameters to help choose gaussian
+        const a = 2;
+        const b = 5;
+
         let F = function (u, v) {
-            return  Math.exp(-u * u - v * v);
+            return  a*Math.exp(-b*(u * u + v * v));
         }
         this.F = F;
 
@@ -19,12 +22,13 @@ class Gaussian extends Surface {
             let u = uv.x;
             let v = uv.y;
             return {
-                fu: -2 * u * F(u, v),
-                fv: -2 * v * F(u, v),
-                fuu: (4*u*u - 2) * F(u, v),
-                fvv: (4*v*v - 2) * F(u, v),
-                fuv: 4 * u * v * F(u, v)
+                fu: -2 * u * b * F(u, v),
+                fv: -2 * v * b * F(u, v),
+                fuu: (4 * b * u * u - 2) * b * F(u, v),
+                fvv: (4 * b * v * v - 2) * b * F(u, v),
+                fuv: 4 * b * b * u * v * F(u, v)
             };
+
         }
 
     }

@@ -4,8 +4,24 @@ import {Vector3,Vector2} from "../../../../3party/three/build/three.module.js";
 import dState from "../Integrator/dState.js";
 import Integrator from "../Integrator/Integrator.js";
 
+
+let width = 5.5/2;
+let length = 11.5/2;
+let defaultDomain = {
+    u: {
+        min: -length,
+        max: length
+    },
+    v: {
+        min: -width,
+        max: width
+    }
+};
+
+
+
 class Surface{
-    constructor(domain){
+    constructor(domain=defaultDomain){
 
         this.domain = domain;
 
@@ -99,14 +115,47 @@ class Surface{
             return new Vector2(rescaleU(uv.x),rescaleV(uv.y));
         }
 
-        this.surfaceFn = function(uv){
+        this.parametricSurface = function(u,v,result){
+            let uv = new Vector2(u,v);
             let UV = rescale(uv);
-            return parameterization(UV);
+            let res = parameterization(UV);
+            result.set(res.x,res.y,res.z);
         }
     }
 
 
 }
 
+
+
+
+
+//not sure why the numerical derivatives dont work:
+// this.derivatives = function (uv) {
+//     let u = uv.x;
+//     let v = uv.y;
+//
+//     let ep = 0.001;
+//
+//     let f00 = F(u, v);
+//
+//     let fp0 = F(u + ep, v);
+//     let fn0 = F(u - ep, v);
+//     let f0p = F(u, v + ep);
+//     let f0n = F(u, v - ep);
+//
+//     let fpp = F(u + ep, v + ep);
+//     let fpn = F(u + ep, v - ep);
+//     let fnp = F(u - ep, v + ep);
+//     let fnn = F(u - ep, v - ep);
+//
+//     return {
+//         fu: (fp0 - fn0) / (2 * ep),
+//         fv: (f0p - f0n) / (2 * ep),
+//         fuu: (-fp0 + 2 * f00 - fn0) / (ep * ep),
+//         fvv: (-f0p + 2 * f00 - f0n) / (ep * ep),
+//         fuv: (fpp - fpn - fnp + fnn) / (4 * ep * ep)
+//     };
+// }
 
 export default Surface;

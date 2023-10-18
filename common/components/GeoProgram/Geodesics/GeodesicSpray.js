@@ -5,7 +5,7 @@ import State from "../Integrator/State.js";
 
 
 let defaultCurveOptions = {
-    length:5,
+    length:15,
     color: 0xffffff,
     radius: 0.02,
     res: 100,
@@ -15,7 +15,10 @@ let defaultCurveOptions = {
 let defaultParams = {
     N:50,
     time:0,
-}
+    pos: new Vector2(-2,0),
+    angle:0,
+    spread:1
+};
 
 
 //the params here should match those of GeodesicSpray
@@ -38,16 +41,14 @@ class GeodesicSpray {
 
     }
 
-    buildIniStates(time = 0) {
+    buildIniStates() {
         //RIGHT NOW JUST A TEST CASE:
         // all based at one point, angles at that point spread around default angle:
-        let pos = new Vector2(3,0);
-        let iniAngle = 3.14+0.5*Math.sin(time);
-        let spread = 3.;
+        let iniAngle = Math.sin(3.1415/2*this.params.angle);
         for (let i = 0; i < this.params.N; i++) {
-            let angle = iniAngle + 3.14/spread * (i/this.params.N-0.5);
+            let angle = iniAngle + 3.14/2*this.params.spread* (i/this.params.N-0.5);
             let vel = new Vector2(Math.cos(angle),Math.sin(angle));
-            this.iniStates[i]=new State(pos, vel);
+            this.iniStates[i]=new State(this.params.pos, vel);
         }
     }
 
@@ -75,10 +76,36 @@ class GeodesicSpray {
 
 
     update(params) {
+
+        let oldN = this.params.N;
         //do the update for parameters:
-        //build the initial states, and rebuild geodesics!
-        this.buildIniStates(params.time);
-        this.updateGeodesics();
+        for(const key in params){
+            if(this.params.hasOwnProperty(key)){
+                this.params[key] = params[key];
+            }
+        }
+        //if we modified the value of N: have to reset everything!
+        // if(this.params.N != oldN){
+        //     console.log('NEED TO FIX')
+        // }
+       // else {
+            //build the initial states, and rebuild geodesics!
+            this.buildIniStates();
+            this.updateGeodesics();
+       // }
+    }
+
+    printPoints(fileName='spray',numPts=500){
+        for(let i=0; i<this.params.N; i++){
+            const name = fileName + i.toString();
+            this.spray[i].printPoints(name,numPts);
+        }
+    }
+
+    setVisibility(value){
+        for(let i=0; i<this.params.N; i++){
+            this.spray[i].setVisibility(value);
+        }
     }
 
 }

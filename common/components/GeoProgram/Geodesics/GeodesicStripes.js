@@ -11,8 +11,11 @@ let defaultCurveOptions = {
 
 
 let defaultParams = {
-    N:50,
+    N:11,
     time:0,
+    angle:0,
+    spread:1,
+    pos:0,
 }
 
 
@@ -28,26 +31,32 @@ class GeodesicStripes {
         //CHANGE THIS: but for now have the curve parameters all just given by default:
         this.curveOptions = defaultCurveOptions
 
+        this.initialize();
+    }
+
+
+    initialize(){
         this.iniStates = new Array(this.params.N);
-        this.buildIniStates( 0);
+        this.buildIniStates();
 
         this.stripes =  new Array(this.params.N);
         this.buildGeodesics();
-
-
     }
 
-    buildIniStates(time = 0) {
+    buildIniStates() {
         //given one initial state, (and a time, if animated) build the whole set
         //RIGHT NOW JUST A TEST CASE: evenly distributed along U direction.
-        let vel = new Vector2(Math.cos(time)/5, 1).normalize();
+        let vel = new Vector2(1,Math.sin(3.1415/2.*this.params.angle) ).normalize();
         let uMin = this.surface.domain.u.min;
         let uMax = this.surface.domain.u.max;
         let vMin = this.surface.domain.v.min;
+        let vMax = this.surface.domain.v.max;
         let uRange = uMax - uMin;
+        let vRange = vMax - vMin;
 
         for (let i = 0; i < this.params.N; i++) {
-            let pos = new Vector2(0.01+uMin + i * 0.99* uRange / this.params.N, vMin );
+            let width = vRange / this.params.N;
+            let pos = new Vector2(uMin , this.params.pos + this.params.spread*(vMin + (i+0.5) * width) );
             this.iniStates[i]=new State(pos, vel);
         }
     }
@@ -55,7 +64,6 @@ class GeodesicStripes {
     buildGeodesics() {
         let geodesic;
         for (let i = 0; i < this.params.N; i++) {
-            console.log(this.iniStates[i]);
             geodesic = new Geodesic(this.surface, this.iniStates[i], this.curveOptions);
             this.stripes[i]=geodesic;
         }
@@ -75,11 +83,35 @@ class GeodesicStripes {
 
 
     update(params) {
+        let oldN = this.params.N;
         //do the update for parameters:
+        for(const key in params){
+            if(this.params.hasOwnProperty(key)){
+                this.params[key] = params[key];
+            }
+        }
+        //if we modified the value of N: have to reset everything!
+        // if(this.params.N != oldN){
+        //   console.log('NEED TO FIX')
+        // }
+       // else {
+            //build the initial states, and rebuild geodesics!
+            this.buildIniStates();
+            this.updateGeodesics();
+        //}
+    }
 
-        //build the initial states, and rebuild geodesics!
-        this.buildIniStates(params.time);
-        this.updateGeodesics();
+    printPoints(fileName='stripes',numPts=500) {
+        for (let i = 0; i < this.params.N; i++) {
+            const name = fileName + i.toString();
+            this.stripes[i].printPoints(name, numPts);
+        }
+    }
+
+    setVisibility(value) {
+        for (let i = 0; i < this.params.N; i++) {
+            this.stripes[i].setVisibility(value);
+        }
     }
 
 }

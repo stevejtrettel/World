@@ -1,4 +1,3 @@
-import {Vector3} from "../../../../3party/three/build/three.module.js";
 
 import Surface from "./Surface.js";
 
@@ -11,7 +10,7 @@ class Paraboloid extends Surface {
         super.setFunctionDerivatives();
 
         let F = function (u, v) {
-            return 4-(u*u+v*v);
+            return (4-(u*u+v*v))/10.;
         }
         this.F = F;
 
@@ -19,10 +18,10 @@ class Paraboloid extends Surface {
             let u = uv.x;
             let v = uv.y;
             return {
-                fu: -2*u,
-                fv: -2 *v,
-                fuu: -2,
-                fvv: -2,
+                fu: -2*u/10,
+                fv: -2 *v/10,
+                fuu: -2/10,
+                fvv: -2/10,
                 fuv: 0
             };
         }

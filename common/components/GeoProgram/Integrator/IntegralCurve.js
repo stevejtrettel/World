@@ -148,114 +148,55 @@ class IntegralCurve{
         this._buildTube(this.curve);
     }
 
+    //generate points for printing:
+    generatePoints(numPts = 100){
+        let precision = 4;
+        let str = ``;
+        for(let i=0;i<numPts;i++){
+            let pt = this.curve.getPoint(i/(numPts-1));
+            //need to re-order so xyz is correct again
+            let x = pt.x.toFixed(precision);
+            let y = -pt.z.toFixed(precision);
+            let z = pt.y.toFixed(precision);
+            let ptString = `(${x},${y},${z}), `;
+            str += ptString;
+        }
+       this.pointString = str;
+    }
+
+    //this makes a file to download with the generated points
+    downloadPoints(fileName=`curve`){
+
+        const file = new File([this.pointString], `${fileName}.txt`, {
+            type: 'text/plain',
+        });
+
+        //a function which allows the browser to automatically downlaod the file created
+        //(a hack from online: it makes a download link, artificially clicks it, and removes the link)
+        //https://javascript.plainenglish.io/javascript-create-file-c36f8bccb3be
+        function download() {
+            const link = document.createElement('a')
+            const url = URL.createObjectURL(file)
+
+            link.href = url
+            link.download = file.name
+            document.body.appendChild(link)
+            link.click()
+
+            document.body.removeChild(link)
+            window.URL.revokeObjectURL(url)
+        }
+
+        download();
+    }
+
+
+    setVisibility(value){
+        this.tube.visible=value;
+        this.start.visible=value;
+        this.end.visible=value;
+    }
+
 }
 
 export default IntegralCurve;
-
-//
-//
-// class IntegralCurve {
-//
-//     constructor(integrator, parameterization, state, options=defaultOptions ){
-//
-//         this.state = state;
-//         this.integrator = integrator;
-//
-//         //save the options for this curve:
-//         this.curveOptions = options;
-//
-//
-//         //this takes the output of the integrator, and displays it in space
-//         //for example, if you solve an ODE in coordinates then need to put back into R3 somehow.
-//         //default just takes (x,y,z) to (x,y,z)...
-//         this.parameterization = parameterization;
-//
-//
-//         //number of steps to integrate out.
-//         this.N = Math.floor(this.curveOptions.length/this.integrator.ep);
-//
-//         this.curve=null;
-//
-//
-//         this.integrate( this.state );
-//
-//         let curveMaterial = new MeshPhysicalMaterial({
-//             clearcoat:1,
-//             color: this.curveOptions.color,
-//             metalness:1,
-//         });
-//         let tubeGeo = new TubeGeometry(this.curve, this.curveOptions.segments, this.curveOptions.radius,this.curveOptions.res);
-//
-//         let ball = new SphereGeometry(2*this.curveOptions.radius, 32,16);
-//
-//         this.tube = new Mesh( tubeGeo, curveMaterial);
-//
-//         this.start = new Mesh( ball, curveMaterial);
-//         let startPt = this.curve.getPoint(0);
-//         this.start.position.set(startPt.x, startPt.y, startPt.z);
-//
-//         this.end = new Mesh(ball, curveMaterial);
-//         let endPt = this.curve.getPoint(1);
-//         this.end.position.set(endPt.x, endPt.y, endPt.z);
-//
-//     }
-//
-//     integrate( state ){
-//
-//         let pts = [];
-//         let p;
-//
-//         let currentState = state.clone();
-//
-//         for(let i=0; i<this.N; i++){
-//
-//             p = this.parameterization( currentState.pos.clone() );
-//             pts.push( p.clone() );
-//
-//             if(this.integrator.stop(currentState)){
-//                 break;
-//             }
-//
-//             currentState = this.integrator.step( currentState );
-//
-//         }
-//         this.curve = new CatmullRomCurve3(pts);
-//     }
-//
-//     resetCurve(curve){
-//         this.tube.geometry.dispose();
-//         this.tube.geometry=new TubeGeometry(
-//             this.curve,
-//             this.curveOptions.segments,
-//             this.curveOptions.radius,
-//             this.curveOptions.res);
-//
-//         let startPt = this.curve.getPoint(0);
-//         this.start.position.set(startPt.x, startPt.y, startPt.z);
-//
-//         let endPt = this.curve.getPoint(1);
-//         this.end.position.set(endPt.x, endPt.y, endPt.z);
-//
-//     }
-//
-//     setName( name ) {
-//         this.name = name;
-//     }
-//
-//     addToScene( scene ) {
-//         scene.add(this.tube);
-//         scene.add(this.start);
-//         scene.add(this.end);
-//     }
-//
-//
-//     update(iniCond){
-//         this.integrate(iniCond);
-//         this.resetCurve(this.curve);
-//     }
-//
-// }
-//
-//
-//
-// export default IntegralCurve;

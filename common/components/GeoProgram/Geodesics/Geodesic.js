@@ -4,7 +4,7 @@ import IntegralCurve from "../Integrator/IntegralCurve.js";
 //and pulls out the acceleration to build the integrator
 
 const defaultOptions = {
-    length:5,
+    length:20,
     color: 0xffffff,
     radius: 0.05,
     res: 100,
@@ -40,6 +40,16 @@ class Geodesic{
         this.iniState = iniState
         this.curve.update(this.iniState);
     }
+
+    printPoints(fileName='geodesic', numPts=500){
+        this.curve.generatePoints(numPts);
+        this.curve.downloadPoints(fileName);
+    }
+
+    setVisibility(value){
+        this.curve.setVisibility(value);
+    }
+
 }
 
 

@@ -1,34 +1,30 @@
 
 import {DoubleSide, Mesh, MeshPhysicalMaterial} from "../../../../3party/three/build/three.module.js";
-import {CustomShaderMaterial} from "../../../../3party/three-csm.m.js";
 import {ParametricGeometry} from "../../../../3party/three/examples/jsm/geometries/ParametricGeometry.js";
+import {CustomShaderMaterial} from "../../../../3party/three-csm.m.js";
 
-import {createFragmentCSM,createVertexCSM} from "./shaders/createCSMShaders.js";
+import zHeight from "./shaders/zHeight.js";
+import {createFragmentCSM,createVertexCSM} from "./shaders/utils/createCSMShaders.js";
 
 
-const colorFn = `
-vec3 colorFn(vec2 uv,vec3 xyz){
-        float u = uv.x;
-        float v = uv.y;
-        float x = xyz.x;
-        float y = xyz.y;
-        float z = xyz.z;
-        
-        return vec3(0.2,0.3,y);
-    }
-`;
+//res is dots per inch
+class PlotGPU {
+    constructor(surface,res=20){
 
-class SurfaceGPU{
-    constructor(compute){
+        this.surface = surface;
+        this.colorFn = zHeight;
 
-        this.compute = compute;
-        this.colorFn = colorFn;
         this.options = {
             clearcoat:1,
             roughness:0.5,
         }
 
-        const plotGeometry = new ParametricGeometry(compute.parametricSurface,100,100);
+        let uDom = this.surface.domain.u;
+        let vDom = this.surface.domain.v;
+        let slices = Math.floor(res*(uDom.max-uDom.min));
+        let stacks = Math.floor(res*(vDom.max-vDom.min));
+        const plotGeometry = new ParametricGeometry(surface.parametricSurface,slices,stacks);
+
 
         //next: build the shader material
         let plotShaderMaterial = this.compileMaterial();
@@ -77,4 +73,4 @@ class SurfaceGPU{
 }
 
 
-export default SurfaceGPU;
+export default PlotGPU;
