@@ -6,7 +6,7 @@ import Gaussian from "./Surfaces/Gaussian.js";
 import Paraboloid from "./Surfaces/Paraboloid.js";
 import Geodesic from "./Geodesics/Geodesic.js";
 import GeodesicSpray from "./Geodesics/GeodesicSpray.js";
-
+import GeodesicStripes from "./Geodesics/GeodesicStripes.js";
 
 let dom = {u:{min:-3,max:3},v:{min:-3,max:3}};
 let gauss = new Gaussian(dom);
@@ -21,10 +21,18 @@ geo.tick = function(time,dTime){
     geo.update(iniState);
 }
 
-// const spray= new GeodesicSpray(gauss);
-// spray.addToUI=function(ui){};
-// spray.tick = function(time,dTime){
-//     spray.update({time:time});
-// }
+const spray= new GeodesicSpray(gauss);
+spray.addToUI=function(ui){};
+spray.tick = function(time,dTime){
+    spray.update({time:time});
+}
 
-export default geo;
+
+const stripes= new GeodesicStripes(gauss);
+stripes.addToUI=function(ui){};
+stripes.tick = function(time,dTime){
+    stripes.update({time:time});
+}
+
+
+export default stripes;

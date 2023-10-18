@@ -1,7 +1,12 @@
 
+
+const defaultStop = function(state){
+    return false;
+}
+
 //base class for a numerical integrator to be extended
 class Integrator {
-    constructor (derive, ep){
+    constructor (derive, ep=0.1, stop=defaultStop){
         this.derive=derive;
         this.ep=ep;
     }
@@ -18,8 +23,8 @@ class Integrator {
 
 class RungeKutta extends Integrator {
 
-    constructor(derive,ep){
-        super(derive,ep);
+    constructor(derive,ep,stop){
+        super(derive,ep,stop);
     }
 
     //step forwards one timestep

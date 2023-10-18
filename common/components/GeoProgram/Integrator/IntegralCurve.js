@@ -1,8 +1,9 @@
 import {
     CatmullRomCurve3,
     MeshPhysicalMaterial,
-    TubeBufferGeometry,
-    Mesh, SphereBufferGeometry
+    TubeGeometry,
+    Mesh,
+    SphereGeometry
 } from "../../../../3party/three/build/three.module.js";
 
 const defaultOptions = {
@@ -14,13 +15,9 @@ const defaultOptions = {
     roughness:0,
 };
 
-const defaultStop=function(){
-    return false;
-}
-
 class IntegralCurve {
 
-    constructor(integrator, parameterization, state, options=defaultOptions, stop=defaultStop){
+    constructor(integrator, parameterization, state, options=defaultOptions ){
 
         this.state = state;
         this.integrator = integrator;
@@ -39,20 +36,18 @@ class IntegralCurve {
         this.N = Math.floor(this.curveOptions.length/this.integrator.ep);
 
         this.curve=null;
-        this.stop=stop;
 
 
         this.integrate( this.state );
-
 
         let curveMaterial = new MeshPhysicalMaterial({
             clearcoat:1,
             color: this.curveOptions.color,
             metalness:1,
         });
-        let tubeGeo = new TubeBufferGeometry(this.curve, this.curveOptions.segments, this.curveOptions.radius,this.curveOptions.res);
+        let tubeGeo = new TubeGeometry(this.curve, this.curveOptions.segments, this.curveOptions.radius,this.curveOptions.res);
 
-        let ball = new SphereBufferGeometry(2*this.curveOptions.radius, 32,16);
+        let ball = new SphereGeometry(2*this.curveOptions.radius, 32,16);
 
         this.tube = new Mesh( tubeGeo, curveMaterial);
 
@@ -70,6 +65,7 @@ class IntegralCurve {
 
         let pts = [];
         let p;
+
         let currentState = state.clone();
 
         for(let i=0; i<this.N; i++){
@@ -77,7 +73,7 @@ class IntegralCurve {
             p = this.parameterization( currentState.pos.clone() );
             pts.push( p.clone() );
 
-            if(this.stop(currentState)){
+            if(this.integrator.stop(currentState)){
                 break;
             }
 
@@ -89,7 +85,7 @@ class IntegralCurve {
 
     resetCurve(curve){
         this.tube.geometry.dispose();
-        this.tube.geometry=new TubeBufferGeometry(
+        this.tube.geometry=new TubeGeometry(
             this.curve,
             this.curveOptions.segments,
             this.curveOptions.radius,

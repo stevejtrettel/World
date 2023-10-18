@@ -1,7 +1,8 @@
 // the base class for surfaces and computations:
 import {Vector3,Vector2} from "../../../../3party/three/build/three.module.js";
-import {dState} from "../../../compute/cpu/components/State.js";
-import RungeKutta from "../Integrator/RungeKutta.js";
+
+import dState from "../Integrator/dState.js";
+import Integrator from "../Integrator/Integrator.js";
 
 class Surface{
     constructor(domain){
@@ -63,7 +64,7 @@ class Surface{
     buildIntegrator(){
         let derive = this.derive;
         let ep = 0.1;
-        this.integrator = new RungeKutta(derive,ep);
+        this.integrator = new Integrator(derive,ep);
     }
 
     buildSurfaceGeometry(){

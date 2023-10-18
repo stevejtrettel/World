@@ -15,7 +15,6 @@ class State {
         return  new State(this.pos.clone(), this.vel.clone());
     }
 
-
     //add a dState to State:
     add( dState ) {
         this.pos.add(dState.vel);
@@ -41,7 +40,6 @@ class State {
     }
 
 }
-
 
 
 export default State;
