@@ -62,9 +62,24 @@ class Surface{
     }
 
     buildIntegrator(){
+
+        let domain = this.domain;
         let derive = this.derive;
         let ep = 0.1;
-        this.integrator = new Integrator(derive,ep);
+
+        let stop = function(uv){
+            let u = uv.x;
+            let v = uv.y;
+            if(u< domain.u.min || u> domain.u.max){
+                return true;
+            }
+            if(v< domain.v.min || v> domain.v.max){
+                return true;
+            }
+            return false;
+        }
+
+        this.integrator = new Integrator(derive,ep,stop);
     }
 
     buildSurfaceGeometry(){
