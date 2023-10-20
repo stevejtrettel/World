@@ -6,25 +6,31 @@ class Paraboloid extends Surface {
         super(domain);
     }
 
-    setFunctionDerivatives() {
-        super.setFunctionDerivatives();
+    setFunctionAndDerivatives() {
+        super.setFunctionAndDerivatives();
+
+        //chose a constant so the farthest point is at most 1 inch below the middle:
+        //farthest point is diagonal, value of function there is length of diagonal squared:
+        const U = this.domain.u.max;
+        const V = this.domain.v.max;
+        const c = 1/(U*U+V*V);
 
         let F = function (u, v) {
-            return (4-(u*u+v*v))/50.;
+            return -c*(u*u+v*v);
         }
         this.F = F;
 
         this.name = 'Paraboloid';
-        this.Ftxt = `f(u,v)=(4-(u*u+v*v))/50`;
+        this.Ftxt = `f(u,v)=-${c}*(u*u+v*v)`;
 
         this.derivatives = function (uv) {
             let u = uv.x;
             let v = uv.y;
             return {
-                fu: -2*u/10,
-                fv: -2 *v/10,
-                fuu: -2/10,
-                fvv: -2/10,
+                fu: -2*c*u,
+                fv: -2*c*v,
+                fuu: -2*c,
+                fvv: -2*c,
                 fuv: 0
             };
         }
