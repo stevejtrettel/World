@@ -108,6 +108,12 @@ class GeodesicStripes {
             this.updateGeodesics();
     }
 
+    updateSurface(){
+        for(let i=0; i<this.maxN; i++){
+            this.stripes[i].updateSurface();
+        }
+    }
+
     printToFile(fileName='stripes',numPts=500) {
         for (let i = 0; i < this.params.N; i++) {
             const name = fileName + i.toString();

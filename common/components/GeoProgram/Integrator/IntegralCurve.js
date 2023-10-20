@@ -21,13 +21,11 @@ const defaultOptions = {
 class IntegralCurve{
     constructor(integrator, parameterization, iniState, curveOptions=defaultOptions ){
     //constructor(integrator, parameterization, iniState, stop, curveOptions) {
-
+        this.isVisible = true;
         this.integrator = integrator;
         this.parameterization = parameterization;
         this.iniState = iniState;
         this.curveOptions = curveOptions;
-        this.isVisible = true;
-
 
         //initialize the curve parameters in the integrator
         this.length = curveOptions.length;
@@ -57,6 +55,7 @@ class IntegralCurve{
     }
 
     _integrate(iniState){
+
         let pts = [];
         let p,uv;
         let currentState = iniState.clone();
@@ -143,6 +142,14 @@ class IntegralCurve{
         scene.add(this.end);
     }
 
+    updateIntegrator(integrator,parameterization){
+        this.integrator=integrator;
+        this.parameterization=parameterization;
+        if(this.isVisible){
+            this.update(this.iniState);
+        }
+    }
+
     update(iniState){
         this._integrate(iniState);
         this._buildTube(this.curve);
@@ -197,6 +204,9 @@ class IntegralCurve{
         this.tube.visible=value;
         this.start.visible=value;
         this.end.visible=value;
+        if(value){
+            this.update(this.iniState);
+        }
     }
 
 }

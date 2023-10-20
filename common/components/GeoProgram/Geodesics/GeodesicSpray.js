@@ -94,6 +94,12 @@ class GeodesicSpray {
             this.updateGeodesics();
     }
 
+    updateSurface(){
+        for(let i=0; i<this.maxN; i++){
+            this.spray[i].updateSurface();
+        }
+    }
+
     printToString(numPts = 500){
         let str = ``;
         for(let i=0; i<this.params.N; i++){

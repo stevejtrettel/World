@@ -16,8 +16,6 @@ class Geodesic{
         this.surface = surface;
         this.iniState = iniState;
         this.curveOptions = curveOptions;
-        this.stop = function(state){return false;}
-            //this.surface.outsideDomain;
 
         this.ep = 0.1;
 
@@ -26,13 +24,16 @@ class Geodesic{
             this.surface.parameterization,
             this.iniState,
             this.curveOptions,
-            this.stop
         );
 
     }
 
     addToScene(scene){
         this.curve.addToScene(scene);
+    }
+
+    updateSurface(){
+        this.curve.updateIntegrator(this.surface.integrator,this.surface.parameterization);
     }
 
     update(iniState){

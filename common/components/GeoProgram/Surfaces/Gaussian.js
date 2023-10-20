@@ -1,17 +1,25 @@
 
 import Surface from "./Surface.js";
 
+
+let gaussParams = {
+    a: 1,
+    b: 1,
+    c:0
+};
+
+
 class Gaussian extends Surface {
     constructor(domain) {
-        super(domain);
+        super(gaussParams, domain);
     }
 
     setFunctionAndDerivatives() {
         super.setFunctionAndDerivatives();
 
-        let a = 1;
-        let b = 0.25;
-        let c = -1;
+        let a = this.params.a;
+        let b = this.params.b;
+        let c = this.params.c;
 
         let F = function (u, v) {
             return  a*Math.exp(-b*((u-c) * (u-c) + v * v));
@@ -31,7 +39,6 @@ class Gaussian extends Surface {
                 fvv: (4 * b * v * v - 2) * b * F(u, v),
                 fuv: 4 * b * b * (u-c) * v * F(u, v)
             };
-
         }
 
     }

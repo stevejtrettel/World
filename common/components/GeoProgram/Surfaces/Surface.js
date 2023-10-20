@@ -21,8 +21,9 @@ let defaultDomain = {
 
 
 class Surface{
-    constructor(domain=defaultDomain){
+    constructor(params={}, domain=defaultDomain){
 
+        this.params = params;
         this.domain = domain;
         this.initialize();
 
@@ -74,11 +75,16 @@ class Surface{
         }
 
         this.acceleration = acceleration;
+       // console.log(this.acceleration({pos: {x:0.3,y:0.4},vel:{x:0,y:1}}));
+
+
         this.derive = function(state){
             let vel = state.vel;
             let acc = acceleration(state);
             return new dState(vel,acc);
         }
+
+
     }
 
     buildIntegrator(){
@@ -86,6 +92,7 @@ class Surface{
         let domain = this.domain;
         let derive = this.derive;
         let ep = 0.1;
+
 
         let stop = function(uv){
             let u = uv.x;
@@ -100,6 +107,15 @@ class Surface{
         }
 
         this.integrator = new Integrator(derive,ep,stop);
+    }
+
+    update(params){
+        for(const key in params){
+            if(this.params.hasOwnProperty(key)){
+                this.params[key] = params[key];
+            }
+        }
+        this.initialize();
     }
 
     buildSurfaceGeometry(){

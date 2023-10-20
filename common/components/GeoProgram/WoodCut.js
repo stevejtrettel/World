@@ -152,29 +152,46 @@ class WoodCut{
     }
 
     addToUI(ui){
+
         let woodCut = this;
         let params = woodCut.params;
 
-       // let surfFolder = ui.addFolder('Surface');
+        let surfFolder = ui.addFolder('Surface');
         let geoFolder = ui.addFolder('Geodesic');
         let stripeFolder = ui.addFolder('Stripes');
         let sprayFolder = ui.addFolder('Spray');
-       // surfFolder.close();
+        surfFolder.close();
         geoFolder.close();
         stripeFolder.close();
         sprayFolder.close();
 
 
-        //add stuff to these folders:
-        // surfFolder.add(woodCut.surface.params,'a',0,5,0.01).onChange(
-        //     function(value){
-        //     woodCut.surface.params.a = value;
-        //     woodCut.surface.initialize();
-        //     woodCut.plot.compileMaterial();
-        // });
-        // ui.add(params, 'surface', woodCut.surfaceList).onChange(function(value){
-        //     console.log(value.key);
-        // });
+        surfFolder.add(woodCut.surface.params,'a',0,5,0.01).onChange(
+            function(value){
+            woodCut.surface.update({a:value});
+            woodCut.plot.update();
+            woodCut.geodesic.updateSurface();
+            woodCut.spray.updateSurface();
+            woodCut.stripes.updateSurface();
+        });
+
+        surfFolder.add(woodCut.surface.params,'b',0,5,0.01).onChange(
+            function(value){
+                woodCut.surface.update({b:value});
+                woodCut.plot.update();
+                woodCut.geodesic.updateSurface();
+                woodCut.spray.updateSurface();
+                woodCut.stripes.updateSurface();
+            });
+
+        surfFolder.add(woodCut.surface.params,'c',-3,3,0.01).onChange(
+            function(value){
+                woodCut.surface.update({c:value});
+                woodCut.plot.update();
+                woodCut.geodesic.updateSurface();
+                woodCut.spray.updateSurface();
+                woodCut.stripes.updateSurface();
+            });
 
         geoFolder.add(params,'geoVisible').onChange(
             function(value){

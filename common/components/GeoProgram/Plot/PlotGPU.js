@@ -21,9 +21,9 @@ class PlotGPU {
 
         let uDom = this.surface.domain.u;
         let vDom = this.surface.domain.v;
-        let slices = Math.floor(res*(uDom.max-uDom.min));
-        let stacks = Math.floor(res*(vDom.max-vDom.min));
-        const plotGeometry = new ParametricGeometry(surface.parametricSurface,slices,stacks);
+        this.slices = Math.floor(res*(uDom.max-uDom.min));
+        this.stacks = Math.floor(res*(vDom.max-vDom.min));
+        const plotGeometry = new ParametricGeometry(this.surface.parametricSurface,this.slices,this.stacks);
 
 
         //next: build the shader material
@@ -68,7 +68,8 @@ class PlotGPU {
 
 
     update(){
-
+        this.plot.geometry.dispose();
+        this.plot.geometry =  new ParametricGeometry(this.surface.parametricSurface,this.slices,this.stacks);
     }
 }
 

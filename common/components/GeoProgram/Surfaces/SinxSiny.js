@@ -1,16 +1,23 @@
 
 import Surface from "./Surface.js";
 
+let sinParams = {
+    a: 0.5,
+    b: 3.5,
+    c: 0
+};
+
+
 class SinxSiny extends Surface {
     constructor(domain) {
-        super(domain);
+        super(sinParams, domain);
     }
 
     setFunctionAndDerivatives() {
         super.setFunctionAndDerivatives();
 
-        const a = 0.5;
-        const kU = 3.5*3.14159/this.domain.u.max;
+        const a = this.params.a;
+        const kU = this.params.b*3.14159/this.domain.u.max;
         const kV = kU;
 
         let F = function (u, v) {
