@@ -23,7 +23,7 @@ class WoodCut{
             geoDir: 0,
             geoVisible: true,
             printGeo: function(){
-                woodCut.geodesic.printPoints('geodesic');
+                woodCut.geodesic.printToFile('geodesic');
             },
 
             stripeNum:11,
@@ -32,7 +32,7 @@ class WoodCut{
             stripePos:0,
             stripeVisible:false,
             printStripe: function(){
-                woodCut.stripes.printPoints('stripe');
+                woodCut.stripes.printToFile('stripe');
             },
 
             sprayNum:10,
@@ -41,8 +41,13 @@ class WoodCut{
             spraySpread:0.2,
             sprayVisible: false,
             printSpray: function(){
-                woodCut.spray.printPoints('spray');
+                woodCut.spray.printToFile('spray');
             },
+
+            printAll: function(){
+                woodCut.printToFile();
+            },
+
         }
 
         let iniState = this.buildGeodesicIniState();
@@ -87,6 +92,50 @@ class WoodCut{
     }
 
 
+    printToString(numPts = 500){
+        let str = ``;
+
+        str += this.surface.printToString();
+
+        if(this.params.geoVisible){
+            str = str + this.geodesic.printToString(numPts);
+        }
+
+        if(this.params.sprayVisible){
+            str = str + this.spray.printToString(numPts);
+        }
+
+        if(this.params.stripeVisible){
+            str = str + this.stripes.printToString(numPts);
+        }
+
+        return str;
+    }
+
+    printToFile(){
+        const contents = this.printToString(10);
+        const file = new File([contents], `${this.surface.name}.txt`, {
+                type: 'text/plain',
+            });
+
+            //a function which allows the browser to automatically downlaod the file created
+            //(a hack from online: it makes a download link, artificially clicks it, and removes the link)
+            //https://javascript.plainenglish.io/javascript-create-file-c36f8bccb3be
+        function download() {
+                const link = document.createElement('a')
+                const url = URL.createObjectURL(file)
+
+                link.href = url
+                link.download = file.name
+                document.body.appendChild(link)
+                link.click()
+
+                document.body.removeChild(link)
+                window.URL.revokeObjectURL(url)
+        }
+
+        download();
+    }
 
 
     addToScene(scene){
@@ -137,9 +186,6 @@ class WoodCut{
                 woodCut.geodesic.update(iniState);
             });
         geoFolder.add(params, 'printGeo').name('Download');
-
-
-
 
 
 
@@ -206,6 +252,7 @@ class WoodCut{
         sprayFolder.add(params, 'printSpray').name('Download');
 
 
+        ui.add(params,'printAll').name('Download All');
     }
 
     tick(time,dTime){
@@ -214,6 +261,8 @@ class WoodCut{
         // this.stripes.update({time:time});
         //this.spray.update({time:time});
     }
+
+
 
 }
 

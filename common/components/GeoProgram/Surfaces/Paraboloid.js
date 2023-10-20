@@ -10,9 +10,12 @@ class Paraboloid extends Surface {
         super.setFunctionDerivatives();
 
         let F = function (u, v) {
-            return (4-(u*u+v*v))/10.;
+            return (4-(u*u+v*v))/50.;
         }
         this.F = F;
+
+        this.name = 'Paraboloid';
+        this.Ftxt = `f(u,v)=(4-(u*u+v*v))/50`;
 
         this.derivatives = function (uv) {
             let u = uv.x;

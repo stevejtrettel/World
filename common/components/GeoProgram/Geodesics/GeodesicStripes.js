@@ -28,6 +28,8 @@ class GeodesicStripes {
         this.surface = surface;
         this.params = params;
 
+        this.isVisible = true;
+
         //CHANGE THIS: but for now have the curve parameters all just given by default:
         this.curveOptions = defaultCurveOptions
 
@@ -101,14 +103,24 @@ class GeodesicStripes {
         //}
     }
 
-    printPoints(fileName='stripes',numPts=500) {
+    printToFile(fileName='stripes',numPts=500) {
         for (let i = 0; i < this.params.N; i++) {
             const name = fileName + i.toString();
-            this.stripes[i].printPoints(name, numPts);
+            this.stripes[i].printToFile(name, numPts);
         }
     }
 
+    printToString(numPts = 500){
+        let str = ``;
+        for(let i=0; i<this.params.N; i++){
+            let next = this.stripes[i].printToString(numPts);
+            str = str + next;
+        }
+        return str;
+    }
+
     setVisibility(value) {
+        this.isVisible = value;
         for (let i = 0; i < this.params.N; i++) {
             this.stripes[i].setVisibility(value);
         }

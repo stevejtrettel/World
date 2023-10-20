@@ -39,6 +39,8 @@ class GeodesicSpray {
         this.spray =  new Array(this.params.N);
         this.buildGeodesics();
 
+        this.isVisible = true;
+
     }
 
     buildIniStates() {
@@ -95,14 +97,24 @@ class GeodesicSpray {
        // }
     }
 
-    printPoints(fileName='spray',numPts=500){
+    printToString(numPts = 500){
+        let str = ``;
+        for(let i=0; i<this.params.N; i++){
+            let next = this.spray[i].printToString(numPts);
+            str = str + next;
+        }
+        return str;
+    }
+
+    printToFile(fileName='spray',numPts=500){
         for(let i=0; i<this.params.N; i++){
             const name = fileName + i.toString();
-            this.spray[i].printPoints(name,numPts);
+            this.spray[i].printToFile(name,numPts);
         }
     }
 
     setVisibility(value){
+        this.isVisible = value;
         for(let i=0; i<this.params.N; i++){
             this.spray[i].setVisibility(value);
         }

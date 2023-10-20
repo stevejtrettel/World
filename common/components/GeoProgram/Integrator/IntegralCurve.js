@@ -26,6 +26,7 @@ class IntegralCurve{
         this.parameterization = parameterization;
         this.iniState = iniState;
         this.curveOptions = curveOptions;
+        this.isVisible = true;
 
 
         //initialize the curve parameters in the integrator
@@ -162,6 +163,7 @@ class IntegralCurve{
             str += ptString;
         }
        this.pointString = str;
+        return str;
     }
 
     //this makes a file to download with the generated points
@@ -192,6 +194,7 @@ class IntegralCurve{
 
 
     setVisibility(value){
+        this.isVisible = value;
         this.tube.visible=value;
         this.start.visible=value;
         this.end.visible=value;

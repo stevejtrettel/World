@@ -25,18 +25,18 @@ class Surface{
 
         this.domain = domain;
 
-
-        this.setFunctionDerivatives();
+        this.setFunctionAndDerivatives();
         this.buildParameterization();
         this.buildAcceleration();
         this.buildIntegrator();
         this.buildSurfaceGeometry();
-
     }
 
     //this will be written in each function individually:
-    setFunctionDerivatives(){
+    setFunctionAndDerivatives(){
         this.F=null;
+        this.name = null;
+        this.Ftxt = null;
         this.derivatives=null;
     }
 
@@ -123,7 +123,14 @@ class Surface{
         }
     }
 
-
+    printToString(){
+        let str = ``;
+        str += this.Ftxt;
+        str += `\n`;
+        str += `{ u: (${this.domain.u.min},${this.domain.u.max}), v:(${this.domain.v.min},${this.domain.v.max}) }`;
+        str += `\n\n`;
+        return str;
+    }
 }
 
 

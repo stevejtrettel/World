@@ -6,17 +6,20 @@ class Gaussian extends Surface {
         super(domain);
     }
 
-    setFunctionDerivatives() {
-        super.setFunctionDerivatives();
+    setFunctionAndDerivatives() {
+        super.setFunctionAndDerivatives();
 
         //parameters to help choose gaussian
         const a = 1;
-        const b = 2;
+        const b = 1;
 
         let F = function (u, v) {
             return  a*Math.exp(-b*(u * u + v * v));
         }
         this.F = F;
+
+        this.name = 'Gaussian';
+        this.Ftxt = `f(u,v)=${a}*exp(-${b}*(u*u + v*v))`;
 
         this.derivatives = function (uv) {
             let u = uv.x;

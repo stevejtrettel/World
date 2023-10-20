@@ -29,6 +29,8 @@ class Geodesic{
             this.stop
         );
 
+        this.isVisible = true;
+
     }
 
     addToScene(scene){
@@ -41,13 +43,18 @@ class Geodesic{
         this.curve.update(this.iniState);
     }
 
-    printPoints(fileName='geodesic', numPts=500){
-        this.curve.generatePoints(numPts);
-        this.curve.downloadPoints(fileName);
+    setVisibility(value){
+        this.isVisible = value;
+        this.curve.setVisibility(value);
     }
 
-    setVisibility(value){
-        this.curve.setVisibility(value);
+    printToString(numPts=500){
+        return this.curve.generatePoints(numPts)+`\n\n`;
+    }
+
+    printToFile(fileName='geodesic', numPts=500){
+        this.curve.generatePoints(numPts);
+        this.curve.downloadPoints(fileName);
     }
 
 }
