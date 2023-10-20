@@ -11,6 +11,12 @@ let parabola = new Paraboloid();
 let sinxsiny = new SinxSiny();
 let cosr = new CosR();
 
-let wood = new WoodCut(sinxsiny);
+
+let surfList = {
+    gauss: gauss,
+    parabola: parabola
+};
+
+let wood = new WoodCut(surfList);
 
 export default wood;

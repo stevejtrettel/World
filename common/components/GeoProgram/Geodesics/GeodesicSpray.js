@@ -1,8 +1,7 @@
-import {Vector2} from "../../../../3party/three/build/three.module.js";
+import {Vector2, Mesh, SphereGeometry,} from "../../../../3party/three/build/three.module.js";
 
 import Geodesic from "./Geodesic.js";
 import State from "../Integrator/State.js";
-
 
 let defaultCurveOptions = {
     length:15,
@@ -10,7 +9,6 @@ let defaultCurveOptions = {
     radius: 0.02,
     res: 100,
 };
-
 
 let defaultParams = {
     N:50,
@@ -20,26 +18,29 @@ let defaultParams = {
     spread:1
 };
 
-
 //the params here should match those of GeodesicSpray
 //so that they can use the same parameters in the UI
 //can we just feed in the whole UI commands here?
 class GeodesicSpray {
     constructor(surface, params=defaultParams) {
-
+        this.maxN = 100;
         this.surface = surface;
         this.params = params;
 
         //CHANGE THIS: but for now have the curve parameters all just given by default:
         this.curveOptions = defaultCurveOptions
 
-        this.iniStates = new Array(this.params.N);
-        this.buildIniStates( 0);
+        this.iniStates = new Array(this.maxN);
+        for(let i=0;i<this.maxN;i++){
+            this.iniStates[i]=new State(new Vector2(0,0),new Vector2(0,0));
+        }
+        this.buildIniStates();
 
-        this.spray =  new Array(this.params.N);
+        this.spray =  new Array(this.maxN);
+        for(let i=0;i<this.maxN;i++){
+            this.spray[i] = new Geodesic(this.surface,this.iniStates[0], this.curveOptions);
+        }
         this.buildGeodesics();
-
-        this.isVisible = true;
 
     }
 
@@ -58,43 +59,39 @@ class GeodesicSpray {
         let geodesic;
         for (let i = 0; i < this.params.N; i++) {
             geodesic = new Geodesic(this.surface, this.iniStates[i],  this.curveOptions);
-           // console.log(geodesic);
             this.spray[i]=geodesic;
         }
     }
 
     updateGeodesics() {
-        for (let i = 0; i < this.params.N; i++) {
-            //console.log(this.iniStates[i]);
-            this.spray[i].update(this.iniStates[i]);
+        for (let i = 0; i < this.maxN; i++) {
+            if(i<this.params.N) {
+                this.spray[i].update(this.iniStates[i]);
+                this.spray[i].setVisibility(true)
+            }
+            else{
+                this.spray[i].setVisibility(false);
+            }
         }
     }
 
     addToScene(scene){
-        for(let i=0; i<this.params.N; i++){
+        for(let i=0; i<this.maxN; i++){
             this.spray[i].addToScene(scene);
+            let show = (i<this.params.N);
+            this.spray[i].setVisibility(show);
         }
     }
 
-
     update(params) {
-
-        let oldN = this.params.N;
-        //do the update for parameters:
         for(const key in params){
             if(this.params.hasOwnProperty(key)){
                 this.params[key] = params[key];
             }
         }
-        //if we modified the value of N: have to reset everything!
-        // if(this.params.N != oldN){
-        //     console.log('NEED TO FIX')
-        // }
-       // else {
             //build the initial states, and rebuild geodesics!
             this.buildIniStates();
             this.updateGeodesics();
-       // }
     }
 
     printToString(numPts = 500){
@@ -114,7 +111,6 @@ class GeodesicSpray {
     }
 
     setVisibility(value){
-        this.isVisible = value;
         for(let i=0; i<this.params.N; i++){
             this.spray[i].setVisibility(value);
         }

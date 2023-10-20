@@ -25,10 +25,10 @@ let defaultParams = {
 class GeodesicStripes {
     constructor(surface, params=defaultParams) {
 
+        this.maxN = 101;
+
         this.surface = surface;
         this.params = params;
-
-        this.isVisible = true;
 
         //CHANGE THIS: but for now have the curve parameters all just given by default:
         this.curveOptions = defaultCurveOptions
@@ -38,10 +38,16 @@ class GeodesicStripes {
 
 
     initialize(){
-        this.iniStates = new Array(this.params.N);
+        this.iniStates = new Array(this.maxN);
+        for(let i=0;i<this.maxN;i++){
+            this.iniStates[i]=new State(new Vector2(0,0),new Vector2(0,0));
+        }
         this.buildIniStates();
 
-        this.stripes =  new Array(this.params.N);
+        this.stripes =  new Array(this.maxN);
+        for(let i=0;i<this.maxN;i++){
+            this.stripes[i] = new Geodesic(this.surface,this.iniStates[0], this.curveOptions);
+        }
         this.buildGeodesics();
     }
 
@@ -72,35 +78,34 @@ class GeodesicStripes {
     }
 
     updateGeodesics() {
-        for (let i = 0; i < this.params.N; i++) {
-            this.stripes[i].update(this.iniStates[i]);
+        for (let i = 0; i < this.maxN; i++) {
+            if(i<this.params.N) {
+                this.stripes[i].update(this.iniStates[i]);
+                this.stripes[i].setVisibility(true)
+            }
+            else{
+                this.stripes[i].setVisibility(false);
+            }
         }
     }
 
     addToScene(scene){
-        for(let i=0; i<this.params.N; i++){
+        for(let i=0; i<this.maxN; i++){
             this.stripes[i].addToScene(scene);
+            let show = (i<this.params.N);
+            this.stripes[i].setVisibility(show);
         }
     }
 
 
     update(params) {
-        let oldN = this.params.N;
-        //do the update for parameters:
         for(const key in params){
             if(this.params.hasOwnProperty(key)){
                 this.params[key] = params[key];
             }
         }
-        //if we modified the value of N: have to reset everything!
-        // if(this.params.N != oldN){
-        //   console.log('NEED TO FIX')
-        // }
-       // else {
-            //build the initial states, and rebuild geodesics!
             this.buildIniStates();
             this.updateGeodesics();
-        //}
     }
 
     printToFile(fileName='stripes',numPts=500) {
@@ -120,7 +125,6 @@ class GeodesicStripes {
     }
 
     setVisibility(value) {
-        this.isVisible = value;
         for (let i = 0; i < this.params.N; i++) {
             this.stripes[i].setVisibility(value);
         }

@@ -10413,6 +10413,17 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/common\/components\/basic-shapes\/Planet.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/basic-shapes\/Planet-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/common\/components\/basic-shapes\/Rod.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -10960,6 +10971,215 @@
       "oA" : 1,
       "oAP" : "\/common\/components\/euc-geometry\/ArchimedesSphereCurve-min.js",
       "oF" : 1,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/GeoProgram\/example.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/GeoProgram\/example-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/GeoProgram\/Geodesics\/Geodesic.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/GeoProgram\/Geodesics\/Geodesic-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/GeoProgram\/Geodesics\/GeodesicSpray.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/GeoProgram\/Geodesics\/GeodesicSpray-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/GeoProgram\/Geodesics\/GeodesicStripes.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/GeoProgram\/Geodesics\/GeodesicStripes-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/GeoProgram\/Integrator\/dState.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/GeoProgram\/Integrator\/dState-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/GeoProgram\/Integrator\/IntegralCurve.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/GeoProgram\/Integrator\/IntegralCurve-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/GeoProgram\/Integrator\/Integrator.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/GeoProgram\/Integrator\/Integrator-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/GeoProgram\/Integrator\/State.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/GeoProgram\/Integrator\/State-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/GeoProgram\/Plot\/Plot.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/GeoProgram\/Plot\/Plot-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/GeoProgram\/Plot\/PlotGPU.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/GeoProgram\/Plot\/PlotGPU-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/GeoProgram\/Plot\/shaders\/utils\/colorConversion.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/components\/GeoProgram\/Plot\/shaders\/utils\/colorConversion-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/GeoProgram\/Plot\/shaders\/utils\/createCSMShaders.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/GeoProgram\/Plot\/shaders\/utils\/createCSMShaders-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/GeoProgram\/Plot\/shaders\/zHeight.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/GeoProgram\/Plot\/shaders\/zHeight-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/GeoProgram\/Surfaces\/CosR.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/GeoProgram\/Surfaces\/CosR-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/GeoProgram\/Surfaces\/Gaussian.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/GeoProgram\/Surfaces\/Gaussian-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/GeoProgram\/Surfaces\/Paraboloid.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/GeoProgram\/Surfaces\/Paraboloid-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/GeoProgram\/Surfaces\/SinxSiny.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/GeoProgram\/Surfaces\/SinxSiny-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/GeoProgram\/Surfaces\/Surface.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/GeoProgram\/Surfaces\/Surface-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/GeoProgram\/WoodCut.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/GeoProgram\/WoodCut-min.js",
+      "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
@@ -11997,6 +12217,17 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/common\/items\/FiveBody.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/FiveBody-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/common\/items\/flows.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -12371,6 +12602,17 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/common\/items\/TwoBody.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/TwoBody-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/common\/items\/vector-calculus\/CrossProduct.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -12422,6 +12664,17 @@
       "mi" : 1,
       "oA" : 0,
       "oAP" : "\/common\/items\/vector-calculus\/Graph3DPlotter-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/vector-calculus\/GraphTangentPlane.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/vector-calculus\/GraphTangentPlane-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -13357,6 +13610,17 @@
       "mi" : 1,
       "oA" : 1,
       "oAP" : "\/common\/utils\/math\/functions_singleVar-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/utils\/math\/gravity.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/utils\/math\/gravity-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0

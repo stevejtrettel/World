@@ -10,15 +10,18 @@ import GeodesicStripes from "./Geodesics/GeodesicStripes.js";
 
 
 class WoodCut{
-    constructor(surface) {
+    constructor(surfaceList) {
 
-        this.surface = surface;
+        this.surfaceList = surfaceList;
+        this.surface = Object.values(this.surfaceList)[0];
         this.plot = new PlotGPU(this.surface);
-
 
         //parameters the UI will control!
         let woodCut = this;
         this.params = {
+
+            surface: this.surface,
+
             geoPos: 0,
             geoDir: 0,
             geoVisible: true,
@@ -113,7 +116,7 @@ class WoodCut{
     }
 
     printToFile(){
-        const contents = this.printToString(10);
+        const contents = this.printToString();
         const file = new File([contents], `${this.surface.name}.txt`, {
                 type: 'text/plain',
             });
@@ -157,14 +160,17 @@ class WoodCut{
         let geoFolder = ui.addFolder('Geodesic');
         let stripeFolder = ui.addFolder('Stripes');
         let sprayFolder = ui.addFolder('Spray');
-        //surfFolder.close();
+       // surfFolder.close();
         geoFolder.close();
         stripeFolder.close();
         sprayFolder.close();
 
 
-
         //add stuff to these folders:
+
+        ui.add(params, 'surface', woodCut.surfaceList).onChange(function(value){
+            console.log(value.key);
+        });
 
         geoFolder.add(params,'geoVisible').onChange(
             function(value){
@@ -187,12 +193,16 @@ class WoodCut{
             });
         geoFolder.add(params, 'printGeo').name('Download');
 
-
-
         stripeFolder.add(params,'stripeVisible').onChange(
             function(value){
                 woodCut.params.stripeVisible = value;
                 woodCut.stripes.setVisibility(value);
+            });
+
+        stripeFolder.add(params,'stripeNum',0,50,1).name('Number').onChange(
+            function(value){
+                params.stripeNum = value;
+                woodCut.stripes.update({N:params.stripeNum});
             });
 
         stripeFolder.add(params,'stripeDir',-1,1,0.01).name('Direction').onChange(
@@ -228,6 +238,14 @@ class WoodCut{
                 woodCut.params.sprayVisible = value;
                 woodCut.spray.setVisibility(value);
             });
+
+
+        sprayFolder.add(params,'sprayNum',0,50,1).name('Number').onChange(
+            function(value){
+                params.sprayNum = value;
+                woodCut.spray.update({N:params.sprayNum});
+            });
+
 
         sprayFolder.add(params,'sprayPos',woodCut.surface.domain.v.min,woodCut.surface.domain.v.max,0.01).name('Position').onChange(
             function(value){

@@ -29,8 +29,6 @@ class Geodesic{
             this.stop
         );
 
-        this.isVisible = true;
-
     }
 
     addToScene(scene){
@@ -44,7 +42,6 @@ class Geodesic{
     }
 
     setVisibility(value){
-        this.isVisible = value;
         this.curve.setVisibility(value);
     }
 

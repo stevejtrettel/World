@@ -57,7 +57,6 @@ class IntegralCurve{
     }
 
     _integrate(iniState){
-
         let pts = [];
         let p,uv;
         let currentState = iniState.clone();
