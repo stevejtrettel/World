@@ -12,11 +12,6 @@ let sinxsiny = new SinxSiny();
 let cosr = new CosR();
 
 
-let surfList = {
-    gauss: gauss,
-    parabola: parabola
-};
-
-let wood = new WoodCut(surfList);
+let wood = new WoodCut(gauss);
 
 export default wood;

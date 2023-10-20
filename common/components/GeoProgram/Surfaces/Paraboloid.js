@@ -13,24 +13,26 @@ class Paraboloid extends Surface {
         //farthest point is diagonal, value of function there is length of diagonal squared:
         const U = this.domain.u.max;
         const V = this.domain.v.max;
-        const c = 1/(U*U+V*V);
+        const a = 4/(U*U+V*V);
+
+        const c = 0;
 
         let F = function (u, v) {
-            return -c*(u*u+v*v);
+            return -a*((u-c)*(u-c)+v*v);
         }
         this.F = F;
 
         this.name = 'Paraboloid';
-        this.Ftxt = `f(u,v)=-${c}*(u*u+v*v)`;
+        this.Ftxt = `f(u,v)=-${a}*((u-${c})^2+v^2)`;
 
         this.derivatives = function (uv) {
             let u = uv.x;
             let v = uv.y;
             return {
-                fu: -2*c*u,
-                fv: -2*c*v,
-                fuu: -2*c,
-                fvv: -2*c,
+                fu: -2*a*(u-c),
+                fv: -2*a*v,
+                fuu: -2*a,
+                fvv: -2*a,
                 fuv: 0
             };
         }

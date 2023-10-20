@@ -9,27 +9,27 @@ class SinxSiny extends Surface {
     setFunctionAndDerivatives() {
         super.setFunctionAndDerivatives();
 
-        const c = 0.5;
-        const k=3.14159/1.5;
-
+        const a = 0.5;
+        const kU = 3.5*3.14159/this.domain.u.max;
+        const kV = kU;
 
         let F = function (u, v) {
-            return  c*Math.sin(k*u)*Math.sin(k*v);
+            return  a*Math.cos(kU*u)*Math.sin(kV*v);
         }
         this.F = F;
 
         this.name = 'Sinusoid';
-        this.Ftxt = `f(u,v)=${c}*sin(${k}*u)*sin(${k}*v)`;
+        this.Ftxt = `f(u,v)=${a}*cos(${kU}*u)*sin(${kV}*v)`;
 
         this.derivatives = function (uv) {
             let u = uv.x;
             let v = uv.y;
             return {
-                fu: c*k*Math.cos(k*u)*Math.sin(k*v),
-                fv: c*k*Math.sin(k*u)*Math.cos(k*v),
-                fuu: -k*k*F(u,v),
-                fvv: -k*k*F(u,v),
-                fuv: -k*k*c*Math.cos(k*u)*Math.cos(k*v)
+                fu: -a*kU*Math.sin(kU*u)*Math.sin(kV*v),
+                fv: a*kV*Math.cos(kU*u)*Math.cos(kV*v),
+                fuu: -kU*kU*F(u,v),
+                fvv: -kV*kV*F(u,v),
+                fuv: -a*kU*kV*Math.sin(kU*u)*Math.cos(kV*v)
             };
 
         }

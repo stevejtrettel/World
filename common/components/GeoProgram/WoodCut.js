@@ -10,10 +10,9 @@ import GeodesicStripes from "./Geodesics/GeodesicStripes.js";
 
 
 class WoodCut{
-    constructor(surfaceList) {
+    constructor(surface) {
 
-        this.surfaceList = surfaceList;
-        this.surface = Object.values(this.surfaceList)[0];
+        this.surface = surface
         this.plot = new PlotGPU(this.surface);
 
         //parameters the UI will control!
@@ -24,16 +23,16 @@ class WoodCut{
 
             geoPos: 0,
             geoDir: 0,
-            geoVisible: true,
+            geoVisible: false,
             printGeo: function(){
                 woodCut.geodesic.printToFile('geodesic');
             },
 
             stripeNum:11,
             stripeDir:0,
-            stripeSpread:1,
+            stripeSpread:0.35       ,
             stripePos:0,
-            stripeVisible:false,
+            stripeVisible:true,
             printStripe: function(){
                 woodCut.stripes.printToFile('stripe');
             },
@@ -156,7 +155,7 @@ class WoodCut{
         let woodCut = this;
         let params = woodCut.params;
 
-        //let surfFolder = ui.addFolder('Surface');
+       // let surfFolder = ui.addFolder('Surface');
         let geoFolder = ui.addFolder('Geodesic');
         let stripeFolder = ui.addFolder('Stripes');
         let sprayFolder = ui.addFolder('Spray');
@@ -167,10 +166,15 @@ class WoodCut{
 
 
         //add stuff to these folders:
-
-        ui.add(params, 'surface', woodCut.surfaceList).onChange(function(value){
-            console.log(value.key);
-        });
+        // surfFolder.add(woodCut.surface.params,'a',0,5,0.01).onChange(
+        //     function(value){
+        //     woodCut.surface.params.a = value;
+        //     woodCut.surface.initialize();
+        //     woodCut.plot.compileMaterial();
+        // });
+        // ui.add(params, 'surface', woodCut.surfaceList).onChange(function(value){
+        //     console.log(value.key);
+        // });
 
         geoFolder.add(params,'geoVisible').onChange(
             function(value){

@@ -24,7 +24,11 @@ class Surface{
     constructor(domain=defaultDomain){
 
         this.domain = domain;
+        this.initialize();
 
+    }
+
+    initialize(){
         this.setFunctionAndDerivatives();
         this.buildParameterization();
         this.buildAcceleration();
