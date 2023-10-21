@@ -26,11 +26,11 @@ class Surface{
         this.params = params;
         this.domain = domain;
         this.initialize();
-
     }
 
     initialize(){
-        this.setFunctionAndDerivatives();
+        this.setFunctionData();
+        this.buildNumericalDerivatives();
         this.buildParameterization();
         this.buildAcceleration();
         this.buildIntegrator();
@@ -38,11 +38,43 @@ class Surface{
     }
 
     //this will be written in each function individually:
-    setFunctionAndDerivatives(){
+    setFunctionData(){
         this.F=null;
         this.name = null;
         this.Ftxt = null;
         this.derivatives=null;
+    }
+
+    buildNumericalDerivatives(){
+        let F = this.F;
+
+        this.derivatives = function( uv ){
+
+            let eps = 0.0001;
+            let u = uv.x;
+            let v = uv.y;
+
+            //useful computations so we dont repeat:
+            const f00 = F(u,v);
+            const fp0 = F(u+eps, v);
+            const fn0 = F(u-eps,v);
+            const f0p = F(u,v+eps);
+            const f0n = F(u,v-eps);
+
+            const fpp = F(u+eps,v+eps);
+            const fpn = F(u+eps, v-eps);
+            const fnp = F(u-eps, v+eps);
+            const fnn = F(u-eps,v-eps);
+
+
+            return {
+                fu: (fp0 - fn0) / (2*eps),
+                fv: (f0p - f0n) / (2*eps),
+                fuu: (fp0 - 2*f00 + fn0) / (eps*eps),
+                fvv: (f0p - 2*f00 + f0n) / (eps*eps),
+                fuv: (fpp + fnn - fnp - fpn) / (4*eps*eps)
+            }
+        }
     }
 
     buildParameterization(){

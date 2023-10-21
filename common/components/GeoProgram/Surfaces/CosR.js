@@ -2,36 +2,32 @@ import {Vector3} from "../../../../3party/three/build/three.module.js";
 
 import Surface from "./Surface.js";
 
+let cosrParams = {
+    a: 1,
+    b: 1,
+    c:0
+};
+
+
 class CosR extends Surface {
     constructor(domain) {
-        super(domain);
+        super(cosrParams, domain);
     }
 
-    setFunctionDerivatives() {
-        super.setFunctionDerivatives();
+    setFunctionData() {
+        super.setFunctionData();
 
-        const c = 0.1;
-        const pi=3.14159;
+        const a = this.params.a;
+        const b = this.params.b;
+        const c = this.params.c;
 
-        let F = function (u, v) {
-            let r2 = u*u+v*v;
-            return  c*Math.cos(pi*r2);
+        this.F = function (u, v) {
+            let r = Math.sqrt(u*u+v*v);
+            return  a*Math.cos(b*r);
         }
-        this.F = F;
 
-        this.derivatives = function (uv) {
-            let u = uv.x;
-            let v = uv.y;
-            let r2 = u*u+v*v;
-            return {
-                fu: -c*(2*u*pi)*Math.sin(pi*r2),
-                fv: -c*(2*v*pi)*Math.sin(pi*r2),
-                fuu: -c*(2*pi)*Math.sin(pi*r2)-c*(2*pi*u)*(2*pi*u)*Math.cos(pi*r2),
-                fvv: -c*(2*pi)*Math.sin(pi*r2)-c*(2*pi*v)*(2*pi*v)*Math.cos(pi*r2),
-                fuv: -c*(2*u*pi)*(2*pi*v)*Math.cos(pi*r2)
-            };
-
-        }
+        this.name ='CosR';
+        this.Ftxt = `f(u,v)=${a}*cos(${b}*sqrt(u^2+v^2))`;
 
     }
 }

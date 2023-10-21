@@ -6,8 +6,8 @@ class Paraboloid extends Surface {
         super(domain);
     }
 
-    setFunctionAndDerivatives() {
-        super.setFunctionAndDerivatives();
+    setFunctionData() {
+        super.setFunctionData();
 
         //chose a constant so the farthest point is at most 1 inch below the middle:
         //farthest point is diagonal, value of function there is length of diagonal squared:
@@ -25,18 +25,17 @@ class Paraboloid extends Surface {
         this.name = 'Paraboloid';
         this.Ftxt = `f(u,v)=-${a}*((u-${c})^2+v^2)`;
 
-        this.derivatives = function (uv) {
-            let u = uv.x;
-            let v = uv.y;
-            return {
-                fu: -2*a*(u-c),
-                fv: -2*a*v,
-                fuu: -2*a,
-                fvv: -2*a,
-                fuv: 0
-            };
-        }
-
+        // this.derivatives = function (uv) {
+        //     let u = uv.x;
+        //     let v = uv.y;
+        //     return {
+        //         fu: -2*a*(u-c),
+        //         fv: -2*a*v,
+        //         fuu: -2*a,
+        //         fvv: -2*a,
+        //         fuv: 0
+        //     };
+        //}
     }
 }
 
