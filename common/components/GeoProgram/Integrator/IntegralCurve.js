@@ -54,11 +54,10 @@ class IntegralCurve{
         this._buildTube(this.curve);
     }
 
-    _integrate(iniState){
-        this.iniState = iniState;
+    _integrate(){
         let pts = [];
         let p,uv;
-        let currentState = iniState.clone();
+        let currentState = this.iniState.clone();
 
         for(let i=0; i<this.N; i++){
 
@@ -83,7 +82,7 @@ class IntegralCurve{
 
     }
 
-    _buildTube(curve){
+    _buildTube(){
         //this method assumes we have built the tube,start, and stop as meshes already
         //dispose of the old geometry
         this.tube.geometry.dispose();
@@ -151,8 +150,9 @@ class IntegralCurve{
     }
 
     update(iniState){
-        this._integrate(iniState);
-        this._buildTube(this.curve);
+        this.iniState = iniState.clone();
+        this._integrate();
+        this._buildTube();
     }
 
     //generate points for printing:
