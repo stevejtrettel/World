@@ -80,8 +80,9 @@ class GeodesicStripes {
     updateGeodesics() {
         for (let i = 0; i < this.maxN; i++) {
             if(i<this.params.N) {
+                this.stripes[i].setVisibility(true);
                 this.stripes[i].update(this.iniStates[i]);
-                this.stripes[i].setVisibility(true)
+
             }
             else{
                 this.stripes[i].setVisibility(false);

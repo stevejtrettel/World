@@ -66,8 +66,8 @@ class GeodesicSpray {
     updateGeodesics() {
         for (let i = 0; i < this.maxN; i++) {
             if(i<this.params.N) {
-                this.spray[i].update(this.iniStates[i]);
                 this.spray[i].setVisibility(true)
+                this.spray[i].update(this.iniStates[i]);
             }
             else{
                 this.spray[i].setVisibility(false);
