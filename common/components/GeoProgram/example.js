@@ -12,6 +12,6 @@ let gauss = new Gaussian();
 let cosr = new CosR();
 
 
-let wood = new WoodCut(cosr);
+let wood = new WoodCut(sinxsiny);
 
 export default wood;
