@@ -8,10 +8,10 @@ import CosR from "./Surfaces/CosR.js";
 
 let gauss = new Gaussian();
 // let parabola = new Paraboloid();
- //let sinxsiny = new SinxSiny();
-//let cosr = new CosR();
+let sinxsiny = new SinxSiny();
+let cosr = new CosR();
 
 
-let wood = new WoodCut(gauss);
+let wood = new WoodCut(cosr);
 
 export default wood;

@@ -2,16 +2,33 @@ import {Vector3} from "../../../../3party/three/build/three.module.js";
 
 import Surface from "./Surface.js";
 
-let cosrParams = {
-    a: 1,
-    b: 1,
-    c:0
-};
-
-
 class CosR extends Surface {
     constructor(domain) {
-        super(cosrParams, domain);
+        super(domain);
+    }
+
+
+
+    setParamData(){
+        this.params = {
+            a: 1,
+            b: 1,
+        };
+
+        this.paramData = {
+            a: {
+                min: 0,
+                max: 5,
+                step: 0.01,
+                name: 'Amplitude'
+            },
+            b: {
+                min: 0,
+                max: 5,
+                step: 0.01,
+                name: 'Frequency'
+            },
+        };
     }
 
     setFunctionData() {
@@ -19,7 +36,6 @@ class CosR extends Surface {
 
         const a = this.params.a;
         const b = this.params.b;
-        const c = this.params.c;
 
         this.F = function (u, v) {
             let r = Math.sqrt(u*u+v*v);

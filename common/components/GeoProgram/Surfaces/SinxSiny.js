@@ -1,17 +1,36 @@
 
 import Surface from "./Surface.js";
 
-let sinParams = {
-    a: 0.5,
-    b: 3.5,
-    c: 0
-};
-
 
 class SinxSiny extends Surface {
     constructor(domain) {
-        super(sinParams, domain);
+        super(domain);
     }
+
+
+
+    setParamData(){
+        this.params = {
+            a: 1,
+            b: 1,
+        };
+
+        this.paramData = {
+            a: {
+                min: 0,
+                max: 5,
+                step: 0.01,
+                name: 'Amplitude'
+            },
+            b: {
+                min: 0,
+                max: 5,
+                step: 0.01,
+                name: 'Frequency'
+            },
+        };
+    }
+
 
     setFunctionData() {
         super.setFunctionData();
@@ -27,19 +46,6 @@ class SinxSiny extends Surface {
 
         this.name = 'Sinusoid';
         this.Ftxt = `f(u,v)=${a}*cos(${kU}*u)*sin(${kV}*v)`;
-
-        // this.derivatives = function (uv) {
-        //     let u = uv.x;
-        //     let v = uv.y;
-        //     return {
-        //         fu: -a*kU*Math.sin(kU*u)*Math.sin(kV*v),
-        //         fv: a*kV*Math.cos(kU*u)*Math.cos(kV*v),
-        //         fuu: -kU*kU*F(u,v),
-        //         fvv: -kV*kV*F(u,v),
-        //         fuv: -a*kU*kV*Math.sin(kU*u)*Math.cos(kV*v)
-        //     };
-        //
-        // }
 
     }
 }
