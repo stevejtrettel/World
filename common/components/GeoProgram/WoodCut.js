@@ -156,42 +156,54 @@ class WoodCut{
         let woodCut = this;
         let params = woodCut.params;
 
-        let surfFolder = ui.addFolder('Surface');
+
+        let resetScene = function(){
+            woodCut.plot.update();
+            woodCut.geodesic.updateSurface();
+            woodCut.spray.updateSurface();
+            woodCut.stripes.updateSurface();
+        };
+        woodCut.surface.buildUIFolder(ui,resetScene);
+
+        //let surfFolder = ui.addFolder('Surface');
         let geoFolder = ui.addFolder('Geodesic');
         let stripeFolder = ui.addFolder('Stripes');
         let sprayFolder = ui.addFolder('Spray');
-        surfFolder.close();
+       // surfFolder.close();
         geoFolder.close();
         stripeFolder.close();
         sprayFolder.close();
 
 
-        surfFolder.add(woodCut.surface.params,'a',0,5,0.01).onChange(
-            function(value){
-            woodCut.surface.update({a:value});
-            woodCut.plot.update();
-            woodCut.geodesic.updateSurface();
-            woodCut.spray.updateSurface();
-            woodCut.stripes.updateSurface();
-        });
 
-        surfFolder.add(woodCut.surface.params,'b',0,5,0.01).onChange(
-            function(value){
-                woodCut.surface.update({b:value});
-                woodCut.plot.update();
-                woodCut.geodesic.updateSurface();
-                woodCut.spray.updateSurface();
-                woodCut.stripes.updateSurface();
-            });
 
-        surfFolder.add(woodCut.surface.params,'c',-3,3,0.01).onChange(
-            function(value){
-                woodCut.surface.update({c:value});
-                woodCut.plot.update();
-                woodCut.geodesic.updateSurface();
-                woodCut.spray.updateSurface();
-                woodCut.stripes.updateSurface();
-            });
+
+        // surfFolder.add(woodCut.surface.params,'a',0,5,0.01).onChange(
+        //     function(value){
+        //     woodCut.surface.update({a:value});
+        //     woodCut.plot.update();
+        //     woodCut.geodesic.updateSurface();
+        //     woodCut.spray.updateSurface();
+        //     woodCut.stripes.updateSurface();
+        // });
+        //
+        // surfFolder.add(woodCut.surface.params,'b',0,5,0.01).onChange(
+        //     function(value){
+        //         woodCut.surface.update({b:value});
+        //         woodCut.plot.update();
+        //         woodCut.geodesic.updateSurface();
+        //         woodCut.spray.updateSurface();
+        //         woodCut.stripes.updateSurface();
+        //     });
+        //
+        // surfFolder.add(woodCut.surface.params,'c',-3,3,0.01).onChange(
+        //     function(value){
+        //         woodCut.surface.update({c:value});
+        //         woodCut.plot.update();
+        //         woodCut.geodesic.updateSurface();
+        //         woodCut.spray.updateSurface();
+        //         woodCut.stripes.updateSurface();
+        //     });
 
         geoFolder.add(params,'geoVisible').onChange(
             function(value){

@@ -5,13 +5,42 @@ import Surface from "./Surface.js";
 let gaussParams = {
     a: 1,
     b: 1,
-    c:0
+    c: 0
 };
 
 
 class Gaussian extends Surface {
     constructor(domain) {
-        super(gaussParams, domain);
+        super(domain);
+    }
+
+    setParamData(){
+        this.params = {
+            a: 1,
+            b: 1,
+            c: 0
+        };
+
+        this.paramData = {
+            a: {
+                min: 0,
+                max: 5,
+                step: 0.01,
+                name: 'Amplitude'
+            },
+            b: {
+                min: 0,
+                max: 5,
+                step: 0.01,
+                name: 'Concentration'
+            },
+            c: {
+                min: -3,
+                max: 3,
+                step: 0.01,
+                name: 'Position'
+            }
+        };
     }
 
     setFunctionData() {

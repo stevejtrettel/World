@@ -21,20 +21,25 @@ let defaultDomain = {
 
 
 class Surface{
-    constructor(params={}, domain=defaultDomain){
-
-        this.params = params;
+    constructor(domain=defaultDomain){
         this.domain = domain;
+        this.setParamData();
         this.initialize();
     }
 
     initialize(){
+        //this.setParamData();
         this.setFunctionData();
         this.buildNumericalDerivatives();
         this.buildParameterization();
         this.buildAcceleration();
         this.buildIntegrator();
         this.buildSurfaceGeometry();
+    }
+
+    setParamData(){
+        this.params = null;
+        this.paramData = null;
     }
 
     //this will be written in each function individually:
@@ -182,6 +187,23 @@ class Surface{
         str += `{ u: (${this.domain.u.min},${this.domain.u.max}), v:(${this.domain.v.min},${this.domain.v.max}) }`;
         str += `\n\n`;
         return str;
+    }
+
+
+    buildUIFolder(ui,resetScene){
+
+        let folder = ui.addFolder('Surface');
+        folder.close();
+
+        let surf = this;
+        for(const key in surf.params){
+            folder.add(surf.params,key,surf.paramData[key].min,surf.paramData[key].max,surf.paramData[key].step).name(surf.paramData[key].name).onChange(
+                function(value){
+                    surf.params[key]=value;
+                    surf.update({key:value});
+                    resetScene();
+                });
+        }
     }
 }
 
