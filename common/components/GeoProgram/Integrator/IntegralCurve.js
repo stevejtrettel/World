@@ -156,7 +156,7 @@ class IntegralCurve{
     }
 
     //generate points for printing:
-    generatePoints(numPts = 100){
+    printToString(numPts = 100){
         let precision = 4;
         let str = ``;
         for(let i=0;i<numPts;i++){
@@ -173,7 +173,7 @@ class IntegralCurve{
     }
 
     //this makes a file to download with the generated points
-    downloadPoints(fileName=`curve`){
+    printToFile(fileName=`curve`){
 
         const file = new File([this.pointString], `${fileName}.txt`, {
             type: 'text/plain',

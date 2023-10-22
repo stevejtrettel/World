@@ -1,5 +1,5 @@
 
-import Surface from "./Surface.js";
+import Surface from "../Surface.js";
 
 class Paraboloid extends Surface {
     constructor(domain) {

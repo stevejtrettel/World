@@ -1,8 +1,8 @@
-import {Vector3} from "../../../../3party/three/build/three.module.js";
 
-import Surface from "./Surface.js";
+import Surface from "../Surface.js";
 
-class CosR extends Surface {
+
+class SinxSiny extends Surface {
     constructor(domain) {
         super(domain);
     }
@@ -31,22 +31,24 @@ class CosR extends Surface {
         };
     }
 
+
     setFunctionData() {
         super.setFunctionData();
 
         const a = this.params.a;
-        const b = this.params.b;
+        const kU = this.params.b*3.14159/this.domain.u.max;
+        const kV = kU;
 
-        this.F = function (u, v) {
-            let r = Math.sqrt(u*u+v*v);
-            return  a*Math.cos(b*r);
+        let F = function (u, v) {
+            return  a*Math.cos(kU*u)*Math.sin(kV*v);
         }
+        this.F = F;
 
-        this.name ='CosR';
-        this.Ftxt = `f(u,v)=${a}*cos(${b}*sqrt(u^2+v^2))`;
+        this.name = 'Sinusoid';
+        this.Ftxt = `f(u,v)=${a}*cos(${kU}*u)*sin(${kV}*v)`;
 
     }
 }
 
 
-export default CosR;
+export default SinxSiny;

@@ -28,7 +28,6 @@ class Surface{
     }
 
     initialize(){
-        //this.setParamData();
         this.setFunctionData();
         this.buildNumericalDerivatives();
         this.buildParameterization();
@@ -196,7 +195,7 @@ class Surface{
         folder.close();
 
         let surf = this;
-        for(const key in surf.params){
+        for(const key in surf.paramData){
             folder.add(surf.params,key,surf.paramData[key].min,surf.paramData[key].max,surf.paramData[key].step).name(surf.paramData[key].name).onChange(
                 function(value){
                     surf.params[key]=value;
@@ -209,34 +208,5 @@ class Surface{
 
 
 
-
-
-//not sure why the numerical derivatives dont work:
-// this.derivatives = function (uv) {
-//     let u = uv.x;
-//     let v = uv.y;
-//
-//     let ep = 0.001;
-//
-//     let f00 = F(u, v);
-//
-//     let fp0 = F(u + ep, v);
-//     let fn0 = F(u - ep, v);
-//     let f0p = F(u, v + ep);
-//     let f0n = F(u, v - ep);
-//
-//     let fpp = F(u + ep, v + ep);
-//     let fpn = F(u + ep, v - ep);
-//     let fnp = F(u - ep, v + ep);
-//     let fnn = F(u - ep, v - ep);
-//
-//     return {
-//         fu: (fp0 - fn0) / (2 * ep),
-//         fv: (f0p - f0n) / (2 * ep),
-//         fuu: (-fp0 + 2 * f00 - fn0) / (ep * ep),
-//         fvv: (-f0p + 2 * f00 - f0n) / (ep * ep),
-//         fuv: (fpp - fpn - fnp + fnn) / (4 * ep * ep)
-//     };
-// }
 
 export default Surface;

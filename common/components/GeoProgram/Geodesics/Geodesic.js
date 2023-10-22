@@ -47,12 +47,12 @@ class Geodesic{
     }
 
     printToString(numPts=500){
-        return this.curve.generatePoints(numPts)+`\n\n`;
+        return this.curve.printToString(numPts)+`\n\n`;
     }
 
     printToFile(fileName='geodesic', numPts=500){
-        this.curve.generatePoints(numPts);
-        this.curve.downloadPoints(fileName);
+        this.curve.printToString(numPts);
+        this.curve.printToFile(fileName);
     }
 
 }
