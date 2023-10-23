@@ -11,14 +11,14 @@ class CosR extends Surface {
 
     setParamData(){
         this.params = {
-            a: 1,
-            b: 1,
+            a: 0.5,
+            b: 1.75,
         };
 
         this.paramData = {
             a: {
                 min: 0,
-                max: 5,
+                max: 2,
                 step: 0.01,
                 name: 'Amplitude'
             },

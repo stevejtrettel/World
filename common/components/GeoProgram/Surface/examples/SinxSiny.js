@@ -11,20 +11,20 @@ class SinxSiny extends Surface {
 
     setParamData(){
         this.params = {
-            a: 1,
-            b: 1,
+            a: 0.4,
+            b: 4,
         };
 
         this.paramData = {
             a: {
                 min: 0,
-                max: 5,
+                max: 2,
                 step: 0.01,
                 name: 'Amplitude'
             },
             b: {
                 min: 0,
-                max: 5,
+                max: 6,
                 step: 0.01,
                 name: 'Frequency'
             },
@@ -40,12 +40,12 @@ class SinxSiny extends Surface {
         const kV = kU;
 
         let F = function (u, v) {
-            return  a*Math.cos(kU*u)*Math.sin(kV*v);
+            return  a*(Math.sin(kU*u)+Math.sin(kV*v));
         }
         this.F = F;
 
         this.name = 'Sinusoid';
-        this.Ftxt = `f(u,v)=${a}*cos(${kU}*u)*sin(${kV}*v)`;
+        this.Ftxt = `f(u,v)=${a}*(sin(${kU}*u)+sin(${kV}*v))`;
 
     }
 }

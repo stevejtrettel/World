@@ -14,10 +14,10 @@ class GraphingCalc extends Surface {
 
     setParamData(){
         this.params = {
-            a: 1,
-            b: 1,
-            c: 1,
-            func: `a*exp(-b*u^2-c*v^2)`
+            a: 2,
+            b: 1.5,
+            c: 0,
+            func: `a*(sin(b*u)+sin(b*v))/(1+u*u+v*v)`
         };
 
         this.paramData = {
@@ -53,9 +53,9 @@ class GraphingCalc extends Surface {
         let c = this.params.c;
 
         this.name = 'GraphingCalc';
-        this.Ftxt = this.params.func;
+        this.Ftxt = this.params.func+`\n`+`{ a:${a}, b:${b}, c:${c} }`;
 
-        let func = parser.evaluate('f(u,v,a,b,c)='.concat(this.Ftxt));
+        let func = parser.evaluate('f(u,v,a,b,c)='.concat(this.params.func));
         //the function with all the variables:
         this.F = function(u,v){
             let z = func(u,v, a,b,c);
@@ -75,7 +75,8 @@ class GraphingCalc extends Surface {
        ui.add(surf.params,'func').name(`f(u,v)=`).onFinishChange(
             function(value){
                 surf.Ftxt=value;
-                let func = parser.evaluate('f(u,v,a,b,c)='.concat(surf.Ftxt));
+                surf.params.func = value;
+                let func = parser.evaluate('f(u,v,a,b,c)='.concat(surf.params.func));
                 surf.F = function(u,v){
                     let z = func(u,v, a,b,c);
                     return z;
