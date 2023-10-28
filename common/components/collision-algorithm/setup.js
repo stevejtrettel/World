@@ -16,10 +16,10 @@ import { inhomogeneousPos } from "./AmbientSpace/ExampleSpaces/InhomogeneousPos.
 
 
 //set the ambient space for the project
-let ambientSpace = hyperbolic;
+let ambientSpace = euclidean;
 
 //build a configuration space:
-let NumBalls = 30;
+let NumBalls = 40;
 let MaxRad = ambientSpace.obstacle.size/10.;
 
 let radii = [];

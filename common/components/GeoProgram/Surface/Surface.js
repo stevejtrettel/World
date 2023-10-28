@@ -52,7 +52,7 @@ class Surface{
     buildNumericalDerivatives(){
         let F = this.F;
 
-        this.derivatives = function( uv ){
+        let derivatives = function( uv ){
 
             let eps = 0.0001;
             let u = uv.x;
@@ -79,6 +79,20 @@ class Surface{
                 fuv: (fpp + fnn - fnp - fpn) / (4*eps*eps)
             }
         }
+
+        this.derivatives = derivatives;
+
+        this.nvec = function( uv ){
+            let D = derivatives(uv);
+            let du = D.fu;
+            let dv = D.fv;
+            let len = Math.sqrt(1+du*du+dv*dv);
+            return {
+                x: du/len,
+                y: 1/len,
+                z: -dv/len
+            }
+        }
     }
 
     buildParameterization(){
@@ -93,6 +107,10 @@ class Surface{
 
     buildAcceleration(){
         let derivatives = this.derivatives;
+        let gravity = 0;
+        if(this.params.gravity){
+            gravity = this.params.gravity;
+        }
         let acceleration = function(state){
             let uv = state.pos;
             let u = state.pos.x;
@@ -102,7 +120,7 @@ class Surface{
 
             let D = derivatives(uv);
 
-            let num = uP*uP*D.fuu + 2*uP*vP*D.fuv + vP*vP*D.fvv;
+            let num = uP*uP*D.fuu + 2*uP*vP*D.fuv + vP*vP*D.fvv+gravity;
             let denom = 1+ D.fu*D.fu + D.fv*D.fv;
             let coef = -num/denom;
 

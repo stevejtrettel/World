@@ -2,7 +2,7 @@
  //import Item from "../common/items/topology/torusFundamentalGroup.js"
 
 import example from "../common/components/GeoProgram/example.js";
-//import example from "../common/items/FiveBody.js";s
+//import example from "../common/items/BlackHoleGeodesics.js";
 //import everything except the objects of the scene
 //this uses all the default settings defined in the "template" folder
 import { World } from "../common/World/World.js";
@@ -18,7 +18,9 @@ let globalSettings={
     stats:false,
 
     environment:{
-        color: 0x0a0d12,
+        color:0x292b36,
+
+            //0x0a0d12,
         //0x212121,
             //0x212121,
             //0x292b36,
@@ -64,7 +66,8 @@ function main(globalSettings) {
 
     //4. Fill this world with objects
     //world.addObjects( example );
-    world.addObjects( {example:example} );
+    world.addObjects( {example:example});
+        //{example:example} );
     world.addObjects( lights );
 
     //5. Set up Post-Processing effects

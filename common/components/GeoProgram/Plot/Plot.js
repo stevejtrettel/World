@@ -10,7 +10,8 @@ class Plot {
 
         //plot the parametric surface:
         const plotMaterial = new MeshPhysicalMaterial({
-            color: 0xeb4034,
+            color: 0x000000,
+                //0xeb4034,
             side: DoubleSide,
             clearcoat:0.5,
             roughness:0.3,

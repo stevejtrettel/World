@@ -60,6 +60,12 @@ let iniCond2 = function(index,time,spread,totalNum=10){
     return new State(pos,vel);
 }
 
+let iniCond3 = function(index,time,spread,totalNum=10){
+    let pos = new Vector3(-10,0,0);
+    let vel = new Vector3(2.5, Math.cos(0.3*index/totalNum+4),Math.sin(0.3*index/totalNum+4)).normalize().multiplyScalar(Math.sin(time/5)*Math.sin(time/5));
+    return new State(pos,vel);
+}
+
 
 
 const optionGenerator = function(n){
@@ -94,8 +100,33 @@ let identity = function(pos){return pos};
 
 
 
+//
+// const geoSpray = new IntegralCurveSpray(bh.nullIntegrator, identity, iniCondCone, optionGenerator, stop, range );
+// geoSpray.tick = function(time,dTime){
+//     geoSpray.update(time);
+// }
+// geoSpray.addToUI=function(ui){}
+//
+//
+//
+// const geoSpray2 = new IntegralCurveSpray(bh.nullIntegrator, identity, iniCondCone2, optionGenerator, stop, range );
+// geoSpray2.tick = function(time,dTime){
+//     geoSpray2.update(time);
+// }
+// geoSpray2.addToUI=function(ui){}
+//
+//
+// const geoSpray3 = new IntegralCurveSpray(bh.nullIntegrator, identity, iniCondCone3, optionGenerator, stop, range );
+// geoSpray3.tick = function(time,dTime){
+//     geoSpray3.update(time);
+// }
+// geoSpray3.addToUI=function(ui){}
 
-const geoSpray = new IntegralCurveSpray(bh.nullIntegrator, identity, iniCondCone, optionGenerator, stop, range );
+
+
+
+
+const geoSpray = new IntegralCurveSpray(bh.nullIntegrator, identity, iniCond1, optionGenerator, stop, range );
 geoSpray.tick = function(time,dTime){
     geoSpray.update(time);
 }
@@ -103,27 +134,18 @@ geoSpray.addToUI=function(ui){}
 
 
 
-const geoSpray2 = new IntegralCurveSpray(bh.nullIntegrator, identity, iniCondCone2, optionGenerator, stop, range );
+const geoSpray2 = new IntegralCurveSpray(bh.nullIntegrator, identity, iniCond2, optionGenerator, stop, range );
 geoSpray2.tick = function(time,dTime){
     geoSpray2.update(time);
 }
 geoSpray2.addToUI=function(ui){}
 
 
-const geoSpray3 = new IntegralCurveSpray(bh.nullIntegrator, identity, iniCondCone3, optionGenerator, stop, range );
+const geoSpray3 = new IntegralCurveSpray(bh.nullIntegrator, identity, iniCond3, optionGenerator, stop, range );
 geoSpray3.tick = function(time,dTime){
     geoSpray3.update(time);
 }
 geoSpray3.addToUI=function(ui){}
-
-
-
-//
-// const geoSpray2 = new IntegralCurveSpray(bh.nullIntegrator, identity, iniCond2, optionGenerator, stop, range );
-// geoSpray2.tick = function(time,dTime){
-//     geoSpray2.update(time);
-// }
-
 
 
 
@@ -188,9 +210,9 @@ let accDisk = new AccretionDisk(2,4,0.2);
 
 export default {
     blackhole: bh,
-    // spray: geoSpray,
+     spray: geoSpray,
     spray2: geoSpray2,
-    // spray3: geoSpray3,
+     spray3: geoSpray3,
   //  spray2: geoSpray2,
   //  acc: accDisk,
 };

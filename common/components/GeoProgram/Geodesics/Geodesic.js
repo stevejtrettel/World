@@ -1,3 +1,4 @@
+
 import IntegralCurve from "../Integrator/IntegralCurve.js";
 
 //essentially a wrapper for IntegralCurve that takes in a compute class
@@ -46,8 +47,34 @@ class Geodesic{
         this.curve.setVisibility(value);
     }
 
+    // printToString(numPts=500){
+    //     return this.curve.printToString(numPts)+`\n\n`;
+    // }
+
+    //redo that also prints normal vectors:
     printToString(numPts=500){
-        return this.curve.printToString(numPts)+`\n\n`;
+        let precision = 4;
+        let str = ``;
+        for(let i=0;i<numPts;i++){
+            let pt = this.curve.curve.getPoint(i/(numPts-1));
+
+            //need to re-order so xyz is correct again
+            let x = pt.x.toFixed(precision);
+            let y = -pt.z.toFixed(precision);
+            let z = pt.y.toFixed(precision);
+
+            //now need to get the normal vector at this point:
+            let nvec = this.surface.nvec({x:pt.x,y:pt.y});
+
+            let nx = nvec.x.toFixed(precision);
+            let ny = -nvec.z.toFixed(precision);
+            let nz = nvec.y.toFixed(precision);
+
+            let ptString = `(${x},${y},${z},${nx},${ny},${nz}), `;
+            str += ptString;
+        }
+        this.curve.pointString = str;
+        return str;
     }
 
     printToFile(fileName='geodesic', numPts=500){
