@@ -87,10 +87,15 @@ class Surface{
             let du = D.fu;
             let dv = D.fv;
             let len = Math.sqrt(1+du*du+dv*dv);
+            let n = {
+                x: -du/len,
+                y: -dv/len,
+                z: 1,
+            }
             return {
-                x: du/len,
-                y: 1/len,
-                z: -dv/len
+                x: n.x,
+                y: n.z,
+                z: -n.y
             }
         }
     }

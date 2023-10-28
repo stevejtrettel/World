@@ -1,0 +1,1 @@
+import Surface from"../Surface.js";class Paraboloid extends Surface{constructor(t){super(t)}setFunctionData(){super.setFunctionData();const t=this.domain.u.max,a=this.domain.v.max,o=4/(t*t+a*a);this.F=function(t,a){return-o*((t-0)*(t-0)+a*a)},this.name="Paraboloid",this.Ftxt=`f(u,v)=-${o}*((u-0)^2+v^2)`}}export default Paraboloid;

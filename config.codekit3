@@ -7,7 +7,7 @@
       "uuidString" : "C9F666BF-AF51-4122-BD68-51F409970018"
     }
   ],
-  "creatorBuild" : "34448",
+  "creatorBuild" : "34518",
   "files" : {
     "\/.gitattributes" : {
       "cB" : 0,
@@ -132,7 +132,7 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/3party\/perlinNoise3d.js" : {
+    "\/3party\/PerlinNoise3d.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
@@ -3285,7 +3285,7 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/3party\/three\/examples\/jsm\/nodes\/utils\/MaxMipLevelNode.js" : {
+    "\/3party\/three\/examples\/jsm\/nodes\/utils\/MaxMIPLevelNode.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
@@ -10385,7 +10385,7 @@
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 0,
+      "oA" : 1,
       "oAP" : "\/common\/components\/basic-shapes\/Blackboard-min.js",
       "oF" : 0,
       "sC" : 3,
@@ -10396,7 +10396,7 @@
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 0,
+      "oA" : 1,
       "oAP" : "\/common\/components\/basic-shapes\/Cylinder-min.js",
       "oF" : 0,
       "sC" : 3,
@@ -10407,7 +10407,7 @@
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 0,
+      "oA" : 1,
       "oAP" : "\/common\/components\/basic-shapes\/GlassPanel-min.js",
       "oF" : 0,
       "sC" : 3,
@@ -10462,7 +10462,7 @@
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 0,
+      "oA" : 1,
       "oAP" : "\/common\/components\/basic-shapes\/Washer-min.js",
       "oF" : 0,
       "sC" : 3,
@@ -10490,7 +10490,7 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/calculus\/DiskRiemannSum.js" : {
+    "\/common\/components\/Calculus\/DiskRiemannSum.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
@@ -10523,7 +10523,7 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/calculus\/GraphOnBoard.js" : {
+    "\/common\/components\/Calculus\/GraphOnBoard.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
@@ -10545,7 +10545,7 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/calculus\/RiemannSum.js" : {
+    "\/common\/components\/Calculus\/RiemannSum.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
@@ -10600,7 +10600,7 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/calculus\/TangentLine.js" : {
+    "\/common\/components\/Calculus\/TangentLine.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
@@ -10919,7 +10919,7 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/depreciated\/RiemannSum.js" : {
+    "\/common\/components\/Depreciated\/RiemannSum.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
@@ -10985,6 +10985,17 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/common\/components\/GeoProgram\/Geodesics\/BallTrail.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/components\/GeoProgram\/Geodesics\/BallTrail-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/common\/components\/GeoProgram\/Geodesics\/Geodesic.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -11014,6 +11025,17 @@
       "mi" : 1,
       "oA" : 1,
       "oAP" : "\/common\/components\/GeoProgram\/Geodesics\/GeodesicStripes-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/GeoProgram\/GravitySim.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/components\/GeoProgram\/GravitySim-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -11089,7 +11111,7 @@
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 0,
+      "oA" : 1,
       "oAP" : "\/common\/components\/GeoProgram\/Plot\/shaders\/utils\/colorConversion-min.js",
       "oF" : 0,
       "sC" : 3,
@@ -11117,57 +11139,68 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/GeoProgram\/Surfaces\/CosR.js" : {
+    "\/common\/components\/GeoProgram\/Surface\/examples\/CosR.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 0,
-      "oAP" : "\/common\/components\/GeoProgram\/Surfaces\/CosR-min.js",
+      "oAP" : "\/common\/components\/GeoProgram\/Surface\/examples\/CosR-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/GeoProgram\/Surfaces\/Gaussian.js" : {
+    "\/common\/components\/GeoProgram\/Surface\/examples\/Gaussian.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 0,
-      "oAP" : "\/common\/components\/GeoProgram\/Surfaces\/Gaussian-min.js",
+      "oAP" : "\/common\/components\/GeoProgram\/Surface\/examples\/Gaussian-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/GeoProgram\/Surfaces\/Paraboloid.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 0,
-      "oAP" : "\/common\/components\/GeoProgram\/Surfaces\/Paraboloid-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/components\/GeoProgram\/Surfaces\/SinxSiny.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 0,
-      "oAP" : "\/common\/components\/GeoProgram\/Surfaces\/SinxSiny-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/common\/components\/GeoProgram\/Surfaces\/Surface.js" : {
+    "\/common\/components\/GeoProgram\/Surface\/examples\/GraphingCalc.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/common\/components\/GeoProgram\/Surfaces\/Surface-min.js",
+      "oAP" : "\/common\/components\/GeoProgram\/Surface\/examples\/GraphingCalc-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/GeoProgram\/Surface\/examples\/Paraboloid.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/components\/GeoProgram\/Surface\/examples\/Paraboloid-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/GeoProgram\/Surface\/examples\/SinxSiny.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/components\/GeoProgram\/Surface\/examples\/SinxSiny-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/GeoProgram\/Surface\/Surface.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/GeoProgram\/Surface\/Surface-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -11188,7 +11221,7 @@
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 0,
+      "oA" : 1,
       "oAP" : "\/common\/components\/odes\/FlowLine-min.js",
       "oF" : 0,
       "sC" : 3,
@@ -11199,7 +11232,7 @@
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 0,
+      "oA" : 1,
       "oAP" : "\/common\/components\/odes\/FlowLineField-min.js",
       "oF" : 0,
       "sC" : 3,
@@ -11210,7 +11243,7 @@
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 0,
+      "oA" : 1,
       "oAP" : "\/common\/components\/odes\/IntegralCurve-Traditional-min.js",
       "oF" : 0,
       "sC" : 3,
@@ -11221,7 +11254,7 @@
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 0,
+      "oA" : 1,
       "oAP" : "\/common\/components\/odes\/IntegralCurve-min.js",
       "oF" : 0,
       "sC" : 3,
@@ -11232,7 +11265,7 @@
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 0,
+      "oA" : 1,
       "oAP" : "\/common\/components\/odes\/IntegralCurveSpray-Traditional-min.js",
       "oF" : 0,
       "sC" : 3,
@@ -11298,7 +11331,7 @@
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 0,
+      "oA" : 1,
       "oAP" : "\/common\/components\/parametric\/SpaceCurve-min.js",
       "oF" : 0,
       "sC" : 3,
@@ -11848,7 +11881,7 @@
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 0,
+      "oA" : 1,
       "oAP" : "\/common\/depreciated\/ParametricSurface-min.js",
       "oF" : 0,
       "sC" : 3,
@@ -11859,7 +11892,7 @@
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 0,
+      "oA" : 1,
       "oAP" : "\/common\/depreciated\/Surface-min.js",
       "oF" : 0,
       "sC" : 3,
@@ -12332,7 +12365,7 @@
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 0,
+      "oA" : 1,
       "oAP" : "\/common\/items\/odes\/SlopeFieldPlotter-min.js",
       "oF" : 0,
       "sC" : 3,
@@ -14917,9 +14950,6 @@
         "active" : 0,
         "optionString" : "'except-parens'"
       },
-      "no-return-await" : {
-        "active" : 0
-      },
       "no-script-url" : {
         "active" : 0
       },
@@ -15536,7 +15566,7 @@
       "moduleType" : 2,
       "removeComments" : 0,
       "sourceMapStyle" : 0,
-      "targetECMAVersion" : 0
+      "targetECMAVersion" : 2018
     },
     "languageDefaultsUserDefined" : [
 
@@ -15588,10 +15618,14 @@
       "ENVIRONMENT:::$NODE_ENV"
     ],
     "rollupTreeshakingEnabled" : 1,
+    "rollupTreeshakingModuleSideEffects" : 1,
     "skippedFoldersString" : "log, _logs, logs, _cache, cache, .idea, \/storage\/framework\/sessions, node_modules",
     "sourceFolderName" : "source",
     "susyVersion" : 3,
+    "tsAllowArbitraryExtensions" : 0,
+    "tsAllowImportingTSExtensions" : 0,
     "tsAllowSyntheticDefaultImports" : 0,
+    "tsAllowUMDGlobalAccess" : 0,
     "tsAllowUnreachableCode" : 0,
     "tsAllowUnusedLabels" : 0,
     "tsAlwaysStrict" : 0,
@@ -15600,36 +15634,36 @@
     "tsEmitDecoratorMetadata" : 0,
     "tsESModuleInterop" : 0,
     "tsExactOptionalPropertyTypes" : 0,
+    "tsExperimentalDecorators" : 0,
     "tsForceConsistentCasingInFileNames" : 0,
     "tsImportHelpers" : 0,
     "tsIsolatedModules" : 0,
     "tsJSXFactory" : "React.createElement",
-    "tsKeyofStringsOnly" : 0,
     "tsNoEmitHelpers" : 0,
     "tsNoFallthroughCasesInSwitch" : 0,
     "tsNoImplicitAny" : 0,
     "tsNoImplicitOverride" : 0,
     "tsNoImplicitReturns" : 0,
     "tsNoImplicitThis" : 0,
-    "tsNoImplicitUseStrict" : 0,
     "tsNoLib" : 0,
     "tsNoPropertyAccessFromIndexSignature" : 0,
     "tsNoResolve" : 0,
-    "tsNoStrictGenericChecks" : 0,
     "tsNoUncheckedIndexAccess" : 0,
     "tsNoUnusedLocals" : 0,
     "tsNoUnusedParameters" : 0,
     "tsPreserveConstEnums" : 0,
     "tsPreserveSymlinks" : 0,
     "tsResolveJsonModule" : 0,
+    "tsSkipDefaultLibCheck" : 0,
     "tsSkipLibCheck" : 0,
+    "tsStrictBindCallApply" : 0,
     "tsStrictFunctionTypes" : 0,
     "tsStrictNullChecks" : 0,
     "tsStrictPropertyInitialization" : 0,
     "tsStripInternal" : 0,
-    "tsSuppressExcessPropertyErrors" : 0,
-    "tsSuppressImplicitAnyIndexErrors" : 0,
+    "tsUseDefineForClassFields" : 0,
     "tsUseUnknownInCatchVariables" : 0,
+    "tsVerbatimModuleSyntax" : 0,
     "uglifyDefinesString" : "",
     "uglifyFlags2" : {
       "arguments" : {
