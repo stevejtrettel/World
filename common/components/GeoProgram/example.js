@@ -10,8 +10,8 @@ import MySurf from "./Surface/examples/GraphingCalc.js";
 let surf = new MySurf();
 let wood = new WoodCut(surf);
 
-//import GravitySim from "./GravitySim.js";
-//let grav = new GravitySim();
+import GravitySim from "./GravitySim.js";
+let grav = new GravitySim();
 
 
-export default wood;
+export default grav;

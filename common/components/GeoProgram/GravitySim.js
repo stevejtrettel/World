@@ -3,6 +3,7 @@ import {Vector2} from "../../../3party/three/build/three.module.js";
 import PlotGPU from "./Plot/PlotGPU.js";
 import State from "./Integrator/State.js";
 import Geodesic from "./Geodesics/Geodesic.js";
+import BallTrail from "./Geodesics/Ball.js";
 import Surface from "./Surface/Surface.js";
 
 //using GLOBAL object math.parser: this is from the 3rd party math file loaded in the html
@@ -34,12 +35,6 @@ class SurfaceGravity extends Surface {
                 step: 0.01,
                 name: 'b'
             },
-            c: {
-                min: 0,
-                max: 5,
-                step: 0.01,
-                name: 'c'
-            },
             gravity: {
                 min: 0,
                 max: 5,
@@ -54,13 +49,12 @@ class SurfaceGravity extends Surface {
 
         let a = this.params.a;
         let b = this.params.b;
-        let c = this.params.c;
 
         this.name = 'SurfaceGravity';
-        let func = parser.evaluate('f(u,v,a,b,c)='.concat(this.params.func));
+        let func = parser.evaluate('f(u,v,a,b)='.concat(this.params.func));
         //the function with all the variables:
         this.F = function(u,v){
-            let z = func(u,v, a,b,c);
+            let z = func(u,v, a,b);
             return z;
         }
     }
@@ -72,14 +66,13 @@ class SurfaceGravity extends Surface {
         let surf = this;
         let a = this.params.a;
         let b = this.params.b;
-        let c = this.params.c;
         //now add in a text box for the function
         ui.add(surf.params,'func').name(`f(u,v)=`).onFinishChange(
             function(value){
                 surf.params.func = value;
-                let func = parser.evaluate('f(u,v,a,b,c)='.concat(surf.params.func));
+                let func = parser.evaluate('f(u,v,a,b)='.concat(surf.params.func));
                 surf.F = function(u,v){
-                    let z = func(u,v, a,b,c);
+                    let z = func(u,v, a,b);
                     return z;
                 }
                 surf.update({});
@@ -101,6 +94,7 @@ class GravitySim{
     constructor() {
 
         this.surface = new SurfaceGravity();
+        this.surface.integrator.ep=0.075;
         this.plot = new PlotGPU(this.surface);
 
         //parameters the UI will control!
@@ -109,32 +103,28 @@ class GravitySim{
 
             surface: this.surface,
 
-            geoPos: 0,
-            geoDir: 0,
-            geoVisible: false,
-
+            trailPos: 0,
+            trailDir: 0,
+            trailVisible: true,
         }
 
-        let iniState = this.buildGeodesicIniState();
-        this.geodesic = new Geodesic(this.surface,iniState);
-
+        let iniState = this.buildTrailIniState();
+        this.trail = new BallTrail(this.surface,iniState);
     }
 
 
 
     //to reset the initial state of a geodesic given position on boundary and angle
-    buildGeodesicIniState(){
-        let pos = new Vector2(this.surface.domain.u.min,this.params.geoPos);
-        let vel = new Vector2(Math.cos(3.1415/2*this.params.geoDir),Math.sin(3.1415/2*this.params.geoDir));
+    buildTrailIniState(){
+        let pos = new Vector2(this.surface.domain.u.min,this.params.trailPos);
+        let vel = new Vector2(Math.cos(3.1415/2*this.params.trailDir),Math.sin(3.1415/2*this.params.trailDir));
         return new State(pos,vel);
     }
 
 
     addToScene(scene){
         this.plot.addToScene(scene);
-        this.geodesic.addToScene(scene);
-
-        this.geodesic.setVisibility(this.params.geoVisible);
+        this.trail.addToScene(scene);
     }
 
     addToUI(ui){
@@ -145,41 +135,38 @@ class GravitySim{
 
         let resetScene = function(){
             woodCut.plot.update();
-            woodCut.geodesic.updateSurface();
+            woodCut.trail.updateSurface();
         };
         woodCut.surface.buildUIFolder(ui,resetScene);
-        let geoFolder = ui.addFolder('Geodesic');
-        geoFolder.close();
+        let trailFolder = ui.addFolder('Billiard');
+        trailFolder.close();
 
 
+        // trailFolder.add(params,'trailVisible').onChange(
+        //     function(value){
+        //         woodCut.params.trailVisible = value;
+        //         woodCut.trail.setVisibility(value);
+        //     });
 
-        geoFolder.add(params,'geoVisible').onChange(
+
+        trailFolder.add(params, 'trailPos', woodCut.surface.domain.v.min, woodCut.surface.domain.v.max,0.01).name('Position').onChange(
             function(value){
-                woodCut.params.geoVisible = value;
-                woodCut.geodesic.setVisibility(value);
+                params.trailPos = value;
+                let iniState = woodCut.buildTrailIniState();
+                woodCut.trail.update(iniState);
             });
 
-
-        geoFolder.add(params, 'geoPos', woodCut.surface.domain.v.min, woodCut.surface.domain.v.max,0.01).name('Position').onChange(
+        trailFolder.add(params,'trailDir',-1,1,0.01).name('Direction').onChange(
             function(value){
-                params.geoPos = value;
-                let iniState = woodCut.buildGeodesicIniState();
-                woodCut.geodesic.update(iniState);
-            });
-        geoFolder.add(params,'geoDir',-1,1,0.01).name('Direction').onChange(
-            function(value){
-                params.geoDir = value;
-                let iniState = woodCut.buildGeodesicIniState();
-                woodCut.geodesic.update(iniState);
+                params.trailDir = value;
+                let iniState = woodCut.buildTrailIniState();
+                woodCut.trail.update(iniState);
             });
 
     }
 
     tick(time,dTime){
-        // let iniState = new State(new Vector2(2,-1),new Vector2(-1,Math.cos(time)));
-        // this.geodesic.update({iniState:iniState});
-        // this.stripes.update({time:time});
-        //this.spray.update({time:time});
+            this.trail.stepForward();
     }
 
 

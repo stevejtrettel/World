@@ -202,6 +202,22 @@ class Surface{
         }
     }
 
+    boundaryReflect(state){
+        if(state.pos.x<this.domain.u.min){
+            state.vel.x *= -1;
+        }
+        else if(state.pos.x>this.domain.u.max){
+            state.vel.x *= -1;
+        }
+        else if(state.pos.y<this.domain.v.min){
+            state.vel.y *= -1;
+        }
+        else if(state.pos.y>this.domain.v.max){
+            state.vel.y *= -1;
+        }
+        return state;
+    }
+
     printToString(){
         let str = ``;
         str += this.Ftxt;
