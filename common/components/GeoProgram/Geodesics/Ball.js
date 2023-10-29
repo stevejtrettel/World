@@ -22,8 +22,7 @@ class Ball {
         this.surface=surface;
         this.state=iniState;
         this.curveOptions=curveOptions;
-        this.ep = 0.1;
-        this.numSteps = this.curveOptions.length/this.ep;
+        this.numSteps = this.curveOptions.length/this.surface.integrator.ep;
         this.visible=true;
 
 
@@ -35,8 +34,11 @@ class Ball {
             }
         );
 
-        let ballGeo = new SphereGeometry(5*this.curveOptions.radius,32,16);
-        this.ball = new Mesh(ballGeo,mat);
+        let startGeo = new SphereGeometry(5*this.curveOptions.radius,32,16);
+        this.start = new Mesh(startGeo,mat);
+
+        let endGeo = new SphereGeometry(2*this.curveOptions.radius,32,16);
+        this.end = new Mesh(endGeo,mat);
 
         this.initialize();
 
@@ -49,7 +51,8 @@ class Ball {
 
         //get the location
         this.pos = this.surface.parameterization(this.state.pos);
-        this.ball.position.set(this.pos.x,this.pos.y,this.pos.z);
+        this.start.position.set(this.pos.x,this.pos.y,this.pos.z);
+        this.end.position.set(this.pos.x,this.pos.y,this.pos.z);
         this.pts = [];
         for(let i=0;i<this.numSteps;i++){
             this.pts.push(this.pos);
@@ -58,8 +61,9 @@ class Ball {
     }
 
     addToScene(scene){
-        scene.add(this.ball);
+        scene.add(this.start);
         scene.add(this.trail);
+        scene.add(this.end);
     }
 
     redrawTrail(){
@@ -84,11 +88,14 @@ class Ball {
         this.state = this.surface.integrator.step(this.state);
         this.pos=this.surface.parameterization(this.state.pos);
 
-        this.ball.position.set(this.pos.x,this.pos.y,this.pos.z);
+        this.start.position.set(this.pos.x,this.pos.y,this.pos.z);
 
         //add pos to the trail, and pop off the earliest element
-        this.pts.pop();
+        let fin = this.pts.pop();
+        this.end.position.set(fin.x,fin.y,fin.z);
+
         this.pts.unshift(this.pos);
+
 
         this.redrawTrail();
     }
@@ -108,7 +115,8 @@ class Ball {
 
     setVisibility(value){
         this.visible=value;
-        this.ball.visible=value;
+        this.start.visible=value;
+        this.end.visible=value;
         this.trail.visible=value;
     }
 
