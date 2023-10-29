@@ -67,12 +67,12 @@ class BilliardPath {
 
             uv = currentState.pos.clone();
 
-            if(this.surface.integrator.stop(uv)){
+            if(this.surface.stop(uv)){
                 //if we have passed the end of the domain:
                 //add one to the count of reflections
                 this.reflectionCount += 1;
-                uv = this.findBoundary(currentState);
-                currentState.pos=uv;
+                //update current state and save position to uv
+                uv = this.surface.findBoundary(currentState);
 
                 if(this.reflectionCount>this.curveOptions.maxReflections) {
                     p = this.surface.parameterization(uv);
@@ -90,31 +90,6 @@ class BilliardPath {
             currentState = this.surface.integrator.step( currentState );
         }
         this.curve = new CatmullRomCurve3(pts);
-    }
-
-    findBoundary(state) {
-        //the state is just outside the region, but last step was inside:
-        let dist = 0.;
-        let testDist = 0.25;
-        let pos = state.pos.clone();
-        //need to go backwards, so negate velocity
-        let vel = state.vel.clone().normalize().multiplyScalar(-1);
-        let temp;
-
-        for (let i = 0; i < 10; i++) {
-            //divide the step size in half
-            testDist = testDist / 2.;
-            //test flow by that amount:
-            temp = pos.clone().add(vel.clone().multiplyScalar(dist + testDist));
-            //if you are still outside, add the dist
-            if (this.surface.integrator.stop(temp)) {
-                dist += testDist;
-            }
-            //if not, then don't add: divide in half and try again
-        }
-        //now, dist stores how far we should travel.
-        // do this to pos directly
-        return pos.add(vel.multiplyScalar(dist));
     }
 
 

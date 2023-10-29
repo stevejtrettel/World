@@ -29,7 +29,7 @@ class Surface{
 
     setDomain(domain){
         this.domain=domain;
-        this.stop = function(uv){
+        let stop = function(uv){
             let u = uv.x;
             let v = uv.y;
             if(u< domain.u.min || u> domain.u.max){
@@ -40,6 +40,40 @@ class Surface{
             }
             return false;
         }
+        this.stop=stop;
+
+        this.findBoundary = function(state) {
+            //the state is just outside the region, but last step was inside:
+            let dist = 0.;
+            let testDist = 0.25;
+            let pos = state.pos.clone();
+            //need to go backwards, so negate velocity
+            let vel = state.vel.clone().normalize().multiplyScalar(-1);
+            let temp;
+
+            for (let i = 0; i < 10; i++) {
+                //divide the step size in half
+                testDist = testDist / 2.;
+                //test flow by that amount:
+                temp = pos.clone().add(vel.clone().multiplyScalar(dist + testDist));
+                //if you are still outside, add the dist
+                if (stop(temp)) {
+                    dist += testDist;
+                }
+                //if not, then don't add: divide in half and try again
+            }
+
+            //now, dist stores how far we should travel.
+            // do this to pos directly
+            let newPos = pos.clone().add(vel.clone().multiplyScalar(dist));
+
+            //update the boundary of the state
+            state.pos=newPos;
+
+            //return it incase we need it:
+            return newPos;
+        }
+
     }
 
     initialize(){
@@ -231,18 +265,20 @@ class Surface{
     }
 
 
-
     boundaryReflect(state){
 
-        //if on the boundary of constant u
-        if(Math.abs(state.pos.x-this.domain.u.min)<0.1 ||Math.abs(state.pos.x-this.domain.u.max)<0.1){
-            console.log('hitu');
-           state.vel = this.reflectGivenTangent(state.pos)(state.vel, new Vector2(0,1));
-        }
-        //if on the boundary of constant v
-        else if(Math.abs(state.pos.y-this.domain.v.min)<0.1||Math.abs(state.pos.y-this.domain.v.max)<0.1){
-            console.log('hitv');
-            state.vel = this.reflectGivenTangent(state.pos)(state.vel, new Vector2(1,0));
+        if(this.stop(state.pos)) {
+
+            //if on the boundary of constant u
+            if (Math.abs(state.pos.x - this.domain.u.min) < 0.1 || Math.abs(state.pos.x - this.domain.u.max) < 0.1) {
+                //console.log(Math.min(Math.abs(state.pos.x-this.domain.u.min),Math.abs(state.pos.x-this.domain.u.max)));
+                state.vel = this.reflectGivenTangent(state.pos)(state.vel, new Vector2(0, 1));
+            }
+            //if on the boundary of constant v
+            if (Math.abs(state.pos.y - this.domain.v.min) < 0.1 || Math.abs(state.pos.y - this.domain.v.max) < 0.1) {
+                state.vel = this.reflectGivenTangent(state.pos)(state.vel, new Vector2(1, 0));
+            }
+
         }
         return state;
     }

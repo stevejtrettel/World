@@ -14,7 +14,7 @@ const defaultOptions = {
     length:20,
     color: 0xffffff,
     radius: 0.05,
-    res: 100,
+    res: 2048,
 }
 
 class Ball {
@@ -69,20 +69,21 @@ class Ball {
     redrawTrail(){
         this.trail.geometry.dispose();
         const curve = new CatmullRomCurve3(this.pts);
-        this.trail.geometry=new TubeGeometry(curve,this.numSteps,this.curveOptions.radius,8);
+        this.trail.geometry=new TubeGeometry(curve,this.curveOptions.res,this.curveOptions.radius,8);
     }
 
     stepForward(){
-
         //if we hit the edge, reflect the state:
-        if(this.surface.integrator.stop(this.state.pos)) {
-            let u = this.state.pos.x;
-            let v = this.state.pos.y;
-            let r2 = u*u+v*v;
-            if(r2<0.0001) {
-                return;
-            }
-                this.surface.boundaryReflect(this.state);
+        if(this.surface.stop(this.state.pos)) {
+            this.state.pos = this.surface.findBoundary(this.state);
+            this.state = this.surface.boundaryReflect(this.state);
+            // let u = this.state.pos.x;
+            // let v = this.state.pos.y;
+            // let r2 = u*u+v*v;
+            // if(r2<0.0001) {
+            //     return;
+            // }
+            //
         }
 
         this.state = this.surface.integrator.step(this.state);
@@ -95,7 +96,6 @@ class Ball {
         this.end.position.set(fin.x,fin.y,fin.z);
 
         this.pts.unshift(this.pos);
-
 
         this.redrawTrail();
     }
