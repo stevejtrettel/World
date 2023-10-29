@@ -31,6 +31,7 @@ class Ball {
             {
                 color: 0xffffff,
                 clearcoat: 1,
+                roughness:0.1,
             }
         );
 
@@ -98,7 +99,7 @@ class Ball {
         this.redrawTrail();
     }
 
-    update(iniState){
+    updateState(iniState){
         //get new initial state if it exists:
         this.state = iniState
         this.initialize();

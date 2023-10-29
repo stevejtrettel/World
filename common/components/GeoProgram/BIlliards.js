@@ -21,7 +21,9 @@ class Billiards{
             gravity:1,
             trailPos: 0,
             trailDir: 0,
-            trailVisible: true,
+
+            billiardVisible:true,
+            trajectoryVisible: false,
         }
 
         if(this.surface.gravity) {
@@ -33,11 +35,9 @@ class Billiards{
         this.surface.initialize();
 
         let iniState = this.buildTrailIniState();
-        this.trail = new BilliardPath(this.surface,iniState);
-
+        this.trajectory = new BilliardPath(this.surface,iniState);
+        this.billiard = new BallTrail(this.surface, iniState);
     }
-
-
 
     //to reset the initial state of a geodesic given position on boundary and angle
     buildTrailIniState(){
@@ -49,8 +49,10 @@ class Billiards{
 
     addToScene(scene){
         this.plot.addToScene(scene);
-        this.trail.addToScene(scene);
-        this.trail.setVisibility(this.params.trailVisible);
+        this.trajectory.addToScene(scene);
+        this.trajectory.setVisibility(this.params.trajectoryVisible);
+        this.billiard.addToScene(scene);
+        this.billiard.setVisibility(this.params.billiardVisible)
     }
 
     addToUI(ui){
@@ -60,7 +62,7 @@ class Billiards{
 
         let resetScene = function(){
             woodCut.plot.update();
-            woodCut.trail.update();
+            woodCut.trajectory.update();
         };
 
         woodCut.surface.buildUIFolder(ui,resetScene);
@@ -74,32 +76,55 @@ class Billiards{
         let trailFolder = ui.addFolder('Billiard');
         trailFolder.close();
 
-        trailFolder.add(params, 'maxReflections', 0,20,1).name('Reflections').onChange(
-            function(value){
-                params.maxReflections = value;
-                woodCut.trail.curveOptions.maxReflections=value;
-                resetScene();
-            });
+
+
+        trailFolder.add(params, 'trajectoryVisible').name('ShowTrajectory').onChange(function(value){
+            params.trajectoryVisible=value;
+            woodCut.trajectory.setVisibility(value);
+
+            params.billiardVisible=!value;
+            woodCut.billiard.setVisibility(!value);
+        });
 
         trailFolder.add(params, 'trailPos', woodCut.surface.domain.v.min, woodCut.surface.domain.v.max,0.01).name('Position').onChange(
             function(value){
                 params.trailPos = value;
                 let iniState = woodCut.buildTrailIniState();
-                woodCut.trail.updateState(iniState);
+                if(woodCut.params.trajectoryVisible) {
+                    woodCut.trajectory.updateState(iniState);
+                }
+                if(woodCut.params.billiardVisible) {
+                    woodCut.billiard.updateState(iniState);
+                }
             });
 
         trailFolder.add(params,'trailDir',-1,1,0.01).name('Direction').onChange(
             function(value){
                 params.trailDir = value;
                 let iniState = woodCut.buildTrailIniState();
-                woodCut.trail.updateState(iniState);
+                if(woodCut.params.trajectoryVisible) {
+                    woodCut.trajectory.updateState(iniState);
+                }
+                if(woodCut.params.billiardVisible) {
+                    woodCut.billiard.updateState(iniState);
+                }
             });
 
+        trailFolder.add(params, 'maxReflections', 0,20,1).name('Reflections').onChange(
+            function(value){
+                params.maxReflections = value;
+                woodCut.trajectory.curveOptions.maxReflections=value;
+                if(woodCut.params.trajectoryVisible){
+                    woodCut.trajectory.update();
+                }
+            });
 
     }
 
     tick(time,dTime){
-
+        if(this.params.billiardVisible) {
+            this.billiard.stepForward();
+        }
     }
 
 }
