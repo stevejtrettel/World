@@ -77,7 +77,6 @@ class Ball {
             if(r2<0.0001) {
                 return;
             }
-
                 this.surface.boundaryReflect(this.state);
         }
 
