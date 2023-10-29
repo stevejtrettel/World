@@ -13,6 +13,7 @@ class GraphingCalc extends Surface {
     }
 
     setParamData(){
+
         this.params = {
             a: 2,
             b: 1.5,
@@ -40,12 +41,6 @@ class GraphingCalc extends Surface {
                 step: 0.01,
                 name: 'c'
             },
-            gravity: {
-                min: 0,
-                max: 5,
-                step: 0.01,
-                name: 'gravity'
-            }
         };
 
 

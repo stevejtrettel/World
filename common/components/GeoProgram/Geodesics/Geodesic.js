@@ -74,7 +74,7 @@ class Geodesic{
             str += ptString;
         }
         this.curve.pointString = str;
-        return str;
+        return str+'\n\n';
     }
 
     printToFile(fileName='geodesic', numPts=500){

@@ -14,11 +14,11 @@ class SurfaceGravity extends Surface {
         super(domain);
     }
     setParamData(){
+        this.gravity=0.3;
         this.params = {
             a: 2,
             b: 1.5,
             c: 0,
-            gravity:0,
             func: `a*(sin(b*u)+sin(b*v))/(1+u*u+v*v)`
         };
 
@@ -35,12 +35,6 @@ class SurfaceGravity extends Surface {
                 step: 0.01,
                 name: 'b'
             },
-            gravity: {
-                min: 0,
-                max: 5,
-                step: 0.01,
-                name: 'gravity'
-            }
         };
     }
 
@@ -94,7 +88,7 @@ class GravitySim{
     constructor() {
 
         this.surface = new SurfaceGravity();
-        this.surface.integrator.ep=0.075;
+        this.surface.integrator.ep=0.03;
         this.plot = new PlotGPU(this.surface);
 
         //parameters the UI will control!
@@ -102,7 +96,8 @@ class GravitySim{
         this.params = {
 
             surface: this.surface,
-
+            simSpeed:3,
+            gravity:0.5,
             trailPos: 0,
             trailDir: 0,
             trailVisible: true,
@@ -138,6 +133,12 @@ class GravitySim{
             woodCut.trail.updateSurface();
         };
         woodCut.surface.buildUIFolder(ui,resetScene);
+        ui.add(params,'gravity',0,1,0.01).name('Gravity').onChange(function(value){
+           params.gravity=value;
+           woodCut.surface.gravity=5.*value;
+           woodCut.surface.initialize();
+           resetScene();
+        });
         let trailFolder = ui.addFolder('Billiard');
         trailFolder.close();
 
@@ -147,7 +148,6 @@ class GravitySim{
         //         woodCut.params.trailVisible = value;
         //         woodCut.trail.setVisibility(value);
         //     });
-
 
         trailFolder.add(params, 'trailPos', woodCut.surface.domain.v.min, woodCut.surface.domain.v.max,0.01).name('Position').onChange(
             function(value){
@@ -163,10 +163,17 @@ class GravitySim{
                 woodCut.trail.update(iniState);
             });
 
+        trailFolder.add(params,'simSpeed',1,10,1).name('SimSpeed').onChange(
+            function(value){
+                params.simSpeed = value;
+            });
+
     }
 
     tick(time,dTime){
+        for(let i=0;i<this.params.simSpeed;i++) {
             this.trail.stepForward();
+        }
     }
 
 

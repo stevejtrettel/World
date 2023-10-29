@@ -37,6 +37,7 @@ class Surface{
     }
 
     setParamData(){
+        this.gravity=undefined;
         this.params = null;
         this.paramData = null;
     }
@@ -113,8 +114,8 @@ class Surface{
     buildAcceleration(){
         let derivatives = this.derivatives;
         let gravity = 0;
-        if(this.params.gravity){
-            gravity = this.params.gravity;
+        if(this.gravity){
+            gravity = this.gravity;
         }
         let acceleration = function(state){
             let uv = state.pos;
