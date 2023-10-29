@@ -1,5 +1,5 @@
 // the base class for surfaces and computations:
-import {Vector3,Vector2} from "../../../../3party/three/build/three.module.js";
+import {Vector3,Vector2,Matrix3} from "../../../../3party/three/build/three.module.js";
 
 import dState from "../Integrator/dState.js";
 import Integrator from "../Integrator/Integrator.js";
@@ -48,7 +48,6 @@ class Surface{
         this.buildParameterization();
         this.buildAcceleration();
         this.buildIntegrator();
-        this.buildSurfaceGeometry();
     }
 
     setParamData(){
@@ -98,6 +97,33 @@ class Surface{
 
         this.derivatives = derivatives;
 
+       let geomDot = function(p){
+            return function(v,w){
+                let D = derivatives(p);
+                let g = new Matrix3().set(
+                    D.fu*D.fu+1, D.fu*D.fv,0,
+                    D.fu*D.fv, D.fv*D.fv+1,0,
+                    0,0,1
+                );
+                let V = new Vector3(v.x,v.y,0);
+                let W = new Vector3(w.x,w.y,0);
+                return V.dot(W.applyMatrix3(g));
+            }
+        }
+
+        this.geomDot=geomDot;
+
+        this.reflectGivenTangent = function(p){
+            return function(v,tang){
+                let tangNorm = geomDot(p)(tang,tang);
+                let unitTang = tang.clone().multiplyScalar(1/tangNorm);
+                let scalarProj = geomDot(p)(v,unitTang)
+                let tangProj = unitTang.clone().multiplyScalar(scalarProj);
+                let reflection = v.clone().multiplyScalar(-1).add(tangProj.multiplyScalar(2));
+                return reflection;
+            }
+        }
+
         this.nvec = function( uv ){
             let D = derivatives(uv);
             let du = D.fu;
@@ -118,11 +144,35 @@ class Surface{
 
     buildParameterization(){
         let F = this.F;
-        this.parameterization = function(uv){
+        let parameterization = function(uv){
             let u = uv.x;
             let v = uv.y;
             //switch order so z is up on screen
             return new Vector3(u,F(u,v),-v);
+        }
+        this.parameterization = parameterization;
+
+
+        let uDom = this.domain.u;
+        let vDom = this.domain.v;
+
+        let rescaleU = function(u){
+            return uDom.min + (uDom.max-uDom.min)*u;
+        }
+
+        let rescaleV = function(v){
+            return vDom.min + (vDom.max-vDom.min)*v;
+        }
+
+        let rescale = function(uv){
+            return new Vector2(rescaleU(uv.x),rescaleV(uv.y));
+        }
+
+        this.parametricSurface = function(u,v,result){
+            let uv = new Vector2(u,v);
+            let UV = rescale(uv);
+            let res = parameterization(UV);
+            result.set(res.x,res.y,res.z);
         }
     }
 
@@ -180,43 +230,19 @@ class Surface{
         this.initialize();
     }
 
-    buildSurfaceGeometry(){
-        let parameterization = this.parameterization;
-        let uDom = this.domain.u;
-        let vDom = this.domain.v;
 
-        let rescaleU = function(u){
-            return uDom.min + (uDom.max-uDom.min)*u;
-        }
-
-        let rescaleV = function(v){
-            return vDom.min + (vDom.max-vDom.min)*v;
-        }
-
-        let rescale = function(uv){
-            return new Vector2(rescaleU(uv.x),rescaleV(uv.y));
-        }
-
-        this.parametricSurface = function(u,v,result){
-            let uv = new Vector2(u,v);
-            let UV = rescale(uv);
-            let res = parameterization(UV);
-            result.set(res.x,res.y,res.z);
-        }
-    }
 
     boundaryReflect(state){
-        if(state.pos.x<this.domain.u.min){
-            state.vel.x *= -1;
+
+        //if on the boundary of constant u
+        if(Math.abs(state.pos.x-this.domain.u.min)<0.1 ||Math.abs(state.pos.x-this.domain.u.max)<0.1){
+            console.log('hitu');
+           state.vel = this.reflectGivenTangent(state.pos)(state.vel, new Vector2(0,1));
         }
-        else if(state.pos.x>this.domain.u.max){
-            state.vel.x *= -1;
-        }
-        else if(state.pos.y<this.domain.v.min){
-            state.vel.y *= -1;
-        }
-        else if(state.pos.y>this.domain.v.max){
-            state.vel.y *= -1;
+        //if on the boundary of constant v
+        else if(Math.abs(state.pos.y-this.domain.v.min)<0.1||Math.abs(state.pos.y-this.domain.v.max)<0.1){
+            console.log('hitv');
+            state.vel = this.reflectGivenTangent(state.pos)(state.vel, new Vector2(1,0));
         }
         return state;
     }

@@ -185,8 +185,30 @@ class BilliardPath {
 
     //redo that also prints normal vectors:
     printToString(numPts=500){
+        let precision = 4;
+        let str = ``;
+        for(let i=0;i<numPts;i++){
+            let pt = this.curve.getPoint(i/(numPts-1));
 
+            //need to re-order so xyz is correct again
+            let x = pt.x.toFixed(precision);
+            let y = -pt.z.toFixed(precision);
+            let z = pt.y.toFixed(precision);
+
+            //now need to get the normal vector at this point:
+            let nvec = this.surface.nvec({x:pt.x,y:pt.y});
+
+            let nx = nvec.x.toFixed(precision);
+            let ny = -nvec.z.toFixed(precision);
+            let nz = nvec.y.toFixed(precision);
+
+            let ptString = `(${x},${y},${z},${nx},${ny},${nz}), `;
+            str += ptString;
+        }
+        this.pointString = str;
+        return str+'\n\n';
     }
+
 
 }
 

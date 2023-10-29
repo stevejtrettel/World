@@ -14,16 +14,21 @@ class Billiards{
         this.plot = new PlotGPU(this.surface);
 
         //parameters the UI will control!
+        let billiards =this;
         this.params = {
             surface: this.surface,
             maxReflections:8,
             simSpeed:3,
-            gravity:1,
+            gravity:0,
             trailPos: 0,
             trailDir: 0,
 
             billiardVisible:true,
             trajectoryVisible: false,
+
+            printAll: function(){
+                billiards.printToFile();
+            }
         }
 
         if(this.surface.gravity) {
@@ -47,6 +52,40 @@ class Billiards{
     }
 
 
+
+    printToString(numPts = 500){
+        let str = ``;
+        str += this.surface.printToString();
+        str = str + this.trajectory.printToString(numPts);
+        return str;
+    }
+
+    printToFile(){
+        const contents = this.printToString();
+        const file = new File([contents], `${this.surface.name}.txt`, {
+            type: 'text/plain',
+        });
+
+        //a function which allows the browser to automatically downlaod the file created
+        //(a hack from online: it makes a download link, artificially clicks it, and removes the link)
+        //https://javascript.plainenglish.io/javascript-create-file-c36f8bccb3be
+        function download() {
+            const link = document.createElement('a')
+            const url = URL.createObjectURL(file)
+
+            link.href = url
+            link.download = file.name
+            document.body.appendChild(link)
+            link.click()
+
+            document.body.removeChild(link)
+            window.URL.revokeObjectURL(url)
+        }
+
+        download();
+    }
+
+
     addToScene(scene){
         this.plot.addToScene(scene);
         this.trajectory.addToScene(scene);
@@ -57,21 +96,21 @@ class Billiards{
 
     addToUI(ui){
 
-        let woodCut = this;
-        let params = woodCut.params;
+        let billiards = this;
+        let params = billiards.params;
 
         let resetScene = function(){
-            woodCut.plot.update();
-            woodCut.trajectory.update();
+            billiards.plot.update();
+            billiards.trajectory.update();
         };
 
-        woodCut.surface.buildUIFolder(ui,resetScene);
-        ui.add(params,'gravity',0,5,0.01).name('Gravity').onChange(function(value){
-           params.gravity=value;
-           woodCut.surface.gravity=value;
-           woodCut.surface.initialize();
-           resetScene();
-        });
+        billiards.surface.buildUIFolder(ui,resetScene);
+        // ui.add(params,'gravity',0,5,0.01).name('Gravity').onChange(function(value){
+        //    params.gravity=value;
+        //    billiards.surface.gravity=value;
+        //    billiards.surface.initialize();
+        //    resetScene();
+        // });
 
         let trailFolder = ui.addFolder('Billiard');
         trailFolder.close();
@@ -80,44 +119,46 @@ class Billiards{
 
         trailFolder.add(params, 'trajectoryVisible').name('ShowTrajectory').onChange(function(value){
             params.trajectoryVisible=value;
-            woodCut.trajectory.setVisibility(value);
+            billiards.trajectory.setVisibility(value);
 
             params.billiardVisible=!value;
-            woodCut.billiard.setVisibility(!value);
+            billiards.billiard.setVisibility(!value);
         });
 
-        trailFolder.add(params, 'trailPos', woodCut.surface.domain.v.min, woodCut.surface.domain.v.max,0.01).name('Position').onChange(
+        trailFolder.add(params, 'trailPos', billiards.surface.domain.v.min, billiards.surface.domain.v.max,0.01).name('Position').onChange(
             function(value){
                 params.trailPos = value;
-                let iniState = woodCut.buildTrailIniState();
-                if(woodCut.params.trajectoryVisible) {
-                    woodCut.trajectory.updateState(iniState);
+                let iniState = billiards.buildTrailIniState();
+                if(billiards.params.trajectoryVisible) {
+                    billiards.trajectory.updateState(iniState);
                 }
-                if(woodCut.params.billiardVisible) {
-                    woodCut.billiard.updateState(iniState);
+                if(billiards.params.billiardVisible) {
+                    billiards.billiard.updateState(iniState);
                 }
             });
 
         trailFolder.add(params,'trailDir',-1,1,0.01).name('Direction').onChange(
             function(value){
                 params.trailDir = value;
-                let iniState = woodCut.buildTrailIniState();
-                if(woodCut.params.trajectoryVisible) {
-                    woodCut.trajectory.updateState(iniState);
+                let iniState = billiards.buildTrailIniState();
+                if(billiards.params.trajectoryVisible) {
+                    billiards.trajectory.updateState(iniState);
                 }
-                if(woodCut.params.billiardVisible) {
-                    woodCut.billiard.updateState(iniState);
+                if(billiards.params.billiardVisible) {
+                    billiards.billiard.updateState(iniState);
                 }
             });
 
         trailFolder.add(params, 'maxReflections', 0,20,1).name('Reflections').onChange(
             function(value){
                 params.maxReflections = value;
-                woodCut.trajectory.curveOptions.maxReflections=value;
-                if(woodCut.params.trajectoryVisible){
-                    woodCut.trajectory.update();
+                billiards.trajectory.curveOptions.maxReflections=value;
+                if(billiards.params.trajectoryVisible){
+                    billiards.trajectory.update();
                 }
             });
+
+        ui.add(params,'printAll').name('Download');
 
     }
 
