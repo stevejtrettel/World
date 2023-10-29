@@ -5,7 +5,7 @@ import State from "../Integrator/State.js";
 let defaultCurveOptions = {
     length:20,
     color: 0xffffff,
-    radius: 0.02,
+    radius: 0.05,
     res: 100,
 };
 
@@ -117,6 +117,14 @@ class BallStripes {
     setVisibility(value) {
         for (let i = 0; i < this.params.N; i++) {
             this.stripes[i].setVisibility(value);
+        }
+    }
+
+    stepForward(){
+        for(let i=0;i<this.maxN; i++){
+            if(this.stripes[i].visible){
+                this.stripes[i].stepForward();
+            }
         }
     }
 

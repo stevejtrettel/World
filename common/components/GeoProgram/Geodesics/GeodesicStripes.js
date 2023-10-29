@@ -3,7 +3,7 @@ import Geodesic from "./Geodesic.js";
 import State from "../Integrator/State.js";
 
 let defaultCurveOptions = {
-    length:20,
+    length:30,
     color: 0xffffff,
     radius: 0.02,
     res: 100,

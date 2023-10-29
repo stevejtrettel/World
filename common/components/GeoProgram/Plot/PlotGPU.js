@@ -3,6 +3,7 @@ import {DoubleSide, Mesh, MeshPhysicalMaterial} from "../../../../3party/three/b
 import {ParametricGeometry} from "../../../../3party/three/examples/jsm/geometries/ParametricGeometry.js";
 import {CustomShaderMaterial} from "../../../../3party/three-csm.m.js";
 
+import polarGrid from "./shaders/polarGrid.js";
 import zHeight from "./shaders/zHeight.js";
 import {createFragmentCSM,createVertexCSM} from "./shaders/utils/createCSMShaders.js";
 
@@ -12,11 +13,11 @@ class PlotGPU {
     constructor(surface,res=20){
 
         this.surface = surface;
-        this.colorFn = zHeight;
+        this.colorFn = polarGrid;
 
         this.options = {
             clearcoat:1,
-            roughness:0.5,
+            roughness:0.35,
         }
 
         let uDom = this.surface.domain.u;

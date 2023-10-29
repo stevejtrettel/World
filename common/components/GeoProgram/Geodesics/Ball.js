@@ -24,7 +24,7 @@ class Ball {
         this.curveOptions=curveOptions;
         this.ep = 0.1;
         this.numSteps = this.curveOptions.length/this.ep;
-
+        this.visible=true;
 
 
         let mat = new MeshPhysicalMaterial(
@@ -71,7 +71,14 @@ class Ball {
 
         //if we hit the edge, reflect the state:
         if(this.surface.integrator.stop(this.state.pos)) {
-            this.surface.boundaryReflect(this.state);
+            let u = this.state.pos.x;
+            let v = this.state.pos.y;
+            let r2 = u*u+v*v;
+            if(r2<0.0001) {
+                return;
+            }
+
+                this.surface.boundaryReflect(this.state);
         }
 
         this.state = this.surface.integrator.step(this.state);
@@ -100,6 +107,7 @@ class Ball {
     }
 
     setVisibility(value){
+        this.visible=value;
         this.ball.visible=value;
         this.trail.visible=value;
     }

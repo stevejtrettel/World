@@ -22,9 +22,24 @@ let defaultDomain = {
 
 class Surface{
     constructor(domain=defaultDomain){
-        this.domain = domain;
+        this.setDomain(domain);
         this.setParamData();
         this.initialize();
+    }
+
+    setDomain(domain){
+        this.domain=domain;
+        this.stop = function(uv){
+            let u = uv.x;
+            let v = uv.y;
+            if(u< domain.u.min || u> domain.u.max){
+                return true;
+            }
+            if(v< domain.v.min || v> domain.v.max){
+                return true;
+            }
+            return false;
+        }
     }
 
     initialize(){
@@ -151,22 +166,9 @@ class Surface{
 
         let domain = this.domain;
         let derive = this.derive;
-        let ep = 0.02;
+        let ep = 0.1;
 
-
-        let stop = function(uv){
-            let u = uv.x;
-            let v = uv.y;
-            if(u< domain.u.min || u> domain.u.max){
-                return true;
-            }
-            if(v< domain.v.min || v> domain.v.max){
-                return true;
-            }
-            return false;
-        }
-
-        this.integrator = new Integrator(derive,ep,stop);
+        this.integrator = new Integrator(derive,ep,this.stop);
     }
 
     update(params){

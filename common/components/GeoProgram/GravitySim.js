@@ -1,97 +1,20 @@
 import {Vector2} from "../../../3party/three/build/three.module.js";
 
+
 import PlotGPU from "./Plot/PlotGPU.js";
 import State from "./Integrator/State.js";
 import Geodesic from "./Geodesics/Geodesic.js";
 import BallTrail from "./Geodesics/Ball.js";
-import Surface from "./Surface/Surface.js";
-
-//using GLOBAL object math.parser: this is from the 3rd party math file loaded in the html
-const parser = math.parser();
-
-class SurfaceGravity extends Surface {
-    constructor(domain) {
-        super(domain);
-    }
-    setParamData(){
-        this.gravity=1;
-        this.params = {
-            a: 2,
-            b: 1.5,
-            c: 0,
-            func: `a*(sin(b*u)+sin(b*v))/(1+u*u+v*v)`
-        };
-
-        this.paramData = {
-            a: {
-                min: 0,
-                max: 5,
-                step: 0.01,
-                name: 'a'
-            },
-            b: {
-                min: 0,
-                max: 5,
-                step: 0.01,
-                name: 'b'
-            },
-        };
-    }
-
-    setFunctionData() {
-        super.setFunctionData();
-
-        let a = this.params.a;
-        let b = this.params.b;
-
-        this.name = 'SurfaceGravity';
-        let func = parser.evaluate('f(u,v,a,b)='.concat(this.params.func));
-        //the function with all the variables:
-        this.F = function(u,v){
-            let z = func(u,v, a,b);
-            return z;
-        }
-    }
-
-
-    buildUIFolder(ui, resetScene) {
-        super.buildUIFolder(ui, resetScene);
-
-        let surf = this;
-        let a = this.params.a;
-        let b = this.params.b;
-        //now add in a text box for the function
-        ui.add(surf.params,'func').name(`f(u,v)=`).onFinishChange(
-            function(value){
-                surf.params.func = value;
-                let func = parser.evaluate('f(u,v,a,b)='.concat(surf.params.func));
-                surf.F = function(u,v){
-                    let z = func(u,v, a,b);
-                    return z;
-                }
-                surf.update({});
-                resetScene();
-            });
-    }
-}
-
-
-
-
-
-
-
-
+import BallStripes from "./Geodesics/BallStripes.js";
 
 
 class GravitySim{
-    constructor() {
+    constructor(surface) {
 
-        this.surface = new SurfaceGravity();
+        this.surface = surface;
         this.plot = new PlotGPU(this.surface);
 
         //parameters the UI will control!
-        let sim = this;
         this.params = {
             surface: this.surface,
             simSpeed:3,
@@ -99,13 +22,28 @@ class GravitySim{
             trailPos: 0,
             trailDir: 0,
             trailVisible: true,
+
+            stripeNum:5,
+            stripeDir:0,
+            stripeSpread:0.35       ,
+            stripePos:0,
+            stripeVisible:true,
         }
 
-        this.surface.gravity=this.params.gravity;
+        if(this.surface.gravity) {
+            this.params.gravity=this.surface.gravity;
+        }
+        else{
+            this.surface.gravity = this.params.gravity;
+        }
         this.surface.initialize();
 
-        let iniState = this.buildTrailIniState();
-        this.trail = new BallTrail(this.surface,iniState);
+       // let iniState = this.buildTrailIniState();
+        //this.trail = new BallTrail(this.surface,iniState);
+
+        let iniStripes = this.buildStripeIniData();
+        this.stripes = new BallStripes(this.surface,iniStripes);
+
     }
 
 
@@ -117,10 +55,24 @@ class GravitySim{
         return new State(pos,vel);
     }
 
+    //build the data needed to be fed into geodesic stripe
+    buildStripeIniData(){
+        return {
+            N: this.params.stripeNum,
+            angle: this.params.stripeDir,
+            spread:this.params.stripeSpread,
+            pos: this.params.stripePos,
+        };
+    }
+
 
     addToScene(scene){
         this.plot.addToScene(scene);
-        this.trail.addToScene(scene);
+        //this.trail.addToScene(scene);
+        this.stripes.addToScene(scene);
+
+       // this.trail.setVisibility(this.params.trailVisible);
+        this.stripes.setVisibility(this.params.stripeVisible);
     }
 
     addToUI(ui){
@@ -131,50 +83,86 @@ class GravitySim{
 
         let resetScene = function(){
             woodCut.plot.update();
-            woodCut.trail.updateSurface();
+            //woodCut.trail.updateSurface();
+            woodCut.stripes.updateSurface();
         };
-        woodCut.surface.buildUIFolder(ui,resetScene);
-        ui.add(params,'gravity',0,5,0.01).name('Gravity').onChange(function(value){
-           params.gravity=value;
-           woodCut.surface.gravity=value;
-           woodCut.surface.initialize();
-           resetScene();
-        });
-        let trailFolder = ui.addFolder('Billiard');
-        trailFolder.close();
-
+       // woodCut.surface.buildUIFolder(ui,resetScene);
+        // ui.add(params,'gravity',0,5,0.01).name('Gravity').onChange(function(value){
+        //    params.gravity=value;
+        //    woodCut.surface.gravity=value;
+        //    woodCut.surface.initialize();
+        //    resetScene();
+        // });
+       // let trailFolder = ui.addFolder('Billiard');
+       // let stripeFolder = ui.addFolder('Multiple');
+       // trailFolder.close();
+       // stripeFolder.close();
 
         // trailFolder.add(params,'trailVisible').onChange(
         //     function(value){
         //         woodCut.params.trailVisible = value;
         //         woodCut.trail.setVisibility(value);
         //     });
+        // trailFolder.add(params, 'trailPos', woodCut.surface.domain.v.min, woodCut.surface.domain.v.max,0.01).name('Position').onChange(
+        //     function(value){
+        //         params.trailPos = value;
+        //         let iniState = woodCut.buildTrailIniState();
+        //         woodCut.trail.update(iniState);
+        //     });
+        //
+        // trailFolder.add(params,'trailDir',-1,1,0.01).name('Direction').onChange(
+        //     function(value){
+        //         params.trailDir = value;
+        //         let iniState = woodCut.buildTrailIniState();
+        //         woodCut.trail.update(iniState);
+        //     });
+        //
+        // trailFolder.add(params,'simSpeed',1,10,1).name('SimSpeed').onChange(
+        //     function(value){
+        //         params.simSpeed = value;
+        //     });
 
-        trailFolder.add(params, 'trailPos', woodCut.surface.domain.v.min, woodCut.surface.domain.v.max,0.01).name('Position').onChange(
+
+
+        ui.add(params,'stripeVisible').onChange(
             function(value){
-                params.trailPos = value;
-                let iniState = woodCut.buildTrailIniState();
-                woodCut.trail.update(iniState);
+                woodCut.params.stripeVisible = value;
+                woodCut.stripes.setVisibility(value);
             });
 
-        trailFolder.add(params,'trailDir',-1,1,0.01).name('Direction').onChange(
+        ui.add(params,'stripeNum',0,15,1).name('Number').onChange(
             function(value){
-                params.trailDir = value;
-                let iniState = woodCut.buildTrailIniState();
-                woodCut.trail.update(iniState);
+                params.stripeNum = value;
+                woodCut.stripes.update({N:params.stripeNum});
             });
 
-        trailFolder.add(params,'simSpeed',1,10,1).name('SimSpeed').onChange(
+        ui.add(params,'stripeDir',-1,1,0.01).name('Direction').onChange(
             function(value){
-                params.simSpeed = value;
+                params.stripeDir = value;
+                woodCut.stripes.update({angle:params.stripeDir});
             });
+
+        ui.add(params,'stripeSpread',0,1,0.01).name('Spread').onChange(
+            function(value){
+                params.stripeSpread = value;
+                woodCut.stripes.update({spread:params.stripeSpread});
+            });
+
+        ui.add(params,'stripePos',woodCut.surface.domain.v.min,woodCut.surface.domain.v.max,0.01).name('Position').onChange(
+            function(value){
+                params.stripePos = value;
+                woodCut.stripes.update({pos:params.stripePos});
+            });
+
 
     }
 
     tick(time,dTime){
-        for(let i=0;i<this.params.simSpeed;i++) {
-            this.trail.stepForward();
-        }
+        //for(let i=0;i<this.params.simSpeed;i++) {
+            //this.trail.stepForward();
+       // }
+            this.stripes.stepForward();
+
     }
 
 
