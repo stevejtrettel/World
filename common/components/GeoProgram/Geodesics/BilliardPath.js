@@ -159,7 +159,8 @@ class BilliardPath {
 
 
     //redo that also prints normal vectors:
-    printToString(numPts=500){
+    printToString(){
+        let numPts = 200*this.reflectionCount;
         let precision = 4;
         let str = ``;
         for(let i=0;i<numPts;i++){

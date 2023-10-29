@@ -14,7 +14,7 @@ const defaultOptions = {
     length:20,
     color: 0xffffff,
     radius: 0.05,
-    res: 2048,
+    res: 1024,
 }
 
 class Ball {

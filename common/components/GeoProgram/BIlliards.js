@@ -18,7 +18,7 @@ class Billiards{
         this.params = {
             surface: this.surface,
             maxReflections:8,
-            simSpeed:3,
+            simSpeed:1,
             gravity:0,
             trailPos: 0,
             trailDir: 0,
@@ -158,14 +158,22 @@ class Billiards{
                 }
             });
 
+        // trailFolder.add(params, 'simSpeed', 0,10,1).name('SimSpeed').onChange(
+        //     function(value){
+        //         params.simSpeed = value;
+        //     });
+
         ui.add(params,'printAll').name('Download');
 
     }
 
     tick(time,dTime){
-        if(this.params.billiardVisible) {
-            this.billiard.stepForward();
+            if(this.params.billiardVisible) {
+              //  for(let i=0;i<this.params.simSpeed;i++){
+                    this.billiard.stepForward();
+           // }
         }
+
     }
 
 }
