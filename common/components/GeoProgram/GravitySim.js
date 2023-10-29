@@ -14,7 +14,7 @@ class SurfaceGravity extends Surface {
         super(domain);
     }
     setParamData(){
-        this.gravity=0.3;
+        this.gravity=1;
         this.params = {
             a: 2,
             b: 1.5,
@@ -88,20 +88,21 @@ class GravitySim{
     constructor() {
 
         this.surface = new SurfaceGravity();
-        this.surface.integrator.ep=0.03;
         this.plot = new PlotGPU(this.surface);
 
         //parameters the UI will control!
         let sim = this;
         this.params = {
-
             surface: this.surface,
             simSpeed:3,
-            gravity:0.5,
+            gravity:1,
             trailPos: 0,
             trailDir: 0,
             trailVisible: true,
         }
+
+        this.surface.gravity=this.params.gravity;
+        this.surface.initialize();
 
         let iniState = this.buildTrailIniState();
         this.trail = new BallTrail(this.surface,iniState);
@@ -133,9 +134,9 @@ class GravitySim{
             woodCut.trail.updateSurface();
         };
         woodCut.surface.buildUIFolder(ui,resetScene);
-        ui.add(params,'gravity',0,1,0.01).name('Gravity').onChange(function(value){
+        ui.add(params,'gravity',0,5,0.01).name('Gravity').onChange(function(value){
            params.gravity=value;
-           woodCut.surface.gravity=5.*value;
+           woodCut.surface.gravity=value;
            woodCut.surface.initialize();
            resetScene();
         });

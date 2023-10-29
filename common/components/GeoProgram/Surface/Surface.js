@@ -151,7 +151,7 @@ class Surface{
 
         let domain = this.domain;
         let derive = this.derive;
-        let ep = 0.1;
+        let ep = 0.02;
 
 
         let stop = function(uv){
