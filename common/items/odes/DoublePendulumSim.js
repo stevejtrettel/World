@@ -142,8 +142,8 @@ class DoublePendulumSim{
         this.torusOffset = 3.;
 
         this.params = {
-            center1: 1,
-            center2: 0.2,
+            center1: 1.75,
+            center2: 0.5,
             spread1: 0.001,
             spread2: 0.001,
         };
@@ -217,7 +217,7 @@ class DoublePendulumSim{
 
     createIntegrator(){
 
-        let ep =0.001;
+        let ep =0.005;
         let g = 5.;
 
         let length = this.length;
@@ -268,7 +268,7 @@ class DoublePendulumSim{
 
     stepForward(){
         for(let i=0; i<this.N; i++){
-            for(let j=0;j<10; j++) {
+            for(let j=0;j<4; j++) {
                 this.states[i] = this.integrator.step(this.states[i]);
             }
         }
@@ -286,12 +286,17 @@ class DoublePendulumSim{
     addToUI(ui){
         let sim = this;
         let params = this.params;
-        ui.add(params,'center1',0,3.14,0.01).name('StartPos').onChange(function(value){
+        ui.add(params,'center1',0,3.14,0.01).name('Angle1').onChange(function(value){
             params.center=value;
             sim.initialize();
         });
-        ui.add(params,'spread1',0,3.14,0.01).name('Spread').onChange(function(value){
-            params.spread=value;
+        ui.add(params,'center2',0,3.14,0.01).name('Angle2').onChange(function(value){
+            params.center=value;
+            sim.initialize();
+        });
+        ui.add(params,'spread1',0,1,0.001).name('Uncertainty').onChange(function(value){
+            params.spread1=value;
+            params.spread2=value;
             sim.initialize();
         });
     }
