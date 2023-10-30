@@ -10,6 +10,9 @@ import  {createEnvironment}  from "./src/environment.js";
 import  {lights}  from "./src/lights.js";
 // import  post  from "./src/post.js"
 
+import PendulumSim from "../common/items/odes/PendulumSim.js";
+let ex = new PendulumSim(10);
+
 
 //global settings for the scene
 let globalSettings={
@@ -66,7 +69,7 @@ function main(globalSettings) {
 
     //4. Fill this world with objects
     //world.addObjects( example );
-    world.addObjects( {example:example});
+    world.addObjects( {example:ex});
         //{example:example} );
     world.addObjects( lights );
 

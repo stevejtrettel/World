@@ -13,8 +13,8 @@ import Billiards from "./BIlliards.js";
 let surf = new MySurf();
 
 //let wood = new WoodCut(surf);
-//let grav = new GravitySim(surf);
-let billiards = new Billiards(surf);
+let grav = new GravitySim(surf);
+//let billiards = new Billiards(surf);
 
 
-export default billiards;
+export default grav;
