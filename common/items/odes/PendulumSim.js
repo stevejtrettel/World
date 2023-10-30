@@ -59,10 +59,10 @@ class PendulumSim{
     constructor(N=10) {
         this.N = 10;
         this.length =2;
-        this.origin = new Vector3(0,2,0);
+        this.origin = new Vector3(0,1,0);
 
         this.params = {
-            center: 4,
+            center: 1,
             spread: 0.01,
         };
 
@@ -145,6 +145,16 @@ class PendulumSim{
     }
 
     addToUI(ui){
+        let sim = this;
+        let params = this.params;
+        ui.add(params,'center',0,3.14,0.01).name('StartPos').onChange(function(value){
+            params.center=value;
+            sim.initialize();
+        });
+        ui.add(params,'spread',0,3.14,0.01).name('Spread').onChange(function(value){
+            params.spread=value;
+            sim.initialize();
+        });
     }
 
     tick(time,dTime){
