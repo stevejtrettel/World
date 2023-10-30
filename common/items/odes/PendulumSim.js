@@ -14,6 +14,10 @@ class Pendulum{
         this.origin = origin;
         this.length = length;
         this.rad = 0.1;
+        //state has a vec2 components because I am being lazy and using an integrator I've already built
+        //this integrator requires the "clone" method on position and velocity: so can't have each
+        //just be a number
+        //will only use x component in each
         this.state = {pos:new Vector2(0,0),vel:new Vector2(0,0)};
 
         let mat = new MeshPhysicalMaterial({
