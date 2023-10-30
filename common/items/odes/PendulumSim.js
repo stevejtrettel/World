@@ -61,7 +61,7 @@ class Pendulum{
 
 class PendulumSim{
     constructor(N=10) {
-        this.N = 10;
+        this.N = N;
         this.length =2;
         this.origin = new Vector3(0,1,0);
 

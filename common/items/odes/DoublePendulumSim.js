@@ -2,12 +2,15 @@ import {
     LineCurve3,
     Mesh,
     MeshPhysicalMaterial,
-    SphereGeometry,
+    SphereGeometry, TorusGeometry,
     TubeGeometry,
     Vector2, Vector3
 } from "../../../3party/three/build/three.module.js";
+import {ParametricGeometry} from "../../../3party/three/examples/jsm/geometries/ParametricGeometry.js";
+
 import {dState, State} from "../../compute/cpu/components/State.js";
 import {RungeKutta} from "../../compute/cpu/RungeKutta.js";
+
 
 
 
@@ -28,6 +31,11 @@ let cos2 = function(x){
     return cos(x)*cos(x);
 }
 
+let torusCoords = function(uv){
+    let x = uv.x;
+    let y = uv.y;
+    return new Vector3((2+cos(y))*cos(x),sin(y),(2+cos(y))*sin(x));
+}
 
 
 
@@ -35,12 +43,12 @@ class DoublePendulum{
     //length is a Vec2, origin a Vec3 (just used for display purposes)
     constructor(length = new Vector2(1,1), mass = new Vector2(1,1), origin = new Vector3(0,1,0)){
         this.origin = origin;
+        this.torusOffset = 3;
         this.length = length;
         this.mass = mass;
         this.rad = 0.1;
         //state is a vec2: theta1 theta2 and their derivatives
         this.state = {pos:new Vector2(0,0),vel:new Vector2(0,0)};
-
 
         //build all the geometries for a first time:
         let mat = new MeshPhysicalMaterial({
@@ -56,8 +64,10 @@ class DoublePendulum{
         this.rod1 = new Mesh(rodGeo1,mat);
         this.rod2 = new Mesh(rodGeo2, mat);
 
-    }
+        //also have the point in configuration space:
+        this.config = new Mesh(sphGeo,mat);
 
+    }
 
     getPositions(){
         let origin = this.origin;
@@ -92,18 +102,28 @@ class DoublePendulum{
         this.ball2.position.set(pos.pt2.x,pos.pt2.y,pos.pt2.z);
     }
 
+    repositionConfig(){
+        let p = torusCoords(this.state.pos);
+        p.multiplyScalar(1);
+        let torusOrigin = new Vector3(0,-this.torusOffset,0);
+        p.add(torusOrigin);
+        this.config.position.set(p.x,p.y,p.z);
+    }
+
 
     addToScene(scene){
         scene.add(this.ball1);
         scene.add(this.ball2);
         scene.add(this.rod1);
         scene.add(this.rod2);
+        scene.add(this.config);
     }
 
     update(state){
         this.state=state;
         this.repositionBalls();
         this.rebuildRods();
+        this.repositionConfig();
     }
 }
 
@@ -115,16 +135,17 @@ class DoublePendulum{
 
 class DoublePendulumSim{
     constructor(N=10) {
-        this.N = 10;
+        this.N = N;
         this.length = new Vector2(1,1);
         this.mass = new Vector2(1,1);
         this.origin = new Vector3(0,1,0);
+        this.torusOffset = 3.;
 
         this.params = {
             center1: 1,
             center2: 0.2,
-            spread1: 0.01,
-            spread2: 0.01,
+            spread1: 0.001,
+            spread2: 0.001,
         };
 
         this.states =  new Array(this.N);
@@ -143,6 +164,22 @@ class DoublePendulumSim{
         let sphGeo = new SphereGeometry(0.15);
         this.vertex = new Mesh(sphGeo,mat);
         this.vertex.position.set(this.origin.x,this.origin.y,this.origin.z);
+
+
+        let torusMat = new MeshPhysicalMaterial(
+            {
+                clearcoat:2,
+                transparent:true,
+                transmission:0.9,
+                ior:1.,
+                color:0xffffff
+            }
+        );
+        let torusGeo = new TorusGeometry(2,1,32,64);
+
+        this.torus = new Mesh(torusGeo,torusMat);
+        this.torus.rotateX(Math.PI/2);
+        this.torus.position.set(0,-this.torusOffset,0);
 
 
         this.createIntegrator();
@@ -239,6 +276,7 @@ class DoublePendulumSim{
     }
 
     addToScene(scene){
+        scene.add(this.torus);
         scene.add(this.vertex);
         for(let i=0; i<this.N; i++){
             this.pendula[i].addToScene(scene);

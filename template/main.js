@@ -14,7 +14,7 @@ import PendulumSim from "../common/items/odes/PendulumSim.js";
 // let ex = new PendulumSim(10);
 
 import DoublePendulumSim from "../common/items/odes/DoublePendulumSim.js";
-let ex = new DoublePendulumSim(10);
+let ex = new DoublePendulumSim(200);
 
 //global settings for the scene
 let globalSettings={
