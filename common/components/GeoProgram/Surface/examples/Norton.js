@@ -5,25 +5,26 @@ import Surface from "../Surface.js";
 class Norton extends Surface {
     constructor(domain={u:{min:-5.75,max:5.75},v:{min:-5.75,max:5.75}}) {
         super(domain);
+
+
+
+        this.stop = function(uv){
+                        let u = uv.x;
+                        let v = uv.y;
+                        if(u< domain.u.min || u> domain.u.max){
+                            return true;
+                        }
+                        if(v< domain.v.min || v> domain.v.max){
+                            return true;
+                        }
+                        if(u*u+v*v<0.01){
+                            return true;
+                        }
+                        return false;
+                    }
+
     }
 
-    setDomain(domain){
-            this.domain=domain;
-            this.stop = function(uv){
-                let u = uv.x;
-                let v = uv.y;
-                if(u< domain.u.min || u> domain.u.max){
-                    return true;
-                }
-                if(v< domain.v.min || v> domain.v.max){
-                    return true;
-                }
-                if(u*u+v*v<0.001){
-                    return true;
-                }
-                return false;
-            }
-    }
 
     setParamData(){
         this.gravity = 0.2957731724645785995;

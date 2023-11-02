@@ -105,12 +105,12 @@ class Billiards{
         };
 
         billiards.surface.buildUIFolder(ui,resetScene);
-        // ui.add(params,'gravity',0,5,0.01).name('Gravity').onChange(function(value){
-        //    params.gravity=value;
-        //    billiards.surface.gravity=value;
-        //    billiards.surface.initialize();
-        //    resetScene();
-        // });
+        ui.add(params,'gravity',0,5,0.01).name('Gravity').onChange(function(value){
+           params.gravity=value;
+           billiards.surface.gravity=value;
+           billiards.surface.initialize();
+           resetScene();
+        });
 
         let trailFolder = ui.addFolder('Billiard');
         trailFolder.close();

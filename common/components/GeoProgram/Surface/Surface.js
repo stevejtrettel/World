@@ -250,7 +250,7 @@ class Surface{
 
         let domain = this.domain;
         let derive = this.derive;
-        let ep = 0.1;
+        let ep = 0.01;
 
         this.integrator = new Integrator(derive,ep,this.stop);
     }

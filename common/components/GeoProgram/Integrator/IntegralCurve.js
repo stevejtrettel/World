@@ -27,10 +27,7 @@ class IntegralCurve{
         this.iniState = iniState;
         this.curveOptions = curveOptions;
 
-        //initialize the curve parameters in the integrator
-        this.length = curveOptions.length;
-        //number of steps to integrate out.
-        this.N = Math.floor(curveOptions.length/this.integrator.ep);
+        this.setLength(this.curveOptions.length);
 
         //initialize the material parameters for the tube:
         let curveMaterial = new MeshPhysicalMaterial({
@@ -54,11 +51,19 @@ class IntegralCurve{
         this._buildTube(this.curve);
     }
 
+    setLength(length){
+        //initialize the curve parameters in the integrator
+        this.length = length;
+        //number of steps to integrate out.
+        this.N = Math.floor(length/this.integrator.ep);
+    }
+
     _integrate(){
         let pts = [];
         let p,uv;
         let currentState = this.iniState.clone();
 
+        let len = 0;
         for(let i=0; i<this.N; i++){
 
             uv = currentState.pos.clone();
@@ -74,10 +79,27 @@ class IntegralCurve{
 
             //otherwise, just carry on as usual:
             p = this.parameterization( uv );
+
+
+            //try to stop when we get to the right length, by adding up all the infinitesimal lengths
+            //should be a better way to do this.
+            if(i>1) {
+                //figure out the distance we're at:
+                let q = pts[pts.length - 1];
+                let diff = p.distanceTo(q);
+                len += diff;
+                if (len > this.length) {
+                    //if length is greater, we should actually remove that last element,
+                    //and replace it with one that's the right percentage of the way along!
+                    //that way we lie actually at the right distance, instead of slightly overshooting.
+                    break;
+                }
+            }
             pts.push( p.clone() );
 
             currentState = this.integrator.step( currentState );
         }
+
         this.curve = new CatmullRomCurve3(pts);
 
     }

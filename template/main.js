@@ -1,6 +1,5 @@
 //set the stuff for this particular example!
- //import Item from "../common/items/topology/torusFundamentalGroup.js"
-
+//import example from "../common/items/FiveBody.js"
 import example from "../common/components/GeoProgram/example.js";
 //import example from "../common/items/BlackHoleGeodesics.js";
 //import everything except the objects of the scene
@@ -10,11 +9,11 @@ import  {createEnvironment}  from "./src/environment.js";
 import  {lights}  from "./src/lights.js";
 // import  post  from "./src/post.js"
 
-import PendulumSim from "../common/items/odes/PendulumSim.js";
+//import PendulumSim from "../common/items/odes/PendulumSim.js";
 // let ex = new PendulumSim(10);
 
-import DoublePendulumSim from "../common/items/odes/DoublePendulumSim.js";
-let ex = new DoublePendulumSim(200);
+// import DoublePendulumSim from "../common/items/odes/DoublePendulumSim.js";
+// let ex = new DoublePendulumSim(200);
 
 //global settings for the scene
 let globalSettings={
@@ -71,7 +70,7 @@ function main(globalSettings) {
 
     //4. Fill this world with objects
     //world.addObjects( example );
-    world.addObjects( {example:ex});
+    world.addObjects({example:example});
         //{example:example} );
     world.addObjects( lights );
 

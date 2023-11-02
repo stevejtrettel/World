@@ -37,6 +37,11 @@ class Geodesic{
         this.curve.updateIntegrator(this.surface.integrator,this.surface.parameterization);
     }
 
+    updateLength(length){
+        this.curveOptions.length = length;
+        this.curve.setLength(length);
+    }
+
     update(iniState){
         //get new initial state if it exists:
         this.iniState = iniState
@@ -45,6 +50,11 @@ class Geodesic{
 
     setVisibility(value){
         this.curve.setVisibility(value);
+    }
+
+    //get the point htat is percent of the way along the curve
+    getPoint(percent){
+        return this.curve.curve.getPointAt(percent);
     }
 
     // printToString(numPts=500){

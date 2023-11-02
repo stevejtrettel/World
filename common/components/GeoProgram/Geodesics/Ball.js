@@ -11,7 +11,7 @@ import {
 //and pulls out the acceleration to build the integrator
 
 const defaultOptions = {
-    length:20,
+    length:2,
     color: 0xffffff,
     radius: 0.05,
     res: 1024,
@@ -74,16 +74,17 @@ class Ball {
 
     stepForward(){
         //if we hit the edge, reflect the state:
+        let u = this.state.pos.x;
+        let v = this.state.pos.y;
+        let r2 = u*u+v*v;
+        if(r2<0.0001) {
+            return;
+        }
         if(this.surface.stop(this.state.pos)) {
+            console.log(this.surface.stop);
             this.state.pos = this.surface.findBoundary(this.state);
             this.state = this.surface.boundaryReflect(this.state);
-            // let u = this.state.pos.x;
-            // let v = this.state.pos.y;
-            // let r2 = u*u+v*v;
-            // if(r2<0.0001) {
-            //     return;
-            // }
-            //
+
         }
 
         this.state = this.surface.integrator.step(this.state);

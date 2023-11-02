@@ -16,7 +16,7 @@ class Gaussian extends Surface {
 
     setParamData(){
         this.params = {
-            a: 1,
+            a: 1.5,
             b: 1,
             c: 0
         };
