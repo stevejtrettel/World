@@ -5,7 +5,7 @@ import IntegralCurve from "../Integrator/IntegralCurve.js";
 //and pulls out the acceleration to build the integrator
 
 const defaultOptions = {
-    length:20,
+    length:40,
     color: 0xffffff,
     radius: 0.05,
     res: 100,

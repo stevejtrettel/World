@@ -1,41 +1,49 @@
 
 import Surface from "../Surface.js";
 
+
 class Paraboloid extends Surface {
     constructor(domain) {
         super(domain);
+
+        // this.stop = function(uv){
+        //     if(uv.length()>2.){
+        //         return true;
+        //     }
+        //     return false;
+        // }
+    }
+
+    setParamData(){
+        this.params = {
+            a: 1,
+            b: 1,
+            c: 1
+        };
+
+        this.paramData = {
+            a: {
+                min: 0,
+                max: 2,
+                step: 0.01,
+                name: 'Amplitude'
+            },
+        };
     }
 
     setFunctionData() {
         super.setFunctionData();
 
-        //chose a constant so the farthest point is at most 1 inch below the middle:
-        //farthest point is diagonal, value of function there is length of diagonal squared:
-        const U = this.domain.u.max;
-        const V = this.domain.v.max;
-        const a = 4/(U*U+V*V);
-
-        const c = 0;
+        let a = this.params.a;
 
         let F = function (u, v) {
-            return -a*((u-c)*(u-c)+v*v);
+            return  2.-a*(u*u+v*v);
         }
         this.F = F;
 
         this.name = 'Paraboloid';
-        this.Ftxt = `f(u,v)=-${a}*((u-${c})^2+v^2)`;
+        this.Ftxt = `f(u,v)=2.-${a}*(u^2+v^2)`;
 
-        // this.derivatives = function (uv) {
-        //     let u = uv.x;
-        //     let v = uv.y;
-        //     return {
-        //         fu: -2*a*(u-c),
-        //         fv: -2*a*v,
-        //         fuu: -2*a,
-        //         fvv: -2*a,
-        //         fuv: 0
-        //     };
-        //}
     }
 }
 

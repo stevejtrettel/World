@@ -23,7 +23,7 @@ class WoodCut{
 
             geoPos: 0,
             geoDir: 0,
-            geoVisible: false,
+            geoVisible: true,
             printGeo: function(){
                 woodCut.geodesic.printToFile('geodesic');
             },
@@ -32,7 +32,7 @@ class WoodCut{
             stripeDir:0,
             stripeSpread:0.35       ,
             stripePos:0,
-            stripeVisible:true,
+            stripeVisible:false,
             printStripe: function(){
                 woodCut.stripes.printToFile('stripe');
             },

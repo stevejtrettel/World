@@ -7,7 +7,7 @@ import {
 } from "../../../../3party/three/build/three.module.js";
 
 const defaultOptions = {
-    length:10,
+    length:20,
     segments: 1024,
     radius: 0.1,
     tubeRes: 32,
