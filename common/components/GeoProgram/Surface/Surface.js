@@ -3,7 +3,7 @@ import {Vector3,Vector2,Matrix3} from "../../../../3party/three/build/three.modu
 
 import dState from "../Integrator/dState.js";
 import Integrator from "../Integrator/Integrator.js";
-
+import SymplecticIntegrator from "../Integrator/SymplecticIntegrator.js";
 
 let width = 5.5/2;
 let length = 11.5/2;
@@ -250,9 +250,9 @@ class Surface{
 
         let domain = this.domain;
         let derive = this.derive;
-        let ep = 0.05;
+        let ep = 0.01;
 
-        this.integrator = new Integrator(derive,ep,this.stop);
+        this.integrator = new SymplecticIntegrator(derive,ep,this.stop);
     }
 
     update(params){

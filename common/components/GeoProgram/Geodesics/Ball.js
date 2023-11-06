@@ -74,21 +74,25 @@ class Ball {
 
     stepForward(){
         //if we hit the edge, reflect the state:
-        let u = this.state.pos.x;
-        let v = this.state.pos.y;
-        let r2 = u*u+v*v;
-        if(r2<0.0001) {
-            return;
-        }
+        // let u = this.state.pos.x;
+        // let v = this.state.pos.y;
+        // let r2 = u*u+v*v;
+        // if(r2<0.0001) {
+        //     return;
+        // }
+
+
         if(this.surface.stop(this.state.pos)) {
-            console.log(this.surface.stop);
             this.state.pos = this.surface.findBoundary(this.state);
             this.state = this.surface.boundaryReflect(this.state);
 
         }
 
-        this.state = this.surface.integrator.step(this.state);
+      //  for(let i=0;i<10; i++) {
+            this.state = this.surface.integrator.step(this.state);
+      //  }
         this.pos=this.surface.parameterization(this.state.pos);
+
 
         this.start.position.set(this.pos.x,this.pos.y,this.pos.z);
 

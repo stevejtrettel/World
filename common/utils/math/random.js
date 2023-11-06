@@ -1,9 +1,17 @@
 
 import {
-    MathUtils,
+    MathUtils, Vector2,
     Vector3
 } from "../../../3party/three/build/three.module.js";
 
+
+
+function randomDisk(){
+    let theta = 2*Math.PI * Math.random();
+    let r2 = Math.random();
+    let r = Math.sqrt(r2);
+    return new Vector2(r*Math.cos(theta), r*Math.sin(theta));
+}
 
 
 function randomVec3Sphere( Radius=1 ){

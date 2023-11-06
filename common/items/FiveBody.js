@@ -11,6 +11,8 @@ import {
 } from "../compute/cpu/components/State.js";
 
 import {RungeKutta} from "../compute/cpu/RungeKutta.js";
+import SymplecticIntegrator from "../compute/cpu/SymplecticIntegrator.js";
+
 
 import{
     randomVec3Ball,
@@ -57,6 +59,7 @@ class FiveBodyData{
         this.c.multiplyScalar(k);
         this.d.multiplyScalar(k);
         this.e.multiplyScalar(k);
+        return this;
     }
 
     clone(){
@@ -133,8 +136,8 @@ class FiveBody{
             return new dState( vel, acc );
         };
 
-        const ep=0.005;
-        this.integrator= new RungeKutta(this.derive, ep);
+        const ep=0.002;
+        this.integrator= new SymplecticIntegrator(this.derive, ep);
 
     }
 
@@ -236,7 +239,7 @@ class FiveBody{
     }
 
     update(){
-        for(let i=0;i<200.*this.speed;i++) {
+        for(let i=0;i<300.*this.speed;i++) {
             this.state = this.integrator.step(this.state);
         }
 

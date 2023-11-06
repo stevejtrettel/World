@@ -10,7 +10,7 @@ import {ParametricGeometry} from "../../../3party/three/examples/jsm/geometries/
 
 import {dState, State} from "../../compute/cpu/components/State.js";
 import {RungeKutta} from "../../compute/cpu/RungeKutta.js";
-
+import SymplecticIntegrator from "../../compute/cpu/SymplecticIntegrator.js";
 
 
 
@@ -217,7 +217,7 @@ class DoublePendulumSim{
 
     createIntegrator(){
 
-        let ep =0.005;
+        let ep =0.001;
         let g = 5.;
 
         let length = this.length;
@@ -263,12 +263,12 @@ class DoublePendulumSim{
             let acc =accel(state);
             return new dState(vel,acc);
         }
-        this.integrator = new RungeKutta(derive,ep);
+        this.integrator = new SymplecticIntegrator(derive,ep);
     }
 
     stepForward(){
         for(let i=0; i<this.N; i++){
-            for(let j=0;j<4; j++) {
+            for(let j=0;j<25; j++) {
                 this.states[i] = this.integrator.step(this.states[i]);
             }
         }
