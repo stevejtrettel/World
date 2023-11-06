@@ -7,6 +7,7 @@ import {
     Vector3
 } from "../../../3party/three/build/three.module.js";
 import {ParametricGeometry} from "../../../3party/three/examples/jsm/geometries/ParametricGeometry.js";
+import {postprocess} from "../../shaders/colors/postprocess.js";
 import {CustomShaderMaterial} from "../../../3party/three-csm.m.js";
 import {createFragmentCSM,createVertexCSM} from "./createCSM.js";
 
@@ -56,7 +57,7 @@ class Archimedes{
     constructor() {
         this.position = new Vector3(0,0,0);
         this.orientation = new Matrix3();
-        this.tex = new TextureLoader().load('../assets/textures/earth.jpeg');
+        this.tex = new TextureLoader().load('./earth.jpeg');
         this.geometry = new PlaneGeometry(1,1,100,100);
         this.buildMaterial();
         this.map = new Mesh(this.geometry,this.material);
@@ -113,7 +114,7 @@ class Archimedes{
         let options = {};
 
 
-        const colorFn = getTexCoord + `
+        const colorFn =  getTexCoord + `
         vec3 colorFn(vec2 uv, vec3 xyz){
             vec3 s = toSphere(uv);
             s=orientation*s; 
@@ -122,7 +123,8 @@ class Archimedes{
         }`;
 
         let fragMain = `vec3 fragColor(){
-                return colorFn(vUv, vPosition);
+                vec3 col = colorFn(vUv, vPosition);
+                return col;
             }`;
 
 
@@ -136,6 +138,7 @@ class Archimedes{
             uniforms: this.uniforms,
             passthrough: {
                 side: DoubleSide,
+                clearcoat:1,
                 ... options
             },
         };
