@@ -2,7 +2,7 @@ import {Object3D,Matrix3} from "../../../3party/three/build/three.module.js";
 import Stereographic from "../../components/maps/Stereographic.js";
 
 
-class StereographicMap{
+class StereographicMapEarth{
     constructor() {
         this.map = new Stereographic();
         this.dummy = new Object3D();
@@ -45,4 +45,4 @@ class StereographicMap{
 
 
 
-export default StereographicMap;
+export default StereographicMapEarth;

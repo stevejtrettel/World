@@ -10,7 +10,7 @@ import  {lights}  from "./src/lights.js";
 // import  post  from "./src/post.js"
 
 
-import Item from "../common/items/maps/StereographicMap.js";
+import Item from "../common/items/maps/EquirectangularMap.js";
 
 //import PendulumSim from "../common/items/odes/PendulumSim.js";
 // let ex = new PendulumSim(10);
