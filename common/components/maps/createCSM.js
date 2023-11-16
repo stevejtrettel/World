@@ -63,7 +63,7 @@ const varyingValues = `
 
 
 const newColor = `
-    vec4 newColor = vec4( fragColor(), 1.);
+    vec4 newColor = vec4( fragColor(), 1);
 `;
 
 

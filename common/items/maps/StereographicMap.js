@@ -1,10 +1,10 @@
 import {Object3D,Matrix3} from "../../../3party/three/build/three.module.js";
-import Archimedes from "../../components/maps/Archimedes.js";
-import Mercator from "../../components/maps/Mercator.js";
+import Stereographic from "../../components/maps/Stereographic.js";
 
-class ArchimedesMap{
+
+class StereographicMap{
     constructor() {
-        this.map = new Archimedes();
+        this.map = new Stereographic();
         this.dummy = new Object3D();
     }
 
@@ -15,23 +15,19 @@ class ArchimedesMap{
 
     addToUI(ui){
         let params = {
-            toCyl:0,
-            toPlane:0,
+            homotopy:0,
             rotate:0.5,
             animate:false,
         }
-        let archimedes = this.map;
-        ui.add(params,'toCyl',0,1,0.01).onChange(function(value){
-            archimedes.uniforms.toCyl.value = value;
-        });
-        ui.add(params,'toPlane',0,1,0.01).onChange(function(value){
-            archimedes.uniforms.toPlane.value = value;
+        let mercator = this.map;
+        ui.add(params,'homotopy',0,1,0.01).onChange(function(value){
+            mercator.uniforms.homotopy.value = value;
         });
         ui.add(params,'rotate',0,1,0.01).name('Rotate').onChange(function(value){
-            archimedes.uniforms.rotate.value=value;
+            mercator.uniforms.rotate.value=value;
         });
         ui.add(params,'animate').name('Tumble').onChange(function(value){
-            archimedes.uniforms.animate.value = value;
+            mercator.uniforms.animate.value = value;
         });
     }
 
@@ -48,4 +44,4 @@ class ArchimedesMap{
 
 
 
-export default ArchimedesMap;
+export default StereographicMap;
