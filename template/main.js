@@ -1,6 +1,6 @@
 //set the stuff for this particular example!
 //import example from "../common/items/FiveBody.js"
-//import example from "../common/components/GeoProgram/example.js";
+import example from "../common/components/GeoProgram/example.js";
 //import example from "../common/items/BlackHoleGeodesics.js";
 //import everything except the objects of the scene
 //this uses all the default settings defined in the "template" folder
@@ -10,7 +10,7 @@ import  {lights}  from "./src/lights.js";
 // import  post  from "./src/post.js"
 
 
-import Item from "../common/items/maps/EquirectangularMap.js";
+//import ex from "../common/items/BlackHoleGeodesics.js";
 
 //import PendulumSim from "../common/items/odes/PendulumSim.js";
 // let ex = new PendulumSim(10);
@@ -72,9 +72,9 @@ function main(globalSettings) {
     //let object = example;
 
     //4. Fill this world with objects
-    //world.addObjects( example );
-    world.addObjects({example:new Item()});
-        //{example:example} );
+   // world.addObjects( ex );
+   // world.addObjects({example:new Item()});
+        world.addObjects({example:example} );
     world.addObjects( lights );
 
     //5. Set up Post-Processing effects
