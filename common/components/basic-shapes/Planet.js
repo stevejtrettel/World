@@ -48,7 +48,7 @@ class Planet{
         );
 
         let trailCurve = new CatmullRomCurve3(this.trail);
-        let trailGeometry = new TubeBufferGeometry(trailCurve,this.trailLength,0.15*this.radius,8);
+        let trailGeometry = new TubeBufferGeometry(trailCurve,2.*this.trailLength,0.15*this.radius,8);
         this.trailMesh=new Mesh(trailGeometry, trailMaterial);
 
     }

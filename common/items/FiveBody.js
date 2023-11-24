@@ -259,7 +259,7 @@ class FiveBody{
     }
 
     tick(time,dTime){
-        if(!this.detectCollision()) {
+        if(!this.detectCollision() && this.speed!==0) {
             this.update();
         }
     }
@@ -280,7 +280,7 @@ const pA = {
     pos: new Vector3(5,30,0),
     vel: new Vector3(0,0,-0.25),
     color: 0xffffff,
-    trailLength: 2000,
+    trailLength: 3000,
 }
 
 const pB = {
@@ -288,7 +288,7 @@ const pB = {
     pos: new Vector3(-5,30,0),
     vel: new Vector3(0,0,0.25),
     color: 0xd96493,
-    trailLength: 2000,
+    trailLength: 3000,
 }
 
 const pC = {
@@ -296,7 +296,7 @@ const pC = {
     pos: new Vector3(11,0,0),
     vel: new Vector3(0,0,0),
     color: 0x32a852,
-    trailLength: 2000,
+    trailLength: 3000,
 }
 
 const pD = {
@@ -304,7 +304,7 @@ const pD = {
     pos: new Vector3(0,-30,2),
     vel: new Vector3(-1,0,0),
     color: 0xb88c40,
-    trailLength: 2000,
+    trailLength: 3000,
 }
 
 const pE = {
@@ -312,7 +312,7 @@ const pE = {
     pos: new Vector3(0,-30,-2),
     vel: new Vector3(1,0,0),
     color: 0x4a2a5c,
-    trailLength: 2000,
+    trailLength: 3000,
 }
 
 const example = new FiveBody(pA, pB, pC, pD, pE);

@@ -1,6 +1,6 @@
 //set the stuff for this particular example!
-//import example from "../common/items/FiveBody.js"
-import example from "../common/components/GeoProgram/example.js";
+import example from "../common/items/FiveBody.js"
+//import example from "../common/components/GeoProgram/example.js";
 //import example from "../common/items/BlackHoleGeodesics.js";
 //import everything except the objects of the scene
 //this uses all the default settings defined in the "template" folder
@@ -25,14 +25,15 @@ let globalSettings={
     stats:false,
 
     environment:{
-        color:0x292b36,
+        color:0x000000,
+            //0x292b36,
 
             //0x0a0d12,
         //0x212121,
             //0x212121,
             //0x292b36,
             //0xffffff,
-        cube: true,
+        cube: false,
     },
 
     camera:{
