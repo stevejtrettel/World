@@ -229,7 +229,7 @@ class FiveBody{
             planetE.setMass(value);
         });
 
-        ui.add(params, 'speed', 0.01,1,0.01).name('Speed').onChange(function(value){
+        ui.add(params, 'speed', 0.0,1,0.01).name('Speed').onChange(function(value){
             ThreeB.speed=value;
         });
 

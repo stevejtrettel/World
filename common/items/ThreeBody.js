@@ -224,7 +224,7 @@ class ThreeBody{
             planetC.setMass(value);
         });
 
-        ui.add(params, 'speed', 0.01,1,0.01).name('Speed').onChange(function(value){
+        ui.add(params, 'speed', 0.0,1,0.01).name('Speed').onChange(function(value){
             ThreeB.speed=value;
         });
 
@@ -252,7 +252,7 @@ class ThreeBody{
     }
 
     tick(time,dTime){
-        if(!this.detectCollision()) {
+        if(!this.detectCollision() && this.speed !==0) {
             this.update();
         }
     }
@@ -299,7 +299,7 @@ const pA = {
     pos: new Vector3(10,0,0),
     vel: new Vector3(0,0,-0.15),
     color: 0xffffff,
-    trailLength: 2000,
+    trailLength: 3000,
 }
 
 const pB = {
@@ -307,7 +307,7 @@ const pB = {
     pos: new Vector3(-10,0,0),
     vel: new Vector3(0,0,0.15),
     color: 0xd96493,
-    trailLength: 2000,
+    trailLength: 3000,
 }
 
 const pC = {
@@ -315,7 +315,7 @@ const pC = {
     pos: new Vector3(0,42,0),
     vel: new Vector3(0,0,0),
     color: 0x32a852,
-    trailLength: 2000,
+    trailLength: 3000,
 }
 
 const example = new ThreeBody(pA, pB, pC);

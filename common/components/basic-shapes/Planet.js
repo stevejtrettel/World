@@ -89,7 +89,7 @@ class Planet{
         }
     }
 
-    reset(spaceRad=3,velRad=1){
+    reset(spaceRad=10,velRad=2){
         this.pos=randomVec3Ball(spaceRad);
         this.vel=randomVec3Ball(velRad);
         this.resetTrail();
