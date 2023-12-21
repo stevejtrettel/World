@@ -3,7 +3,7 @@
 //items fed into RungeKutta need to have the following methods available:
 //.add, .multiplyScalar, .clone
 class SymplecticIntegrator  {
-    constructor (derive, ep=0.1, stop=defaultStop){
+    constructor (derive, ep=0.1, stop){
         this.derive=derive;
         this.ep=ep;
         this.stop=stop;

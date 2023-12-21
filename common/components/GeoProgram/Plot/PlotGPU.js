@@ -3,6 +3,7 @@ import {DoubleSide, Mesh, MeshPhysicalMaterial} from "../../../../3party/three/b
 import {ParametricGeometry} from "../../../../3party/three/examples/jsm/geometries/ParametricGeometry.js";
 import {CustomShaderMaterial} from "../../../../3party/three-csm.m.js";
 
+import inDomain from "./shaders/utils/inDomain.js";
 import zStripes from "./shaders/zStripes.js";
 import polarGrid from "./shaders/polarGrid.js";
 import zHeight from "./shaders/zHeight.js";
@@ -11,10 +12,10 @@ import {createFragmentCSM,createVertexCSM} from "./shaders/utils/createCSMShader
 
 //res is dots per inch
 class PlotGPU {
-    constructor(surface,res=20){
+    constructor(surface,res=10){
 
         this.surface = surface;
-        this.colorFn = zStripes;
+        this.colorFn = inDomain + zStripes;
 
         this.options = {
             clearcoat:1,
@@ -42,9 +43,20 @@ class PlotGPU {
 
     compileMaterial(){
         //build shaders from our inputs
-        let fragMain = this.colorFn +
+        console.log(this.surface.domain.v.min);
+        this.domainVariables = `
+                float uMin = ${this.surface.domain.u.min};
+                float uMax = ${this.surface.domain.u.max};
+                float vMin = ${this.surface.domain.v.min};
+                float vMax = ${this.surface.domain.v.max};
+                float edge = ${this.surface.domainParams.edge};`;
+
+        let fragMain = this.domainVariables + this.colorFn +
             `
             vec3 fragColor(){
+                if(inDomain(vUv, vPosition)){
+                    return vec3(1,1,1);
+                }
                 return colorFn(vUv, vPosition);
             }`;
 
@@ -68,8 +80,11 @@ class PlotGPU {
         return new CustomShaderMaterial( customMatParameters );
     }
 
-
     update(){
+        //only need to do this first line if we are changing the shader
+        //right now, only relevant if we change the domain.
+        this.compileMaterial();
+        //this is for changing the geometry itself:
         this.plot.geometry.dispose();
         this.plot.geometry =  new ParametricGeometry(this.surface.parametricSurface,this.slices,this.stacks);
     }

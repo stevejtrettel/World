@@ -165,52 +165,19 @@ class WoodCut{
         };
         woodCut.surface.buildUIFolder(ui,resetScene);
 
-        //let surfFolder = ui.addFolder('Surface');
         let geoFolder = ui.addFolder('Geodesic');
         let stripeFolder = ui.addFolder('Stripes');
         let sprayFolder = ui.addFolder('Spray');
-       // surfFolder.close();
         geoFolder.close();
         stripeFolder.close();
         sprayFolder.close();
 
-
-
-
-
-        // surfFolder.add(woodCut.surface.params,'a',0,5,0.01).onChange(
-        //     function(value){
-        //     woodCut.surface.update({a:value});
-        //     woodCut.plot.update();
-        //     woodCut.geodesic.updateSurface();
-        //     woodCut.spray.updateSurface();
-        //     woodCut.stripes.updateSurface();
-        // });
-        //
-        // surfFolder.add(woodCut.surface.params,'b',0,5,0.01).onChange(
-        //     function(value){
-        //         woodCut.surface.update({b:value});
-        //         woodCut.plot.update();
-        //         woodCut.geodesic.updateSurface();
-        //         woodCut.spray.updateSurface();
-        //         woodCut.stripes.updateSurface();
-        //     });
-        //
-        // surfFolder.add(woodCut.surface.params,'c',-3,3,0.01).onChange(
-        //     function(value){
-        //         woodCut.surface.update({c:value});
-        //         woodCut.plot.update();
-        //         woodCut.geodesic.updateSurface();
-        //         woodCut.spray.updateSurface();
-        //         woodCut.stripes.updateSurface();
-        //     });
 
         geoFolder.add(params,'geoVisible').onChange(
             function(value){
                 woodCut.params.geoVisible = value;
                 woodCut.geodesic.setVisibility(value);
             });
-
 
         geoFolder.add(params, 'geoPos', woodCut.surface.domain.v.min, woodCut.surface.domain.v.max,0.01).name('Position').onChange(
             function(value){
@@ -257,13 +224,6 @@ class WoodCut{
             });
 
         stripeFolder.add(params, 'printStripe').name('Download');
-
-        //THIS PART NEEDS MORE WORK!
-        // stripeFolder.add(params,'stripeNum',1,51,1).name('Number').onChange(
-        //     function(value){
-        //         params.stripeNum = value;
-        //         woodCut.stripes.update({N:params.stripeNum});
-        //     });
 
 
         sprayFolder.add(params,'sprayVisible').onChange(
@@ -312,8 +272,6 @@ class WoodCut{
         // this.stripes.update({time:time});
         //this.spray.update({time:time});
     }
-
-
 
 }
 

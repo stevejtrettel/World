@@ -4,6 +4,7 @@
 
 //THIS CODE REQUIRES ONE ALSO INCLUDE PROJECTR4, OR IMPLEMENT ONE'S OWN INVSTEREOGRAPHICPROJ
 
+//language=<GLSL>
 const parameterizedKnots = `
 //=============================================
 //KNOTS IN R3

@@ -23,10 +23,9 @@ const linearGradient = `
 `;
 
 
-
-
-const rainbowGradient = `
-
+//language = GLSL
+const rainbowGradient =
+    `
 vec3 cubehelix(vec3 c) {
   vec2 sc = vec2(sin(c.x), cos(c.x));
   return c.z * (1.0 + c.y * (1.0 - c.z) * (

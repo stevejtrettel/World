@@ -7,8 +7,8 @@ const parser = math.parser();
 
 
 class GraphingCalc extends Surface {
-    constructor(domain) {
-        super(domain);
+    constructor() {
+        super();
 
     }
 
@@ -19,7 +19,8 @@ class GraphingCalc extends Surface {
             b: 1.5,
             c: 0,
             gravity:0,
-            func: `a*(sin(b*u)+sin(b*v))/(1+u*u+v*v)`
+            func: `a*sin(u+v)`
+                //`a*(sin(b*u)+sin(b*v))/(1+u*u+v*v)`
         };
 
         this.paramData = {
@@ -42,8 +43,6 @@ class GraphingCalc extends Surface {
                 name: 'c'
             },
         };
-
-
 
     }
 
@@ -80,7 +79,7 @@ class GraphingCalc extends Surface {
                 surf.params.func = value;
                 let func = parser.evaluate('f(u,v,a,b,c)='.concat(surf.params.func));
                 surf.F = function(u,v){
-                    let z = func(u,v, a,b,c);
+                    let z = func(u,v,a,b,c);
                     return z;
                 }
                 surf.update({});

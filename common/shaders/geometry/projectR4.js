@@ -2,7 +2,6 @@
 
 
 const projectR4 = `
-
 vec3 orthographicProj(vec4 p){
     //JUST DELETE THE W COORDINATE
     return p.xyz;

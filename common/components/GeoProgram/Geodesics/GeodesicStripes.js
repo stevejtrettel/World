@@ -1,6 +1,8 @@
 import {Vector2} from "../../../../3party/three/build/three.module.js";
 import Geodesic from "./Geodesic.js";
 import State from "../Integrator/State.js";
+import ParallelTransport from "../Parallel/ParallelTransport.js";
+
 
 let defaultCurveOptions = {
     length:30,
@@ -52,20 +54,29 @@ class GeodesicStripes {
     }
 
     buildIniStates() {
-        //given one initial state, (and a time, if animated) build the whole set
-        //RIGHT NOW JUST A TEST CASE: evenly distributed along U direction.
+
+        //set an initial vector direction with respect to the edge
         let vel = new Vector2(1,Math.sin(3.1415/2.*this.params.angle) ).normalize();
+
+        //build a curve that goes along a portion of the boundary
         let uMin = this.surface.domain.u.min;
-        let uMax = this.surface.domain.u.max;
         let vMin = this.surface.domain.v.min;
-        let vMax = this.surface.domain.v.max;
-        let uRange = uMax - uMin;
-        let vRange = vMax - vMin;
+        let vRange = this.surface.domain.v.max-vMin;
+        let pos = this.params.pos;
+        let spread = this.params.spread;
+
+        let curve = function(t){
+            let u = uMin;
+            let v = pos + spread*vRange*(t-0.5);
+            return new Vector2(u,v);
+        }
+
+        this.parallelTransport = new ParallelTransport(vel,curve,this.surface);
 
         for (let i = 0; i < this.params.N; i++) {
-            let width = vRange / this.params.N;
-            let pos = new Vector2(uMin , this.params.pos + this.params.spread*(vMin + (i+0.5) * width) );
-            this.iniStates[i]=new State(pos, vel);
+            let state = this.parallelTransport.getVector(i/this.params.N);
+           // console.log(state.vel);
+            this.iniStates[i] = state;
         }
     }
 

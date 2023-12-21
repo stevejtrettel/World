@@ -3,32 +3,38 @@ import {Vector3,Vector2,Matrix3} from "../../../../3party/three/build/three.modu
 
 import dState from "../Integrator/dState.js";
 import Integrator from "../Integrator/Integrator.js";
-import SymplecticIntegrator from "../Integrator/SymplecticIntegrator.js";
-
-let width = 5.5/2;
-let length = 11.5/2;
-let defaultDomain = {
-    u: {
-        min: -length,
-        max: length
-    },
-    v: {
-        min: -width,
-        max: width
-    }
-};
+//import SymplecticIntegrator from "../Integrator/SymplecticIntegrator.js";
 
 
 
 class Surface{
-    constructor(domain=defaultDomain){
-        this.setDomain(domain);
+    constructor(){
+        //build the domain from parameters:
+        this.domainParams = {
+            length: 11,
+            width: 5.5,
+            centerU: 0,
+            centerV: 0,
+            edge:0.125,
+        }
         this.setParamData();
         this.initialize();
     }
 
-    setDomain(domain){
-        this.domain=domain;
+    setDomain(){
+        let domain={
+            u:{
+               min: this.domainParams.centerU - this.domainParams.length/2.-this.domainParams.edge,
+               max: this.domainParams.centerU + this.domainParams.length/2.+this.domainParams.edge
+            },
+            v:{
+                min: this.domainParams.centerV - this.domainParams.width/2.-this.domainParams.edge,
+                max: this.domainParams.centerV + this.domainParams.width/2.+this.domainParams.edge
+            },
+        };
+
+        this.domain = domain;
+
         let stop = function(uv){
             let u = uv.x;
             let v = uv.y;
@@ -77,6 +83,7 @@ class Surface{
     }
 
     initialize(){
+        this.setDomain();
         this.setFunctionData();
         this.buildNumericalDerivatives();
         this.buildParameterization();
@@ -230,6 +237,7 @@ class Surface{
             let coef = -num/denom;
 
             let acc = new Vector2(D.fu,D.fv).multiplyScalar(coef);
+
             return acc;
         }
 
@@ -244,6 +252,10 @@ class Surface{
         }
 
 
+
+
+
+
     }
 
     buildIntegrator(){
@@ -252,7 +264,7 @@ class Surface{
         let derive = this.derive;
         let ep = 0.01;
 
-        this.integrator = new SymplecticIntegrator(derive,ep,this.stop);
+        this.integrator = new Integrator(derive,ep,this.stop);
     }
 
     update(params){
@@ -295,10 +307,28 @@ class Surface{
 
     buildUIFolder(ui,resetScene){
 
+        let surf = this;
+
+        // let woodFolder = ui.addFolder('Wood Block');
+        // woodFolder.close();
+        //
+        // woodFolder.add(surf.domainParams,'length').onFinishChange(function(value){
+        //     surf.domainParams.length = value;
+        //     surf.initialize();
+        //     resetScene();
+        // });
+        //
+        // woodFolder.add(surf.domainParams,'width').onFinishChange(function(value){
+        //     surf.domainParams.width = value;
+        //     surf.initialize();
+        //     resetScene();
+        // });
+
+
         let folder = ui.addFolder('Surface');
         folder.close();
 
-        let surf = this;
+
         for(const key in surf.paramData){
             folder.add(surf.params,key,surf.paramData[key].min,surf.paramData[key].max,surf.paramData[key].step).name(surf.paramData[key].name).onChange(
                 function(value){
