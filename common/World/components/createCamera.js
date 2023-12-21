@@ -7,13 +7,13 @@ import {
 let defaultOptions = {fov:55,pos:{x:1,y:0,z:5},look:{x:0,y:0,z:0}};
 
 function createCamera(options=defaultOptions) {
-    const camera = new OrthographicCamera();
-    // const camera = new PerspectiveCamera(
-    //     options.fov||55, // fov = Field Of View
-    //     1, // aspect ratio (dummy value)
-    //     0.1, // near clipping plane
-    //     200, // far clipping plane
-    // );
+    //const camera = new OrthographicCamera();
+    const camera = new PerspectiveCamera(
+        options.fov||55, // fov = Field Of View
+        1, // aspect ratio (dummy value)
+        0.1, // near clipping plane
+        200, // far clipping plane
+    );
 
     // move the camera back so we can view the scene
     //camera.position.set(0, 0.1, 0);

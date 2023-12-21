@@ -19,7 +19,7 @@ class GraphingCalc extends Surface {
             b: 1.5,
             c: 0,
             gravity:0,
-            func: `a*sin(u+v)`
+            func: `0.5*a*sin(u+v)`
                 //`a*(sin(b*u)+sin(b*v))/(1+u*u+v*v)`
         };
 

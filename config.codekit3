@@ -7,7 +7,7 @@
       "uuidString" : "C9F666BF-AF51-4122-BD68-51F409970018"
     }
   ],
-  "creatorBuild" : "34518",
+  "creatorBuild" : "34564",
   "files" : {
     "\/.gitattributes" : {
       "cB" : 0,
@@ -10279,6 +10279,32 @@
       "q" : 100,
       "rq" : 75
     },
+    "\/assets\/textures\/earth.jpeg" : {
+      "ft" : 16384,
+      "iS" : 614562,
+      "jF" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/textures\/earth.jpg",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-none",
+      "q" : 100,
+      "rq" : 75
+    },
+    "\/assets\/textures\/earthmap.png" : {
+      "ft" : 32768,
+      "iS" : 484540,
+      "oA" : 0,
+      "oAP" : "\/assets\/textures\/earthmap.png",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "oT" : 1,
+      "ou" : "lpckwebp-none",
+      "q" : 90,
+      "rq" : 75
+    },
     "\/assets\/textures\/foil.webp" : {
       "ft" : 8388608,
       "iS" : 704872,
@@ -10974,6 +11000,50 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/common\/components\/GeoProgram\/BilliardChaos.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/GeoProgram\/BilliardChaos-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/GeoProgram\/Billiards.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/GeoProgram\/Billiards-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/GeoProgram\/Circles\/CircleGrid.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/GeoProgram\/Circles\/CircleGrid-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/GeoProgram\/Circles\/ConcentricCircles.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/GeoProgram\/Circles\/ConcentricCircles-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/common\/components\/GeoProgram\/example.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -10985,13 +11055,46 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/common\/components\/GeoProgram\/Geodesics\/BallTrail.js" : {
+    "\/common\/components\/GeoProgram\/Geodesics\/Ball.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 0,
-      "oAP" : "\/common\/components\/GeoProgram\/Geodesics\/BallTrail-min.js",
+      "oA" : 1,
+      "oAP" : "\/common\/components\/GeoProgram\/Geodesics\/Ball-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/GeoProgram\/Geodesics\/BallGPU.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/GeoProgram\/Geodesics\/BallGPU-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/GeoProgram\/Geodesics\/BallStripes.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/GeoProgram\/Geodesics\/BallStripes-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/GeoProgram\/Geodesics\/BilliardPath.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/GeoProgram\/Geodesics\/BilliardPath-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -11084,6 +11187,39 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/common\/components\/GeoProgram\/Integrator\/SymplecticIntegrator.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/components\/GeoProgram\/Integrator\/SymplecticIntegrator-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/GeoProgram\/Parallel\/ParallelTransport.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/GeoProgram\/Parallel\/ParallelTransport-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/GeoProgram\/Parallel\/TransportIntegrator.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/GeoProgram\/Parallel\/TransportIntegrator-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/common\/components\/GeoProgram\/Plot\/Plot.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -11102,6 +11238,28 @@
       "mi" : 1,
       "oA" : 1,
       "oAP" : "\/common\/components\/GeoProgram\/Plot\/PlotGPU-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/GeoProgram\/Plot\/shaders\/cartesianGrid.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/components\/GeoProgram\/Plot\/shaders\/cartesianGrid-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/GeoProgram\/Plot\/shaders\/polarGrid.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/GeoProgram\/Plot\/shaders\/polarGrid-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -11128,6 +11286,28 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/common\/components\/GeoProgram\/Plot\/shaders\/utils\/grid.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/GeoProgram\/Plot\/shaders\/utils\/grid-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/GeoProgram\/Plot\/shaders\/utils\/inDomain.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/GeoProgram\/Plot\/shaders\/utils\/inDomain-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/common\/components\/GeoProgram\/Plot\/shaders\/zHeight.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -11135,6 +11315,28 @@
       "mi" : 1,
       "oA" : 1,
       "oAP" : "\/common\/components\/GeoProgram\/Plot\/shaders\/zHeight-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/GeoProgram\/Plot\/shaders\/zStripes.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/GeoProgram\/Plot\/shaders\/zStripes-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/GeoProgram\/Rings.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/GeoProgram\/Rings-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -11166,8 +11368,19 @@
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 0,
+      "oA" : 1,
       "oAP" : "\/common\/components\/GeoProgram\/Surface\/examples\/GraphingCalc-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/GeoProgram\/Surface\/examples\/Norton.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/components\/GeoProgram\/Surface\/examples\/Norton-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -11179,6 +11392,17 @@
       "mi" : 1,
       "oA" : 0,
       "oAP" : "\/common\/components\/GeoProgram\/Surface\/examples\/Paraboloid-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/GeoProgram\/Surface\/examples\/Ripples.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/components\/GeoProgram\/Surface\/examples\/Ripples-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -11212,6 +11436,83 @@
       "mi" : 1,
       "oA" : 1,
       "oAP" : "\/common\/components\/GeoProgram\/WoodCut-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/maps\/Archimedes.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/maps\/Archimedes-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/maps\/createCSM.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/maps\/createCSM-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/maps\/Equirectangular.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/maps\/Equirectangular-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/maps\/Hemisphere.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/maps\/Hemisphere-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/maps\/Map.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/components\/maps\/Map-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/maps\/Mercator.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/maps\/Mercator-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/components\/maps\/Stereographic.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/components\/maps\/Stereographic-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -11652,6 +11953,17 @@
       "mi" : 1,
       "oA" : 1,
       "oAP" : "\/common\/compute\/cpu\/RungeKuttaParams-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/compute\/cpu\/SymplecticIntegrator.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/compute\/cpu\/SymplecticIntegrator-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -12206,6 +12518,17 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/common\/items\/euclidean-geometry\/CircleOnSphere.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/euclidean-geometry\/CircleOnSphere-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/common\/items\/euclidean-geometry\/Pythagorean3d.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -12294,6 +12617,72 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/common\/items\/maps\/ArchimedesMap.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/maps\/ArchimedesMap-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/maps\/EquirectangularMap.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/maps\/EquirectangularMap-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/maps\/HemisphereMap.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/maps\/HemisphereMap-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/maps\/MercatorMap.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/maps\/MercatorMap-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/maps\/StereographicMap.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/maps\/StereographicMap-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/maps\/StereographicMapEarth.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/maps\/StereographicMapEarth-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/common\/items\/objExample.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -12302,6 +12691,17 @@
       "oA" : 1,
       "oAP" : "\/common\/items\/objExample-min.js",
       "oF" : 1,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/odes\/DoublePendulumSim.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/odes\/DoublePendulumSim-min.js",
+      "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
@@ -12323,6 +12723,17 @@
       "mi" : 1,
       "oA" : 0,
       "oAP" : "\/common\/items\/odes\/LorenzAttractor-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/common\/items\/odes\/PendulumSim.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/common\/items\/odes\/PendulumSim-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -13262,6 +13673,17 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/common\/shaders\/colors\/postprocess.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/common\/shaders\/colors\/postprocess-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/common\/shaders\/geometry\/diffGeoS3.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -13834,6 +14256,19 @@
       "oF" : 1,
       "sC" : 3,
       "tS" : 0
+    },
+    "\/template\/earth.jpeg" : {
+      "ft" : 16384,
+      "iS" : 614562,
+      "jF" : 0,
+      "oA" : 0,
+      "oAP" : "\/template\/earth.jpg",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-none",
+      "q" : 100,
+      "rq" : 75
     },
     "\/template\/index.html" : {
       "cB" : 0,
@@ -14881,9 +15316,6 @@
       "no-new-native-nonconstructor" : {
         "active" : 0
       },
-      "no-new-object" : {
-        "active" : 0
-      },
       "no-new-symbol" : {
         "active" : 1
       },
@@ -14895,6 +15327,9 @@
       },
       "no-obj-calls" : {
         "active" : 1
+      },
+      "no-object-constructor" : {
+        "active" : 0
       },
       "no-octal" : {
         "active" : 1

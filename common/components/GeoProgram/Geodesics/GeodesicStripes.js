@@ -121,8 +121,10 @@ class GeodesicStripes {
     }
 
     updateSurface(){
+        this.buildIniStates();
         for(let i=0; i<this.maxN; i++){
             this.stripes[i].updateSurface();
+            this.stripes[i].update(this.iniStates[i]);
         }
     }
 
