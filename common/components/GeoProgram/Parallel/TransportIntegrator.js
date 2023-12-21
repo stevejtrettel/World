@@ -7,8 +7,10 @@ class TransportIntegrator{
         this.ep = ep;
 
         this.tangent = function(t){
-            let eps=0.001;
-            let ds = curve.getPoint(t+eps).add(curve.getPoint(t).multiplyScalar(-1));
+            let eps=0.01;
+            let pos1 = curve.getPoint(t+eps);
+            let pos2 = curve.getPoint(t);
+            let ds = pos1.add(pos2.multiplyScalar(-1));
             return ds.divideScalar(eps);
         };
 

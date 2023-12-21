@@ -22,18 +22,18 @@ class ParallelTransport{
     }
 
     initialize(){
-
         this.integrator = new TransportIntegrator(this.curve,this.surface,this.ep);
 
         this.vecs = [];
         let vec = this.iniVector;
         let t=0;
-        for(let i=0; i<1/this.ep; i++){
+        let N = Math.floor(1/this.ep);
+        for(let i=0; i<N; i++){
             this.vecs.push(vec);
             t=this.ep*i;
             vec = this.integrator.step(vec,t);
         }
-        this.parallelField = new SplineCurve(this.vecs,false);
+        this.parallelField = new SplineCurve(this.vecs);
     }
 
     updateVector(iniVec){
@@ -52,8 +52,8 @@ class ParallelTransport{
     }
 
     getVector(t){
-        let pos = this.curve.getPointAt(t);
-        let vec = this.parallelField.getPointAt(t);
+        let pos = this.curve.getPoint(t);
+        let vec = this.parallelField.getPoint(t);
         return new State(pos,vec);
     }
 }
