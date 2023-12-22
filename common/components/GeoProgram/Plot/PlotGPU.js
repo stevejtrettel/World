@@ -51,6 +51,7 @@ class PlotGPU {
                 float vMax = ${this.surface.domain.v.max};
                 float edge = ${this.surface.domainParams.edge};`;
 
+        console.log(this.domainVariables);
         let fragMain = this.domainVariables + this.colorFn +
             `
             vec3 fragColor(){
@@ -83,7 +84,8 @@ class PlotGPU {
     update(){
         //only need to do this first line if we are changing the shader
         //right now, only relevant if we change the domain.
-        this.compileMaterial();
+        this.plot.material.dispose();
+        this.plot.material = this.compileMaterial();
         //this is for changing the geometry itself:
         this.plot.geometry.dispose();
         this.plot.geometry =  new ParametricGeometry(this.surface.parametricSurface,this.slices,this.stacks);

@@ -16,7 +16,9 @@ class Surface{
             centerU: 0,
             centerV: 0,
             edge:0.125,
+            rebuild: function(){},
         }
+
         this.setParamData();
         this.initialize();
     }
@@ -125,7 +127,6 @@ class Surface{
             const fpn = F(u+eps, v-eps);
             const fnp = F(u-eps, v+eps);
             const fnn = F(u-eps,v-eps);
-
 
             return {
                 fu: (fp0 - fn0) / (2*eps),
@@ -309,21 +310,26 @@ class Surface{
 
         let surf = this;
 
-        // let woodFolder = ui.addFolder('Wood Block');
-        // woodFolder.close();
-        //
-        // woodFolder.add(surf.domainParams,'length').onFinishChange(function(value){
-        //     surf.domainParams.length = value;
-        //     surf.initialize();
-        //     resetScene();
-        // });
-        //
-        // woodFolder.add(surf.domainParams,'width').onFinishChange(function(value){
-        //     surf.domainParams.width = value;
-        //     surf.initialize();
-        //     resetScene();
-        // });
+        let resetParam={
+            reset:resetScene,
+        }
 
+        let woodFolder = ui.addFolder('Wood Block');
+        woodFolder.close();
+
+        woodFolder.add(surf.domainParams,'length').onFinishChange(function(value){
+            surf.domainParams.length = value;
+            surf.initialize();
+            //resetScene();
+        });
+
+        woodFolder.add(surf.domainParams,'width').onFinishChange(function(value){
+            surf.domainParams.width = value;
+            surf.initialize();
+            //resetScene();
+        });
+
+        woodFolder.add(resetParam,'reset');
 
         let folder = ui.addFolder('Surface');
         folder.close();

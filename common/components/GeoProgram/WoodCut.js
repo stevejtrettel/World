@@ -21,12 +21,28 @@ class WoodCut{
 
             surface: this.surface,
 
-            geoPos: 0,
-            geoDir: 0,
+            geoPos: -0.2,
+            geoDir: -0.5,
             geoVisible: false,
-            printGeo: function(){
-                woodCut.geodesic.printToFile('geodesic');
-            },
+            // printGeo: function(){
+            //     woodCut.geodesic.printToFile('geodesic');
+            // },
+
+            geoPos2: -0.1,
+            geoDir2: -0.25,
+            geoVisible2: false,
+
+            geoPos3: 0,
+            geoDir3: 0,
+            geoVisible3: false,
+
+            geoPos4: 0.1,
+            geoDir4: 0.25,
+            geoVisible4: false,
+
+            geoPos5: 0.2,
+            geoDir5: 0.5,
+            geoVisible5: false,
 
             stripeNum:11,
             stripeDir:0,
@@ -55,6 +71,20 @@ class WoodCut{
         let iniState = this.buildGeodesicIniState();
         this.geodesic = new Geodesic(this.surface,iniState);
 
+        let iniState2 = this.buildGeodesicIniState();
+        this.geodesic2 = new Geodesic(this.surface,iniState2);
+
+        let iniState3 = this.buildGeodesicIniState();
+        this.geodesic3 = new Geodesic(this.surface,iniState3);
+
+        let iniState4 = this.buildGeodesicIniState();
+        this.geodesic4 = new Geodesic(this.surface,iniState4);
+
+        let iniState5 = this.buildGeodesicIniState();
+        this.geodesic5 = new Geodesic(this.surface,iniState5);
+
+
+
         let iniStripes = this.buildStripeIniData();
         this.stripes = new GeodesicStripes(this.surface,iniStripes);
 
@@ -70,6 +100,34 @@ class WoodCut{
     buildGeodesicIniState(){
         let pos = new Vector2(this.surface.domain.u.min,this.params.geoPos);
         let vel = new Vector2(Math.cos(3.1415/2*this.params.geoDir),Math.sin(3.1415/2*this.params.geoDir));
+        return new State(pos,vel);
+    }
+
+    //to reset the initial state of a geodesic given position on boundary and angle
+    buildGeodesicIniState2(){
+        let pos = new Vector2(this.surface.domain.u.min,this.params.geoPos2);
+        let vel = new Vector2(Math.cos(3.1415/2*this.params.geoDir2),Math.sin(3.1415/2*this.params.geoDir2));
+        return new State(pos,vel);
+    }
+
+    //to reset the initial state of a geodesic given position on boundary and angle
+    buildGeodesicIniState3(){
+        let pos = new Vector2(this.surface.domain.u.min,this.params.geoPos3);
+        let vel = new Vector2(Math.cos(3.1415/2*this.params.geoDir3),Math.sin(3.1415/2*this.params.geoDir3));
+        return new State(pos,vel);
+    }
+
+    //to reset the initial state of a geodesic given position on boundary and angle
+    buildGeodesicIniState4(){
+        let pos = new Vector2(this.surface.domain.u.min,this.params.geoPos4);
+        let vel = new Vector2(Math.cos(3.1415/2*this.params.geoDir4),Math.sin(3.1415/2*this.params.geoDir4));
+        return new State(pos,vel);
+    }
+
+    //to reset the initial state of a geodesic given position on boundary and angle
+    buildGeodesicIniState5(){
+        let pos = new Vector2(this.surface.domain.u.min,this.params.geoPos5);
+        let vel = new Vector2(Math.cos(3.1415/2*this.params.geoDir5),Math.sin(3.1415/2*this.params.geoDir5));
         return new State(pos,vel);
     }
 
@@ -101,6 +159,22 @@ class WoodCut{
 
         if(this.params.geoVisible){
             str = str + this.geodesic.printToString(numPts);
+        }
+
+        if(this.params.geoVisible2){
+            str = str + this.geodesic2.printToString(numPts);
+        }
+
+        if(this.params.geoVisible3){
+            str = str + this.geodesic3.printToString(numPts);
+        }
+
+        if(this.params.geoVisible4){
+            str = str + this.geodesic4.printToString(numPts);
+        }
+
+        if(this.params.geoVisible5){
+            str = str + this.geodesic5.printToString(numPts);
         }
 
         if(this.params.sprayVisible){
@@ -142,11 +216,22 @@ class WoodCut{
 
     addToScene(scene){
         this.plot.addToScene(scene);
+
         this.geodesic.addToScene(scene);
+        this.geodesic2.addToScene(scene);
+        this.geodesic3.addToScene(scene);
+        this.geodesic4.addToScene(scene);
+        this.geodesic5.addToScene(scene);
+
         this.stripes.addToScene(scene);
         this.spray.addToScene(scene);
 
         this.geodesic.setVisibility(this.params.geoVisible);
+        this.geodesic2.setVisibility(this.params.geoVisible2);
+        this.geodesic3.setVisibility(this.params.geoVisible3);
+        this.geodesic4.setVisibility(this.params.geoVisible4);
+        this.geodesic5.setVisibility(this.params.geoVisible5);
+
         this.stripes.setVisibility(this.params.stripeVisible);
         this.spray.setVisibility(this.params.sprayVisible);
     }
@@ -156,19 +241,33 @@ class WoodCut{
         let woodCut = this;
         let params = woodCut.params;
 
-
         let resetScene = function(){
             woodCut.plot.update();
             woodCut.geodesic.updateSurface();
+            woodCut.geodesic2.updateSurface();
+            woodCut.geodesic3.updateSurface();
+            woodCut.geodesic4.updateSurface();
+            woodCut.geodesic5.updateSurface();
             woodCut.spray.updateSurface();
             woodCut.stripes.updateSurface();
         };
         woodCut.surface.buildUIFolder(ui,resetScene);
 
-        let geoFolder = ui.addFolder('Geodesic');
+        let gF = ui.addFolder('Geodesics');
+        let geoFolder = gF.addFolder('Geodesic 1');
+        let geoFolder2 = gF.addFolder('Geodesic 2');
+        let geoFolder3 = gF.addFolder('Geodesic 3');
+        let geoFolder4 = gF.addFolder('Geodesic 4');
+        let geoFolder5 = gF.addFolder('Geodesic 5');
+
         let stripeFolder = ui.addFolder('Stripes');
         let sprayFolder = ui.addFolder('Spray');
+        gF.close();
         geoFolder.close();
+        geoFolder2.close();
+        geoFolder3.close();
+        geoFolder4.close();
+        geoFolder5.close();
         stripeFolder.close();
         sprayFolder.close();
 
@@ -191,7 +290,102 @@ class WoodCut{
                 let iniState = woodCut.buildGeodesicIniState();
                 woodCut.geodesic.update(iniState);
             });
-        geoFolder.add(params, 'printGeo').name('Download');
+
+        // geoFolder.add(params, 'printGeo').name('Download');
+        //
+
+
+        geoFolder2.add(params,'geoVisible2').onChange(
+            function(value){
+                woodCut.params.geoVisible2 = value;
+                woodCut.geodesic2.setVisibility(value);
+            });
+
+        geoFolder2.add(params, 'geoPos2', woodCut.surface.domain.v.min, woodCut.surface.domain.v.max,0.01).name('Position').onChange(
+            function(value){
+                params.geoPos2 = value;
+                let iniState = woodCut.buildGeodesicIniState2();
+                woodCut.geodesic2.update(iniState);
+            });
+        geoFolder2.add(params,'geoDir2',-1,1,0.01).name('Direction').onChange(
+            function(value){
+                params.geoDir2 = value;
+                let iniState = woodCut.buildGeodesicIniState2();
+                woodCut.geodesic2.update(iniState);
+            });
+
+
+        geoFolder3.add(params,'geoVisible3').onChange(
+            function(value){
+                woodCut.params.geoVisible3 = value;
+                woodCut.geodesic3.setVisibility(value);
+            });
+
+        geoFolder3.add(params, 'geoPos3', woodCut.surface.domain.v.min, woodCut.surface.domain.v.max,0.01).name('Position').onChange(
+            function(value){
+                params.geoPos3 = value;
+                let iniState = woodCut.buildGeodesicIniState3();
+                woodCut.geodesic3.update(iniState);
+            });
+        geoFolder3.add(params,'geoDir3',-1,1,0.01).name('Direction').onChange(
+            function(value){
+                params.geoDir3 = value;
+                let iniState = woodCut.buildGeodesicIniState3();
+                woodCut.geodesic3.update(iniState);
+            });
+
+
+        geoFolder4.add(params,'geoVisible4').onChange(
+            function(value){
+                woodCut.params.geoVisible4 = value;
+                woodCut.geodesic4.setVisibility(value);
+            });
+
+        geoFolder4.add(params, 'geoPos4', woodCut.surface.domain.v.min, woodCut.surface.domain.v.max,0.01).name('Position').onChange(
+            function(value){
+                params.geoPos4 = value;
+                let iniState = woodCut.buildGeodesicIniState4();
+                woodCut.geodesic4.update(iniState);
+            });
+        geoFolder4.add(params,'geoDir4',-1,1,0.01).name('Direction').onChange(
+            function(value){
+                params.geoDir4 = value;
+                let iniState = woodCut.buildGeodesicIniState4();
+                woodCut.geodesic4.update(iniState);
+            });
+
+
+        geoFolder5.add(params,'geoVisible5').onChange(
+            function(value){
+                woodCut.params.geoVisible5 = value;
+                woodCut.geodesic5.setVisibility(value);
+            });
+
+        geoFolder5.add(params, 'geoPos5', woodCut.surface.domain.v.min, woodCut.surface.domain.v.max,0.01).name('Position').onChange(
+            function(value){
+                params.geoPos5 = value;
+                let iniState = woodCut.buildGeodesicIniState5();
+                woodCut.geodesic5.update(iniState);
+            });
+        geoFolder5.add(params,'geoDir5',-1,1,0.01).name('Direction').onChange(
+            function(value){
+                params.geoDir5 = value;
+                let iniState = woodCut.buildGeodesicIniState5();
+                woodCut.geodesic5.update(iniState);
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         stripeFolder.add(params,'stripeVisible').onChange(
             function(value){

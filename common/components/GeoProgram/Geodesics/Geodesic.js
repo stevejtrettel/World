@@ -52,7 +52,7 @@ class Geodesic{
         this.curve.setVisibility(value);
     }
 
-    //get the point htat is percent of the way along the curve
+    //get the point that is percent of the way along the curve
     getPoint(percent){
         return this.curve.curve.getPointAt(percent);
     }
