@@ -6,7 +6,8 @@ import ParallelTransport from "../Parallel/ParallelTransport.js";
 
 let defaultCurveOptions = {
     length:30,
-    color: 0xffffff,
+    color: 0x000000,
+        //0xffffff,
     radius: 0.02,
     res: 100,
 };

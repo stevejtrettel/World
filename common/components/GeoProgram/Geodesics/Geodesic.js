@@ -6,7 +6,8 @@ import IntegralCurve from "../Integrator/IntegralCurve.js";
 
 const defaultOptions = {
     length:40,
-    color: 0xffffff,
+    color: 0x000000,
+        //0xffffff,
     radius: 0.05,
     res: 100,
 }

@@ -17,7 +17,7 @@ vec3 colorFn(vec2 uv,vec3 xyz){
         
         float hue = t;
         float sat =0.6*(2.*r*r/(1.+2.*r*r));
-        float light =0.5;
+        float light =0.4;
         vec3 base = hsb2rgb(vec3(hue,sat,light));
         
         float grid = scalarGrid(y, 2.);

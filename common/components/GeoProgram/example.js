@@ -1,4 +1,5 @@
 import WoodCut from "./WoodCut.js";
+import StripeBoard from "./StripeBoard.js";
 //import GravitySim from "./GravitySim.js";
 import Rings from "./Rings.js";
 import BilliardChaos from "./BilliardChaos.js";
@@ -16,7 +17,7 @@ import Billiards from "./Billiards.js";
 let surf = new MySurf();
     //{u:{min:-2,max:2},v:{min:-2,max:2}});
 
-let wood = new WoodCut(surf);
+let wood = new StripeBoard(surf);
 //let grav = new GravitySim(surf);
 //let billiards = new Billiards(surf);
 //let rings = new Rings(surf);

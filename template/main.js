@@ -36,7 +36,7 @@ let globalSettings={
     },
 
     camera:{
-        animate:false,
+        animate:true,
         fov:55,
         pos:{x:2,y:4,z:8},
         look:{x:0,y:0,z:0},
