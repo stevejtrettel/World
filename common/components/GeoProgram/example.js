@@ -9,7 +9,7 @@ import BilliardChaos from "./BilliardChaos.js";
 //import MySurf from "./Surface/examples/Paraboloid.js";
 //import MySurf from "./Surface/examples/SinxSiny.js";
 //import MySurf from "./Surface/examples/CosR.js";
-import MySurf from "./Surface/examples/GraphingCalc.js";
+import MySurf from "./Surface/examples/surface-set/Eggcarton.js";
 //import MySurf from "./Surface/examples/Norton.js";
 import Billiards from "./Billiards.js";
 //import MySurf from "./Surface/examples/Ripples.js";

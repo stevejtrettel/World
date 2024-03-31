@@ -84,11 +84,11 @@ class PlotGPU {
     update(){
         //only need to do this first line if we are changing the shader
         //right now, only relevant if we change the domain.
-        this.plot.material.dispose();
-        this.plot.material = this.compileMaterial();
-        //this is for changing the geometry itself:
-        this.plot.geometry.dispose();
-        this.plot.geometry =  new ParametricGeometry(this.surface.parametricSurface,this.slices,this.stacks);
+        // this.plot.material.dispose();
+        // this.plot.material = this.compileMaterial();
+        // //this is for changing the geometry itself:
+        // this.plot.geometry.dispose();
+        // this.plot.geometry =  new ParametricGeometry(this.surface.parametricSurface,this.slices,this.stacks);
     }
 }
 

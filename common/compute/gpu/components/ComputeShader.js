@@ -1,7 +1,6 @@
 import {FullScreenQuad} from "./FullScreenQuad.js";
 import {ComputeRenderTargets} from "./ComputeRTs.js";
 
-
 //shaders is either 1) a single shader or 2) a pair {initialization:x, simulation:y}
 //they've already been built, including their uniforms, and come here complete
 class ComputeShader {

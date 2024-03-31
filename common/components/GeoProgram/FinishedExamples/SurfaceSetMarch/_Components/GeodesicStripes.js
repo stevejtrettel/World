@@ -1,7 +1,8 @@
-import {Vector2} from "../../../../3party/three/build/three.module.js";
+import {Vector2} from "../../../../../../3party/three/build/three.module.js";
+import State from "../../../Integrator/State.js";
+import ParallelTransport from "../../../Parallel/ParallelTransport.js";
+
 import Geodesic from "./Geodesic.js";
-import State from "../Integrator/State.js";
-import ParallelTransport from "../Parallel/ParallelTransport.js";
 
 
 let defaultCurveOptions = {

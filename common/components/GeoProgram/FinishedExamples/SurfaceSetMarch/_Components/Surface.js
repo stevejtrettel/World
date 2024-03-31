@@ -1,9 +1,8 @@
 // the base class for surfaces and computations:
-import {Vector3,Vector2,Matrix3} from "../../../../3party/three/build/three.module.js";
+import {Vector2,Vector3, Matrix3} from "../../../../../../3party/three/build/three.module.js";
 
-import dState from "../Integrator/dState.js";
-import Integrator from "../Integrator/Integrator.js";
-//import SymplecticIntegrator from "../Integrator/SymplecticIntegrator.js";
+import dState from "../../../Integrator/dState.js";
+import Integrator from "../../../Integrator/Integrator.js";
 
 
 
@@ -20,6 +19,7 @@ class Surface{
         }
 
         this.setParamData();
+        this.setDomain();
         this.initialize();
     }
 
@@ -85,7 +85,7 @@ class Surface{
     }
 
     initialize(){
-        this.setDomain();
+        // this.setDomain();
         this.setFunctionData();
         this.buildNumericalDerivatives();
         this.buildParameterization();
@@ -282,23 +282,23 @@ class Surface{
     }
 
 
-    boundaryReflect(state){
-
-        if(this.stop(state.pos)) {
-
-            //if on the boundary of constant u
-            if (Math.abs(state.pos.x - this.domain.u.min) < 0.1 || Math.abs(state.pos.x - this.domain.u.max) < 0.1) {
-                //console.log(Math.min(Math.abs(state.pos.x-this.domain.u.min),Math.abs(state.pos.x-this.domain.u.max)));
-                state.vel = this.reflectGivenTangent(state.pos)(state.vel, new Vector2(0, 1));
-            }
-            //if on the boundary of constant v
-            if (Math.abs(state.pos.y - this.domain.v.min) < 0.1 || Math.abs(state.pos.y - this.domain.v.max) < 0.1) {
-                state.vel = this.reflectGivenTangent(state.pos)(state.vel, new Vector2(1, 0));
-            }
-
-        }
-        return state;
-    }
+    // boundaryReflect(state){
+    //
+    //     if(this.stop(state.pos)) {
+    //
+    //         //if on the boundary of constant u
+    //         if (Math.abs(state.pos.x - this.domain.u.min) < 0.1 || Math.abs(state.pos.x - this.domain.u.max) < 0.1) {
+    //             //console.log(Math.min(Math.abs(state.pos.x-this.domain.u.min),Math.abs(state.pos.x-this.domain.u.max)));
+    //             state.vel = this.reflectGivenTangent(state.pos)(state.vel, new Vector2(0, 1));
+    //         }
+    //         //if on the boundary of constant v
+    //         if (Math.abs(state.pos.y - this.domain.v.min) < 0.1 || Math.abs(state.pos.y - this.domain.v.max) < 0.1) {
+    //             state.vel = this.reflectGivenTangent(state.pos)(state.vel, new Vector2(1, 0));
+    //         }
+    //
+    //     }
+    //     return state;
+    // }
 
     printToString(){
         let str = ``;

@@ -3,7 +3,6 @@ import {Vector3} from "../../../3party/three/build/three.module.js";
 import Vector from "../basic-shapes/Vector.js";
 
 
-
 let defaultOptions = {
     tColor:0xffffff,
     nColor:0xffffff,

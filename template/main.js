@@ -1,6 +1,8 @@
 //set the stuff for this particular example!
 //import example from "../common/items/FiveBody.js"
-import example from "../common/components/GeoProgram/example.js";
+//import example from "../common/components/GeoProgram/example.js";
+
+import example from "../common/components/GeoProgram/FinishedExamples/SurfaceSetMarch/BumpSide/export.js";
 //import example from "../common/items/BlackHoleGeodesics.js";
 //import everything except the objects of the scene
 //this uses all the default settings defined in the "template" folder
@@ -36,7 +38,7 @@ let globalSettings={
     },
 
     camera:{
-        animate:true,
+        animate:false,
         fov:55,
         pos:{x:2,y:4,z:8},
         look:{x:0,y:0,z:0},

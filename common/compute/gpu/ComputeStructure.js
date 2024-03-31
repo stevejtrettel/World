@@ -101,7 +101,6 @@ class ComputeStructure {
         for(let name of this.externalUniforms){
             this.uniforms[name].value = externalInput[name];
         }
-
     }
 
     getData( variable ){

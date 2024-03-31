@@ -17,7 +17,6 @@ const defaultOptions = {
 
 
 
-
 class IntegralCurve{
     constructor(integrator, parameterization, iniState, curveOptions=defaultOptions ){
     //constructor(integrator, parameterization, iniState, stop, curveOptions) {
