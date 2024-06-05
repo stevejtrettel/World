@@ -335,18 +335,18 @@ class Surface{
         //
         // woodFolder.add(resetParam,'reset');
         //
-        let folder = ui.addFolder('Surface');
-        folder.close();
+        // let folder = ui.addFolder('Surface');
+        // folder.close();
 
-
-        for(const key in surf.paramData){
-            folder.add(surf.params,key,surf.paramData[key].min,surf.paramData[key].max,surf.paramData[key].step).name(surf.paramData[key].name).onChange(
-                function(value){
-                    surf.params[key]=value;
-                    surf.update({key:value});
-                    resetScene();
-                });
-        }
+        //
+        // for(const key in surf.paramData){
+        //     folder.add(surf.params,key,surf.paramData[key].min,surf.paramData[key].max,surf.paramData[key].step).name(surf.paramData[key].name).onChange(
+        //         function(value){
+        //             surf.params[key]=value;
+        //             surf.update({key:value});
+        //             resetScene();
+        //         });
+        // }
     }
 }
 

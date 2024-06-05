@@ -17,7 +17,7 @@ html {
 body {
     margin: 0;
     padding: 0;
-    background-color: #202020;
+    /*background-color: #202020;*/
     color: #ffffff;
     line-height: 1.4em;
     height: 100%;
@@ -30,8 +30,6 @@ body {
 
 
 
-
-
 /* The spot that our threejs scene goes */
 
 #World {
@@ -39,7 +37,6 @@ body {
     position: absolute;
     width: 100%;
     height: 100%;
-
     /*
       Set the container's background color to the same as the scene's
       background to prevent flashing on load

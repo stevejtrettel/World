@@ -262,4 +262,4 @@ let N = 100;
 
 let example = new RiemannSumPlotter(fnText, range, N);
 
-export default {example};
+export default example;

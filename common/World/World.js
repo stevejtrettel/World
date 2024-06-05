@@ -1,6 +1,6 @@
 import { UI } from "./Ui.js";
 import { Loop } from "./Loop.js";
-import { Resizer } from "./Resizer.js";
+import Resizer from "./Resizer.js";
 //import { Environment } from "./Environment.js";
 
 import { createCamera } from "./components/createCamera.js";
@@ -9,17 +9,27 @@ import { createStats, placeStats } from "./components/createStats.js";
 import { createControls } from "./components/createControls.js";
 import {createPMREM, createRenderer} from "./components/createRenderer.js";
 
-
 class World {
 
     constructor( container, options ) {
 
-        this.container = container;
         this.renderer = createRenderer(options.renderer={});
         this.pmrem = createPMREM(this.renderer);
 
+        //put the container for the scene into the html
+        //get the canvas that things attach to, and add to scene
+        //this.container = this.renderer.domElement;
+        //document.body.appendChild(this.container);
+        //this.container.setAttribute("id", "World");
+        // this.container.style.width = '100%';
+        // this.container.style.height = '100%';
+        // this.container.style.position = 'absolute';
+        // this.container.style['background-color'] = "#0f213d";
+        //
+
         //the renderer creates a canvas element: append it to the html
-        this.container.append( this.renderer.domElement );
+        this.container = container;
+         this.container.append( this.renderer.domElement );
 
         this.camera = createCamera(options.camera);
         this.scene = createScene( options.environment.color );
@@ -91,7 +101,7 @@ class World {
 
     stop() {
         //end an animation cycle
-        this.loop.end();
+        this.loop.stop();
     }
 
 }

@@ -117,7 +117,7 @@ class WoodCut{
                 woodCut.stripes.update({pos:params.stripePos});
             });
 
-        stripeFolder.add(params, 'printStripe').name('Download');
+        // stripeFolder.add(params, 'printStripe').name('Download');
 
         ui.add(params,'printAll').name('Download All');
     }

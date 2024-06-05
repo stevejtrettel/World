@@ -1,7 +1,7 @@
 import {
     AmbientLight,
     DirectionalLight,
-} from "../../3party/three/build/three.module.js";
+} from "../../../3party/three/build/three.module.js";
 
 const ambient = new AmbientLight(0xffffff,0.4);
 ambient.addToScene = (scene) => scene.add(ambient);

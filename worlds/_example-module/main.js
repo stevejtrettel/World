@@ -1,15 +1,11 @@
 //set the stuff for this particular example!
- import Item from "../common/itemsNew/topology/Solitar.js";
+ import Item from "../../common/itemsNew/topology/Solitar.js";
 
 //import everything except the objects of the scene
 //this uses all the default settings defined in the "template" folder
-import { World } from "../common/World/World.js";
-import  {createEnvironment}  from "./src/environment.js";
-import  {lights}  from "./src/lights.js";
-// import  post  from "./src/post.js"
-
-import { createRenderer } from "../common/World/components/createRenderer.js";
-import {PMREMGenerator} from "../3party/three/build/three.module.js";
+import { World} from "../../common/World/World.js";
+import  {createEnvironment} from "../../common/World/template/environment.js";
+import  {lights} from "../../common/World/template/lights.js";
 
 
 function main(globalSettings,itemSettings) {

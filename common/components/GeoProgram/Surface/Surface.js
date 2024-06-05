@@ -309,7 +309,6 @@ class Surface{
         return str;
     }
 
-
     buildUIFolder(ui,resetScene){
 
         let surf = this;

@@ -1,11 +1,8 @@
 
-import { LightProbeGenerator } from "../../3party/three/examples/jsm/lights/LightProbeGenerator.js";
-import {BoxNoLights} from "../../common/backgrounds/BoxNoLights.js";
-import {BoxWithLights } from "../../common/backgrounds/BoxWithLights.js";
-import {CubeMap} from "../../common/backgrounds/CubeMap.js";
+import {BoxNoLights} from "../../backgrounds/BoxNoLights.js";
+import {BoxWithLights} from "../../backgrounds/BoxWithLights.js";
 
-import {Color} from "../../3party/three/build/three.module.js";
-
+import {Color} from "../../../3party/three/build/three.module.js";
 
 function createEnvironment(options,pmremGen){
 
