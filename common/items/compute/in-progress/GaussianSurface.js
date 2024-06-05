@@ -13,10 +13,6 @@ import { RungeKutta } from "../../compute/cpu/RungeKutta.js";
 import IntegralCurveSpray from "../../components/odes/IntegralCurveSpray-Traditional.js";
 
 
-
-
-
-
 let equations = {
     x: 'u',
     y: 'v',

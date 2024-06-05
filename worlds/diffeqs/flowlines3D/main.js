@@ -1,12 +1,10 @@
 //set the stuff for this particular example!
-import CTC from "../../../common/items/geometry/CTC.js";
-let example = new CTC();
+import object from "./flowSetup.js";
 
 //this uses all the default settings defined in the "template" folder
 import { World } from "../../../common/World/World.js";
 import  {createEnvironment} from "../../../common/World/template/environment.js";
 import  {lights} from "../../../common/World/template/lights.js";
-
 
 
 //global settings for the scene
@@ -53,7 +51,6 @@ function main(globalSettings) {
     world.setEnvironment( environment ) ;
 
     // Fill this world with objects
-    let object = {example:example};
     world.addObjects(object);
     world.addObjects( lights );
 

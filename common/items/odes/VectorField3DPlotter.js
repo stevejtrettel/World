@@ -6,9 +6,9 @@ import {
     SphereBufferGeometry,
     MeshPhysicalMaterial,
     Mesh
-} from "../../3party/three/build/three.module.js";
+} from "../../../3party/three/build/three.module.js";
 
-import VectorField3D from "../components/VectorCalculus/VectorField3D.js";
+import VectorField3D from "../../components/vector-calculus/VectorField3D.js";
 
 //using GLOBAL object math.parser: this is from the 3rd party math file loaded in the html
 const parser = math.parser();

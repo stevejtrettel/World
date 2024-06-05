@@ -1,7 +1,7 @@
-import {Vector3} from "../../3party/three/build/three.module.js";
-import {RungeKutta} from "../compute/cpu/RungeKutta.js";
-import {FlowLine} from "../components/odes/FlowLine.js";
-import {FlowLineField} from "../components/odes/FlowLineField.js";
+import {Vector3} from "../../../3party/three/build/three.module.js";
+import {RungeKutta} from "../../../common/compute/cpu/RungeKutta.js";
+import {FlowLine} from "../../../common/components/odes/FlowLine.js";
+import {FlowLineField} from "../../../common/components/odes/FlowLineField.js";
 
 
 const ep = 0.01;
@@ -48,14 +48,10 @@ flowLines.tick=function(time,dTime){
 
 
 
-
-
-
-
-let flows = {
+let flowSetup = {
     curve: integralCurve,
     lines: flowLines,
 };
 
 
-export default flows;
+export default flowSetup;

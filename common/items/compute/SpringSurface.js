@@ -1,19 +1,20 @@
-import {globals} from "../World/globals.js";
 
-import {VerletDissipative} from "../compute/gpu/VerletDissipative.js";
-import {ComputeMaterial} from "../compute/materials/ComputeMaterial.js";
+import {VerletDissipative} from "../../compute/gpu/VerletDissipative.js";
+import {ComputeMaterial} from "../../compute/materials/ComputeMaterial.js";
 
-import { colorConversion } from "../shaders/colors/colorConversion.js";
+import { colorConversion} from "../../shaders/colors/colorConversion.js";
 
-import { setIJ, onEdges, fetch } from "../shaders/springs/setup.js";
-import {SpringStruct} from "../shaders/springs/Spring.js";
-import { grid2D_springForce } from "../shaders/springs/grid2D/grid2D_springForce.js";
-import { grid2D_springDamping } from "../shaders/springs/grid2D/grid2D_springDamping.js";
+import { setIJ, onEdges, fetch } from "../../shaders/springs/setup.js";
+import {SpringStruct} from "../../shaders/springs/Spring.js";
+import { grid2D_springForce } from "../../shaders/springs/grid2D/grid2D_springForce.js";
+import { grid2D_springDamping } from "../../shaders/springs/grid2D/grid2D_springDamping.js";
+
+
+
 
 //-------------------------------------------------------------------
 // SETUP THE SPRING FORCES
 //-------------------------------------------------------------------
-
 
 
 const envForces = `
@@ -86,18 +87,83 @@ const fragColor = `
 
 
 
+//-------------------------------------------------------------------
+// DEFAULT VALUES OF THE PARAMETERS
+//-------------------------------------------------------------------
+
+
+
+let matOptions = {
+    clearcoat:0.5,
+    metalness:0.,
+    roughness:0.5,
+};
 
 
 
 
+const getInitialPos = `
+        vec4 getInitialPos( ivec2 ij ){
+               vec4 xdir = vec4(1,0,0,0);
+               vec4 ydir = normalize(vec4(0,0,1,0));
+               
+               float x = float(ij.x);
+               float y = float(ij.y);
+             
+                vec4 origin = vec4(-res.x/2.+30., -res.y/2., -100, 0.);
+               return  origin + gridSpacing * (x*xdir + y*ydir);
+        }
+`;
+
+const getInitialVel = `
+    vec4 getInitialVel( ivec2 ij ){
+        return vec4(0);
+    }
+`;
+
+const setBdyCond = `
+    void setBoundaryConditions(ivec2 ij, inout vec4 totalForce ){
+        if(ij.y==int(res.y)-1 && (ij.x==0||ij.x==int(res.x/2.)||ij.x==int(res.x)-1)){totalForce = vec4(0);}
+        //if(onCorner(ij)){totalForce =vec4(0);}
+    }`;
 
 
+const defaultSpringConditions = {
+    position: getInitialPos,
+    velocity: getInitialVel,
+    boundary: setBdyCond,
+};
+
+let defaultSpringParameters = {
+    mass:0.1,
+    springConst: 20.,
+    gridSpacing : 0.5,
+    dampingConst : 0.1,
+    airDragConst : 0.,
+    simTimeStep : 0.002,
+};
+
+const defaultResolution = [128,64];
+
+
+
+
+let defaultSpringMaterial = {
+    uniforms: {},
+    options: matOptions,
+};
 
 
 
 class SpringSurface {
 
-    constructor(arraySize, springParameters, springConditions, springMaterial, renderer){
+    constructor(
+        renderer,
+        arraySize = defaultResolution,
+        springParameters = defaultSpringParameters,
+        springConditions = defaultSpringConditions,
+        springMaterial = defaultSpringMaterial
+    ){
 
         //copy over all the data
         this.arraySize=arraySize;
@@ -249,113 +315,4 @@ class SpringSurface {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//-------------------------------------------------------------------
-// BUILDING AN EXAMPLE
-//-------------------------------------------------------------------
-
-
-const resolution = [128,64];
-
-let matOptions = {
-    clearcoat:0.5,
-    metalness:0.,
-    roughness:0.5,
-};
-
-let springParameters = {
-    mass:0.1,
-    springConst: 20.,
-    gridSpacing : 0.5,
-    dampingConst : 0.1,
-    airDragConst : 0.,
-    simTimeStep : 0.002,
-};
-
-
-const getInitialPos = `
-        vec4 getInitialPos( ivec2 ij ){
-               vec4 xdir = vec4(1,0,0,0);
-               vec4 ydir = normalize(vec4(0,0,1,0));
-               
-               float x = float(ij.x);
-               float y = float(ij.y);
-             
-                vec4 origin = vec4(-res.x/2.+30., -res.y/2., -100, 0.);
-               return  origin + gridSpacing * (x*xdir + y*ydir);
-        }
-`;
-
-const getInitialVel = `
-    vec4 getInitialVel( ivec2 ij ){
-        return vec4(0);
-    }
-`;
-
-const setBdyCond = `
-    void setBoundaryConditions(ivec2 ij, inout vec4 totalForce ){
-        if(ij.y==int(res.y)-1 && (ij.x==0||ij.x==int(res.x/2.)||ij.x==int(res.x)-1)){totalForce = vec4(0);}
-        //if(onCorner(ij)){totalForce =vec4(0);}
-    }`;
-
-
-
-
-
-
-
-//-------------------------------------------------------------------
-// actually doing it
-//-------------------------------------------------------------------
-
-
-
-
-let springMaterial = {
-    uniforms: {},
-    options: matOptions,
-};
-
-
-const springConditions = {
-    position: getInitialPos,
-    velocity: getInitialVel,
-    boundary: setBdyCond,
-};
-
-
-
-let cloth = new SpringSurface(resolution, springParameters, springConditions, springMaterial, globals.renderer);
-cloth.setIterations(30);
-
-
-
-
-
-
-
-
-
-
-export { SpringSurface };
-
-export default { cloth };
-
-
+export default SpringSurface;

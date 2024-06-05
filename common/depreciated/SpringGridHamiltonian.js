@@ -1,13 +1,11 @@
+import {VerletHamiltonian} from "../../compute/gpu/VerletHamiltonian.js";
+import { CSSpheres } from "../../compute/gpu/displays/CSSpheres.js";
+import { CSQuad } from "../../compute/gpu/displays/CSQuad.js";
 
-import {globals} from "../World/globals.js";
+import { setIJ, onEdges, fetch } from "../../shaders/springs/setup.js";
+import {SpringStruct} from "../../shaders/springs/Spring.js";
+import { grid2D_springPotentialGrad } from "../../shaders/springs/grid2D/grid2D_springPotentialGrad.js";
 
-import {VerletHamiltonian } from "../compute/gpu/VerletHamiltonian.js";
-import { CSSpheres } from "../compute/gpu/displays/CSSpheres.js";
-import { CSQuad } from "../compute/gpu/displays/CSQuad.js";
-
-import { setIJ, onEdges, fetch } from "../shaders/springs/setup.js";
-import { SpringStruct } from "../shaders/springs/Spring.js";
-import { grid2D_springPotentialGrad } from "../shaders/springs/grid2D/grid2D_springPotentialGrad.js";
 
 
 //-------------------------------------------------------------------
@@ -56,9 +54,107 @@ const envGradients = `
 
 
 
-class SpringGrid {
 
-    constructor(arraySize, springParameters, springConditions, renderer){
+
+
+
+//-------------------------------------------------------------------
+// PARAMETER DEFAULTS
+//-------------------------------------------------------------------
+
+
+
+const getInitialPos = `
+        vec4 getInitialPos( ivec2 ij ){
+               vec4 xdir = vec4(1,0,0,0);
+               vec4 ydir = normalize(vec4(0,0,1,0));
+               
+               float x = float(ij.x);
+               float y = float(ij.y);
+             
+                vec4 origin = vec4(-res.x/2.+30., -res.y/2., -100, 0.);
+               return origin + gridSpacing * (x*xdir + y*ydir);
+        }
+`;
+
+const getInitialMom = `
+    vec4 getInitialMom( ivec2 ij ){
+        return vec4(0);
+    }
+`;
+
+const setBdyCond = `
+    void setBoundaryConditions(ivec2 ij, inout vec4 totalForce ){
+        //if(ij.y==int(res.y)-1 && (ij.x==0||ij.x==int(res.x/2.)||ij.x==int(res.x)-1)){totalForce = vec4(0);}
+        if(onCorner(ij)){totalForce =vec4(0);}
+    }`;
+
+
+
+
+const defaultRes =  [64,64];
+
+let defaultSpringParameters = {
+    mass:0.1,
+    springConst: 30.,
+    gridSpacing : 0.25,
+    dampingConst : 0.5,
+    airDragConst : 0.,
+};
+
+
+
+const defaultSpringConditions = {
+    position: getInitialPos,
+    momentum: getInitialMom,
+    boundary: setBdyCond,
+};
+
+
+//
+// let springSim = new SpringGrid(res, springParameters, springConditions, globals.renderer);
+// springSim.setIterations(50);
+//
+//
+// let testDisplay = new CSQuad(springSim.integrator.computer);
+//
+// export default {
+//     system: springSim,
+//     display: testDisplay,
+// };
+//
+//
+//
+//
+// export { SpringGrid };
+//
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class SpringGridHamiltonian {
+
+    constructor(
+        renderer,
+        arraySize = defaultRes,
+        springParameters = defaultSpringParameters,
+        springConditions = defaultSpringConditions
+    ){
 
         //copy over all the data
         this.arraySize=arraySize;
@@ -179,93 +275,4 @@ class SpringGrid {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//-------------------------------------------------------------------
-// BUILDING AN EXAMPLE
-//-------------------------------------------------------------------
-
-
-
-const res =  [64,64];
-
-let springParameters = {
-    mass:0.1,
-    springConst: 30.,
-    gridSpacing : 0.25,
-    dampingConst : 0.5,
-    airDragConst : 0.,
-};
-
-
-const getInitialPos = `
-        vec4 getInitialPos( ivec2 ij ){
-               vec4 xdir = vec4(1,0,0,0);
-               vec4 ydir = normalize(vec4(0,0,1,0));
-               
-               float x = float(ij.x);
-               float y = float(ij.y);
-             
-                vec4 origin = vec4(-res.x/2.+30., -res.y/2., -100, 0.);
-               return origin + gridSpacing * (x*xdir + y*ydir);
-        }
-`;
-
-const getInitialMom = `
-    vec4 getInitialMom( ivec2 ij ){
-        return vec4(0);
-    }
-`;
-
-const setBdyCond = `
-    void setBoundaryConditions(ivec2 ij, inout vec4 totalForce ){
-        //if(ij.y==int(res.y)-1 && (ij.x==0||ij.x==int(res.x/2.)||ij.x==int(res.x)-1)){totalForce = vec4(0);}
-        if(onCorner(ij)){totalForce =vec4(0);}
-    }`;
-
-
-const springConditions = {
-    position: getInitialPos,
-    momentum: getInitialMom,
-    boundary: setBdyCond,
-};
-
-
-
-let springSim = new SpringGrid(res, springParameters, springConditions, globals.renderer);
-springSim.setIterations(50);
-
-
-let testDisplay = new CSQuad(springSim.integrator.computer);
-
-export default {
-    system: springSim,
-    display: testDisplay,
-};
-
-
-
-
-export { SpringGrid };
-
-
-
-
-
-
-
+export default SpringGridHamiltonian;

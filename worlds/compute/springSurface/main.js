@@ -1,12 +1,11 @@
 //set the stuff for this particular example!
-import CTC from "../../../common/items/geometry/CTC.js";
-let example = new CTC();
+import SpringSurface from "../../../common/items/springs/SpringSurface.js";
+
 
 //this uses all the default settings defined in the "template" folder
 import { World } from "../../../common/World/World.js";
 import  {createEnvironment} from "../../../common/World/template/environment.js";
 import  {lights} from "../../../common/World/template/lights.js";
-
 
 
 //global settings for the scene
@@ -52,8 +51,12 @@ function main(globalSettings) {
     const environment = createEnvironment(globalSettings.environment, world.pmrem);
     world.setEnvironment( environment ) ;
 
-    // Fill this world with objects
-    let object = {example:example};
+    // BUILD THE COMPUTE OBJECT (which needs the renderer)
+    let example = new SpringSurface(world.renderer);
+    example.setIterations(10);
+
+    //Add objects to scene
+    let object = {example: example};
     world.addObjects(object);
     world.addObjects( lights );
 

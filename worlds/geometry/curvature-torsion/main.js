@@ -1,6 +1,6 @@
 
 //this example is already an object
-import object from "../../../common/items/differential-geometry/curveAndTorsion.js";
+import object from "../../../common/items/geometry/curveAndTorsion.js";
 
 
 //this uses all the default settings defined in the "template" folder

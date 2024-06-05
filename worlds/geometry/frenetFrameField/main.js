@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import FrenetFrameField from "../../../common/items/differential-geometry/FrenetFrameField.js";
+import FrenetFrameField from "../../../common/items/geometry/FrenetFrameField.js";
 let example = new FrenetFrameField();
 
 //this uses all the default settings defined in the "template" folder

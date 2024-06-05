@@ -1,12 +1,11 @@
 //set the stuff for this particular example!
-import FrenetFrameField from "../../../common/items/euclidean-geometry/Pythagorean3d.js";
+import Pythagorean3d from "../../../common/items/geometry/Pythagorean3d.js";
 let example = new Pythagorean3d();
 
 //this uses all the default settings defined in the "template" folder
 import { World } from "../../../common/World/World.js";
 import  {createEnvironment} from "../../../common/World/template/environment.js";
 import  {lights} from "../../../common/World/template/lights.js";
-import Pythagorean3d from "../../../common/items/euclidean-geometry/Pythagorean3d.js";
 
 
 

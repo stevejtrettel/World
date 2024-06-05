@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import SphereAndCylinder from "../../../common/items/euclidean-geometry/SphereAndCylinder2.js";
+import SphereAndCylinder from "../../../common/items/geometry/SphereAndCylinder2.js";
 let example = new SphereAndCylinder();
 
 //this uses all the default settings defined in the "template" folder

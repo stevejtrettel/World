@@ -1,6 +1,6 @@
 //set the stuff for this particular example!
-import CTC from "../../../common/items/geometry/CTC.js";
-let example = new CTC();
+import VectorField3DPlotter from "../../../common/items/odes/VectorField3DPlotter.js";
+let example = new VectorField3DPlotter();
 
 //this uses all the default settings defined in the "template" folder
 import { World } from "../../../common/World/World.js";
