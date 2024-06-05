@@ -1,13 +1,10 @@
-
-//this example is already an object
-import object from "../../common/items/BlackHoleGeodesics.js";
-
+//set the stuff for this particular example!
+import example from "../../../common/items/FiveBody.js"
 
 //this uses all the default settings defined in the "template" folder
-import { World } from "../../common/World/World.js";
-import  {createEnvironment} from "../../common/World/template/environment.js";
-import  {lights} from "../../common/World/template/lights.js";
-
+import { World } from "../../../common/World/World.js";
+import  {createEnvironment} from "../../../common/World/template/environment.js";
+import  {lights} from "../../../common/World/template/lights.js";
 
 //global settings for the scene
 let globalSettings={
@@ -44,7 +41,7 @@ let globalSettings={
 function main(globalSettings) {
 
     // Get a reference to the container element, set options
-     const container = document.getElementById(globalSettings.name);
+    const container = document.getElementById(globalSettings.name);
 
     // Create an instance of the World class
     const world = new World( container, globalSettings );
@@ -52,6 +49,8 @@ function main(globalSettings) {
     const environment = createEnvironment(globalSettings.environment, world.pmrem);
     world.setEnvironment( environment ) ;
 
+    //BUILD THE OBJECT THAT GOES IN THIS WORLD:
+    let object = {example:example};
     // Fill this world with objects
     world.addObjects(object);
     world.addObjects( lights );

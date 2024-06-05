@@ -1,11 +1,12 @@
 //set the stuff for this particular example!
-import PendulumSim from "../../common/items/odes/PendulumSim.js";
-let example = new PendulumSim(10);
+import StereographicMap from "../../../common/items/maps/StereographicMap.js";
+let example = new StereographicMap();
 
 //this uses all the default settings defined in the "template" folder
-import { World } from "../../common/World/World.js";
-import  {createEnvironment} from "../../common/World/template/environment.js";
-import  {lights} from "../../common/World/template/lights.js";
+import { World } from "../../../common/World/World.js";
+import  {createEnvironment} from "../../../common/World/template/environment.js";
+import  {lights} from "../../../common/World/template/lights.js";
+
 
 
 //global settings for the scene
@@ -43,7 +44,7 @@ let globalSettings={
 function main(globalSettings) {
 
     // Get a reference to the container element, set options
-     const container = document.getElementById(globalSettings.name);
+    const container = document.getElementById(globalSettings.name);
 
     // Create an instance of the World class
     const world = new World( container, globalSettings );

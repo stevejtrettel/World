@@ -1,10 +1,13 @@
 //set the stuff for this particular example!
-import example from "../../common/items/FiveBody.js"
+import DoublePendulumSim from "../../../common/items/odes/DoublePendulumSim.js";
+let example = new DoublePendulumSim(200);
 
 //this uses all the default settings defined in the "template" folder
-import { World } from "../../common/World/World.js";
-import  {createEnvironment} from "../../common/World/template/environment.js";
-import  {lights} from "../../common/World/template/lights.js";
+import { World } from "../../../common/World/World.js";
+import  {createEnvironment} from "../../../common/World/template/environment.js";
+import  {lights} from "../../../common/World/template/lights.js";
+
+
 
 //global settings for the scene
 let globalSettings={
@@ -49,9 +52,8 @@ function main(globalSettings) {
     const environment = createEnvironment(globalSettings.environment, world.pmrem);
     world.setEnvironment( environment ) ;
 
-    //BUILD THE OBJECT THAT GOES IN THIS WORLD:
-    let object = {example:example};
     // Fill this world with objects
+    let object = {example:example};
     world.addObjects(object);
     world.addObjects( lights );
 
