@@ -1,9 +1,3 @@
-import {
-    Vector3,
-    MeshPhysicalMaterial,
-    SphereBufferGeometry,
-    Mesh, TubeBufferGeometry, CatmullRomCurve3, DoubleSide,
-} from "../../../3party/three/build/three.module.js";
 
 import {
     State,
@@ -14,10 +8,7 @@ import {
     RungeKutta
 } from "../../compute/cpu/RungeKutta.js";
 
-import{
-    randomVec3Ball,
-    randomVec3Sphere
-} from "../../utils/math/random.js";
+
 
 import{ gravForce} from "../../utils/math/gravity.js";
 
@@ -260,68 +251,9 @@ class ThreeBody{
 }
 
 
+export default ThreeBody;
 
 
 
 
 
-
-//
-// //actually building one of these
-// const pA = {
-//     mass:1,
-//     pos: new Vector3(0,0,0),
-//     vel: new Vector3(0,0,0),
-//     color: 0xffffff,
-//     trailLength: 2000,
-// }
-//
-// const pB = {
-//     mass:0.5,
-//     pos: new Vector3(0,3,0),
-//     vel: new Vector3(0,0,0.5),
-//     color: 0xd96493,
-//     trailLength: 2000,
-// }
-//
-// const pC = {
-//     mass:0.3,
-//     pos: new Vector3(0,0,3),
-//     vel: new Vector3(0.2,0,0),
-//     color: 0x32a852,
-//     trailLength: 2000,
-// }
-
-
-
-const pA = {
-    mass:5,
-    pos: new Vector3(10,0,0),
-    vel: new Vector3(0,0,-0.15),
-    color: 0xffffff,
-    trailLength: 3000,
-}
-
-const pB = {
-    mass:5,
-    pos: new Vector3(-10,0,0),
-    vel: new Vector3(0,0,0.15),
-    color: 0xd96493,
-    trailLength: 3000,
-}
-
-const pC = {
-    mass:0.5,
-    pos: new Vector3(0,42,0),
-    vel: new Vector3(0,0,0),
-    color: 0x32a852,
-    trailLength: 3000,
-}
-
-const example = new ThreeBody(pA, pB, pC);
-
-// export {
-//     ThreeBody
-// };
-
-export default example;

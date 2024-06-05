@@ -1,5 +1,40 @@
+import {Vector3} from "../../../3party/three/build/three.module.js";
+
+
 //set the stuff for this particular example!
-import example from "../../../common/items/odes/FiveBody.js"
+import ThreeBody from "../../../common/items/odes/ThreeBody.js";
+
+
+//actually building one of these
+const pA = {
+    mass:1,
+    pos: new Vector3(0,0,0),
+    vel: new Vector3(0,-0.5,-0.5),
+    color: 0xffffff,
+    trailLength: 2000,
+}
+
+const pB = {
+    mass:0.5,
+    pos: new Vector3(0,5,0),
+    vel: new Vector3(0,0,.5),
+    color: 0xd96493,
+    trailLength: 2000,
+}
+
+const pC = {
+    mass:0.3,
+    pos: new Vector3(0,0,5),
+    vel: new Vector3(-0.2,0.5,0.),
+    color: 0x32a852,
+    trailLength: 2000,
+}
+
+
+const example = new ThreeBody(pA, pB, pC);
+
+
+
 
 //this uses all the default settings defined in the "template" folder
 import { World } from "../../../common/World/World.js";

@@ -1,14 +1,10 @@
 //set the stuff for this particular example!
-//import SphereAndCylinder from "../../../common/items/euclidean-geometry/SphereAndCylinder.js";
-// let example = new SphereAndCylinder();
-
-import example from "../../../common/items/springs/SpringCube.js";
+import example from "../../../common/items/pdes/Hydrogen2DSlice.js";
 
 //this uses all the default settings defined in the "template" folder
 import { World } from "../../../common/World/World.js";
 import  {createEnvironment} from "../../../common/World/template/environment.js";
 import  {lights} from "../../../common/World/template/lights.js";
-
 
 
 //global settings for the scene

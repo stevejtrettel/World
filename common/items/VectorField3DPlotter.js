@@ -14,8 +14,17 @@ import VectorField3D from "../components/VectorCalculus/VectorField3D.js";
 const parser = math.parser();
 
 
+
+let defaultRange = {
+    x:{ min:-10,max:10},
+    y:{min:-10,max:10},
+    z:{min:-10,max:10},
+};
+
+let defaultRes = {x:20,y:20,z:20};
+
 class VectorField3DPlotter{
-    constructor( range, res ){
+    constructor( range=defaultRange, res=defaultRes ){
 
         this.params = {
             xMin: range.x.min,
@@ -163,20 +172,4 @@ class VectorField3DPlotter{
 
 
 
-
-
-
-
-
-
-let range = {
-    x:{ min:-10,max:10},
-    y:{min:-10,max:10},
-    z:{min:-10,max:10},
-};
-
-let res = {x:20,y:20,z:20};
-
-let example = new VectorField3DPlotter(range, res);
-
-export default {example};
+export default VectorField3DPlotter;

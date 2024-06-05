@@ -1,6 +1,6 @@
-import hydrogenOrbital from "../shaders/math/hydrogenOrbital.js";
-import { colorConversion } from "../shaders/colors/colorConversion.js";
-import { ParametricMaterial } from "../compute/materials/ParametricMaterial.js";
+import hydrogenOrbital from "../../shaders/math/hydrogenOrbital.js";
+import { colorConversion } from "../../shaders/colors/colorConversion.js";
+import { ParametricMaterial } from "../../compute/materials/ParametricMaterial.js";
 
 
 
@@ -137,4 +137,4 @@ let options = {
 let hydrogenAtom = new ParametricMaterial([512,512], vert, frag, uniforms, options);
 hydrogenAtom.setName('Hydrogen');
 
-export default { hydrogenAtom };
+export default  hydrogenAtom;

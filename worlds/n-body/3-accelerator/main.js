@@ -1,15 +1,43 @@
-//set the stuff for this particular example!
-//import SphereAndCylinder from "../../../common/items/euclidean-geometry/SphereAndCylinder.js";
-// let example = new SphereAndCylinder();
+import {Vector3} from "../../../3party/three/build/three.module.js";
 
-import example from "../../../common/items/springs/SpringCube.js";
+
+//set the stuff for this particular example!
+import ThreeBody from "../../../common/items/odes/ThreeBody.js";
+
+
+const pA = {
+    mass:5,
+    pos: new Vector3(10,0,0),
+    vel: new Vector3(0,0,-0.15),
+    color: 0xffffff,
+    trailLength: 3000,
+}
+
+const pB = {
+    mass:5,
+    pos: new Vector3(-10,0,0),
+    vel: new Vector3(0,0,0.15),
+    color: 0xd96493,
+    trailLength: 3000,
+}
+
+const pC = {
+    mass:0.5,
+    pos: new Vector3(0,42,0),
+    vel: new Vector3(0,0,0),
+    color: 0x32a852,
+    trailLength: 3000,
+}
+
+const example = new ThreeBody(pA, pB, pC);
+
+
+
 
 //this uses all the default settings defined in the "template" folder
 import { World } from "../../../common/World/World.js";
 import  {createEnvironment} from "../../../common/World/template/environment.js";
 import  {lights} from "../../../common/World/template/lights.js";
-
-
 
 //global settings for the scene
 let globalSettings={
@@ -25,7 +53,7 @@ let globalSettings={
     camera:{
         animate:false,
         fov:55,
-        pos:{x:2,y:4,z:8},
+        pos:{x:2,y:4,z:30},
         look:{x:0,y:0,z:0},
         posAnimate: (t)=>{
             return {x:15.*Math.sin(Math.sin(t/5)),y:7,z:15.*Math.cos(Math.sin(t/5))}},
@@ -54,8 +82,9 @@ function main(globalSettings) {
     const environment = createEnvironment(globalSettings.environment, world.pmrem);
     world.setEnvironment( environment ) ;
 
-    // Fill this world with objects
+    //BUILD THE OBJECT THAT GOES IN THIS WORLD:
     let object = {example:example};
+    // Fill this world with objects
     world.addObjects(object);
     world.addObjects( lights );
 

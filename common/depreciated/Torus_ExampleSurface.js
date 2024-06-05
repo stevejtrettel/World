@@ -3,6 +3,7 @@ import { Surface } from "../depreciated/Surface.js";
 import { ParametricSurface } from "../depreciated/ParametricSurface.js";
 
 
+
 const torusEqn = new Surface(
 
     {
@@ -37,12 +38,12 @@ const torusEqn = new Surface(
 
 
 //make the parametric surface!
-const torus = new ParametricSurface( torusEqn, 'gaussCurvature' );
-torus.surface.setName(`Torus`);
+const torus_ExampleSurface = new ParametricSurface( torusEqn, 'gaussCurvature' );
+torus_ExampleSurface.surface.setName(`Torus`);
 
 
 
-export default { torus };
+export default { torus: torus_ExampleSurface };
 
 
 
