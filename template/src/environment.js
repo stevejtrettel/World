@@ -7,9 +7,7 @@ import {CubeMap} from "../../common/components/backgrounds/CubeMap.js";
 
 
 
-
-
-function createEnvironment(color){
+function createEnvironment(color=0xffffff){
 
     //make the background texture:
         const bkgScene = new BoxNoLights( color );

@@ -314,10 +314,9 @@ let springSim = new SpringCube(resolution, springParameters, springConditions, c
 springSim.setIterations(20);
 
 
-
 export { SpringCube };
 
-export default { springSim };
+export default springSim;
 
 
 
