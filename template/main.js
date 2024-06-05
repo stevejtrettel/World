@@ -4,25 +4,7 @@ import { createEnvironment } from "./src/environment.js";
 import { lights } from "./src/lights.js";
 import { post } from "./src/post.js"
 
-// const location =  "./src/components/torusFundamentalGroup.js";
-// console.log(location);
-//
-// console.log(item);
-//
-// let objects = {item};
-//
-//
-// function test(){
-//     let variable =`sin(x)`;
-//     let str = `My favorite function is ${variable}`;
-//
-//     let createStr = ()=>{
-//         return `My favorite function is ${variable}`;
-//     }
-//     console.log(createStr());
-//     variable = 'exp(x)';
-//     console.log(createStr());
-// }
+
 
 import springSim from "../common/items/SpringCube.js";
 let objects = {example: springSim};
@@ -40,7 +22,7 @@ function main() {
     world.addGlobalParams( globals.params );
 
     //3. Set the environment
-    let environment = createEnvironment()
+    let environment = createEnvironment(globals.color)
     world.setEnvironment( environment ) ;
 
     //4. Fill this world with objects
