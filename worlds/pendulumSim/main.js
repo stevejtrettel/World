@@ -1,28 +1,12 @@
 //set the stuff for this particular example!
-import example from "../../common/items/FiveBody.js"
-//import example from "../common/components/GeoProgram/FinishedExamples/SurfaceSetMarch/EggCarton/export.js"
-//import example from "../common/components/GeoProgram/example.js";
-//import StereographicMap from "../common/items/maps/StereographicMap.js";
-//import stereoProj from "../common/items/topology/stereoProj.js";
-//import example from "../common/items/calculus/RiemannSumPlotter.js"
-        // "../common/components/GeoProgram/FinishedExamples/SurfaceSetMarch/BumpSide/export.js";
-//import example from "../common/items/BlackHoleGeodesics.js";
-//import everything except the objects of the scene
-
+import PendulumSim from "../../common/items/odes/PendulumSim.js";
+let example = new PendulumSim(10);
 
 //this uses all the default settings defined in the "template" folder
 import { World } from "../../common/World/World.js";
 import  {createEnvironment} from "../../common/World/template/environment.js";
 import  {lights} from "../../common/World/template/lights.js";
 
-
-//import ex from "../common/items/BlackHoleGeodesics.js";
-
-//import PendulumSim from "../common/items/odes/PendulumSim.js";
-// let ex = new PendulumSim(10);
-
-// import DoublePendulumSim from "../common/items/odes/DoublePendulumSim.js";
-// let ex = new DoublePendulumSim(200);
 
 //global settings for the scene
 let globalSettings={
@@ -59,7 +43,7 @@ let globalSettings={
 function main(globalSettings) {
 
     // Get a reference to the container element, set options
-    const container = document.getElementById(globalSettings.name);
+     const container = document.getElementById(globalSettings.name);
 
     // Create an instance of the World class
     const world = new World( container, globalSettings );
