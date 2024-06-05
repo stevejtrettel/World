@@ -8,10 +8,7 @@ import {CSParticle} from "../../compute/gpu/displays/CSParticle.js";
 import {NearestFilter} from "../../../3party/three/build/three.module.js";
 
 
-
-
 //Build the compute system
-
 const res = [1024, 1024];
 
 const computeVariables = ['pos'];

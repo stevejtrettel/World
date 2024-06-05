@@ -126,5 +126,4 @@ class Pythagorean3d{
 
 }
 
-let ex = new Pythagorean3d();
-export default {ex};
+export default Pythagorean3d;

@@ -1,6 +1,4 @@
 
-
-
 import {
     Vector3,
     SphereBufferGeometry,
@@ -228,7 +226,4 @@ class FrenetFramePlotter {
 
 
 
-
-
-let ex = new FrenetFramePlotter();
-export default {ex};
+export default FrenetFramePlotter;

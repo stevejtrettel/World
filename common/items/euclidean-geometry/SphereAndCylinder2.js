@@ -279,7 +279,7 @@ class Slice{
 
 //a class containing both the deforming cylinder and some slices:
 class SphereAndCylinder{
-    constructor(radius=2) {
+    constructor(radius=4) {
 
         //how big is our sphere and cylinder?
         this.radius =radius;
@@ -391,8 +391,4 @@ class SphereAndCylinder{
     }
 }
 
-let example = new SphereAndCylinder(4);
-
-export default {example};
-
-
+export default SphereAndCylinder;

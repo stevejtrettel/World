@@ -1,7 +1,6 @@
 import {Vector3} from "../../../3party/three/build/three.module.js";
 
-import ParametricCurve from "../../components/VectorCalculus/ParametricCurveCPU.js";
-import {BlackBoard} from "../../components/basic-shapes/Blackboard.js";
+import ParametricCurve from "../../components/parametric/ParametricCurveCPU.js";
 import {GlassPanel} from "../../components/basic-shapes/GlassPanel.js";
 
 class WaveString{
@@ -17,7 +16,7 @@ class WaveString{
 
         this.curve = function(x,params={n:1,L:5,time:1}){
             let lambda = Math.PI * params.n /params.L;
-            let y =  Math.sin(lambda * x ) * Math.sin(lambda* params.time);
+            let y =  Math.sin(lambda * x ) * Math.sin(lambda* params.time)/(params.n+0.1);
             return new Vector3(x,y,0);
         };
 
@@ -45,6 +44,4 @@ class WaveString{
 
 }
 
-
-let example = new WaveString();
-export default {example};
+export default WaveString;

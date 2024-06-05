@@ -176,9 +176,10 @@ let options = {
     clearcoat:1,
     metalness:0.,
     roughness:0.2,
+    envMapIntensity:3,
 }
 
 let torus = new ParametricMaterial([512,512], vert, frag, uniforms, options);
 torus.setName('TorusEigenfunctions');
 
-export default { torus };
+export default torus;

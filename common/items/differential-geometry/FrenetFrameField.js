@@ -246,6 +246,4 @@ class FrenetFrameField {
 
 
 
-
-let ex = new FrenetFrameField();
-export default {ex};
+export default FrenetFrameField;

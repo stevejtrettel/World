@@ -158,9 +158,10 @@ let options = {
     clearcoat:1,
     metalness:0.,
     roughness:0.2,
+    envMapIntensity:3,
 }
 
 let cyl = new ParametricMaterial([512,1024], vert, frag, uniforms, options);
 cyl.setName('CylinderEigenfunctions');
 
-export default { cyl };
+export default cyl;

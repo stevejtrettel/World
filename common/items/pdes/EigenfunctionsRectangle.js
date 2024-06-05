@@ -120,9 +120,10 @@ let options = {
     clearcoat:1,
     metalness:0.,
     roughness:0.2,
+    envMapIntensity:2,
 }
 
-let drum = new ParametricMaterial([512,512], vert, frag, uniforms, options);
-drum.setName('Drum');
+let rect = new ParametricMaterial([512,512], vert, frag, uniforms, options);
+rect.setName('Rect');
 
-export default { drum };
+export default rect;

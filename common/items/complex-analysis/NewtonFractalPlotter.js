@@ -1,7 +1,15 @@
-import NewtonFractal from "../components/ComplexAnalysis/NewtonFractal.js";
+import NewtonFractal from "../../components/complex-analysis/NewtonFractal2.js";
+
+let defaultFn = 'cmult(z-vec2(1,0),z-vec2(0,1),z-vec2(1,1))';
+
+let defaultRange = {
+    x:{ min:-10,max:10},
+    y:{min:-10,max:10},
+};
+
 
 class NewtonFractalPlotter {
-    constructor( fnText, range ){
+    constructor( fnText=defaultFn, range=defaultRange ){
 
         //the range in x,y of the plot {x:{min:,max:},y:{min:max:}}
         this.range = range;
@@ -73,14 +81,4 @@ class NewtonFractalPlotter {
 
 
 
-
-let fn = 'cmult(z-vec2(1,0),z-vec2(0,1),z-vec2(1,1))';
-
-let range = {
-    x:{ min:-10,max:10},
-    y:{min:-10,max:10},
-};
-
-let example = new NewtonFractalPlotter(fn, range );
-
-export default  { example };
+export default NewtonFractalPlotter;

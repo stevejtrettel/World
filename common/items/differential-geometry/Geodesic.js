@@ -1,3 +1,10 @@
+
+// THIS IS JUST AN EXAMPLE TO ENSURE THAT EVERYTHING IS WORKING
+// NOT A FULL BUILT THING TO DISPLAY
+
+
+
+
 import { Vector2, Vector3 } from "../../../3party/three/build/three.module.js";
 
 import { IntegralCurve } from "../../components/odes/IntegralCurve.js";
@@ -53,4 +60,4 @@ geodesic.tick= function( time, dTime ){
 }
 geodesic.addToUI=function(ui){};
 
-export default { geodesic };
+export default geodesic;

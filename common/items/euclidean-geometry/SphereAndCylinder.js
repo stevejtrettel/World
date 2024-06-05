@@ -309,6 +309,4 @@ class SphereAndCylinder{
     }
 }
 
-let example = new SphereAndCylinder();
-
-export default {example};
+export default SphereAndCylinder;

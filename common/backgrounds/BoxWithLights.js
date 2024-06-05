@@ -19,7 +19,7 @@ class BoxWithLights extends BoxNoLights {
         const lightParameters = {
             color: 0xffffff,
             emissive: 0xffffff,
-            emissiveIntensity: 2
+            emissiveIntensity: 3
         };
 
         const geometry = new BoxGeometry();

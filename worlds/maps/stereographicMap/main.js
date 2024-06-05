@@ -1,6 +1,6 @@
 //set the stuff for this particular example!
-import StereographicMap from "../../../common/items/maps/StereographicMap.js";
-let example = new StereographicMap();
+import Map from "../../../common/items/maps/StereographicMap.js";
+let example = new Map();
 
 //this uses all the default settings defined in the "template" folder
 import { World } from "../../../common/World/World.js";
