@@ -8,8 +8,6 @@ import ComputeParticles from "../../compute/materials/ComputeParticles.js";
 
 
 
-
-
 //------------------------------------------------------------------
 // DEFAULT VALUES OF THE PARAMETERS
 //-------------------------------------------------------------------
@@ -17,7 +15,7 @@ import ComputeParticles from "../../compute/materials/ComputeParticles.js";
 const defaultRes = [1024,1024];
 
 //can use these in either shader
-let computeUniforms = {
+let defaultUniforms = {
     sigma:{
         type: 'float',
         value: 10.,
@@ -34,6 +32,25 @@ let computeUniforms = {
         range: [23,32,0.001],
     },
 };
+
+
+
+const defaultVecField = `
+    //choose the vector field based on a uniform: chooseAttractor
+    
+    vec3 vecField( vec3 pos ) {
+   
+                float x = pos.x;
+                float y = pos.y;
+                float z = pos.z;
+                    
+                float vx = sigma*(y-x);
+                float vy = x*(rho-z)-y;
+                float vz = x*y-beta*z;
+                
+                return vec3(vx,vy,vz);
+    }
+    `;
 
 
 //------------------------------------------------------------------
@@ -75,22 +92,6 @@ const ini = `
 `;
 
 
-const vecField = `
-    //choose the vector field based on a uniform: chooseAttractor
-    
-    vec3 vecField( vec3 pos ) {
-   
-                float x = pos.x;
-                float y = pos.y;
-                float z = pos.z;
-                    
-                float vx = sigma*(y-x);
-                float vy = x*(rho-z)-y;
-                float vz = x*y-beta*z;
-                
-                return vec3(vx,vy,vz);
-    }
-    `;
 
 const sim = `
 
@@ -195,9 +196,12 @@ void main() {
 //-------------------------------------------------------------------
 
 
-class LorenzAttractor{
+class Attractor3D{
 
-    constructor(renderer,res = defaultRes) {
+    constructor(renderer,
+                vecField = defaultVecField,
+                uniforms = defaultUniforms,
+                res = defaultRes) {
 
         const computeVariables = ['pos'];
 
@@ -217,11 +221,12 @@ class LorenzAttractor{
         this.compute = new ComputeSystem(
             computeVariables,
             computeShaders,
-            computeUniforms,
+            uniforms,
             computeOptions,
             renderer,
         );
-        this.compute.setName( 'Compute' );
+        this.compute.setName('Integrator');
+        this.compute.initialize();
 
 
         //assemble the particle system
@@ -233,13 +238,14 @@ class LorenzAttractor{
             particleFragment,
             options
         );
-        this.particles.setName('Particles');
+        this.particles.setName('Particle System');
+
 
     }
 
 
     addToScene(scene){
-        this.compute.addToScene(scene);
+        // this.compute.addToScene(scene);
         this.particles.addToScene(scene);
     }
 
@@ -256,4 +262,4 @@ class LorenzAttractor{
 }
 
 
-export default LorenzAttractor;
+export default Attractor3D;

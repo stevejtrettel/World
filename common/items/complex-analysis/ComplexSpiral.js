@@ -287,5 +287,4 @@ class ComplexSpiral {
     }
 }
 
-let ex = new ComplexSpiral();
-export default {ex};
+export default ComplexSpiral;

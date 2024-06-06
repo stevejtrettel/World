@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import PendulumSim from "../../../common/items/odes/PendulumSim.js";
+import PendulumSim from "../../../common/items/diffeqs/PendulumSim.js";
 let example = new PendulumSim(10);
 
 //this uses all the default settings defined in the "template" folder

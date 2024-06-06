@@ -1,5 +1,10 @@
+
 //set the stuff for this particular example!
-import example from "../../../common/items/pdes/EigenfunctionsTorus.js";
+import ParametricMaterial from "../../../common/compute/materials/ParametricMaterial.js";
+import {res, vert,frag, uniforms} from "./torusSetup.js";
+let example = new ParametricMaterial(res, vert, frag, uniforms);
+example.setName('Periodic Eigenfunctions');
+
 
 //this uses all the default settings defined in the "template" folder
 import { World } from "../../../common/World/World.js";

@@ -1,7 +1,4 @@
-
-import { colorConversion } from "../../shaders/colors/colorConversion.js";
-import { ParametricMaterial } from "../../compute/materials/ParametricMaterial.js";
-
+import {colorConversion} from "../../../common/shaders/colors/colorConversion.js";
 
 let uniforms = {
     m:{
@@ -139,10 +136,6 @@ const fragColor = `
             `;
 
 
-
-
-
-
 let vert = {
     aux: vertAux,
     displace: displace,
@@ -154,14 +147,7 @@ let frag = {
 }
 
 
-let options = {
-    clearcoat:1,
-    metalness:0.,
-    roughness:0.2,
-    envMapIntensity:3,
-}
+let res = [512,1024];
 
-let cyl = new ParametricMaterial([512,1024], vert, frag, uniforms, options);
-cyl.setName('CylinderEigenfunctions');
 
-export default cyl;
+export {res, vert, frag, uniforms };

@@ -1,5 +1,6 @@
 //set the stuff for this particular example!
-import example from "../../../common/items/diffeqs/TwoBody.js"
+import Attractor3D from "../../../common/items/computeSystem/Attractor3D.js";
+import {res, uniforms, vecField} from "./sprottSystem.js";
 
 //this uses all the default settings defined in the "template" folder
 import { World } from "../../../common/World/World.js";
@@ -49,9 +50,11 @@ function main(globalSettings) {
     const environment = createEnvironment(globalSettings.environment, world.pmrem);
     world.setEnvironment( environment ) ;
 
-    //BUILD THE OBJECT THAT GOES IN THIS WORLD:
-    let object = {example:example};
-    // Fill this world with objects
+    // BUILD THE COMPUTE OBJECT (which needs the renderer)
+    let example = new Attractor3D(world.renderer,vecField, uniforms, res);
+
+    //Add objects to scene
+    let object = {example: example};
     world.addObjects(object);
     world.addObjects( lights );
 

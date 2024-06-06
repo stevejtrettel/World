@@ -1,5 +1,8 @@
 //set the stuff for this particular example!
-import example from "../../../common/items/pdes/EigenfunctionsRectangle.js";
+import ParametricMaterial from "../../../common/compute/materials/ParametricMaterial.js";
+import {res, vert,frag, uniforms} from "./rectangleSetup.js";
+let example = new ParametricMaterial(res, vert, frag, uniforms);
+example.setName('Rectangle Eigenfunctions');
 
 //this uses all the default settings defined in the "template" folder
 import { World } from "../../../common/World/World.js";

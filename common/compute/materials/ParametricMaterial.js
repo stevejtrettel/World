@@ -16,9 +16,19 @@ import UnitSquare from "../gpu/components/UnitSquare.js";
 // 2) using varyings from the vertex shader to properly color the fragment shader
 
 
+let defaultOptions =  {
+    clearcoat:1,
+    metalness:0.,
+    roughness:0.2,
+    envMapIntensity:3,
+};
+
+
+
+
 class ParametricMaterial {
 
-    constructor( res, vertex, fragment, uniforms, options = {} ) {
+    constructor( res, vertex, fragment, uniforms, options = defaultOptions ) {
 
         //make uniforms for the display shaders
         //start with assumption there are no new special ones just for the display

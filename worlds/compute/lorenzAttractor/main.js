@@ -1,11 +1,11 @@
 //set the stuff for this particular example!
-import LorenzAttractor from "../../../common/items/computeSystem/LorenzAttractor.js";
+import Attractor3D from "../../../common/items/computeSystem/Attractor3D.js";
+import {res, uniforms, vecField} from "./lorenzSystem.js";
 
 //this uses all the default settings defined in the "template" folder
 import { World } from "../../../common/World/World.js";
 import  {createEnvironment} from "../../../common/World/template/environment.js";
 import  {lights} from "../../../common/World/template/lights.js";
-
 
 //global settings for the scene
 let globalSettings={
@@ -51,7 +51,7 @@ function main(globalSettings) {
     world.setEnvironment( environment ) ;
 
     // BUILD THE COMPUTE OBJECT (which needs the renderer)
-    let example = new LorenzAttractor(world.renderer);
+    let example = new Attractor3D(world.renderer,vecField, uniforms, res);
 
     //Add objects to scene
     let object = {example: example};

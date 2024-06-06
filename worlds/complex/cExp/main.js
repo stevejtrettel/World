@@ -6,7 +6,7 @@ let example = new CExp();
 import { World } from "../../../common/World/World.js";
 import  {createEnvironment} from "../../../common/World/template/environment.js";
 import  {lights} from "../../../common/World/template/lights.js";
-i
+
 
 //global settings for the scene
 let globalSettings={

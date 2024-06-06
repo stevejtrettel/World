@@ -2,7 +2,7 @@ import {Vector3} from "../../../3party/three/build/three.module.js";
 
 
 //set the stuff for this particular example!
-import FiveBody from "../../../common/items/odes/FiveBody.js";
+import FiveBody from "../../../common/items/diffeqs/FiveBody.js";
 
 
 //actually building one of these

@@ -326,11 +326,10 @@ a*b*pow(d,2.) + b*pow(d,3.) + pow(b,2.)*pow(d,3.)))/(a*b*c);
     
         // vec2 invariants = vec2(invP, invQ);
         //
-        // vec4 grad = - gradPhi( pos, invariants );
-        // vec4 flow = symplecticG( pos );
+         //vec4 grad = - gradPhi( pos, invariants );
+         //vec4 flow = symplecticG( pos );
         //
-        // return (1.-gradSpeed)*flow + gradSpeed*grad;
-        
+         //return (1.-gradSpeed)*flow + gradSpeed*grad;
         
         return X1(pos);
         

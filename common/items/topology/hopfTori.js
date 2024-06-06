@@ -1,12 +1,8 @@
 import { rotateR4 } from "../../shaders/geometry/rotateR4.js";
 import { projectR4 } from "../../shaders/geometry/projectR4.js";
 import { hopfMapTools, hopfSurface } from "../../shaders/geometry/hopfMap.js";
-
 import { colorConversion } from "../../shaders/colors/colorConversion.js";
-
-import { ParametricMaterial } from "../../compute/materials/ParametricMaterial.js";
-
-
+import ParametricMaterial from "../../compute/materials/ParametricMaterial.js";
 
 
 
@@ -147,6 +143,8 @@ let options = {
     metalness:0.2,
     roughness:0.1,
 }
+
+
 
 let torus = new ParametricMaterial([100,100], vert, frag, uniforms, options);
 torus.setName('Torus');

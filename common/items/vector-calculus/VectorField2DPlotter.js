@@ -8,7 +8,7 @@ import {
     Mesh
 } from "../../../3party/three/build/three.module.js";
 
-import {SlopeFieldIntegralCurve } from "../odes/SlopeFieldPlotter.js";
+import {SlopeFieldIntegralCurve } from "../diffeqs/SlopeFieldPlotter.js";
 import VectorField2D from "../../components/VectorCalculus/VectorField2D.js";
 import { GlassPanel } from "../../components/basic-shapes/GlassPanel.js";
 

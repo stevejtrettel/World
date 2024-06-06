@@ -2,7 +2,7 @@ import {Vector3} from "../../../3party/three/build/three.module.js";
 
 
 //set the stuff for this particular example!
-import ThreeBody from "../../../common/items/odes/ThreeBody.js";
+import ThreeBody from "../../../common/items/diffeqs/ThreeBody.js";
 
 
 //actually building one of these

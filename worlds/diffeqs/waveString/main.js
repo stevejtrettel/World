@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import WaveString from "../../../common/items/odes/WaveString.js";
+import WaveString from "../../../common/items/diffeqs/WaveString.js";
 let example = new WaveString();
 
 //this uses all the default settings defined in the "template" folder
