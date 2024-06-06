@@ -16,8 +16,6 @@ import {colorConversion} from "../../shaders/colors/colorConversion.js";
 //
 
 
-
-
 let params = {rad:1};
 params.addToScene=(scene)=>{};
 params.addToUI=(ui)=>{

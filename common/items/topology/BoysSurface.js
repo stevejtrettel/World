@@ -11,25 +11,14 @@ import ParametricSurface from "../../components/parametric/ParametricSurface.js"
 import ParametricSurfaceCPU from "../../components/parametric/ParametricSurfaceCPU.js";
 
 
-import Item from "../Item.js";
 
 
-let defaultSettings = {
 
-    ui:{
-        animate:true,
-    },
-
-    scene:{
-        glassSurface:true,
-    },
-
-    config:{
-        traditional:true,
-        glassTransparency:0.99,
-    },
-
-    params: {
+//------------------------------------------------------------------
+// DEFAULT VALUES OF THE PARAMETERS
+//-------------------------------------------------------------------
+let defaultParams = {
+        enableUI: true,
         animate: true,
         slice: 1,
         uMin:0,
@@ -43,18 +32,7 @@ let defaultSettings = {
         blackBarWidth:0.01,
         stripe:false,
         stripeFreq:10,
-    }
 }
-
-
-
-
-
-
-
-
-
-
 
 
 let glassOptions= {
@@ -71,8 +49,16 @@ let glassOptions= {
 let surfaceOptions = {
     clearcoat:1,
     roughness:0.4,
+    envmapIntensity:2,
 }
 
+
+
+
+
+//------------------------------------------------------------------
+// STUFF FOR THE PARAMETRIC SURFACE GPU COLORING FUNCTION
+//-------------------------------------------------------------------
 
 const boySlice = `
     float sliceAt(vec2 uv, vec3 xyz){
@@ -160,6 +146,52 @@ const colorFn = complex + boySlice + chooseColor + `
      }`;
 
 
+
+
+
+
+
+
+//------------------------------------------------------------------
+// STUFF FOR THE PARAMETRIC SURFACE GPU
+//-------------------------------------------------------------------
+
+
+let boyGLSL = complex + `
+            vec3 eqn( vec2 uv ){
+                vec2 z = uv.x*vec2(cos(uv.y),sin(uv.y));
+                
+                vec2 z3 = cmult(z,z,z);
+                vec2 z4 = cmult(z,z3);
+                vec2 z6 = cmult(z3,z3);
+                
+                vec2 denom = z6+sqrt(5.)*z3-vec2(1,0);
+                vec2 G1 = -3./2.* cdiv(cmult(z,vec2(1,0)-z4),denom);
+                vec2 G2 = -3./2.* cdiv(cmult(z,vec2(1,0)+z4),denom);
+                vec2 G3 = cdiv(vec2(1,0)+z6,denom);
+                
+                float g1 = G1.y;
+                float g2 = G2.x;
+                float g3 = G3.y-0.5;
+                float g = g1*g1+g2*g2+g3*g3;
+         
+                float x = g1/g;
+                float y = g2/g;
+                float zed = -g3/g;
+                
+
+                return 2.*vec3(x,zed-0.5,y);
+
+            }`;
+
+
+
+
+//------------------------------------------------------------------
+// STUFF FOR THE PARAMETRIC SURFACE CPU
+//-------------------------------------------------------------------
+
+
 function cmult(z,w){
     let re = z.x*w.x-z.y*w.y;
     let im = z.x*w.y + z.y*w.x;
@@ -212,42 +244,14 @@ let boyJS = function(u,v){
 
 
 
-let boyGLSL = complex + `
-            vec3 eqn( vec2 uv ){
-                vec2 z = uv.x*vec2(cos(uv.y),sin(uv.y));
-                
-                vec2 z3 = cmult(z,z,z);
-                vec2 z4 = cmult(z,z3);
-                vec2 z6 = cmult(z3,z3);
-                
-                vec2 denom = z6+sqrt(5.)*z3-vec2(1,0);
-                vec2 G1 = -3./2.* cdiv(cmult(z,vec2(1,0)-z4),denom);
-                vec2 G2 = -3./2.* cdiv(cmult(z,vec2(1,0)+z4),denom);
-                vec2 G3 = cdiv(vec2(1,0)+z6,denom);
-                
-                float g1 = G1.y;
-                float g2 = G2.x;
-                float g3 = G3.y-0.5;
-                float g = g1*g1+g2*g2+g3*g3;
-         
-                float x = g1/g;
-                float y = g2/g;
-                float zed = -g3/g;
-                
-
-                return 2.*vec3(x,zed-0.5,y);
-
-            }`;
 
 
 
 
+class BoysSurface{
+    constructor( params = defaultParams ) {
 
-
-class BoysSurface extends Item{
-    constructor( settings = defaultSettings ) {
-
-        super(settings);
+        this.params = defaultParams;
 
         this.range = {
             u:{min:this.params.uMin+0.0001, max: this.params.uMax},
@@ -280,7 +284,7 @@ class BoysSurface extends Item{
 
         let thisObj = this;
 
-        if(this.settings.ui.animate) {
+        if(this.params.enableUI) {
 
             ui.add(thisObj.params, 'sliceWidth', 0., 1., 0.01).name('Width').onChange(function (value) {
                 thisObj.surface.update({sliceWidth: value * value + 0.03});

@@ -1,3 +1,11 @@
+
+//-------------------------------------------------------------------
+// This is just a parametric material!
+//-------------------------------------------------------------------
+
+
+
+
 import hydrogenOrbital from "../../../common/shaders/math/hydrogenOrbital.js";
 import {colorConversion} from "../../../common/shaders/colors/colorConversion.js";
 

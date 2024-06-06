@@ -1,3 +1,12 @@
+
+//-------------------------------------------------------------------
+// This is just a parametric material!
+//-------------------------------------------------------------------
+
+
+
+
+
 import sphericalHarmonic from "../../../common/shaders/math/sphericalHarmonic.js";
 import {colorConversion} from "../../../common/shaders/colors/colorConversion.js";
 

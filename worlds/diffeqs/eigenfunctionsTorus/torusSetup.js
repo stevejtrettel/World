@@ -1,3 +1,11 @@
+
+//-------------------------------------------------------------------
+// This is just a parametric material!
+//-------------------------------------------------------------------
+
+
+
+
 import {rotateR4} from "../../../common/shaders/geometry/rotateR4.js";
 import {projectR4} from "../../../common/shaders/geometry/projectR4.js";
 import {colorConversion} from "../../../common/shaders/colors/colorConversion.js";

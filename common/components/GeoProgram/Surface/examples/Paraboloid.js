@@ -15,7 +15,7 @@ class Paraboloid extends Surface {
     }
 
     setParamData(){
-        this.params = {
+        this.settingsAndParams = {
             a: 1,
             b: 1,
             c: 1

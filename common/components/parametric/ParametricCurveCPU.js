@@ -11,7 +11,7 @@ import {
 } from "../../../3party/three/build/three.module.js";
 
 class ParametricCurveCPU {
-    constructor(curve, domain, options={}) {
+    constructor(curve, domain={min:0,max:1}, options={}) {
 
         this.curveFn = curve;
         this.domain = domain;

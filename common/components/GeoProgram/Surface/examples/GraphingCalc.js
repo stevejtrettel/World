@@ -14,7 +14,7 @@ class GraphingCalc extends Surface {
 
     setParamData(){
 
-        this.params = {
+        this.settingsAndParams = {
             a: 2,
             b: 1.5,
             c: 0,

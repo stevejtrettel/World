@@ -113,7 +113,7 @@ class VectorField2DPlotter{
                 thisObj.params.yPrimeText = value;
                 let xC = parser.evaluate('xPrime(x,y,a,b,c,d,e)='.concat(thisObj.params.xPrimeText));
                 let yC = parser.evaluate('yPrime(x,y,a,b,c,d,e)='.concat(thisObj.params.yPrimeText));
-                let eqn = function(pos,params=this.params){
+                let eqn = function(pos,params=this.settingsAndParams){
                     let x = xC(pos.x,pos.y,params.a,params.b,params.c,params.d,params.e);
                     let y = yC(pos.x,pos.y,params.a,params.b,params.c,params.d,params.e);
                     return new Vector2(x,y);

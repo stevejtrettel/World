@@ -1,65 +1,43 @@
-import {
-    Vector2,
-    Vector4,
-    DoubleSide,
-    Mesh,
-    MeshPhysicalMaterial,
-    PlaneBufferGeometry, Vector3,
-} from "../../../3party/three/build/three.module.js";
 
 import {rotateR4} from "../../shaders/geometry/rotateR4.js";
 import {projectR4} from "../../shaders/geometry/projectR4.js";
-import {stereographicProjX} from "../../utils/math/projectR4.js";
-import {rotateR4JS} from "../../utils/math/rotateR4.js";
 
 import ParametricSurface from "../../components/parametric/ParametricSurface.js";
-import ParametricCurveCPU from "../../components/parametric/ParametricCurveCPU.js";
 
 
-import Item from "../Item.js";
 
 
-let defaultSettings = {
+//------------------------------------------------------------------
+// DEFAULT VALUES OF THE PARAMETERS
+//-------------------------------------------------------------------
 
-    ui:{
-        animate:true,
-    },
 
-    config:{
-        traditional:true,
-        glassTransparency:0.99,
-    },
-
-    params: {
+let defaultParams = {
         animate: true,
         vMin:0,
         vMax:2.*3.1416,
         uMin:-3.1416/4.,
         uMax:3.1416/4.,
-        stripe:false,
         stripeFreq:0,
         angle:0,
         twist:1,
-    }
 }
-
-
-
-
-
-
-
-
-
-
 
 
 let surfaceOptions = {
     clearcoat:1,
     roughness:0.4,
+    envMapIntensity: 2,
 }
 
 
+
+
+
+
+//------------------------------------------------------------------
+// SETUP FOR PARAMETRIC SURFACE GPU
+//-------------------------------------------------------------------
 
 
 const coordGrid = `
@@ -136,34 +114,23 @@ vec3 eqn( vec2 uv ){
 
 }`;
 
-let boundaryEqn = function(t,params={angle:Math.PI/4.,twist:1}){
-
-    let tau = params.twist/2.;
-
-    let u = 3.1416/4.;
-    let v = 2.*t;
-    if(params.twist==1){
-        u/=2;
-    }
-
-    let x = Math.cos(u)*Math.cos(v);
-    let y = Math.cos(u)*Math.cos(v);
-    let z = Math.sin(u)*Math.cos(tau*v);
-    let w = Math.sin(u)*Math.sin(tau*v);
-
-    let p = new Vector4(x,y,z,w);
-
-    p = rotateR4JS(p,params.angle,2.*params.angle,0);
-    let q = stereographicProjX(p);
-    console.log(q);
-    return q;
-}
 
 
-class SudaneseMobius extends Item{
-    constructor( settings = defaultSettings ) {
 
-        super(settings);
+
+
+
+
+
+
+//------------------------------------------------------------------
+// THE CLASS ITSELF
+//-------------------------------------------------------------------
+
+class SudaneseMobius{
+    constructor( params = defaultParams ) {
+
+        this.params = params;
 
         this.range = {
             u:{min:this.params.uMin, max: this.params.uMax},
@@ -174,24 +141,21 @@ class SudaneseMobius extends Item{
         this.uniforms = {
             twist: {type:'float',value:this.params.twist},
             angle: {type:'float',value:this.params.angle},
-            stripe: {type:'bool',value:this.params.stripe},
             stripeFreq: {type:'float',value:this.params.stripeFreq},
         };
 
         this.surface = new ParametricSurface(glslEqn,this.range,this.uniforms,colorFn,surfaceOptions);
-       // this.boundary = new ParametricCurveCPU(boundaryEqn, this.bdyRange);
     }
 
     addToScene(scene){
         this.surface.addToScene(scene);
-       // this.boundary.addToScene(scene);
     }
 
     addToUI(ui){
 
         let thisObj = this;
 
-        if(this.settings.ui.animate) {
+        if(this.params.animate) {
 
             ui.add(thisObj.params, 'animate').name('Animate');
 
@@ -207,10 +171,6 @@ class SudaneseMobius extends Item{
                 thisObj.surface.update({stripeFreq: value})
             });
 
-            // let sFolder = ui.addFolder('Stripes');
-            // sFolder.add(thisObj.params, 'stripe').name('Stripes').onChange(function (value) {
-            //     thisObj.surface.update({stripe: value});
-            // });
 
         }
     }
@@ -221,7 +181,6 @@ class SudaneseMobius extends Item{
 
         if(this.params.animate ){
             this.surface.update({angle:time/10.});
-            //this.boundary.update({angle:time/10.});
         }
     }
 }

@@ -6,7 +6,7 @@ class Eggcarton extends Surface {
     }
 
     setParamData(){
-        this.params = {
+        this.settingsAndParams = {
             a: 0.375,
             b: 5,
         };

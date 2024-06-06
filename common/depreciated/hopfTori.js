@@ -145,7 +145,6 @@ let options = {
 }
 
 
-
 let torus = new ParametricMaterial([100,100], vert, frag, uniforms, options);
 torus.setName('Torus');
 

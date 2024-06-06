@@ -10,29 +10,18 @@ import PerlinNoise3d from "../../../3party/PerlinNoise3d.js";
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+let defaultOptions = {
+    clearcoat:1,
+    metalness:0.3,
+    roughness:0.1,
+    envMapIntensity: 2
+    // color: 0xffc82b,
+}
 
 
 class WobbleSphere {
 
-    constructor( matOptions ){
+    constructor( matOptions = defaultOptions ){
         this.geometry = new SphereGeometry(1,128,128);
         this.material = new MeshPhysicalMaterial(matOptions);
         this.mesh = new Mesh(this.geometry, this.material);
@@ -81,19 +70,4 @@ class WobbleSphere {
 
 
 
-//export {WobbleSphere}
-
-
-
-let options = {
-    clearcoat:1,
-    metalness:0.3,
-    roughness:0.1,
-   // color: 0xffc82b,
-}
-
-
-let wobbleSphere = new WobbleSphere(options);
-
-
-export default wobbleSphere;
+export default WobbleSphere;

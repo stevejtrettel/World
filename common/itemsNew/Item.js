@@ -19,9 +19,6 @@ class Item{
 
 
 
-
-
-
     //need a method to addToScene
     addToScene(scene){
 

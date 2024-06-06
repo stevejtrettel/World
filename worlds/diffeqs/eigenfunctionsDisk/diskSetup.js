@@ -1,3 +1,11 @@
+//-------------------------------------------------------------------
+// This is just a parametric material!
+//-------------------------------------------------------------------
+
+
+
+
+
 import bessel from "../../../common/shaders/math/bessel.js";
 import {colorConversion} from "../../../common/shaders/colors/colorConversion.js";
 

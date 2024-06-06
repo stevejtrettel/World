@@ -8,7 +8,7 @@ class VelocityNode extends Vector3Node {
 
 		super();
 
-		this.params = {};
+		this.settingsAndParams = {};
 
 		this.velocity = new Vector3();
 

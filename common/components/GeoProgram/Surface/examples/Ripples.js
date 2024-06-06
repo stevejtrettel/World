@@ -10,7 +10,7 @@ class Ripples extends Surface {
 
 
     setParamData(){
-        this.params = {
+        this.settingsAndParams = {
             a: 0.5,
             b: 1.75,
         };

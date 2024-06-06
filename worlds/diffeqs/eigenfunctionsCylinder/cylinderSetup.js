@@ -1,3 +1,10 @@
+
+//-------------------------------------------------------------------
+// This is just a parametric material!
+//-------------------------------------------------------------------
+
+
+
 import {colorConversion} from "../../../common/shaders/colors/colorConversion.js";
 
 let uniforms = {

@@ -28,7 +28,7 @@ class Norton extends Surface {
 
     setParamData(){
         this.gravity = 0.2957731724645785995;
-        this.params = {
+        this.settingsAndParams = {
         };
 
         this.paramData = {

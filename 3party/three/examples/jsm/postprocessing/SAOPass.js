@@ -49,7 +49,7 @@ class SAOPass extends Pass {
 		this._oldClearColor = new Color();
 		this.oldClearAlpha = 1;
 
-		this.params = {
+		this.settingsAndParams = {
 			output: 0,
 			saoBias: 0.5,
 			saoIntensity: 0.18,

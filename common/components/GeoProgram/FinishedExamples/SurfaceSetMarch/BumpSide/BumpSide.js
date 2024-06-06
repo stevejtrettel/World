@@ -7,7 +7,7 @@ class BumpSide extends Surface {
     }
 
     setParamData(){
-        this.params = {
+        this.settingsAndParams = {
             a: 1.4,
             b: 0.5,
             c: 2
