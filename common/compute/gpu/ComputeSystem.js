@@ -80,6 +80,9 @@ class ComputeSystem {
         //option to name the ComputeSystem
         this.name = null;
 
+        //initialize the compute system:
+        this.initialize();
+
 
         //if we need a reset switch, add one:
         if(options.resetSwitch){
