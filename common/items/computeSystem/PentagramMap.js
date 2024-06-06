@@ -1,55 +1,23 @@
-import { ComputeSystem } from "../../compute/gpu/ComputeSystem.js";
-import { ComputeParticles} from "../../compute/materials/ComputeParticles.js";
+import {NearestFilter} from "../../../3party/three/build/three.module.js";
 
-import { globals } from "../../World/globals.js";
-import { randomFns } from "../../shaders/math/random.js";
-import { rotateR4 } from "../../shaders/geometry/rotateR4.js";
+import {randomFns} from "../../shaders/math/random.js";
 import {rk4_vec4 as rk4} from "../../shaders/odes/rk4.js";
-import {CSParticle} from "../../compute/gpu/displays/CSParticle.js";
+import { rotateR4 } from "../../shaders/geometry/rotateR4.js";
 import {colorConversion} from "../../shaders/colors/colorConversion.js";
-import {LinearFilter, NearestFilter} from "../../../3party/three/build/three.module.js";
+
+import ComputeSystem from "../../compute/gpu/ComputeSystem.js";
+import ComputeParticles from "../../compute/materials/ComputeParticles.js";
 
 
 
+//------------------------------------------------------------------
+// DEFAULT VALUES OF THE PARAMETERS
+//-------------------------------------------------------------------
 //Build the compute system
-
-const res = [4096,2048];
-
-const computeVariables = ['pos'];
-
-const computeOptions = {
-    res: res,
-    filter: NearestFilter,
-    resetSwitch: true,
-}
+const defaultRes = [1024,1024];
 
 //can use these in either shader
 let computeUniforms = {
-    // invP: {
-    //     type:'float',
-    //     value: 2,
-    //     range:[0,10,0.01]
-    // },
-    //
-    // invQ: {
-    //     type:'float',
-    //     value: 6,
-    //     range:[0,10,0.01]
-    // },
-    //
-    // gradSpeed: {
-    //     type:'float',
-    //     value: 0,
-    //     range:[0,0.5,0.01]
-    // },
-    //
-    // dt: {
-    //     type:'float',
-    //     value: 0.001,
-    //     range:[0,0.2,0.005]
-    // },
-
-
     a0: {
         type:'float',
         value: 0.75,
@@ -75,6 +43,12 @@ let computeUniforms = {
     },
 
 };
+
+
+
+//------------------------------------------------------------------
+// THE COMPUTE SHADERS
+//-------------------------------------------------------------------
 
 const ini = `
         void main() {
@@ -461,59 +435,10 @@ void main()
 
 
 
-const posIni = randomFns+ini;
 
-const posSim = randomFns+vecField+rk4+sim;
-
-
-const computeShaders= {
-    pos: {
-        initialization: posIni,
-        simulation: posSim,
-    }
-};
-
-
-
-const computePos = new ComputeSystem(
-    computeVariables,
-    computeShaders,
-    computeUniforms,
-    computeOptions,
-    globals.renderer,
-);
-computePos.setName( 'Integrator' );
-
-
-
-const testParticles = new CSParticle( computePos );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//Build the particle simulation
-
-
-//the usable uniforms are those of the compute system:
-//pos - the position shader
-//frameNumber - time parameter
-
-//also a new one, measuring dot size:
-//size
+//------------------------------------------------------------------
+// THE PARTICLE SIMULATION
+//-------------------------------------------------------------------
 
 const particleUniforms = {
     size:
@@ -592,26 +517,71 @@ void main() {
 
 
 
-const options = {};
-
-
-const particleDisplay = new ComputeParticles(
-    computePos,
-    particleUniforms,
-    particleVertex,
-    particleFragment,
-    options
-);
-particleDisplay.setName('Particles');
 
 
 
 
 
-const pentagramMap = {
-    compute: computePos,
-    display: particleDisplay,
+
+
+class PentagramMap{
+    constructor(renderer,res = defaultRes) {
+
+        const computeVariables = ['pos'];
+
+        const computeOptions = {
+            res: res,
+            filter: NearestFilter,
+            resetSwitch: true,
+        }
+
+        //assemble the compute shader:
+        const computeShaders= {
+            pos: {
+                initialization: randomFns+ini,
+                simulation: randomFns+vecField+rk4+sim,
+            }
+        };
+        this.compute = new ComputeSystem(
+            computeVariables,
+            computeShaders,
+            computeUniforms,
+            computeOptions,
+            renderer,
+        );
+        this.compute.setName( 'Compute' );
+
+
+        //assemble the particle system
+        const options = {};
+        this.particles = new ComputeParticles(
+            this.compute,
+            particleUniforms,
+            particleVertex,
+            particleFragment,
+            options
+        );
+        this.particles.setName('Particles');
+
+    }
+
+
+    addToScene(scene){
+        this.compute.addToScene(scene);
+        this.particles.addToScene(scene);
+    }
+
+    addToUI(ui){
+        this.compute.addToUI(ui);
+        this.particles.addToUI(ui);
+    }
+
+    tick(time,dTime){
+        this.compute.tick(time,dTime);
+        this.particles.tick(time,dTime);
+    }
+
 }
 
 
-export default  pentagramMap;
+export default PentagramMap;
