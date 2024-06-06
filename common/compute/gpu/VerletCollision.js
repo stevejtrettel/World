@@ -1,6 +1,7 @@
-import {ComputeSystem} from "./ComputeSystem.js";
+
 import {LinearFilter} from "../../../3party/three/build/three.module.js";
 
+import ComputeSystem from "./ComputeSystem.js";
 
 //implements the augmentation of standard velocity verlet integration
 //with dissapative forces (velocity dependent)
@@ -220,4 +221,4 @@ class VerletCollision {
 
 
 
-export { VerletCollision };
+export default VerletCollision;

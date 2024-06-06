@@ -6,7 +6,7 @@ import {
 } from "../../../../3party/three/build/three.module.js"
 
 
-import { CSDisplay } from "./CSDisplay.js";
+import CSDisplay from "./CSDisplay.js";
 
 
 class CSQuad extends CSDisplay {
@@ -37,4 +37,4 @@ class CSQuad extends CSDisplay {
 
 
 
-export { CSQuad };
+export default CSQuad;

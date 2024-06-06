@@ -76,4 +76,4 @@ class ComputeRenderTargets {
 
 
 
-export { ComputeRenderTargets };
+export default ComputeRenderTargets;

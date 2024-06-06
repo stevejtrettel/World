@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import SpringCube from "../../../common/items/springs/SpringCube.js";
+import SpringCube from "../../../common/items/computeSystem/SpringCube.js";
 import {resolution,springConditions,springParameters,collision} from "./springSetup.js";
 
 

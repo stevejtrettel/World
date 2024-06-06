@@ -1,6 +1,6 @@
 
-import {VerletDissipative} from "../../compute/gpu/VerletDissipative.js";
-import {ComputeMaterial} from "../../compute/materials/ComputeMaterial.js";
+import VerletDissipative from "../../compute/gpu/VerletDissipative.js";
+import ComputeMaterial from "../../compute/materials/ComputeMaterial.js";
 
 import { colorConversion} from "../../shaders/colors/colorConversion.js";
 
@@ -8,7 +8,6 @@ import { setIJ, onEdges, fetch } from "../../shaders/springs/setup.js";
 import {SpringStruct} from "../../shaders/springs/Spring.js";
 import { grid2D_springForce } from "../../shaders/springs/grid2D/grid2D_springForce.js";
 import { grid2D_springDamping } from "../../shaders/springs/grid2D/grid2D_springDamping.js";
-
 
 
 

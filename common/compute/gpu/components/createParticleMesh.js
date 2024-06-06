@@ -20,4 +20,4 @@ function createParticleMesh(width,height){
 
 
 
-export { createParticleMesh };
+export default createParticleMesh;

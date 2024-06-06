@@ -1,6 +1,6 @@
 
 import {
-    BufferGeometry, InstancedBufferAttribute, InstancedBufferGeometry, Mesh, Points,
+    InstancedBufferAttribute, InstancedBufferGeometry, Mesh,
     ShaderMaterial, SphereBufferGeometry,
     Vector2
 } from "../../../../3party/three/build/three.module.js";
@@ -119,4 +119,4 @@ class CSSpheres extends Mesh {
 
 
 
-export { CSSpheres };
+export default CSSpheres;

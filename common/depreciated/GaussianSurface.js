@@ -1,17 +1,22 @@
+import { Vector2, Vector3 } from "../../../3party/three/build/three.module.js";
+
+
 import{ globals } from "../../World/globals.js";
 import { ComputeSystem } from "../../compute/gpu/ComputeSystem.js";
-import { CSQuad } from "../../compute/gpu/displays/CSQuad.js";
 import {ComputeMaterial} from "../../compute/materials/ComputeMaterial.js";
 import { colorConversion } from "../../shaders/colors/colorConversion.js";
 import {LinearFilter, NearestFilter} from "../../../3party/three/build/three.module.js";
 
-
+import { IntegralCurve } from "../../components/odes/IntegralCurve-Traditional.js";
+import { State, dState } from "../../compute/cpu/components/State.js";
+import { RungeKutta } from "../../compute/cpu/RungeKutta.js";
+import IntegralCurveSpray from "../../components/odes/IntegralCurveSpray-Traditional.js";
 
 
 let equations = {
-    x: '(b+a*cos(u))*cos(v)',
-    y: '(b+a*cos(u))*sin(v)',
-    z: 'a*sin(u)+0.5*cos(u)*sin(3.*v)*sin(time)',
+    x: 'u',
+    y: 'v',
+    z: 'a*exp(-b*(u*u+v*v))',
 };
 
 let domain = {
@@ -20,44 +25,6 @@ let domain = {
     vMin: -3.14,
     vMax: 3.14,
 };
-
-
-//BULD A BETTER WAY OF DOING THIS IN THE FUTURE!
-equations.addToUI = (ui)=>{
-    let eqnFolder = ui.addFolder(`Equations`);
-    eqnFolder.add(equations,'x').name('x(u,v)=').onChange(
-        ()=>{computer.recompile('point');
-        });
-    eqnFolder.add(equations,'y').name('y(u,v)=').onChange(
-        ()=>{
-            computer.recompile('point')
-        });
-    eqnFolder.add(equations,'z').name('z(u,v)=').onChange(
-        ()=>{computer.recompile('point')
-        });
-
-    let domFolder = ui.addFolder('Domain');
-    domFolder.add(domain,'uMin',-6.3,6.3,0.01).onChange(
-        ()=>{
-            computer.recompile('point')
-        });
-    domFolder.add(domain,'uMax',-6.3,6.3,0.01).onChange(
-        ()=>{
-            computer.recompile('point')
-        });
-    domFolder.add(domain,'vMin',-6.3,6.3,0.01).onChange(
-        ()=>{
-            computer.recompile('point')
-        });
-    domFolder.add(domain,'vMax',-6.3,6.3,0.01).onChange(
-        ()=>{
-            computer.recompile('point')
-        });
-};
-equations.addToScene = ()=>{};
-
-
-
 
 let buildPointShader = ()=> {
     return `
@@ -69,37 +36,58 @@ let buildPointShader = ()=> {
                  float v = (float(${domain.vMax})-float(${domain.vMin}))/0.97*uv.y+float(${domain.vMin});
                  
                  float x = ${equations.x};
-                 float y = ${equations.y};
-                 float z = ${equations.z};
+                 float y = ${equations.z};
+                 float z = ${equations.y};
                  
                  vec3 pos = vec3(x,y,z);
-                 
+                
                  gl_FragColor = vec4(pos,1.);
             }
         `;
 }
 
 
+const parameterization = ( uv ) => {
 
-//
-// const pointShader = `
-//             void main(){
-//
-//                  vec2 uv = gl_FragCoord.xy/res;
-//
-//                  float u = float(${domain.u[1]-domain.u[0]})*uv.x+float(${domain.u[0]});
-//                  float v = float(${domain.u[1]-domain.u[0]})*uv.y+float(${domain.u[0]});
-//
-//                  float x = ${equations.x};
-//                  float y = ${equations.y};
-//                  float z = ${equations.z};
-//
-//                  vec3 pos = vec3(x,y,z);
-//
-//                  gl_FragColor = vec4(pos,1.);
-//             }
-//         `;
-//
+    const a = 1;
+    const b = 2;
+
+    let u = uv.x;
+    let v = uv.y;
+    let x = u;
+    let y = v;
+    let z = a*Math.exp(-b*(u*u+v*v));
+    return new Vector3(x,z,y);
+
+};
+
+
+
+
+
+
+const accel = ( state ) => {
+
+    const a = 1;
+    const b = 2;
+
+    let u = state.pos.x;
+    let v = state.pos.y;
+    let uP = state.vel.x;
+    let vP = state.vel.y;
+
+    //For Gaussian
+    let num = 4*a*a*b*b * (uP*uP * (2*b * u*u - 1) + vP*vP * (2*b * v*v - 1) + 4*b * u*v * uP*vP);
+    let denom = 4*a*a*b*b * (u*u + v*v) + Math.exp(2*b * (u*u + v*v));
+    let K = num / denom;
+    let acc = new Vector2(u, v);
+    acc.multiplyScalar(K);
+
+    return acc;
+};
+
+
+
 
 
 
@@ -288,9 +276,6 @@ const curvatureShader = fetch + `
 
 
 
-
-
-
 const variables = ['point', 'tangentU', 'tangentV', 'normalVec', 'firstFF', 'secondFF', 'curvature' ];
 
 const shaders = {
@@ -338,24 +323,9 @@ let computer = new ComputeSystem(
 computer.setName('Parameters');
 
 
-//set up its display:
-//everything here is working!
-let surfaceDisplay = new CSQuad( computer );
-
-
-
-
-
-
-
-
-
-
-
 
 
 // make the compute material!!!!
-
 
 const vertAux = ``;
 
@@ -481,29 +451,7 @@ let matUniforms = {
         value:true,
         range:[],
     }
-    // positiveHue:{
-    //     type: 'float',
-    //     value: 0,
-    //     range: [0,1,0.01],
-    // },
-    // negativeHue:{
-    //     type: 'float',
-    //     value:0.6,
-    //     range:[0,1,0.01],
-    // },
-    // saturation:{
-    //     type: 'float',
-    //     value: 0.75,
-    //     range: [0,1,0.01],
-    // },
-    // lightness:{
-    //     type: 'float',
-    //     value:0.5,
-    //     range:[0,1,0.01],
-    // }
 }
-
-
 let surface = new ComputeMaterial(computer, matUniforms, vert, frag, matOptions);
 surface.setName('Coloration');
 
@@ -511,39 +459,79 @@ surface.setName('Coloration');
 
 
 
-class PixelReader {
-    constructor(computer, variable, i,j){
-        this.computer=computer;
-        this.variable=variable;
-        this.i=i;
-        this.j=j;
-    }
 
-    addToScene(scene){}
 
-    addToUI(ui){}
 
-    tick(){
-        console.log(this.computer.compute[this.variable].readPixel(this.i,this.j));
+const derive = ( state ) => {
+    let vel = state.vel;
+    let acc = accel( state );
+    return new dState( vel, acc );
+};
 
+const integrator = new RungeKutta(derive, 0.05);
+
+const iniState = new State( new Vector2(2,1), new Vector2(1,1) );
+
+
+const curveOptions = {
+    length:10,
+    segments: 1024,
+    radius: 0.05,
+    tubeRes: 8,
+    color: 0xffffff,
+};
+
+
+
+const iniCondGenerator = function(n,time=0){
+    let pos = new Vector2(-2,1);
+    let angle = -0.5+0.4*Math.sin(time/3)+n/40;
+    let vel = new Vector2(Math.cos(angle), Math.sin(angle)).normalize()
+    return new State(pos,vel);
+}
+
+const optionGenerator = function(n){
+    return {
+        length: 5,
+        segments: 100,
+        radius: 0.03/(1+(0.3*n)*(0.3*n)),
+        tubeRes: 8,
+        color: 0x2B4882,
     }
 }
 
+const range = {
+    min:-10,
+    max:10,
+}
+
+const stop = function(state){
+    return false;
+}
+
+
+const geoSpray = new IntegralCurveSpray(integrator, parameterization, iniCondGenerator, optionGenerator, stop, range );
+geoSpray.tick = function(time,dTime){
+    geoSpray.update(time);
+}
+geoSpray.addToUI=function(ui){}
 
 
 
+// const geodesic = new IntegralCurve( integrator, parameterization, iniState, curveOptions, stop);
+// geodesic.tick= function( time, dTime ){
+//     let iniState = new State( new Vector2(2,1), new Vector2(Math.cos(time/10),Math.sin(time/10)));
+//     geodesic.integrate(iniState);
+//     geodesic.resetCurve(geodesic.curve);
+// }
 
 
-// THIS IS JUST PRACTICE TO SEE IF MY READPIXEL COMMAND WORKS: IT DOES!
 
-let readout = new PixelReader(computer, 'curvature',5,5);
-
-const computeSurface = {
-    eqn: equations,
+const gaussian = {
     computer: computer,
-  //  display: surfaceDisplay,
     surface: surface,
-    //pixelReader:readout
+   // geodesic: geodesic,
+    spray: geoSpray,
 };
 
-export default computeSurface;
+export default gaussian;

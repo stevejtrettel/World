@@ -62,4 +62,4 @@ class FullScreenQuad {
 
 
 
-export { FullScreenQuad };
+export default FullScreenQuad;

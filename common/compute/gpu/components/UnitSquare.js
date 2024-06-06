@@ -85,4 +85,4 @@ class UnitSquare extends BufferGeometry {
     }
 }
 
-export { UnitSquare };
+export default UnitSquare;

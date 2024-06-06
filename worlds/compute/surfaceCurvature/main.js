@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import SpringSurface from "../../../common/items/computeSystem/SpringSurface.js";
+import SurfaceCurvature from "../../../common/items/computeSystem/SurfaceCurvature.js";
 
 
 //this uses all the default settings defined in the "template" folder
@@ -52,8 +52,7 @@ function main(globalSettings) {
     world.setEnvironment( environment ) ;
 
     // BUILD THE COMPUTE OBJECT (which needs the renderer)
-    let example = new SpringSurface(world.renderer);
-    example.setIterations(10);
+    let example = new SurfaceCurvature(world.renderer);
 
     //Add objects to scene
     let object = {example: example};

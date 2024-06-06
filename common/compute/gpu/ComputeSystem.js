@@ -1,9 +1,9 @@
 //A compute system is a collection of ComputeShaders
 // (position,velocity,etc) that all work together
 
-import { Vector2} from "../../../3party/three/build/three.module.js";
-import { ComputeShader } from "./components/ComputeShader.js";
-import {FullScreenQuad} from "./components/FullScreenQuad.js";
+import {Vector2} from "../../../3party/three/build/three.module.js";
+import ComputeShader from "./components/ComputeShader.js";
+import FullScreenQuad from "./components/FullScreenQuad.js";
 
 //names come in an ordered array
 //[position, velocity]
@@ -182,4 +182,4 @@ class ComputeSystem {
 
 
 
-export { ComputeSystem };
+export default ComputeSystem;

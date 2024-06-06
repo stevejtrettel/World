@@ -1,5 +1,5 @@
-import {VerletDissipative} from "../../compute/gpu/VerletDissipative.js";
-import { CSSpheres } from "../../compute/gpu/displays/CSSpheres.js";
+import VerletDissipative from "../../compute/gpu/VerletDissipative.js";
+import CSSpheres from "../../compute/gpu/displays/CSSpheres.js";
 
 import { setIJ, onEdges, fetch } from "../../shaders/springs/setup.js";
 import {SpringStruct} from "../../shaders/springs/Spring.js";

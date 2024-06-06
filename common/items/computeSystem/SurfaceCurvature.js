@@ -1,94 +1,53 @@
-import { Vector2, Vector3 } from "../../../3party/three/build/three.module.js";
+import {LinearFilter} from "../../../3party/three/build/three.module.js";
+
+import {colorConversion} from "../../shaders/colors/colorConversion.js";
+import ComputeSystem from "../../compute/gpu/ComputeSystem.js";
+import ComputeMaterial from "../../compute/materials/ComputeMaterial.js";
 
 
-import{ globals } from "../../World/globals.js";
-import { ComputeSystem } from "../../compute/gpu/ComputeSystem.js";
-import {ComputeMaterial} from "../../compute/materials/ComputeMaterial.js";
-import { colorConversion } from "../../shaders/colors/colorConversion.js";
-import {LinearFilter, NearestFilter} from "../../../3party/three/build/three.module.js";
+//-------------------------------------------------------------------
+// DEFAULT VALUES OF THE PARAMETERS
+//-------------------------------------------------------------------
 
-import { IntegralCurve } from "../../components/odes/IntegralCurve-Traditional.js";
-import { State, dState } from "../../compute/cpu/components/State.js";
-import { RungeKutta } from "../../compute/cpu/RungeKutta.js";
-import IntegralCurveSpray from "../../components/odes/IntegralCurveSpray-Traditional.js";
-
-
-let equations = {
-    x: 'u',
-    y: 'v',
-    z: 'a*exp(-b*(u*u+v*v))',
+let defaultEquations = {
+    x: '(b+a*cos(u))*cos(v)',
+    y: '(b+a*cos(u))*sin(v)',
+    z: 'a*sin(u)+0.5*cos(u)*sin(3.*v)*sin(time)',
 };
 
-let domain = {
+let defaultDomain = {
     uMin: -3.14,
     uMax: 3.14,
     vMin: -3.14,
     vMax: 3.14,
 };
 
-let buildPointShader = ()=> {
-    return `
-            void main(){
-
-                 vec2 uv = gl_FragCoord.xy/res;
-                 
-                 float u = (float(${domain.uMax})-float(${domain.uMin}))/0.97*uv.x+float(${domain.uMin});
-                 float v = (float(${domain.vMax})-float(${domain.vMin}))/0.97*uv.y+float(${domain.vMin});
-                 
-                 float x = ${equations.x};
-                 float y = ${equations.z};
-                 float z = ${equations.y};
-                 
-                 vec3 pos = vec3(x,y,z);
-                
-                 gl_FragColor = vec4(pos,1.);
-            }
-        `;
-}
-
-
-const parameterization = ( uv ) => {
-
-    const a = 1;
-    const b = 2;
-
-    let u = uv.x;
-    let v = uv.y;
-    let x = u;
-    let y = v;
-    let z = a*Math.exp(-b*(u*u+v*v));
-    return new Vector3(x,z,y);
-
-};
 
 
 
+//-------------------------------------------------------------------
+// THE COMPUTE SHADERS
+//-------------------------------------------------------------------
 
 
-
-const accel = ( state ) => {
-
-    const a = 1;
-    const b = 2;
-
-    let u = state.pos.x;
-    let v = state.pos.y;
-    let uP = state.vel.x;
-    let vP = state.vel.y;
-
-    //For Gaussian
-    let num = 4*a*a*b*b * (uP*uP * (2*b * u*u - 1) + vP*vP * (2*b * v*v - 1) + 4*b * u*v * uP*vP);
-    let denom = 4*a*a*b*b * (u*u + v*v) + Math.exp(2*b * (u*u + v*v));
-    let K = num / denom;
-    let acc = new Vector2(u, v);
-    acc.multiplyScalar(K);
-
-    return acc;
-};
-
-
-
-
+// //NOT used in general: but if we wanted to not be able to change equations or domain
+// let pointShader =  `
+//             void main(){
+//
+//                  vec2 uv = gl_FragCoord.xy/res;
+//
+//                  float u = (float(${defaultDomain.uMax})-float(${defaultDomain.uMin}))/0.97*uv.x+float(${defaultDomain.uMin});
+//                  float v = (float(${defaultDomain.vMax})-float(${defaultDomain.vMin}))/0.97*uv.y+float(${defaultDomain.vMin});
+//
+//                  float x = ${defaultEquations.x};
+//                  float y = ${defaultEquations.y};
+//                  float z = ${defaultEquations.z};
+//
+//                  vec3 pos = vec3(x,y,z);
+//
+//                  gl_FragColor = vec4(pos,1.);
+//             }
+// `;
 
 
 const fetch = `
@@ -275,57 +234,9 @@ const curvatureShader = fetch + `
 
 
 
-
-const variables = ['point', 'tangentU', 'tangentV', 'normalVec', 'firstFF', 'secondFF', 'curvature' ];
-
-const shaders = {
-    point: buildPointShader,
-    tangentU: tangentUShader,
-    tangentV: tangentVShader,
-    normalVec: normalVecShader,
-    firstFF: firstFFShader,
-    secondFF: secondFFShader,
-    curvature: curvatureShader,
-};
-
-const uniforms = {
-    a: {
-        type: `float`,
-        value: 1,
-        range: [0, 2, 0.01],
-    },
-    b: {
-        type: `float`,
-        value: 2,
-        range: [1, 3, 0.01],
-    },
-    c: {
-        type: `float`,
-        value: 0,
-        range: [-1, 1, 0.01],
-    }
-};
-
-const options = {
-    res:[256,256],
-    filter:LinearFilter,
-};
-
-
-
-let computer = new ComputeSystem(
-    variables,
-    shaders,
-    uniforms,
-    options,
-    globals.renderer,
-);
-computer.setName('Parameters');
-
-
-
-
-// make the compute material!!!!
+//-------------------------------------------------------------------
+// THE CUSTOM SHADER MATERIAL
+//-------------------------------------------------------------------
 
 const vertAux = ``;
 
@@ -342,8 +253,6 @@ const nVec = `
         return texture(normalVec, uv).xyz;
     }
 `;
-
-
 
 const  fragAux = colorConversion;
 
@@ -433,8 +342,6 @@ let frag = {
 };
 
 
-
-
 //these are all just for the fragColor shader:
 let matUniforms = {
     coloration:{
@@ -452,95 +359,154 @@ let matUniforms = {
         range:[],
     }
 }
-let surface = new ComputeMaterial(computer, matUniforms, vert, frag, matOptions);
-surface.setName('Coloration');
 
 
 
 
 
+class SurfaceCurvature {
+
+    constructor(
+        renderer,
+        equations = defaultEquations,
+        domain = defaultDomain
+    ) {
+
+        this.equations = equations;
+        this.domain=domain;
+        this.renderer=renderer;
 
 
 
-const derive = ( state ) => {
-    let vel = state.vel;
-    let acc = accel( state );
-    return new dState( vel, acc );
-};
+        //collect the shaders and necessary information for the compute system:
 
-const integrator = new RungeKutta(derive, 0.05);
+        const variables = ['point', 'tangentU', 'tangentV', 'normalVec', 'firstFF', 'secondFF', 'curvature' ];
 
-const iniState = new State( new Vector2(2,1), new Vector2(1,1) );
+        const shaders = {
+            point: ()=>this.buildPointShader(this.domain,this.equations),
+            tangentU: tangentUShader,
+            tangentV: tangentVShader,
+            normalVec: normalVecShader,
+            firstFF: firstFFShader,
+            secondFF: secondFFShader,
+            curvature: curvatureShader,
+        };
+
+        const uniforms = {
+            a: {
+                type: `float`,
+                value: 1,
+                range: [0, 2, 0.01],
+            },
+            b: {
+                type: `float`,
+                value: 2,
+                range: [1, 3, 0.01],
+            },
+            c: {
+                type: `float`,
+                value: 0,
+                range: [-1, 1, 0.01],
+            }
+        };
+
+        const options = {
+            res:[256,256],
+            filter:LinearFilter,
+        };
 
 
-const curveOptions = {
-    length:10,
-    segments: 1024,
-    radius: 0.05,
-    tubeRes: 8,
-    color: 0xffffff,
-};
 
 
+        this.computer = new ComputeSystem(
+            variables,
+            shaders,
+            uniforms,
+            options,
+            this.renderer
+        );
+
+        //actually make the computer shader group
+        this.computer.setName('Parameters');
+
+        //make the material that displays this:
+        this.surface = new ComputeMaterial(this.computer, matUniforms, vert, frag, matOptions);
+        this.surface.setName('Coloration');
+
+    }
 
 
+    buildPointShader(dom, eqn){
+
+            return `
+            void main(){
+
+                 vec2 uv = gl_FragCoord.xy/res;
+                 
+                 float u = (float(${dom.uMax})-float(${dom.uMin}))/0.97*uv.x+float(${dom.uMin});
+                 float v = (float(${dom.vMax})-float(${dom.vMin}))/0.97*uv.y+float(${dom.vMin});
+                 
+                 float x = ${eqn.x};
+                 float y = ${eqn.y};
+                 float z = ${eqn.z};
+                 
+                 vec3 pos = vec3(x,y,z);
+                 
+                 gl_FragColor = vec4(pos,1.);
+            }
+        `;
+    }
 
 
+    addToScene(scene){
+       // this.computer.addToScene(scene);
+        this.surface.addToScene(scene);
+    }
 
+    addToUI(ui){
 
+        let computer = this.computer;
+        let eqnFolder = ui.addFolder(`Equations`);
 
+        eqnFolder.add(this.equations,'x').name('x(u,v)=').onChange(
+            ()=>{computer.recompile('point');
+            });
+        eqnFolder.add(this.equations,'y').name('y(u,v)=').onChange(
+            ()=>{
+                computer.recompile('point')
+            });
+        eqnFolder.add(this.equations,'z').name('z(u,v)=').onChange(
+            ()=>{computer.recompile('point')
+            });
 
+        let domFolder = ui.addFolder('Domain');
+        domFolder.add(this.domain,'uMin',-6.3,6.3,0.01).onChange(
+            ()=>{
+                computer.recompile('point')
+            });
+        domFolder.add(this.domain,'uMax',-6.3,6.3,0.01).onChange(
+            ()=>{
+                computer.recompile('point')
+            });
+        domFolder.add(this.domain,'vMin',-6.3,6.3,0.01).onChange(
+            ()=>{
+                computer.recompile('point')
+            });
+        domFolder.add(this.domain,'vMax',-6.3,6.3,0.01).onChange(
+            ()=>{
+                computer.recompile('point')
+            });
 
+        this.computer.addToUI(ui);
+        this.surface.addToUI(ui);
+    }
 
-const iniCondGenerator = function(n,time=0){
-    let pos = new Vector2(-2,1);
-    let angle = -0.5+0.4*Math.sin(time/3)+n/40;
-    let vel = new Vector2(Math.cos(angle), Math.sin(angle)).normalize()
-    return new State(pos,vel);
-}
-
-const optionGenerator = function(n){
-    return {
-        length: 5,
-        segments: 100,
-        radius: 0.03/(1+(0.3*n)*(0.3*n)),
-        tubeRes: 8,
-        color: 0x2B4882,
+    tick(time,dTime){
+        this.computer.tick(time,dTime);
+        this.surface.tick(time,dTime);
     }
 }
 
-const range = {
-    min:-10,
-    max:10,
-}
-
-const stop = function(state){
-    return false;
-}
 
 
-const geoSpray = new IntegralCurveSpray(integrator, parameterization, iniCondGenerator, optionGenerator, stop, range );
-geoSpray.tick = function(time,dTime){
-    geoSpray.update(time);
-}
-geoSpray.addToUI=function(ui){}
-
-
-
-// const geodesic = new IntegralCurve( integrator, parameterization, iniState, curveOptions, stop);
-// geodesic.tick= function( time, dTime ){
-//     let iniState = new State( new Vector2(2,1), new Vector2(Math.cos(time/10),Math.sin(time/10)));
-//     geodesic.integrate(iniState);
-//     geodesic.resetCurve(geodesic.curve);
-// }
-
-
-
-const gaussian = {
-    computer: computer,
-    surface: surface,
-   // geodesic: geodesic,
-    spray: geoSpray,
-};
-
-export default gaussian;
+export default SurfaceCurvature;

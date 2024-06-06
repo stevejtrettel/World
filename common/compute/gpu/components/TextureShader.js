@@ -1,6 +1,6 @@
 
-import {FullScreenQuad} from "./FullScreenQuad.js";
-import {ComputeRenderTargets} from "./ComputeRTs.js";
+import FullScreenQuad from "./FullScreenQuad.js";
+import ComputeRenderTargets from "./ComputeRTs.js";
 
 
 

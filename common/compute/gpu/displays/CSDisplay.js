@@ -53,4 +53,4 @@ class CSDisplay {
 
 
 
-export { CSDisplay };
+export default CSDisplay;

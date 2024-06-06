@@ -5,14 +5,15 @@ import {
     Mesh,
 } from "../../../3party/three/build/three.module.js";
 
+import {CustomShaderMaterial} from "../../../3party/three-csm.m.js";
+
 import {
     createFragmentCSM,
     createVertexCSM,
     createVertexTube
 } from "./createCSMShaders.js";
 
-import {UnitSquare} from "../gpu/components/UnitSquare.js";
-import {CustomShaderMaterial} from "../../../3party/three-csm.m.js";
+import UnitSquare from "../gpu/components/UnitSquare.js";
 
 
 //make a geometry which has segments many things long and tubeRes things high
@@ -249,4 +250,4 @@ class ParametricTube {
 
 
 
-export { ParametricTube };
+export default ParametricTube;

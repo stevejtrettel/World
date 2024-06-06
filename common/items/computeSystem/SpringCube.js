@@ -1,11 +1,11 @@
 import { Vector3 } from "../../../3party/three/build/three.module.js";
 
-import{ VerletCollision } from "../../compute/gpu/VerletCollision.js";
-import {VerletDissipative } from "../../compute/gpu/VerletDissipative.js";
-import { CSSpheres } from "../../compute/gpu/displays/CSSpheres.js";
+import VerletCollision from "../../compute/gpu/VerletCollision.js";
+//import VerletDissipative from "../../compute/gpu/VerletDissipative.js";
+import CSSpheres from "../../compute/gpu/displays/CSSpheres.js";
 
 import { setIJK, onEdges, fetch } from "../../shaders/springs/setup.js";
-import {SpringStruct} from "../../shaders/springs/Spring.js";
+import { SpringStruct } from "../../shaders/springs/Spring.js";
 import { grid3D_texLookup } from "../../shaders/springs/grid3D/grid3D_texLookup.js";
 import { grid3D_springForce } from "../../shaders/springs/grid3D/grid3D_springForce.js";
 import { grid3D_springDamping } from "../../shaders/springs/grid3D/grid3D_springDamping.js";

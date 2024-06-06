@@ -7,9 +7,8 @@ import {
     BufferAttribute,
 } from "../../../../3party/three/build/three.module.js";
 
-import { createParticleMesh } from "../components/createParticleMesh.js";
-
-import { CSDisplay } from "./CSDisplay.js";
+import createParticleMesh from "../components/createParticleMesh.js";
+import CSDisplay from "./CSDisplay.js";
 
 
 
@@ -104,4 +103,4 @@ class CSParticle extends CSDisplay {
 }
 
 
-export { CSParticle };
+export default CSParticle;

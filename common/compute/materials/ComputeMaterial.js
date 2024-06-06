@@ -5,13 +5,10 @@ import {
     PlaneBufferGeometry,
 } from "../../../3party/three/build/three.module.js";
 
-import {
-    UnitSquare,
-} from "../gpu/components/UnitSquare.js";
-
-import { CustomShaderMaterial} from "../../../3party/three-csm.m.js";
+import  {CustomShaderMaterial} from "../../../3party/three-csm.m.js";
 import { createVertexCSM, createFragmentCSM } from "./createCSMShaders.js";
 
+import UnitSquare from "../gpu/components/UnitSquare.js";
 
 
 // writing custom vertex and fragment shaders for a material
@@ -146,4 +143,4 @@ class ComputeMaterial {
 }
 
 
-export { ComputeMaterial };
+export default ComputeMaterial;
