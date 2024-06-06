@@ -9,8 +9,6 @@ import {CSParticle} from "../../compute/gpu/displays/CSParticle.js";
 import {colorConversion} from "../../shaders/colors/colorConversion.js";
 import {LinearFilter, NearestFilter} from "../../../3party/three/build/three.module.js";
 
-
-
 //Build the compute system
 
 const res = [4096,2048];

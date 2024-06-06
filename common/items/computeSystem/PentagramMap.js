@@ -14,7 +14,7 @@ import ComputeParticles from "../../compute/materials/ComputeParticles.js";
 // DEFAULT VALUES OF THE PARAMETERS
 //-------------------------------------------------------------------
 //Build the compute system
-const defaultRes = [1024,1024];
+const defaultRes = [2048,2048];
 
 //can use these in either shader
 let computeUniforms = {
