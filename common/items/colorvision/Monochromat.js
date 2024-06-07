@@ -1,7 +1,7 @@
 import {Color} from "../../../3party/three/build/three.module.js";
 
-import ConeCell from "../../components/colorvision/ConeCell.js";
-import Spectrum from "../../components/colorvision/Spectrum.js";
+import ConeCell from "../../components/misc/ConeCell.js";
+import Spectrum from "../../components/misc/Spectrum.js";
 
 let generalSpectrum =function(f,params={time:0}){
     let val = 3.*Math.exp(-15.*(f-0.5)*(f-0.5))+Math.sin(30.*f)/8.-2.5*Math.exp(-600*(f-0.6)*(f-0.6))-4.*Math.exp(-800*(f-0.3)*(f-0.3))-Math.exp(-600*(f-0.45)*(f-0.45))+2.*Math.exp(-600*(f-0.3)*(f-0.3))+0.5*Math.sin(20.*(f-params.time));

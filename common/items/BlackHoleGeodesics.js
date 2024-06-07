@@ -8,7 +8,7 @@ import {
     Group, DoubleSide,
 } from "../../3party/three/build/three.module.js";
 
-import {BlackHole} from "../components/BlackHole.js";
+import {BlackHole} from "../components/misc/BlackHole.js";
 import { State } from "../compute/cpu/components/State.js";
 import IntegralCurveSpray from "../components/odes/IntegralCurveSpray-Traditional.js";
 

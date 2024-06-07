@@ -1,6 +1,6 @@
 import {Color, Vector3,} from "../../../3party/three/build/three.module.js";
-import Spectrum from "../../components/colorvision/Spectrum.js";
-import EMWave from "../../components/colorvision/EMWave.js";
+import Spectrum from "../../components/misc/Spectrum.js";
+import EMWave from "../../components/misc/EMWave.js";
 import {Rod} from "../../components/basic-shapes/Rod.js";
 import {spectralColor} from "../../utils/colors.js";
 

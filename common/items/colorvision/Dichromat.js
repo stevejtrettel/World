@@ -1,5 +1,5 @@
-import Spectrum from "../../components/colorvision/Spectrum.js";
-import ConeCell from "../../components/colorvision/ConeCell.js";
+import Spectrum from "../../components/misc/Spectrum.js";
+import ConeCell from "../../components/misc/ConeCell.js";
 import {Color} from "../../../3party/three/build/three.module.js";
 
 
