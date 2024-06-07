@@ -3,7 +3,7 @@ import {
 } from "../../../3party/three/build/three.module.js";
 
 
-import SlopeField from "../../components/Calculus/SlopeField.js";
+import SlopeField from "../../components/calculus/SlopeField.js";
 import { GlassPanel } from "../../components/basic-shapes/GlassPanel.js";
 import SlopeFieldIntegralCurve from "../../components/odes/SlopeFIeldIntegralCurve.js";
 

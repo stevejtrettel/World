@@ -1,11 +1,11 @@
 import {Vector3} from "../../../3party/three/build/three.module.js";
 
-import RiemannSum from "../../components/Calculus/RiemannSum.js";
-import Graph2D from "../../components/Calculus/Graph2D.js";
+import RiemannSum from "../../components/calculus/RiemannSum.js";
+import Graph2D from "../../components/calculus/Graph2D.js";
 import {Rod} from "../../components/basic-shapes/Rod.js";
-import Graph2DIntegral from "../../components/Calculus/Graph2DIntegral.js";
+import Graph2DIntegral from "../../components/calculus/Graph2DIntegral.js";
 import {BlackBoard} from "../../components/basic-shapes/Blackboard.js";
-import SecantLine from "../../components/Calculus/SecantLine.js";
+import SecantLine from "../../components/calculus/SecantLine.js";
 
 //using GLOBAL object math.parser: this is from the 3rd party math file loaded in the html
 const parser = math.parser();

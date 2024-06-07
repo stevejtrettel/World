@@ -2,10 +2,15 @@ import {
     Matrix3,
     SphereBufferGeometry,
     BoxBufferGeometry,
-    Vector3
-} from  "../../../../../3party/three/build/three.module.js";
+    Vector3,
+    Vector4
+} from "../../../../../3party/three/build/three.module.js";
 
-import {randomVec3Ball, randomVec3Sphere} from "../../utils/random.js";
+import {
+    randomVec3Ball,
+    randomVec3Sphere
+} from "../../utils/random.js";
+
 import {State} from "../../Computation/State.js";
 
 import { Geometry } from "../Components/Geometry.js";
@@ -18,14 +23,25 @@ import {AmbientSpace} from "../AmbientSpace.js";
 
 
 
-// -------------------------------------------------------------
-//This is an INHOMOGENEOUS geometry on R3 that has an explicit distance function
-//Found on https://mathoverflow.net/questions/37651/riemannian-surfaces-with-an-explicit-distance-function
-//The metric's curvature in any totally geodesic 2-plane is
-// K = -4/(2+r^2)^3
-// -------------------------------------------------------------
+function minkowskiDot(u,v){
+    return u.w*v.w - ( u.x*v.x + u.y*v.y + u.z*v.z );
+}
+
+//distance on hyperboloid:
+function hyperboloidDistance(u,v){
+    return Math.acosh(Math.abs(minkowskiDot(u,v)));
+}
 
 
+//map from poincare ball to the hyperboloid:
+function toHyperboloid(pos){
+
+    let len2 = pos.lengthSq();
+    let w = 1 + len2;
+    let p = new Vector4(2.*pos.x,2.*pos.y,2.* pos.z,w).divideScalar(1-len2);
+
+    return p;
+}
 
 
 
@@ -38,37 +54,31 @@ import {AmbientSpace} from "../AmbientSpace.js";
 //this metric is conformal to the Euclidean plane
 //so, its defined by a conformal factor
 function conformalFactor(pos){
-    let len2 = pos.lengthSq();
-    return  2+len2;
+
+    let r2 = pos.lengthSq();
+    let diff = 1-r2;
+    let diff2 = diff*diff;
+
+    return  4./(diff2);
 }
 
+
+
 let metricTensor = function(pos){
+
     //just multiply the identity by the conformal factor
     let scale = conformalFactor(pos);
     return new Matrix3().identity().multiplyScalar(scale);
 }
 
 
-//an auxilary function to compute the distance:
+let distance = function(pos1,pos2){
 
-function fAux(x){
-    let sqrt2 = Math.sqrt(2);
-    return Math.asinh(x/sqrt2) + x*Math.sqrt(x*x+2)/2;
+    let u = toHyperboloid(pos1);
+    let v = toHyperboloid(pos2);
+    return hyperboloidDistance(u,v);
+
 }
-
-
-let distance = function(p,q){
-
-    let u = p.clone().add(q).length();
-    let v = p.clone().sub(q).length();
-
-    let avg = (u+v)/2;
-    let diff = (u-v)/2;
-
-    return fAux(avg)-fAux(diff);
-}
-
-
 
 let christoffel = function(state){
 
@@ -86,13 +96,13 @@ let christoffel = function(state){
     let yP2 = yP*yP;
     let zP2 = zP*zP;
 
-    let denom = conformalFactor(pos);
+    let denom = pos.lengthSq()-1.;
 
-    let xPP = x * ( xP2 - yP2 - zP2 ) + 2 * xP * ( y*yP + z*zP );
-    let yPP = y * ( yP2 - xP2 - zP2 ) + 2 * yP * ( x*xP + z*zP );
-    let zPP = z * ( zP2 - xP2 - yP2 ) + 2 * zP * ( x*xP + y*yP );
+    let xPP = 2*x * ( xP2 - yP2 - zP2 ) + 4 * xP * ( y*yP + z*zP );
+    let yPP = 2*y * ( yP2 - xP2 - zP2 ) + 4 * yP * ( x*xP + z*zP );
+    let zPP = 2*z * ( zP2 - xP2 - yP2 ) + 4 * zP * ( x*xP + y*yP );
 
-    let acc =  new Vector3(xPP,yPP,zPP).divideScalar(-1*denom);
+    let acc =  new Vector3(xPP,yPP,zPP).divideScalar(denom);
 
     return acc;
 }
@@ -111,9 +121,10 @@ let space = new Geometry(
 //model of Euclidean space : do nothing
 // -------------------------------------------------------------
 
-//the coordinates are directly R3!
-//though, we have the option to scale it up
-let zoom = 0.6;
+//there is no model for this space: its a metric directly on R3!
+//though, its all drawn inside of a unit ball: so let's scale it up
+
+let zoom = 6.;
 
 let coordsToModel= function(coords){
     return coords.clone().multiplyScalar(zoom);
@@ -127,7 +138,7 @@ let modelScaling = function(modelPos){
     //unscale position back to true Poincare ball:
     let coordPos = modelPos.clone().divideScalar(zoom);
     let scale = conformalFactor(coordPos);
-    return zoom/Math.sqrt(Math.abs(scale));
+    return zoom/Math.sqrt(scale);
 
 }
 
@@ -140,27 +151,23 @@ let model = new Model(coordsToModel, modelScaling);
 //obstacles to contain balls in Euclidean Space
 // -------------------------------------------------------------
 
-//distance to the origin is calculable by an explicit function
-//distTo0(p)= fAux(|p|);
-
 //a sphere of radius R
-let coordSize = 5.;
-let sphereSize = fAux(coordSize);
+let coordSize = 0.8;
+let sphereSize = distance(new Vector3(0,0,0), new Vector3(coordSize,0,0));
 
-
-//the metric is spherically symmetric; so measuring the distance to some level set of a sphere in Euc coordinates
-//is a metric sphere!
+//the metric distance to the origin of the poincare disk is the arctanh of the norm:
 let distToSphere = function(pos){
     let center = new Vector3(0,0,0);
     let dist =  distance(pos,center);
     return sphereSize - dist;
 }
 
-let sphereGeom = new SphereBufferGeometry(zoom*coordSize, 64,32);
+let sphereGeom = new SphereBufferGeometry(zoom * coordSize, 64,32);
 
 let generateState = function(){
+
     let pos = randomVec3Sphere(0.5*coordSize);
-    let vel = randomVec3Ball(1).divideScalar(conformalFactor(pos));
+    let vel = randomVec3Ball(3).divideScalar(conformalFactor(pos));
     return new State(pos,vel);
 }
 
@@ -176,8 +183,7 @@ let obstacle = new Obstacle(
 
 
 
-
 //package stuff up for export
-let inhomogeneousNeg = new AmbientSpace( space, model, obstacle);
+let hyperbolic = new AmbientSpace( space, model, obstacle);
 
-export { inhomogeneousNeg };
+export { hyperbolic };

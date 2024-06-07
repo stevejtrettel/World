@@ -4,16 +4,16 @@ import{
     SphereBufferGeometry,
     Mesh,
     DoubleSide,
-} from "../../3party/three/build/three.module.js";
+} from "../../../3party/three/build/three.module.js";
 
 import{
     RungeKutta,
-} from "../compute/cpu/RungeKutta.js";
+} from "../../compute/cpu/RungeKutta.js";
 
 import{
     State,
     dState
-} from "../compute/cpu/components/State.js";
+} from "../../compute/cpu/components/State.js";
 
 
 //set up the integrator for the light-like geodesics.

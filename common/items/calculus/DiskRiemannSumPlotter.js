@@ -1,7 +1,7 @@
 
-import DiskRiemannSum from "../../components/Calculus/DiskRiemannSum.js";
-import Graph2D from "../../components/Calculus/Graph2D.js";
-import RiemannSum from "../../components/Calculus/RiemannSum.js";
+import DiskRiemannSum from "../../components/calculus/DiskRiemannSum.js";
+import Graph2D from "../../components/calculus/Graph2D.js";
+import RiemannSum from "../../components/calculus/RiemannSum.js";
 
 
 //using GLOBAL object math.parser: this is from the 3rd party math file loaded in the html

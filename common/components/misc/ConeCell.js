@@ -1,3 +1,9 @@
+
+//------------------------------------------------------------------
+// PART OF THE COLOR VISION COLLECTION OF PROGRAMS
+//-------------------------------------------------------------------
+
+
 import {BoxGeometry, MeshPhysicalMaterial, Mesh,Vector3} from "../../../3party/three/build/three.module.js";
 
 import BarGraph from "../basic-shapes/BarGraph.js";

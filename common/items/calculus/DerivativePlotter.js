@@ -1,7 +1,7 @@
 import {BlackBoard} from "../../components/basic-shapes/Blackboard.js";
 
 import{ getRange, differentiate } from "../../utils/math/functions_singleVar.js";
-import {Graph2D} from "../../components/Calculus/Graph2D.js";
+import {Graph2D} from "../../components/calculus/Graph2D.js";
 
 
 

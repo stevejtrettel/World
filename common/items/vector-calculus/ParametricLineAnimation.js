@@ -1,15 +1,24 @@
 import {Color, Vector3} from "../../../3party/three/build/three.module.js";
 
 import {Rod} from "../../components/basic-shapes/Rod.js";
-import Vector from "../../components/VectorCalculus/Vector.js";
+import Vector from "../../components/basic-shapes/Vector.js";
 
 let ptColor = new Color().setHSL(0.55,0.5,0.5);
 let dirColor = new Color().setHSL(0.2,0.5,0.5);
 let sumColor = new Color().setHSL(0.35,0.5,0.5);
 let lineColor = new Color().setHSL(0.65,0.5,0.7);
 
+
+
+
+const defaultSetup = {
+    pt: new Vector3(0,1,2),
+    dir: new Vector3(1,-2,-1)
+};
+
+
 class ParametricLineAnimation {
-    constructor(pt, dir) {
+    constructor(setup=defaultSetup) {
 
         this.params = {
             animate: true,
@@ -23,13 +32,13 @@ class ParametricLineAnimation {
         }
 
 
-        this.pt = pt;
-        this.ptVector = new Vector(pt,ptColor);
+        this.pt = setup.pt;
+        this.ptVector = new Vector(setup.pt,ptColor);
 
-        this.dir = dir;
-        this.dirVector = new Vector(dir,dirColor);
+        this.dir = setup.dir;
+        this.dirVector = new Vector(setup.dir,dirColor);
 
-        this.shiftedDirVector = new Vector(dir);
+        this.shiftedDirVector = new Vector(setup.dir);
         this.shiftedDirVector.setPos(this.pt,dirColor);
 
         this.sum = this.pt.clone().add(this.dir);
@@ -138,5 +147,4 @@ class ParametricLineAnimation {
 
 
 
-let ex = new ParametricLineAnimation(new Vector3(0,1,2),new Vector3(1,-2,-1));
-export default {ex};
+export default ParametricLineAnimation;

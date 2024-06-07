@@ -1,10 +1,10 @@
 import {Color, Vector3} from "../../../3party/three/build/three.module.js";
 
-import SurfaceRevolutionX from "../../components/Calculus/SurfaceRevolutionX.js";
+import SurfaceRevolutionX from "../../components/calculus/SurfaceRevolutionX.js";
 import {BlackBoard} from "../../components/basic-shapes/Blackboard.js";
 import {Rod} from "../../components/basic-shapes/Rod.js";
-import Graph2D from "../../components/Calculus/Graph2D.js";
-import AreaBetweenCurves from "../../components/Calculus/AreaBetweenCurves.js";
+import Graph2D from "../../components/calculus/Graph2D.js";
+import AreaBetweenCurves from "../../components/calculus/AreaBetweenCurves.js";
 import Washer from "../../components/basic-shapes/Washer.js";
 
 

@@ -3,7 +3,7 @@ import {
     SphereBufferGeometry,
     Vector3,
     Vector4
-} from  "../../../../../3party/three/build/three.module.js";
+} from "../../../../../3party/three/build/three.module.js";
 
 import { Geometry } from "../Components/Geometry.js";
 import {Model} from "../Components/Model.js";

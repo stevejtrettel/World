@@ -5,9 +5,9 @@ import {
     Mesh,
     DoubleSide,
     Group,
-} from "../../../3party/three/build/three.module.js";
+} from "../../3party/three/build/three.module.js";
 
-import{ Rod } from "../basic-shapes/Rod.js";
+import{ Rod } from "../components/basic-shapes/Rod.js";
 
 //the geometry for a quadrilateral given its vertices
 class RiemannRectangle {

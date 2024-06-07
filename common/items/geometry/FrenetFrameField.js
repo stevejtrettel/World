@@ -9,7 +9,7 @@ import {
 } from "../../../3party/three/build/three.module.js";
 
 import ParametricCurve from "../../compute/parametric/ParametricCurve.js";
-import FrenetFrame from "../../components/differential-geometry/FrenetFrame.js";
+import FrenetFrame from "../../components/geometry/FrenetFrame.js";
 
 let surfaceOptions = {
     clearcoat:1,

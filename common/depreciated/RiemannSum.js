@@ -1,6 +1,6 @@
-import{ setX } from "../../utils/math/functions_singleVar.js";
+import{ setX } from "../utils/math/functions_singleVar.js";
 import {RiemannRectangle} from "./RiemannRectangle.js";
-import {DoubleSide, MeshPhysicalMaterial} from "../../../3party/three/build/three.module.js";
+import {DoubleSide, MeshPhysicalMaterial} from "../../3party/three/build/three.module.js";
 
 class RiemannSum{
     constructor( options ){

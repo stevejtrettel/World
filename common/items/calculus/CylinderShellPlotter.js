@@ -1,10 +1,10 @@
 import {Color, CylinderBufferGeometry, Vector3} from "../../../3party/three/build/three.module.js";
 
-import SurfaceRevolutionY from "../../components/Calculus/SurfaceRevolutionY.js";
+import SurfaceRevolutionY from "../../components/calculus/SurfaceRevolutionY.js";
 import {BlackBoard} from "../../components/basic-shapes/Blackboard.js";
 import {Rod} from "../../components/basic-shapes/Rod.js";
-import Graph2D from "../../components/Calculus/Graph2D.js";
-import AreaBetweenCurves from "../../components/Calculus/AreaBetweenCurves.js";
+import Graph2D from "../../components/calculus/Graph2D.js";
+import AreaBetweenCurves from "../../components/calculus/AreaBetweenCurves.js";
 import Washer from "../../components/basic-shapes/Washer.js";
 import Cylinder from "../../components/basic-shapes/Cylinder.js";
 

@@ -1,3 +1,11 @@
+
+
+//------------------------------------------------------------------
+// PART OF THE COLOR VISION COLLECTION OF PROGRAMS
+//-------------------------------------------------------------------
+
+
+
 import { spectralColor } from "../../utils/colors.js";
 
 
