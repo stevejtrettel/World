@@ -1,6 +1,6 @@
 import {Vector2,Vector3} from "../../../3party/three/build/three.module.js";
 
-import ParametricCurveCPU from "../../components/parametric/ParametricCurveCPU.js";
+import ParametricCurveCPU from "../../compute/parametric/ParametricCurveCPU.js";
 
 
 

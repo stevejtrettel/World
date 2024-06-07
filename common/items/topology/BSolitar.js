@@ -1,7 +1,7 @@
 
 import {rotateR4} from "../../shaders/geometry/rotateR4.js";
 import {projectR4} from "../../shaders/geometry/projectR4.js";
-import ParametricSurface from "../../components/parametric/ParametricSurface.js";
+import ParametricSurface from "../../compute/parametric/ParametricSurface.js";
 
 
 

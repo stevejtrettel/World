@@ -1,6 +1,6 @@
 import {Vector2,Vector3} from "../../../3party/three/build/three.module.js";
 import RodChain from "../../components/basic-shapes/RodChain.js";
-import ParametricCurve from "../../components/parametric/ParametricCurve.js";
+import ParametricCurve from "../../compute/parametric/ParametricCurve.js";
 
 
 

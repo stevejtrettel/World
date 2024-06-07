@@ -5,8 +5,7 @@ import {
 
 
 import DomainPlot from "../../components/vector-calculus/DomainPlot.js";
-import ParametricSurface from "../../components/parametric/ParametricSurface.js";
-
+import ParametricSurface from "../../compute/parametric/ParametricSurface.js";
 
 
 let surfaceOptions = {
@@ -15,18 +14,33 @@ let surfaceOptions = {
 }
 
 
+const defaultSetup = {
+    showPos:true,
+    animate:true,
+    xEqn: "(2.+sin(v))*cos(u)",
+    yEqn: "v",
+    zEqn: "(2.+sin(v))*sin(u)",
+    range: {
+        u: {min: 0, max: 6.29 },
+        v: {min:-6.75, max:3.75}
+    },
+}
+
 class ParametricSurfaceAnimation {
-    constructor() {
+    constructor(renderer, setup = defaultSetup) {
+
+        this.renderer = renderer;
+        this.range = setup.range;
 
         this.params = {
-            uMin:0,
-            uMax:6.29,
-            vMin:-6.75,
-            vMax:3.75,
-            showPos:true,
+            uMin:this.range.u.min,
+            uMax:this.range.u.max,
+            vMin:this.range.v.min,
+            vMax:this.range.v.max,
+            showPos:setup.showPos,
             uPos:0.5,
             vPos:0.5,
-            animate:true,
+            animate:setup.animate,
             xEqn: "(2.+sin(v))*cos(u)",
             yEqn: "v",
             zEqn: "(2.+sin(v))*sin(u)",
@@ -34,11 +48,6 @@ class ParametricSurfaceAnimation {
             b:0,
             c:0,
         }
-
-        this.range = {
-            u:{min:this.params.uMin, max:this.params.uMax},
-            v:{min:this.params.vMin, max:this.params.vMax}
-        };
 
         this.uniforms = {
             showPos:{type:'bool',value:this.params.showPos},
@@ -48,7 +57,6 @@ class ParametricSurfaceAnimation {
             b:{type:'float',value:this.params.b},
             c:{type:'float',value:this.params.c},
         };
-
 
 
         let colorFnText = `
@@ -92,7 +100,7 @@ class ParametricSurfaceAnimation {
 
         this.surface = new ParametricSurface(this.buildEquation(),this.range,this.uniforms,this.surfaceColor,surfaceOptions);
 
-        this.domainPlot = new DomainPlot(this.params.eqn,this.range,this.uniforms,this.domainColor);
+        this.domainPlot = new DomainPlot(this.renderer,this.params.eqn,this.range,this.uniforms,this.domainColor);
         this.domainPlot.setPosition(0,-10,0);
 
     }
@@ -223,7 +231,4 @@ class ParametricSurfaceAnimation {
 
 
 
-
-let ex = new ParametricSurfaceAnimation();
-
-export default {ex};
+export default ParametricSurfaceAnimation;

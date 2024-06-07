@@ -1,6 +1,6 @@
 import {Vector3} from "../../../3party/three/build/three.module.js";
 
-import ParametricCurve from "../../components/parametric/ParametricCurveCPU.js";
+import ParametricCurve from "../../compute/parametric/ParametricCurveCPU.js";
 import {GlassPanel} from "../../components/basic-shapes/GlassPanel.js";
 
 class WaveString{

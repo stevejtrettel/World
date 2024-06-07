@@ -9,8 +9,6 @@ import {
 
 import {colorConversion} from "../../shaders/colors/colorConversion.js";
 import TextureShader from "../../compute/gpu/components/TextureShader.js";
-import {globals} from "../../World/globals.js";
-
 
 //need to make a function vec3 fragColor();
 //have available as varyings vPosition, vUv and vNormal
@@ -68,8 +66,9 @@ const defaultMatOptions = {};
 //THIS IS JUST FOR PARAMETRIC SURFACE PLOTS, BUT WE CAN'T USE THE CUSTOMSHADERMATERIAL TWICE FOR SOME REASON.....
 //SO I HAVE TO DO THIS
 class DomainPlot {
-    constructor(eqn, domain, uniforms, colorFn=defaultColorFn, options = defaultMatOptions) {
+    constructor(renderer,eqn, domain, uniforms, colorFn=defaultColorFn, options = defaultMatOptions) {
 
+        this.renderer = renderer;
         this.eqn = eqn;
         this.domain = domain;
         this.colorFn = colorFn;
@@ -100,7 +99,7 @@ class DomainPlot {
             res:this.res,
             filter:LinearFilter,
         };
-        this.texShader = new TextureShader(shader, this.uniforms, this.uniformString, rtSettings, globals.renderer );
+        this.texShader = new TextureShader(shader, this.uniforms, this.uniformString, rtSettings, this.renderer );
 
         //main thing here is that we have a map for the texture!
         //it comes from this.compute

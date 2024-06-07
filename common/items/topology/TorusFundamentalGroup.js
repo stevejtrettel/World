@@ -8,7 +8,7 @@ import {
 import { colorConversion } from "../../shaders/colors/colorConversion.js";
 
 import  ParametricMaterial  from "../../compute/materials/ParametricMaterial.js";
-import ParametricCurveCPU from "../../components/parametric/ParametricCurveCPU.js";
+import ParametricCurveCPU from "../../compute/parametric/ParametricCurveCPU.js";
 
 let surfaceEqn = {
     x:  `(2.+sin(t))*cos(s)`,

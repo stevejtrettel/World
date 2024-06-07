@@ -2,7 +2,7 @@
 import {Vector3,Color} from "../../../3party/three/build/three.module.js";
 
 import Vector from "../../components/basic-shapes/Vector.js";
-import ParametricSurface from "../../components/parametric/ParametricSurface.js";
+import ParametricSurface from "../../compute/parametric/ParametricSurface.js";
 import DomainPlot from "../../components/vector-calculus/DomainPlot.js";
 
 let surfaceOptions = {
@@ -15,7 +15,9 @@ const parser = math.parser();
 
 
 class ParametricPlaneAnimation{
-    constructor() {
+    constructor(renderer) {
+
+        this.renderer = renderer;
 
         this.params = {
             ux:1,
@@ -99,7 +101,7 @@ class ParametricPlaneAnimation{
 
         this.plane = new ParametricSurface(this.buildGLSLEquation(),this.range,this.uniforms,this.planeColor,surfaceOptions);
 
-        this.domainPlot = new DomainPlot(this.params.eqn,this.range,this.uniforms,this.domainColor);
+        this.domainPlot = new DomainPlot(this.renderer, this.params.eqn,this.range,this.uniforms,this.domainColor);
         this.domainPlot.setPosition(0,-10,0);
 
 
@@ -233,6 +235,4 @@ class ParametricPlaneAnimation{
 }
 
 
-let ex = new ParametricPlaneAnimation();
-
-export default {ex};
+export default ParametricPlaneAnimation;

@@ -1,4 +1,4 @@
-import ParametricSurface from "../../components/parametric/ParametricSurface.js";
+import ParametricSurface from "../../compute/parametric/ParametricSurface.js";
 
 let surfaceOptions = {
     clearcoat:1,
@@ -6,29 +6,37 @@ let surfaceOptions = {
 }
 
 
-
-
+const defaultSetup = {
+    range: {
+        u:{min:0, max:6.29},
+        v:{min:0, max:6.29}
+    },
+    xEqn: "(1.25 *(1.-v/(2.*3.14159))*cos(2.*v)*(1.+cos(u))+cos(2.*v))",
+    yEqn: "(10.*v/(2.*3.14159)+(1.-v/(2.*3.14159))*sin(u))-5.",
+    zEqn: "-(1.25 *(1.-v/(2.*3.14159))*sin(2.*v)*(1.+cos(u))+sin(2.*v))",
+    animate:false,
+    a:0,
+    b:0,
+    c:0
+};
 
 class ParametricSurfacePlotter {
-    constructor() {
-        this.range = {
-            u:{min:0, max:6.29},
-            v:{min:0, max:6.29}
-        };
+    constructor(setup = defaultSetup) {
+        this.range = setup.range;
 
         this.params = {
-            uMin:0,
-            uMax:6.29,
-            vMin:0,
-            vMax:6.29,
-            animate:false,
+            uMin:this.range.u.min,
+            uMax:this.range.u.max,
+            vMin:this.range.v.min,
+            vMax:this.range.v.max,
+            animate:setup.animate,
             homotopy: 1,
-            xEqn: "(1.25 *(1.-v/(2.*3.14159))*cos(2.*v)*(1.+cos(u))+cos(2.*v))",
-            yEqn: "(10.*v/(2.*3.14159)+(1.-v/(2.*3.14159))*sin(u))-5.",
-            zEqn: "-(1.25 *(1.-v/(2.*3.14159))*sin(2.*v)*(1.+cos(u))+sin(2.*v))",
-            a:0,
-            b:0,
-            c:0,
+            xEqn: setup.xEqn,
+            yEqn: setup.yEqn,
+            zEqn: setup.zEqn,
+            a:setup.a||0,
+            b:setup.b||0,
+            c:setup.c||0,
         }
 
         this.uniforms = {
@@ -167,6 +175,4 @@ class ParametricSurfacePlotter {
 
 
 
-
-let ex = new ParametricSurfacePlotter();
-export default ex;
+export default ParametricSurfacePlotter;

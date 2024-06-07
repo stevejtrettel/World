@@ -1,4 +1,4 @@
-import ParametricSurface from "../../components/parametric/ParametricSurface.js";
+import ParametricSurface from "../../compute/parametric/ParametricSurface.js";
 
 let surfaceOptions = {
     clearcoat:1,
@@ -6,20 +6,28 @@ let surfaceOptions = {
 }
 
 
+
+let defaultSetup = {
+    range:{
+        u:{min:-3.14, max:3.14},
+        v:{min:-3.14, max:3.14}
+    },
+    eqn: "sin(x*y)",
+
+
+}
+
 class Graph3DPlotter {
-    constructor() {
-        this.range = {
-            u:{min:-3.14, max:3.14},
-            v:{min:-3.14, max:3.14}
-        };
+    constructor(setup=defaultSetup) {
+        this.range = setup.range;
 
         this.params = {
-            uMin:-3.14,
-            uMax:3.14,
-            vMin:-3.14,
-            vMax:3.14,
+            uMin:this.range.u.min,
+            uMax:this.range.u.max,
+            vMin:this.range.v.min,
+            vMax:this.range.v.max,
             homotopy: 1,
-            zEqn: "sin(x*y)",
+            zEqn: setup.eqn,
             a:0,
             b:0,
             c:0,
@@ -117,8 +125,4 @@ class Graph3DPlotter {
 }
 
 
-
-
-
-let ex = new Graph3DPlotter();
-export default ex;
+export default Graph3DPlotter;

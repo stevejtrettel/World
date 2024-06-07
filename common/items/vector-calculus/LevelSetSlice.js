@@ -7,8 +7,13 @@ import {
 
 import {Rod} from "../../components/basic-shapes/Rod.js";
 import Graph3D from "../../components/vector-calculus/Graph3D.js";
-import ContourPlotOld from "../../components/vector-calculus/ContourPlotOld.js";
 import ContourPlot2D from "../../components/vector-calculus/ContourPlot2D.js";
+
+
+
+//----------------------
+//NOTE: THIS CLASS REQUIRES THE RENDERER TO RUN CONTOURPLOT2D, AS WE CAN'T GET 2 SHADER MATERIALS WORKING :(
+//----------------------
 
 let planeMaterial=new MeshPhysicalMaterial({
     side:DoubleSide,
@@ -17,7 +22,6 @@ let planeMaterial=new MeshPhysicalMaterial({
     clearcoat:1,
     ior:1,
 });
-
 
 
 let surfaceOptions = {
@@ -42,18 +46,28 @@ let pointMaterial = new MeshPhysicalMaterial({
 
 
 
-class LevelSetSlice {
-    constructor() {
 
-        this.range = {
-            u:{min:-10, max:10},
-            v:{min:-10, max:10}
-        };
+
+
+const defaultSetup = {
+    range: {
+        u:{min:-10, max:10},
+        v:{min:-10, max:10}
+    },
+    eqn:'2.*(cos(u)+sin(u*v/5.))',
+    animate: true,
+};
+
+class LevelSetSlice {
+    constructor(renderer, setup = defaultSetup) {
+
+        this.renderer = renderer;
+        this.range = setup.range;
 
         this.params = {
-            animate:true,
+            animate:setup.animate,
             slice: 0,
-            eqn: '2.*(cos(u)+sin(u*v/5.))',
+            eqn: setup.eqn,
         }
 
         this.uniforms = {
@@ -67,7 +81,7 @@ class LevelSetSlice {
                 return vec3(0.8,0.8,0);
               }
               
-              return vec3(0.03,vUv);
+              return vec3(0.05);
             }
         `;
 
@@ -93,7 +107,8 @@ class LevelSetSlice {
 
         this.graph = new Graph3D(this.params.eqn,this.range,this.uniforms,this.surfaceColor,surfaceOptions);
 
-        this.contour = new ContourPlot2D(this.params.eqn,this.range,this.uniforms,this.contourColor);
+        this.contour = new ContourPlot2D(this.renderer, this.params.eqn, this.range, this.uniforms, this.contourColor);
+        //,this.contourColor
 
         this.contour.setPosition(0,-7,0);
 
@@ -168,8 +183,4 @@ class LevelSetSlice {
 }
 
 
-
-
-let ex = new LevelSetSlice();
-
-export default {ex};
+export default LevelSetSlice;

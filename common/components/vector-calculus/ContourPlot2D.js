@@ -1,5 +1,3 @@
-import {createFragmentCSM, createVertexCSM} from "../../compute/materials/createCSMShaders.js";
-import {UnitSquare} from "../../compute/gpu/components/UnitSquare.js";
 import {
     BoxBufferGeometry,
     DoubleSide,
@@ -7,10 +5,8 @@ import {
     Mesh,
     MeshPhysicalMaterial
 } from "../../../3party/three/build/three.module.js";
-import {CustomShaderMaterial} from "../../../3party/three-csm.m.js";
 import {colorConversion} from "../../shaders/colors/colorConversion.js";
 import TextureShader from "../../compute/gpu/components/TextureShader.js";
-import {globals} from "../../World/globals.js";
 
 
 //need to make a function vec3 fragColor();
@@ -63,13 +59,15 @@ const mainShaderFn = `
 
 const defaultMatOptions = {};
 
+
 class ContourPlot2D{
-    constructor(eqn, domain, uniforms, colorFn=defaultColorFn, options = defaultMatOptions) {
+    constructor(renderer, eqn, domain, uniforms, colorFn=defaultColorFn, options = defaultMatOptions) {
 
         this.eqn = eqn;
         this.domain = domain;
         this.colorFn = colorFn;
         this.res = [1024,1024];
+        this.renderer = renderer;
 
         //make uniforms for the display shaders
         this.uniformString = ``;
@@ -96,7 +94,7 @@ class ContourPlot2D{
             res:this.res,
             filter:LinearFilter,
         };
-        this.texShader = new TextureShader(shader, this.uniforms, this.uniformString, rtSettings, globals.renderer );
+        this.texShader = new TextureShader(shader, this.uniforms, this.uniformString, rtSettings, this.renderer );
 
         //main thing here is that we have a map for the texture!
         //it comes from this.compute
@@ -166,7 +164,6 @@ class ContourPlot2D{
     addToScene(scene){
         scene.add(this.plane);
     }
-
 
 }
 

@@ -1,21 +1,34 @@
 
 import {posNegColor} from "../../utils/colors.js";
-import RiemannSum2D from "../../components/VectorCalculus/RiemannSum2D.js";
+import RiemannSum2D from "../../components/vector-calculus/RiemannSum2D.js";
 
 //using GLOBAL object math.parser: this is from the 3rd party math file loaded in the html
 const parser = math.parser();
 
+
+
+
+
+const defaultParams = {
+    range: {x:{ min:-10,max:10},
+        y:{ min:-10,max:10}},
+
+    res: {x:20,y:20},
+
+    fnText: 'x/5+sin(y*x/5)',
+};
+
 class RiemannSum2DPlotter{
-    constructor(fnText, range, res, materialProps){
+    constructor(params=defaultParams, materialProps){
 
         this.params = {
-            xMin: range.x.min,
-            xMax: range.x.max,
+            xMin: params.range.x.min,
+            xMax: params.range.x.max,
 
-            yMin: range.y.min,
-            yMax: range.y.max,
+            yMin: params.range.y.min,
+            yMax: params.range.y.max,
 
-             numBars: res.x*res.y,
+             numBars: params.res.x*params.res.y,
             // xRes:res.x,
             // yRes:res.y,
 
@@ -25,7 +38,7 @@ class RiemannSum2DPlotter{
 
             time:0,
 
-            functionText: fnText,
+            functionText: params.fnText,
 
             showCurve:true,
 
@@ -43,7 +56,7 @@ class RiemannSum2DPlotter{
             return z;
         }
 
-        this.riemannSum = new RiemannSum2D(this.f, range, res, materialProps);
+        this.riemannSum = new RiemannSum2D(this.f, params.range, params.res, materialProps);
     }
 
     addToScene(scene){
@@ -132,17 +145,5 @@ class RiemannSum2DPlotter{
 
 
 
-let matProps = {
-    transparent:true,
-    opacity:0.2,
-}
 
-let range = {x:{ min:-10,max:10},
-    y:{ min:-10,max:10}};
-let res = {x:20,y:20};
-
-let fnText = 'x/5+sin(y*x/5)';
-
-let example = new RiemannSum2DPlotter(fnText,range, res );
-
-export default {example};
+export default RiemannSum2DPlotter;

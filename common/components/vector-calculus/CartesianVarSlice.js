@@ -1,5 +1,5 @@
 import {Mesh, DoubleSide, MeshPhysicalMaterial, Vector3} from "../../../3party/three/build/three.module.js";
-import ParametricCurveCPU from "../parametric/ParametricCurveCPU.js";
+import ParametricCurveCPU from "../../compute/parametric/ParametricCurveCPU.js";
 import {Rod} from "../basic-shapes/Rod.js";
 import {ParametricGeometry} from "../../../3party/three/examples/jsm/geometries/ParametricGeometry.js";
 import {getRange} from "../../utils/math/functions_singleVar.js";

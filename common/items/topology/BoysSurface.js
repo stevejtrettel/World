@@ -7,8 +7,8 @@ import {
 } from "../../../3party/three/build/three.module.js";
 
 import {complex} from "../../shaders/math/complex.js";
-import ParametricSurface from "../../components/parametric/ParametricSurface.js";
-import ParametricSurfaceCPU from "../../components/parametric/ParametricSurfaceCPU.js";
+import ParametricSurface from "../../compute/parametric/ParametricSurface.js";
+import ParametricSurfaceCPU from "../../compute/parametric/ParametricSurfaceCPU.js";
 
 
 

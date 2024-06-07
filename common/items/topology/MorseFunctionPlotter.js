@@ -5,7 +5,7 @@ import {
     PlaneBufferGeometry,
 } from "../../../3party/three/build/three.module.js";
 
-import ParametricSurface from "../../components/parametric/ParametricSurface.js";
+import ParametricSurface from "../../compute/parametric/ParametricSurface.js";
 
 
 
