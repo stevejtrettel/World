@@ -1,13 +1,16 @@
-import { UI } from "./Ui.js";
-import { Loop } from "./Loop.js";
-import Resizer from "./Resizer.js";
-//import { Environment } from "./Environment.js";
+import UI from "./Ui.js";
+import Loop from "./Loop.js";
 
+
+import {createContainer} from "./components/createContainer.js";
 import { createCamera } from "./components/createCamera.js";
 import { createScene } from "./components/createScene.js";
 import { createStats, placeStats } from "./components/createStats.js";
 import { createControls } from "./components/createControls.js";
 import {createPMREM, createRenderer} from "./components/createRenderer.js";
+import {setSize} from "./components/setSize.js";
+
+
 
 class World {
 
@@ -16,19 +19,9 @@ class World {
         this.renderer = createRenderer(options.renderer={});
         this.pmrem = createPMREM(this.renderer);
 
-       // put the container for the scene into the html
-        //get the canvas that things attach to, and add to scene
-        this.container = this.renderer.domElement;
-        document.body.appendChild(this.container);
-        this.container.setAttribute("id", "World");
-        this.container.style.width = '100%';
-        this.container.style.height = '100%';
-        this.container.style.position = 'absolute';
-        this.container.style['background-color'] = "#0f213d";
-
-        //the renderer creates a canvas element: append it to the html
-       // this.container = container;
-       //  this.container.append( this.renderer.domElement );
+        //create container and attach to renderer:
+        this.container = createContainer(options.name);
+        this.container.append( this.renderer.domElement );
 
         this.camera = createCamera(options.camera);
         this.scene = createScene( options.environment.color );
@@ -51,7 +44,13 @@ class World {
         }
 
         this.ui = new UI();
-        this.resizer = new Resizer( this.container, this.camera, this.renderer );
+
+
+        // set the size of the window:
+        setSize( this.container, this.camera, this.renderer );
+        window.addEventListener('resize', () => {
+            setSize( this.container, this.camera, this.renderer );
+        }, false );
 
     }
 
@@ -106,4 +105,4 @@ class World {
 }
 
 
-export { World };
+export default World;

@@ -14,4 +14,4 @@ class UI extends GUI {
 }
 
 
-export { UI };
+export default UI;

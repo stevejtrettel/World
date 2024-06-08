@@ -4,7 +4,7 @@ import {resolution,springConditions,springParameters,collision} from "./springSe
 
 
 //this uses all the default settings defined in the "template" folder
-import { World } from "../../../code/World/World.js";
+import World from "../../../code/World/World.js";
 import  {createEnvironment} from "../../../code/World/template/environment.js";
 import  {lights} from "../../../code/World/template/lights.js";
 
