@@ -1,7 +1,7 @@
 import {Color, Vector3} from "../../../3party/three/build/three.module.js";
 import {Rod} from "../../components/basic-shapes/Rod.js";
 
-import Vector from "../../components/VectorCalculus/Vector.js";
+import Vector from "../../components/basic-shapes/Vector.js";
 
 
 class VectorComponents{
@@ -125,6 +125,4 @@ class VectorComponents{
 }
 
 
-let ex = new VectorComponents();
-
-export default {ex};
+export default VectorComponents;

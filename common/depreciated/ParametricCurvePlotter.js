@@ -1,10 +1,10 @@
-import ParametricCurve from "../../compute/parametric/ParametricCurve.js";
+import ParametricCurve from "../compute/parametric/ParametricCurve.js";
 import {
     Mesh,
     MeshPhysicalMaterial,
     SphereBufferGeometry,
     Vector3
-} from "../../../3party/three/build/three.module.js";
+} from "../../3party/three/build/three.module.js";
 
 let surfaceOptions = {
     clearcoat:1,

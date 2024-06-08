@@ -5,9 +5,9 @@ let params = {
     showParameters:true,
 
     animate:true,
-    showPosVector:false,
-    showTangVector:true,
-    showTangLine:false,
+    showPosVector:true,
+    showTangVector:false,
+    showTangLine:true,
     showCurrentPos:false,
     unitTangent:false,
 

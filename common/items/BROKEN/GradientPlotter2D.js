@@ -1,17 +1,32 @@
 
 import GradientField2D from "../../components/vector-calculus/GradientField2D.js";
-import ContourPlot2D from "../../components/vector-calculus/ContourPlotOld.js";
-import Graph3D from "../../components/vector-calculus/Graph3D.js";
+import ContourPlot2D from "../../components/vector-calculus/ContourPlot2D.js";
 
 //using GLOBAL object math.parser: this is from the 3rd party math file loaded in the html
 const parser = math.parser();
 
+
+
+const defaultSetup = {
+    fn: 'u*v-sin(u-t)*v',
+
+    range: {
+        x:{ min:-10,max:10},
+        y:{min:-10,max:10},
+    }
+
+};
+
+
+
 class GradientPlotter2D {
-    constructor( fnText, range ){
+    constructor( renderer, setup = defaultSetup ){
+
+        this.renderer = renderer;
 
         //the range in x,y of the plot {x:{min:,max:},y:{min:max:}}
-        this.range = range;
-        this.fnText = fnText;
+        this.range = setup.range;
+        this.fnText = setup.fn;
 
         //things that are editable by the UI
         this.params = {
@@ -20,7 +35,7 @@ class GradientPlotter2D {
             b:1,
             c:1,
             t:0,
-            fnText: fnText,
+            fnText: setup.fn,
         };
 
         //uniforms that are accessible in the texture shader
@@ -47,7 +62,7 @@ class GradientPlotter2D {
         this.gradientField = new GradientField2D( this.scalarFn, this.range );
 
         //make the contour plot
-        this.contourPlot = new ContourPlot2D(this.params.fnText,this.uniforms,this.uniformsString,this.range);
+        this.contourPlot = new ContourPlot2D(this.renderer, this.params.fnText,this.range, this.uniforms);
         this.contourPlot.setPosition(0,-0.1,0);
 
 
@@ -114,14 +129,4 @@ class GradientPlotter2D {
 
 
 
-
-let fn = 'u*v-sin(u-t)*v';
-
-let range = {
-    x:{ min:-10,max:10},
-    y:{min:-10,max:10},
-};
-
-let example = new GradientPlotter2D(fn, range );
-
-export default  { example };
+export default GradientPlotter2D;

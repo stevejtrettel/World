@@ -3,10 +3,10 @@ import {
     SphereBufferGeometry,
     MeshPhysicalMaterial,
     Mesh
-} from "../../../3party/three/build/three.module.js";
+} from "../../3party/three/build/three.module.js";
 
-import ParametricCurve from "../../compute/parametric/ParametricCurve.js";
-import Vector from "../../components/basic-shapes/Vector.js";
+import ParametricCurve from "../compute/parametric/ParametricCurve.js";
+import Vector from "../components/basic-shapes/Vector.js";
 
 
 let surfaceOptions = {
@@ -14,29 +14,27 @@ let surfaceOptions = {
     roughness:0.4,
 }
 
-let defaultParams = {
-    sMin:-3.14,
-    sMax:3.14,
-    animate:true,
-    xEqn: "(2.+cos(4.*s))*sin(s)",
-    yEqn: "sin(4.*s)",
-    zEqn: "(2.+cos(4.*s))*cos(s)",
-    a:0,
-    b:0,
-    c:0,
-    homotopy: 1,
-    time:0,
-};
-
 
 //using GLOBAL object math.parser: this is from the 3rd party math file loaded in the html
 const parser = math.parser();
 
 
 class ParametricCurveAnimation {
-    constructor(params=defaultParams) {
+    constructor() {
 
-        this.params = params;
+        this.params = {
+            sMin:-3.14,
+            sMax:3.14,
+            animate:true,
+            xEqn: "(2.+cos(4.*s))*sin(s)",
+            yEqn: "sin(4.*s)",
+            zEqn: "(2.+cos(4.*s))*cos(s)",
+            a:0,
+            b:0,
+            c:0,
+            homotopy: 1,
+            time:0,
+        }
 
         this.periodic=true;
 
@@ -66,7 +64,7 @@ class ParametricCurveAnimation {
              float grid3 = (1.-pow(abs(sin(100.*3.14*s)),0.1))/50.;
              float grid = grid1+grid2+grid3;
              
-             vec3 base =  0.6 + 0.4*cos(2.*3.14*vec3(s,1.-s,s)+vec3(0,2,4));
+             vec3 base =  0.6 + 0.5*cos(2.*3.14*vec3(s,1.-s,s)+vec3(0,2,4));
              
              return base + 2.*vec3(grid);
             }
@@ -127,7 +125,7 @@ class ParametricCurveAnimation {
         }
 
 
-        this.checkPeriodic();
+       this.checkPeriodic();
 
     }
 
@@ -227,7 +225,7 @@ class ParametricCurveAnimation {
 
 
 
-export default ParametricCurveAnimation;
 
-// let ex = new ParametricCurveAnimation();
-// export default {ex};
+
+let ex = new ParametricCurveAnimation();
+export default {ex};

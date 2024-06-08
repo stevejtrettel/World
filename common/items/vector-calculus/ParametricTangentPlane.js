@@ -9,7 +9,6 @@ import {
 
 import DomainPlot from "../../components/vector-calculus/DomainPlot.js";
 import ParametricSurface from "../../compute/parametric/ParametricSurface.js";
-import ParametricCurveCPU from "../../compute/parametric/ParametricCurveCPU.js";
 import ParametricSurfaceCPU from "../../compute/parametric/ParametricSurfaceCPU.js";
 import {Rod} from "../../components/basic-shapes/Rod.js";
 
@@ -42,21 +41,39 @@ const parser = math.parser();
 
 
 
-class GraphTangentPlane {
-    constructor() {
+
+
+
+let defaultSetup = {
+    animate: true,
+    xEqn: "2.*sin(u)*cos(v)",
+    yEqn: "2.*cos(u)",
+    zEqn: "2.*sin(u)*sin(v)",
+    range: {u: {min: 0, max: 3.14}, v:{min:-3.14, max:3.14}},
+    showPos: true,
+    tangentPlaneSize:2,
+}
+
+
+class ParametricTangentPlane {
+    constructor(renderer, setup = defaultSetup) {
+
+        this.renderer = renderer;
+
+        this.range = setup.range;
 
         this.params = {
-            uMin:-2,
-            uMax:2,
-            vMin:-2,
-            vMax:2,
-            showPos:true,
+            uMin:this.range.u.min,
+            uMax:this.range.u.max,
+            vMin:this.range.v.min,
+            vMax:this.range.v.max,
+            showPos:setup.showPos,
             uPos:0.5,
             vPos:0.5,
-            animate:true,
-            xEqn: "u",
-            yEqn: "v",
-            zEqn: "exp(-u*u-v*v)",
+            animate:setup.animate,
+            xEqn: setup.xEqn,
+            yEqn: setup.yEqn,
+            zEqn: setup.zEqn,
             a:0,
             b:0,
             c:0,
@@ -66,14 +83,11 @@ class GraphTangentPlane {
         this.yEqn=this.params.yEqn;
         this.zEqn=this.params.zEqn;
 
-        this.range = {
-            u:{min:this.params.uMin, max:this.params.uMax},
-            v:{min:this.params.vMin, max:this.params.vMax}
-        };
+
 
         this.tangentRange = {
-            u:{min:-2,max:2},
-            v:{min:-2,max:2}
+            u:{min:-setup.tangentPlaneSize, max:setup.tangentPlaneSize},
+            v:{min:-setup.tangentPlaneSize, max:setup.tangentPlaneSize}
         };
 
         this.rescaleU=function(u){
@@ -151,8 +165,8 @@ class GraphTangentPlane {
         `;
 
         this.surface = new ParametricSurface(this.buildGLSLEquation(),this.range,this.uniforms,this.surfaceColor,surfaceOptions);
-        //this.domainPlot = new DomainPlot(this.params.eqn,this.range,this.uniforms,this.domainColor);
-        //this.domainPlot.setPosition(0,-4,0);
+        this.domainPlot = new DomainPlot(this.renderer, this.params.eqn,this.range,this.uniforms,this.domainColor);
+        this.domainPlot.setPosition(0,-4,0);
 
         this.buildJSEquation();
 
@@ -190,7 +204,7 @@ class GraphTangentPlane {
             float y = ${this.params.yEqn};
             float z = ${this.params.zEqn};
            
-            vec3 end = vec3(x,z,-y);
+            vec3 end = vec3(x,y,z);
            
             return end;
             
@@ -211,7 +225,7 @@ class GraphTangentPlane {
             let x = xC(u,v,params.time,params.a,params.b,params.c);
             let y = yC(u,v,params.time,params.a,params.b,params.c);
             let z = zC(u,v,params.time,params.a,params.b,params.c);
-            return new Vector3(x,z,-y);
+            return new Vector3(x,y,z);
         }
 
         this.uEqn=function(s,params={time:0,a:0,b:0,c:0,uPos:0,vPos:0}){
@@ -240,9 +254,9 @@ class GraphTangentPlane {
 
         this.tangentEqn = function(u,v, params={time:0,a:0,b:0,c:0,uPos:0,vPos:0}){
             let pos = thisObj.eqn(thisObj.rescaleU(params.uPos),thisObj.rescaleV(params.vPos),params);
-            let du = thisObj.uDerivative(thisObj.rescaleU(params.uPos),params).normalize();
-            let dv = thisObj.vDerivative(thisObj.rescaleV(params.vPos),params).normalize();
-            return pos.addScaledVector(du,u).addScaledVector(dv,v);
+             let du = thisObj.uDerivative(thisObj.rescaleU(params.uPos),params).normalize();
+             let dv = thisObj.vDerivative(thisObj.rescaleV(params.vPos),params).normalize();
+             return pos.addScaledVector(du,u).addScaledVector(dv,v);
         }
 
     }
@@ -274,7 +288,7 @@ class GraphTangentPlane {
     addToScene(scene){
 
         this.surface.addToScene(scene);
-        //this.domainPlot.addToScene(scene);
+        this.domainPlot.addToScene(scene);
         this.uTangent.addToScene(scene);
         this.vTangent.addToScene(scene);
         this.tangentPlane.addToScene(scene);
@@ -285,19 +299,19 @@ class GraphTangentPlane {
 
         let thisObj = this;
 
-        // ui.add(thisObj.params,'xEqn').name('x(u,v)=').onFinishChange(function(val){
-        //     thisObj.params.xEqn = val;
-        //     thisObj.xEqn=val;
-        //     let newEqn = thisObj.buildGLSLEquation();
-        //     thisObj.surface.setFunction(newEqn);
-        //     thisObj.buildJSEquation();
-        //     thisObj.updateTangents();
-        // });
+        ui.add(thisObj.params,'xEqn').name('x(u,v)=').onFinishChange(function(val){
+            thisObj.params.xEqn = val;
+            thisObj.xEqn=val;
+            let newEqn = thisObj.buildGLSLEquation();
+            thisObj.surface.setFunction(newEqn);
+            thisObj.buildJSEquation();
+            thisObj.updateTangents();
+        });
 
 
         // RENAMING Y AND Z BECAUSE VECTOR CALC
 
-        ui.add(thisObj.params,'zEqn').name('z(u,v)=').onFinishChange(function(val){
+        ui.add(thisObj.params,'zEqn').name('y(u,v)=').onFinishChange(function(val){
             thisObj.params.zEqn = val
             thisObj.zEqn=val;
             let newEqn = thisObj.buildGLSLEquation();
@@ -306,14 +320,14 @@ class GraphTangentPlane {
             thisObj.updateTangents();
         });
 
-        // ui.add(thisObj.params,'yEqn').name('z(u,v)=').onFinishChange(function(val){
-        //     thisObj.params.yEqn = val;
-        //     thisObj.yEqn=val;
-        //     let newEqn = thisObj.buildGLSLEquation();
-        //     thisObj.surface.setFunction(newEqn);
-        //     thisObj.buildJSEquation();
-        //     thisObj.updateTangents();
-        // });
+        ui.add(thisObj.params,'yEqn').name('z(u,v)=').onFinishChange(function(val){
+            thisObj.params.yEqn = val;
+            thisObj.yEqn=val;
+            let newEqn = thisObj.buildGLSLEquation();
+            thisObj.surface.setFunction(newEqn);
+            thisObj.buildJSEquation();
+            thisObj.updateTangents();
+        });
 
 
         let dFolder = ui.addFolder('Domain');
@@ -321,22 +335,22 @@ class GraphTangentPlane {
         dFolder.add(thisObj.params, 'uMin',-10,10,0.01).onChange(function(val){
             thisObj.range.u.min=val;
             thisObj.surface.setDomain(thisObj.range);
-           // thisObj.domainPlot.setDomain(thisObj.range);
+            thisObj.domainPlot.setDomain(thisObj.range);
         });
         dFolder.add(thisObj.params, 'uMax',-10,10,0.01).onChange(function(val){
             thisObj.range.u.max=val;
             thisObj.surface.setDomain(thisObj.range);
-            //thisObj.domainPlot.setDomain(thisObj.range);
+            thisObj.domainPlot.setDomain(thisObj.range);
         });
         dFolder.add(thisObj.params, 'vMin',-10,10,0.01).onChange(function(val){
             thisObj.range.v.min=val;
             thisObj.surface.setDomain(thisObj.range);
-            //thisObj.domainPlot.setDomain(thisObj.range);
+            thisObj.domainPlot.setDomain(thisObj.range);
         });
         dFolder.add(thisObj.params, 'vMax',-10,10,0.01).onChange(function(val){
             thisObj.range.v.max=val;
             thisObj.surface.setDomain(thisObj.range);
-           // thisObj.domainPlot.setDomain(thisObj.range);
+            thisObj.domainPlot.setDomain(thisObj.range);
         });
 
 
@@ -356,7 +370,7 @@ class GraphTangentPlane {
         ui.add(thisObj.params, 'uPos',0,1,0.01).name("u0").onChange(function(val){
             thisObj.params.uPos=val;
             thisObj.surface.update({uPos:val});
-           // thisObj.domainPlot.update({uPos:val});
+            thisObj.domainPlot.update({uPos:val});
 
             thisObj.buildJSEquation();
             thisObj.updateTangents();
@@ -367,7 +381,7 @@ class GraphTangentPlane {
         ui.add(thisObj.params, 'vPos',0,1,0.01).name("v0").onChange(function(val){
             thisObj.params.vPos=val;
             thisObj.surface.update({vPos:val});
-            //thisObj.domainPlot.update({vPos:val});
+            thisObj.domainPlot.update({vPos:val});
 
             thisObj.buildJSEquation();
             thisObj.updateTangents();
@@ -388,7 +402,7 @@ class GraphTangentPlane {
             this.params.vPos = 0.25*Math.sin(time/3)+0.5;
 
             this.surface.update({uPos:this.params.uPos, vPos:this.params.vPos});
-           // this.domainPlot.update({uPos:this.params.uPos, vPos:this.params.vPos});
+            this.domainPlot.update({uPos:this.params.uPos, vPos:this.params.vPos});
 
             this.updateTangents();
 
@@ -398,7 +412,4 @@ class GraphTangentPlane {
 
 
 
-
-let ex = new GraphTangentPlane();
-
-export default {ex};
+export default ParametricTangentPlane;

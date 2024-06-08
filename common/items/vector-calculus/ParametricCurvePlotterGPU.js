@@ -178,7 +178,9 @@ class ParametricCurvePlotterGPU {
         this.curve.addToScene(scene);
         scene.add(this.start);
         scene.add(this.end);
-        scene.add(this.currentPt);
+        if(this.params.animate) {
+            scene.add(this.currentPt);
+        }
     }
 
     addToUI(ui){
@@ -260,8 +262,10 @@ class ParametricCurvePlotterGPU {
 
     updateS(s){
 
-        let pos = this.eqn(s, this.params);
-        this.currentPt.position.set(pos.x,pos.y,pos.z);
+        if(this.params.animate) {
+            let pos = this.eqn(s, this.params);
+            this.currentPt.position.set(pos.x, pos.y, pos.z);
+        }
 
     }
 
