@@ -1,10 +1,10 @@
 
 import { GraphOnBoard } from "../../components/calculus/GraphOnBoard.js";
-import { SecantLine } from "../../components/calculus/SecantLine.js";
-import { TangentLine } from "../../components/calculus/TangentLine.js";
+import  SecantLine  from "../../components/calculus/SecantLine.js";
+import  TangentLine  from "../../components/calculus/TangentLine.js";
+import { getRange } from "../../utils/math/functions_singleVar.js";
 
-import { getRange, differentiate } from "../../utils/math/functions_singleVar.js";
-import {RiemannRectangle} from "../../depreciated/RiemannRectangle.js";
+
 
 function setX(percent, domain){
     let spread = domain.max-domain.min;
@@ -13,8 +13,18 @@ function setX(percent, domain){
 }
 
 
+
+const defaultOptions = {
+    domain: { min:-5, max:3},
+    f: (x)=> Math.cos(3*x)+Math.cos(x),
+    res:300,
+    radius:0.05,
+    color:0x244f30,
+    accentColor:0xa8a032,
+};
+
 class SecantLinePlotter{
-    constructor(options){
+    constructor(options = defaultOptions){
 
         this.domain = options.domain;
         this.f = options.f
@@ -97,12 +107,12 @@ class SecantLinePlotter{
 
         secantFolder.add(params, 'x', 0, 1,0.001).name('x').onChange(function(){
             const newX = setX(params.x, params.domain);
-            obj.secant.resetX(newX);
-            obj.tangent.resetX(newX);
+            obj.secant.setX(newX);
+            obj.tangent.setX(newX);
         });
 
         secantFolder.add(params, 'h', 0.01, 2,0.01).name('h').onChange(function(){
-            obj.secant.resetH(params.h);
+            obj.secant.setH(params.h);
         });
 
         ui.add(params, 'drawSecant').name('Secant').onChange(function(value) {
@@ -118,19 +128,6 @@ class SecantLinePlotter{
     tick(time, dTime){}
 }
 
-export { SecantLinePlotter };
 
 
-const data = {
-    domain: { min:-5, max:3},
-    f: (x)=> Math.cos(3*x)+Math.cos(x),
-    res:300,
-    radius:0.05,
-    color:0x244f30,
-    accentColor:0xa8a032,
-};
-
-let example = new SecantLinePlotter(data)
-
-
-export default { example };
+export default SecantLinePlotter;

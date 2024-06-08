@@ -7,7 +7,6 @@ import {BoxBufferGeometry, MeshPhysicalMaterial, Mesh} from "../../../3party/thr
 const parser = math.parser();
 
 
-
 class AccumulationBlock{
     constructor(curve,range,N){
        this.curve=curve;

@@ -1,12 +1,8 @@
 import {CustomShaderMaterial} from "../../../3party/three-csm.m.js";
 import {createVertexCSM,createFragmentCSM} from "../../compute/materials/createCSMShaders.js";
 import {complex} from "../../shaders/math/complex.js";
-import {UnitSquare} from "../../compute/gpu/components/UnitSquare.js";
+import UnitSquare from "../../compute/gpu/components/UnitSquare.js";
 import {DoubleSide, Mesh} from "../../../3party/three/build/three.module.js";
-
-
-
-
 
 //points in the square (0,1)x(0,1)
 const toUV = `

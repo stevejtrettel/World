@@ -47,7 +47,7 @@ class TangentLine{
         this.rod.addToScene( scene );
     }
 
-    resetX( newX ) {
+    setX( newX ) {
         this.x=newX;
         this.y = this.f(this.x);
         this.slope = derivative( this.f, this.x );
@@ -63,7 +63,7 @@ class TangentLine{
 
     }
 
-    resetF( newF ){
+    setF( newF ){
         this.f=newF;
         this.y = this.f(this.x);
         this.slope = derivative( this.f, this.x );
@@ -89,4 +89,4 @@ class TangentLine{
 
 
 
-export { TangentLine };
+export default TangentLine;

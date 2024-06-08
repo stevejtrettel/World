@@ -10,15 +10,22 @@ import {BlackBoard} from "../../components/basic-shapes/Blackboard.js";
 const parser = math.parser();
 
 
+let defaultSetup = {
+    fnText: 'cos(x)+x/(1+x*x)',
+   range: { min:-10,max:10},
+    showCurve: false,
+    showAccumulate: false,
+}
+
 
 class AreaFunctionPlotter{
-    constructor(fnText, range ){
+    constructor(setup=defaultSetup){
 
         this.N = 1000;
-
+        this.range = setup.range;
         this.params = {
-            xMin: range.min,
-            xMax: range.max,
+            xMin: setup.range.min,
+            xMax: setup.range.max,
 
             x:0.75,
 
@@ -27,10 +34,10 @@ class AreaFunctionPlotter{
             c:1,
 
             time:0,
-            curveText: fnText,
+            curveText: setup.fnText,
 
-            showCurve:true,
-            showAccumulate:false,
+            showCurve: setup.showCurve,
+            showAccumulate: setup.showAccumulate,
 
         };
 
@@ -44,7 +51,7 @@ class AreaFunctionPlotter{
         }
 
         let graphOptions = {
-            domain:range,
+            domain:this.range,
             radius:0.03,
             res:300,
             f: this.curve,
@@ -78,13 +85,10 @@ class AreaFunctionPlotter{
 
         //draw the blackboard this is all taking place on:
         let boardOptions = {
-            xRange: range,
-            yRange: range,
+            xRange: this.range,
+            yRange: this.range,
         }
         this.blackboard = new BlackBoard(boardOptions);
-
-
-
 
     }
 
@@ -188,16 +192,5 @@ class AreaFunctionPlotter{
 }
 
 
+export default AreaFunctionPlotter;
 
-
-
-
-
-
-
-let fnText = 'cos(x)+x/(1+x*x)';
-let range = { min:-10,max:10};
-
-let example = new AreaFunctionPlotter(fnText, range );
-
-export default {example};

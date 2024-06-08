@@ -1,16 +1,31 @@
+
+//----------------------------------
+// NEED TO MAKE SO SOMEONE CAN TYPE IN THEIR OWN FUNCTION
+//------------------------------
+
+
 import {BlackBoard} from "../../components/basic-shapes/Blackboard.js";
 
 import{ getRange, differentiate } from "../../utils/math/functions_singleVar.js";
-import {Graph2D} from "../../components/calculus/Graph2D.js";
+import Graph2D from "../../components/calculus/Graph2D.js";
 
+
+const defaultSetup = {
+    domain: { min:-5, max:3},
+    f: (x)=> Math.cos(3*x)+Math.cos(x),
+    res:300,
+    radius:0.05,
+    color:0x244f30,
+    accentColor:0xa8a032,
+};
 
 
 class DerivativePlotter {
-    constructor( options ){
+    constructor( setup=defaultSetup ){
 
-        this.domain=options.domain;
+        this.domain=setup.domain;
 
-        this.f = options.f;
+        this.f = setup.f;
         this.fRange = getRange(this.f,this.domain);
 
         this.fPrime = differentiate(this.f);
@@ -19,14 +34,14 @@ class DerivativePlotter {
         const fBoardOptions = {
             xRange: this.domain,
             yRange: this.fRange,
-            radius:options.radius,
+            radius:setup.radius,
         }
         this.fBoard = new BlackBoard( fBoardOptions );
 
         const fPrimeBoardOptions = {
             xRange: this.domain,
             yRange: this.fPrimeRange,
-            radius:options.radius,
+            radius:setup.radius,
         }
         this.fPrimeBoard = new BlackBoard( fPrimeBoardOptions );
         this.fPrimeBoard.setPosition(0,0,-2);
@@ -34,9 +49,9 @@ class DerivativePlotter {
         const graphOptions = {
             domain: this.domain,
             f: this.f,
-            radius: options.radius,
-            color: options.color,
-            res:500,
+            radius: setup.radius,
+            color: setup.color,
+            res:512,
         }
         this.graph = new Graph2D( graphOptions );
 
@@ -44,8 +59,8 @@ class DerivativePlotter {
         const graphPrimeOptions = {
             domain: this.domain,
             f: this.fPrime,
-            radius: options.radius,
-            color: options.color,
+            radius: setup.radius,
+            color: setup.color,
             res:500,
         }
         this.graphPrime = new Graph2D( graphPrimeOptions );
@@ -74,16 +89,4 @@ class DerivativePlotter {
 
 
 
-const data = {
-    domain: { min:-5, max:3},
-    f: (x)=> Math.cos(3*x)+Math.cos(x),
-    res:300,
-    radius:0.05,
-    color:0x244f30,
-    accentColor:0xa8a032,
-};
-
-let example = new DerivativePlotter(data)
-
-
-export default { example };
+export default DerivativePlotter;

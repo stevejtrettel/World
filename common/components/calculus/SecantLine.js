@@ -114,14 +114,17 @@ class SecantLine{
 
     setX( newX ){
         this.x = newX;
+        this.update();
      }
 
     setH( newH ){
         this.h = newH;
+        this.update();
     }
 
     setF( newF ){
         this.f=newF;
+        this.update();
     }
 
     setVisibility(value){
