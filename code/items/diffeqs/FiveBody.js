@@ -1,8 +1,8 @@
 import {
     Vector3,
     MeshPhysicalMaterial,
-    SphereBufferGeometry,
-    Mesh, TubeBufferGeometry, CatmullRomCurve3, DoubleSide,
+    SphereGeometry,
+    Mesh, TubeGeometry, CatmullRomCurve3, DoubleSide,
 } from "../../../3party/three/build/three.module.js";
 
 import {

@@ -1,8 +1,8 @@
 import {
     MeshPhysicalMaterial,
-    SphereBufferGeometry,
+    SphereGeometry,
     Vector3,
-    Mesh, CylinderBufferGeometry, ConeBufferGeometry,
+    Mesh, CylinderGeometry, ConeBufferGeometry,
     Group,
     Color,
 
@@ -27,8 +27,8 @@ class Vector{
 
         this.vec = new Group();
 
-        let sphereGeom = new SphereBufferGeometry(0.2*this.size,32,16);
-        let cylGeom = new CylinderBufferGeometry(0.1*this.size,0.1*this.size,this.length,8,1);
+        let sphereGeom = new SphereGeometry(0.2*this.size,32,16);
+        let cylGeom = new CylinderGeometry(0.1*this.size,0.1*this.size,this.length,8,1);
         let arrowGeom = new ConeBufferGeometry(0.2*this.size,0.3,16,1);
 
         this.sphere = new Mesh(sphereGeom,this.mat);
@@ -65,7 +65,7 @@ class Vector{
         this.length=this.dir.length();
 
         this.cylinder.geometry.dispose();
-        this.cylinder.geometry = new CylinderBufferGeometry(0.1*this.size,0.1*this.size,this.length);
+        this.cylinder.geometry = new CylinderGeometry(0.1*this.size,0.1*this.size,this.length);
         this.cylinder.position.set(0,0,this.length/2);
 
         this.arrow.position.set(0,0,this.length);

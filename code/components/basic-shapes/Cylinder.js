@@ -4,7 +4,7 @@
 
 import {
     Color,
-    CylinderBufferGeometry,
+    CylinderGeometry,
     DoubleSide,
     Mesh,
     MeshPhysicalMaterial,
@@ -88,7 +88,7 @@ class Cylinder {
         let top = this.top(this.x,params);
         let bottom = this.bottom(this.x,params);
         let height = top-bottom;
-        let geom = new CylinderBufferGeometry(radius,radius,height, 32,1,true,Math.PI/2,this.angle);
+        let geom = new CylinderGeometry(radius,radius,height, 32,1,true,Math.PI/2,this.angle);
         geom.translate(this.axis, bottom+ height/2,0);
         return geom;
     }

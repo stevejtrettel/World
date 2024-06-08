@@ -3,7 +3,7 @@ import {
     PlaneBufferGeometry,
     Mesh,
     DoubleSide,
-    SphereBufferGeometry,
+    SphereGeometry,
     Vector3,
     Vector2,
     CatmullRomCurve3,
@@ -59,7 +59,7 @@ const sphereMatOptions = {
     color:0x1d662c,
 }
 const sphereMat = new MeshPhysicalMaterial(sphereMatOptions);
-let sphereGeom = new SphereBufferGeometry(1,32,32)
+let sphereGeom = new SphereGeometry(1,32,32)
 
 let sphere = new Mesh(sphereGeom, sphereMat);
 sphere.position.set(0,1,0);
@@ -337,7 +337,7 @@ const topSphereOptions = {
     roughness:0.1,
     color:0xffffff,
 }
-let topSphereGeom = new SphereBufferGeometry(0.1,32,32);
+let topSphereGeom = new SphereGeometry(0.1,32,32);
 let topSphereMat = new MeshPhysicalMaterial(topSphereOptions);
 let topSphere = new Mesh(topSphereGeom,topSphereMat);
 topSphere.position.set(0,2,0);

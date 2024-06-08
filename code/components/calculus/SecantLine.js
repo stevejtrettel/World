@@ -3,7 +3,7 @@ import {
     Vector3,
     Group,
     MeshPhysicalMaterial,
-    SphereBufferGeometry,
+    SphereGeometry,
     Mesh,
 } from "../../../3party/three/build/three.module.js";
 
@@ -64,7 +64,7 @@ class SecantLine{
             }
         );
 
-        const ballGeometry = new SphereBufferGeometry(1.5*this.radius,32,16);
+        const ballGeometry = new SphereGeometry(1.5*this.radius,32,16);
 
         //ball at x
         this.ballX = new Mesh(ballGeometry, accentMaterial);

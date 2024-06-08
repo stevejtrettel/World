@@ -1,7 +1,7 @@
 import {
-    CylinderBufferGeometry,
+    CylinderGeometry,
     MeshPhysicalMaterial,
-    RingBufferGeometry,
+    RingGeometry,
     Vector2,
     Vector3,
     Mesh,
@@ -163,11 +163,11 @@ class AccretionDisk{
             }
         );
 
-        const face = new RingBufferGeometry(inner,outer,32);
+        const face = new RingGeometry(inner,outer,32);
 
 
-        const innerEdge = new CylinderBufferGeometry(inner,inner,thickness,32,1, true);
-        const outerEdge = new CylinderBufferGeometry(outer, outer, thickness,32,1,true);
+        const innerEdge = new CylinderGeometry(inner,inner,thickness,32,1, true);
+        const outerEdge = new CylinderGeometry(outer, outer, thickness,32,1,true);
 
         this.top = new Mesh(face,diskMaterial);
         this.top.rotateX(Math.PI/2);

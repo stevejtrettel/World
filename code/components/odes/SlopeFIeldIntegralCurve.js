@@ -2,7 +2,7 @@ import {
     CatmullRomCurve3,
     Vector3,
     DoubleSide,
-    SphereBufferGeometry,
+    SphereGeometry,
     MeshPhysicalMaterial,
     Mesh
 } from "../../../3party/three/build/three.module.js";
@@ -40,7 +40,7 @@ class SlopeFieldIntegralCurve{
         };
 
 
-        let sphere =  new SphereBufferGeometry(1.25*curveOptions.radius,32,16);
+        let sphere =  new SphereGeometry(1.25*curveOptions.radius,32,16);
         let sphereMat = new MeshPhysicalMaterial();
         this.start = new Mesh(sphere,sphereMat);
         this.end = new Mesh(sphere, sphereMat);

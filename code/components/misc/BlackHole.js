@@ -1,7 +1,7 @@
 import{
     Vector3,
     MeshPhysicalMaterial,
-    SphereBufferGeometry,
+    SphereGeometry,
     Mesh,
     DoubleSide,
 } from "../../../3party/three/build/three.module.js";
@@ -64,7 +64,7 @@ class BlackHole{
             }
         );
 
-        let ehGeom = new SphereBufferGeometry(this.radius,32,16);
+        let ehGeom = new SphereGeometry(this.radius,32,16);
 
         this.eventHorizon = new Mesh(ehGeom, ehMat);
 
@@ -75,7 +75,7 @@ class BlackHole{
             thickness: this.mass,
         });
 
-        let phGeom = new SphereBufferGeometry(3/2*this.radius, 64, 32);
+        let phGeom = new SphereGeometry(3/2*this.radius, 64, 32);
 
         this.photonSphere = new Mesh(phGeom, phMat);
 
@@ -95,10 +95,10 @@ class BlackHole{
         this.derive = (state)=>accel(state, this.position, this.mass);
 
         this.eventHorizon.geometry.dispose();
-        this.eventHorizon.geometry = new SphereBufferGeometry(this.radius,32,16);
+        this.eventHorizon.geometry = new SphereGeometry(this.radius,32,16);
 
         this.photonSphere.geometry.dispose();
-        this.photonSphere.geometry = new SphereBufferGeometry(3/2*this.radius,32,16);
+        this.photonSphere.geometry = new SphereGeometry(3/2*this.radius,32,16);
     }
 
 }

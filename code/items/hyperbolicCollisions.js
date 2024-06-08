@@ -1,9 +1,9 @@
 import {
     Vector3,
     Matrix3,
-    SphereBufferGeometry,
+    SphereGeometry,
     MeshPhysicalMaterial,
-    Mesh, DoubleSide, CatmullRomCurve3, TubeBufferGeometry
+    Mesh, DoubleSide, CatmullRomCurve3, TubeGeometry
 } from "../../3party/three/build/three.module.js";
 
 
@@ -745,7 +745,7 @@ class Trajectory{
                 clearcoat: 1,
             }
         );
-        const planetGeometry = new SphereBufferGeometry(this.radius,32,16);
+        const planetGeometry = new SphereGeometry(this.radius,32,16);
         this.planetMesh = new Mesh(planetGeometry, planetMaterial);
         this.planetMesh.position.set(this.pos.x,this.pos.y,this.pos.z);
 
@@ -761,7 +761,7 @@ class Trajectory{
         );
 
         let trailCurve = new CatmullRomCurve3(this.trail);
-        let trailGeometry = new TubeBufferGeometry(trailCurve,this.trailLength,0.15*this.radius,8);
+        let trailGeometry = new TubeGeometry(trailCurve,this.trailLength,0.15*this.radius,8);
         this.trailMesh=new Mesh(trailGeometry, trailMaterial);
 
     }
@@ -785,7 +785,7 @@ class Trajectory{
     redrawTrail(){
         this.trailMesh.geometry.dispose();
         const curve = new CatmullRomCurve3(this.trail);
-        this.trailMesh.geometry=new TubeBufferGeometry(curve,this.trailLength,0.15*this.radius,8);
+        this.trailMesh.geometry=new TubeGeometry(curve,this.trailLength,0.15*this.radius,8);
     }
 
 }
@@ -934,7 +934,7 @@ let proj = function(coords){
 }
 
 
-const boundaryGeom = new SphereBufferGeometry(4,64,32);
+const boundaryGeom = new SphereGeometry(4,64,32);
 
 let viz = new Visualize(sim, proj, boundaryGeom);
 

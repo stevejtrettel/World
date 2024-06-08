@@ -2,8 +2,8 @@ import {
     CatmullRomCurve3,
     Mesh,
     MeshPhysicalMaterial,
-    SphereBufferGeometry,
-    TubeBufferGeometry,
+    SphereGeometry,
+    TubeGeometry,
     Vector3,
     Group,
 } from "../../../3party/three/build/three.module.js";
@@ -44,7 +44,7 @@ class Graph2DIntegral{
         this.buildTubeGeometry();
         this.tube = new Mesh(this.tubeGeometry, material);
 
-        let sph = new SphereBufferGeometry(1,32,16);
+        let sph = new SphereGeometry(1,32,16);
         let ballRad = 1.5*this.radius;
 
         this.maxBall = new Mesh(sph,material);
@@ -81,7 +81,7 @@ class Graph2DIntegral{
 
         //draw the curve
         this.curve = new CatmullRomCurve3(pts);
-        this.tubeGeometry = new TubeBufferGeometry(this.curve, 5.*this.res,this.radius,16);
+        this.tubeGeometry = new TubeGeometry(this.curve, 5.*this.res,this.radius,16);
     }
 
 

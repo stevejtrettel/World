@@ -1,9 +1,9 @@
 import {
     CatmullRomCurve3,
     MeshPhysicalMaterial,
-    TubeBufferGeometry,
+    TubeGeometry,
     Vector3,
-    Mesh, SphereBufferGeometry,
+    Mesh, SphereGeometry,
 } from "../../../3party/three/build/three.module.js";
 
 
@@ -32,14 +32,14 @@ class RodChain{
         this.rods = [];
         this.balls = [];
         let start, end, curve, geom, mesh;
-        let sphGeom = new SphereBufferGeometry(1.5*this.radius, 8,16);
+        let sphGeom = new SphereGeometry(1.5*this.radius, 8,16);
         for( let i=1; i<this.n; i++){
 
             start = this.pts[i-1];
             end = this.pts[i];
 
             curve = new CatmullRomCurve3([start, end]);
-            geom = new TubeBufferGeometry(curve, 1 ,this.radius, 8);
+            geom = new TubeGeometry(curve, 1 ,this.radius, 8);
             mesh = new Mesh(geom,this.mat);
             this.rods.push(mesh);
 
@@ -75,7 +75,7 @@ class RodChain{
 
             this.rods[i].geometry.dispose();
             curve = new CatmullRomCurve3([start, end]);
-            this.rods[i].geometry = new TubeBufferGeometry(curve, 1 ,this.radius, 8);
+            this.rods[i].geometry = new TubeGeometry(curve, 1 ,this.radius, 8);
             this.balls[i].position.set(end.x,end.y,end.z);
         }
         //add the final ball endpoint:

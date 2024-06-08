@@ -4,7 +4,7 @@
 
 import {
     MeshPhysicalMaterial,
-    SphereBufferGeometry,
+    SphereGeometry,
     Mesh,
     CatmullRomCurve3,
     TubeGeometry,
@@ -23,7 +23,7 @@ class ParametricCurveCPU {
             return domain.min + u * (domain.max-domain.min);
         }
 
-        let sphGeo = new SphereBufferGeometry(1.25*this.radius,32,16);
+        let sphGeo = new SphereGeometry(1.25*this.radius,32,16);
         let mat = new MeshPhysicalMaterial({
             clearcoat:1,
             color: this.color,

@@ -3,7 +3,7 @@ import {
     DoubleSide,
     Mesh,
     MeshPhysicalMaterial,
-    SphereBufferGeometry, TubeBufferGeometry
+    SphereGeometry, TubeGeometry
 } from "../../../../3party/three/build/three.module.js";
 
 
@@ -36,12 +36,12 @@ class Comet{
                 side: DoubleSide,
             }
         );
-        const nucleusGeometry = new SphereBufferGeometry(this.radius,32,16);
+        const nucleusGeometry = new SphereGeometry(this.radius,32,16);
         this.nucleusMesh = new Mesh(nucleusGeometry, cometMaterial);
         this.nucleusMesh.position.set(this.pos.x,this.pos.y,this.pos.z);
 
         let tailCurve = new CatmullRomCurve3(this.tail);
-        let tailGeometry = new TubeBufferGeometry(tailCurve,this.length,0.15*this.radius,8);
+        let tailGeometry = new TubeGeometry(tailCurve,this.length,0.15*this.radius,8);
         this.tailMesh=new Mesh(tailGeometry, cometMaterial);
 
     }
@@ -57,7 +57,7 @@ class Comet{
     resize(rad){
         this.radius=rad;
         this.nucleusMesh.geometry.dispose();
-        this.nucleusMesh.geometry=new SphereBufferGeometry(this.radius,32,16);
+        this.nucleusMesh.geometry=new SphereGeometry(this.radius,32,16);
     }
 
     //move the comet forward, adding one new position to the list
@@ -76,7 +76,7 @@ class Comet{
     redrawTail(){
         this.tailMesh.geometry.dispose();
         const curve = new CatmullRomCurve3(this.tail);
-        this.tailMesh.geometry=new TubeBufferGeometry(curve,this.length,0.15*this.radius,8);
+        this.tailMesh.geometry=new TubeGeometry(curve,this.length,0.15*this.radius,8);
     }
 
 }

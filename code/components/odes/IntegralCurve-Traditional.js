@@ -1,8 +1,8 @@
 import {
     CatmullRomCurve3,
     MeshPhysicalMaterial,
-    TubeBufferGeometry,
-    Mesh, SphereBufferGeometry
+    TubeGeometry,
+    Mesh, SphereGeometry
 } from "../../../3party/three/build/three.module.js";
 
 
@@ -53,9 +53,9 @@ class IntegralCurve {
             color: this.curveOptions.color,
             metalness:1,
         });
-        let tubeGeo = new TubeBufferGeometry(this.curve, this.curveOptions.segments, this.curveOptions.radius,this.curveOptions.res);
+        let tubeGeo = new TubeGeometry(this.curve, this.curveOptions.segments, this.curveOptions.radius,this.curveOptions.res);
 
-        let ball = new SphereBufferGeometry(2*this.curveOptions.radius, 32,16);
+        let ball = new SphereGeometry(2*this.curveOptions.radius, 32,16);
 
         this.tube = new Mesh( tubeGeo, curveMaterial);
 
@@ -92,7 +92,7 @@ class IntegralCurve {
 
     resetCurve(curve){
         this.tube.geometry.dispose();
-        this.tube.geometry=new TubeBufferGeometry(
+        this.tube.geometry=new TubeGeometry(
             this.curve,
             this.curveOptions.segments,
             this.curveOptions.radius,

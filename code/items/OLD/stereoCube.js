@@ -1,10 +1,10 @@
 import {
     MeshPhysicalMaterial,
     PlaneBufferGeometry,
-    TubeBufferGeometry,
+    TubeGeometry,
     Mesh,
     DoubleSide,
-    SphereBufferGeometry,
+    SphereGeometry,
     Vector3,
     Vector2,
     CatmullRomCurve3,
@@ -58,7 +58,7 @@ const sphereMatOptions = {
     color:0x1d662c,
 }
 const sphereMat = new MeshPhysicalMaterial(sphereMatOptions);
-let sphereGeom = new SphereBufferGeometry(1,32,32)
+let sphereGeom = new SphereGeometry(1,32,32)
 
 let sphere = new Mesh(sphereGeom, sphereMat);
 sphere.position.set(0,1,0);
@@ -170,27 +170,27 @@ function makeEdge(start, dir, proj) {
 function buildCube(sphCube) {
 
     path = makeEdge(new Vector3(1, 0, 1), new Vector3(0, 1, 0), 0.);
-    geo = new TubeBufferGeometry(path, 64, 0.1, 8, false);
+    geo = new TubeGeometry(path, 64, 0.1, 8, false);
     let edge1 = new Mesh(geo, sphCubeMat);
     edge1.name='E1';
     sphCube.add(edge1);
 
 
     path = makeEdge(new Vector3(-1, 0, 1), new Vector3(0, 1, 0), 0.);
-    geo = new TubeBufferGeometry(path, 64, 0.1, 8, false);
+    geo = new TubeGeometry(path, 64, 0.1, 8, false);
     let edge2 = new Mesh(geo, sphCubeMat);
     edge2.name='E2';
     sphCube.add(edge2);
 
 
     path = makeEdge(new Vector3(1, 0, -1), new Vector3(0, 1, 0), 0.);
-    geo = new TubeBufferGeometry(path, 64, 0.1, 8, false);
+    geo = new TubeGeometry(path, 64, 0.1, 8, false);
     let edge3 = new Mesh(geo, sphCubeMat);
     edge3.name='E3';
     sphCube.add(edge3);
 
     path = makeEdge(new Vector3(-1, 0, -1), new Vector3(0, 1, 0), 0.);
-    geo = new TubeBufferGeometry(path, 64, 0.1, 8, false);
+    geo = new TubeGeometry(path, 64, 0.1, 8, false);
     let edge4 = new Mesh(geo, sphCubeMat);
     edge4.name='E4';
     sphCube.add(edge4);
@@ -201,27 +201,27 @@ function buildCube(sphCube) {
 
 
     path = makeEdge(new Vector3(0, 1, 1), new Vector3(1, 0, 0), 0.);
-    geo = new TubeBufferGeometry(path, 64, 0.1, 8, false);
+    geo = new TubeGeometry(path, 64, 0.1, 8, false);
     let edge5 = new Mesh(geo, sphCubeMat);
     edge5.name='E5';
     sphCube.add(edge5);
 
 
     path = makeEdge(new Vector3(0,1,-1), new Vector3(1, 0, 0), 0.);
-    geo = new TubeBufferGeometry(path, 64, 0.1, 8, false);
+    geo = new TubeGeometry(path, 64, 0.1, 8, false);
     let edge6 = new Mesh(geo, sphCubeMat);
     edge6.name='E6';
     sphCube.add(edge6);
 
 
     path = makeEdge(new Vector3(1, 1, 0), new Vector3(0, 0, 1), 0.);
-    geo = new TubeBufferGeometry(path, 64, 0.1, 8, false);
+    geo = new TubeGeometry(path, 64, 0.1, 8, false);
     let edge7 = new Mesh(geo, sphCubeMat);
     edge7.name='E7';
     sphCube.add(edge7);
 
     path = makeEdge(new Vector3(-1, 1, 0), new Vector3(0, 0, 1), 0.);
-    geo = new TubeBufferGeometry(path, 64, 0.1, 8, false);
+    geo = new TubeGeometry(path, 64, 0.1, 8, false);
     let edge8 = new Mesh(geo, sphCubeMat);
     edge8.name='E8';
     sphCube.add(edge8);
@@ -231,27 +231,27 @@ function buildCube(sphCube) {
 
 
     path = makeEdge(new Vector3(0, -1, 1), new Vector3(1, 0, 0), 0.);
-    geo = new TubeBufferGeometry(path, 64, 0.1, 8, false);
+    geo = new TubeGeometry(path, 64, 0.1, 8, false);
     let edge9 = new Mesh(geo, sphCubeMat);
     edge9.name='E9';
     sphCube.add(edge9);
 
 
     path = makeEdge(new Vector3(0,-1,-1), new Vector3(1, 0, 0), 0.);
-    geo = new TubeBufferGeometry(path, 64, 0.1, 8, false);
+    geo = new TubeGeometry(path, 64, 0.1, 8, false);
     let edge10 = new Mesh(geo, sphCubeMat);
     edge10.name='E10';
     sphCube.add(edge10);
 
 
     path = makeEdge(new Vector3(1, -1, 0), new Vector3(0, 0, 1), 0.);
-    geo = new TubeBufferGeometry(path, 64, 0.1, 8, false);
+    geo = new TubeGeometry(path, 64, 0.1, 8, false);
     let edge11 = new Mesh(geo, sphCubeMat);
     edge11.name='E11';
     sphCube.add(edge11);
 
     path = makeEdge(new Vector3(-1, -1, 0), new Vector3(0, 0, 1), 0.);
-    geo = new TubeBufferGeometry(path, 64, 0.1, 8, false);
+    geo = new TubeGeometry(path, 64, 0.1, 8, false);
     let edge12 = new Mesh(geo, sphCubeMat);
     edge12.name='E12';
     sphCube.add(edge12);
@@ -271,26 +271,26 @@ function updateCube(cube,proj) {
     let geo,path;
 
     path = makeEdge(new Vector3(1, 0, 1), new Vector3(0, 1, 0), proj);
-    geo = new TubeBufferGeometry(path, 64, 0.1, 8, false);
+    geo = new TubeGeometry(path, 64, 0.1, 8, false);
     cube.getObjectByName('E1').geometry.dispose();
     cube.getObjectByName('E1').geometry=geo;
 
 
     path = makeEdge(new Vector3(-1, 0, 1), new Vector3(0, 1, 0), proj);
-    geo = new TubeBufferGeometry(path, 64, 0.1, 8, false);
+    geo = new TubeGeometry(path, 64, 0.1, 8, false);
     cube.getObjectByName('E2').geometry.dispose();
     cube.getObjectByName('E2').geometry=geo;
 
 
 
     path = makeEdge(new Vector3(1, 0, -1), new Vector3(0, 1, 0), proj);
-    geo = new TubeBufferGeometry(path, 64, 0.1, 8, false);
+    geo = new TubeGeometry(path, 64, 0.1, 8, false);
     cube.getObjectByName('E3').geometry.dispose();
     cube.getObjectByName('E3').geometry=geo;
 
 
     path = makeEdge(new Vector3(-1, 0, -1), new Vector3(0, 1, 0), proj);
-    geo = new TubeBufferGeometry(path, 64, 0.1, 8, false);
+    geo = new TubeGeometry(path, 64, 0.1, 8, false);
     cube.getObjectByName('E4').geometry.dispose();
     cube.getObjectByName('E4').geometry=geo;
 
@@ -301,24 +301,24 @@ function updateCube(cube,proj) {
 
 
     path = makeEdge(new Vector3(0, 1, 1), new Vector3(1, 0, 0), proj);
-    geo = new TubeBufferGeometry(path, 64, 0.1, 8, false);
+    geo = new TubeGeometry(path, 64, 0.1, 8, false);
     cube.getObjectByName('E5').geometry.dispose();
     cube.getObjectByName('E5').geometry=geo;
 
 
     path = makeEdge(new Vector3(0,1,-1), new Vector3(1, 0, 0), proj);
-    geo = new TubeBufferGeometry(path, 64, 0.1, 8, false);
+    geo = new TubeGeometry(path, 64, 0.1, 8, false);
     cube.getObjectByName('E6').geometry.dispose();
     cube.getObjectByName('E6').geometry=geo;
 
 
     path = makeEdge(new Vector3(1, 1, 0), new Vector3(0, 0, 1), proj);
-    geo = new TubeBufferGeometry(path, 64, 0.1, 8, false);
+    geo = new TubeGeometry(path, 64, 0.1, 8, false);
     cube.getObjectByName('E7').geometry.dispose();
     cube.getObjectByName('E7').geometry=geo;
 
     path = makeEdge(new Vector3(-1, 1, 0), new Vector3(0, 0, 1), proj);
-    geo = new TubeBufferGeometry(path, 64, 0.1, 8, false);
+    geo = new TubeGeometry(path, 64, 0.1, 8, false);
     cube.getObjectByName('E8').geometry.dispose();
     cube.getObjectByName('E8').geometry=geo;
 
@@ -327,24 +327,24 @@ function updateCube(cube,proj) {
 
 
     path = makeEdge(new Vector3(0, -1, 1), new Vector3(1, 0, 0), proj);
-    geo = new TubeBufferGeometry(path, 64, 0.1, 8, false);
+    geo = new TubeGeometry(path, 64, 0.1, 8, false);
     cube.getObjectByName('E9').geometry.dispose();
     cube.getObjectByName('E9').geometry=geo;
 
 
     path = makeEdge(new Vector3(0,-1,-1), new Vector3(1, 0, 0), proj);
-    geo = new TubeBufferGeometry(path, 64, 0.1, 8, false);
+    geo = new TubeGeometry(path, 64, 0.1, 8, false);
     cube.getObjectByName('E10').geometry.dispose();
     cube.getObjectByName('E10').geometry=geo;
 
 
     path = makeEdge(new Vector3(1, -1, 0), new Vector3(0, 0, 1), proj);
-    geo = new TubeBufferGeometry(path, 64, 0.1, 8, false);
+    geo = new TubeGeometry(path, 64, 0.1, 8, false);
     cube.getObjectByName('E11').geometry.dispose();
     cube.getObjectByName('E11').geometry=geo;
 
     path = makeEdge(new Vector3(-1, -1, 0), new Vector3(0, 0, 1), proj);
-    geo = new TubeBufferGeometry(path, 64, 0.1, 8, false);
+    geo = new TubeGeometry(path, 64, 0.1, 8, false);
     cube.getObjectByName('E12').geometry.dispose();
     cube.getObjectByName('E12').geometry=geo;
 

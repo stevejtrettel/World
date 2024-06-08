@@ -3,7 +3,7 @@
 
 import {
     Vector3,
-    SphereBufferGeometry,
+    SphereGeometry,
     MeshPhysicalMaterial,
     Mesh
 } from "../../../3party/three/build/three.module.js";
@@ -39,7 +39,7 @@ class FrenetFrameField {
         this.periodic=true;
 
         //starting and ending balls of the curve (if its not periodic):
-        let sph = new SphereBufferGeometry(0.2,32,16);
+        let sph = new SphereGeometry(0.2,32,16);
         let mat = new MeshPhysicalMaterial(surfaceOptions);
         this.start = new Mesh(sph,mat);
         this.end = new Mesh(sph,mat);

@@ -2,7 +2,7 @@ import {
     MeshPhysicalMaterial,
     DoubleSide,
     Vector3,
-    SphereBufferGeometry,
+    SphereGeometry,
     Mesh,
 } from "../../../3party/three/build/three.module.js";
 
@@ -201,7 +201,7 @@ class Graph3DSystem {
                 color: 0x000000,
             });
 
-            let ptGeom = new SphereBufferGeometry(0.12, 32, 16);
+            let ptGeom = new SphereGeometry(0.12, 32, 16);
             this.point = new Mesh(ptGeom, ptMat);
 
             pos = this.eqn(this.params.uPos,this.params.vPos,this.params);

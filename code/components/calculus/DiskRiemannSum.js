@@ -5,7 +5,7 @@ import {
     InstancedMesh,
     MeshPhysicalMaterial,
     Object3D,
-    CylinderBufferGeometry,
+    CylinderGeometry,
 } from "../../../3party/three/build/three.module.js";
 
 import {posNegColor } from "../../utils/colors.js";
@@ -46,7 +46,7 @@ class DiskRiemannSum{
 
     initialize(){
         //all the Riemann sum rectangles are going to be resized versions of this:
-        const diskGeometry = new CylinderBufferGeometry(1,1,1,32);
+        const diskGeometry = new CylinderGeometry(1,1,1,32);
         const diskMaterial = new MeshPhysicalMaterial({
             side: DoubleSide,
             clearcoat:1,

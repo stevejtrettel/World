@@ -7,7 +7,7 @@ import {
     DynamicDrawUsage,
     DoubleSide,
     Vector2,
-    CylinderBufferGeometry,
+    CylinderGeometry,
 } from "../../../3party/three/build/three.module.js";
 
 
@@ -54,7 +54,7 @@ class SlopeField{
     buildBaseGeometry(){
         let length = 1;
         let rad = 0.1;
-        let cylGeometry = new CylinderBufferGeometry(rad,rad,length, 16,1);
+        let cylGeometry = new CylinderGeometry(rad,rad,length, 16,1);
         this.baseGeometry = cylGeometry;
     }
 

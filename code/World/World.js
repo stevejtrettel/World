@@ -11,25 +11,24 @@ import {createPMREM, createRenderer} from "./components/createRenderer.js";
 
 class World {
 
-    constructor( container, options ) {
+    constructor( options ) {
 
         this.renderer = createRenderer(options.renderer={});
         this.pmrem = createPMREM(this.renderer);
 
-        //put the container for the scene into the html
+       // put the container for the scene into the html
         //get the canvas that things attach to, and add to scene
-        //this.container = this.renderer.domElement;
-        //document.body.appendChild(this.container);
-        //this.container.setAttribute("id", "World");
-        // this.container.style.width = '100%';
-        // this.container.style.height = '100%';
-        // this.container.style.position = 'absolute';
-        // this.container.style['background-color'] = "#0f213d";
-        //
+        this.container = this.renderer.domElement;
+        document.body.appendChild(this.container);
+        this.container.setAttribute("id", "World");
+        this.container.style.width = '100%';
+        this.container.style.height = '100%';
+        this.container.style.position = 'absolute';
+        this.container.style['background-color'] = "#0f213d";
 
         //the renderer creates a canvas element: append it to the html
-        this.container = container;
-         this.container.append( this.renderer.domElement );
+       // this.container = container;
+       //  this.container.append( this.renderer.domElement );
 
         this.camera = createCamera(options.camera);
         this.scene = createScene( options.environment.color );

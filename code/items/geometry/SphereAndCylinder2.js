@@ -6,8 +6,8 @@ import {
     MeshPhysicalMaterial,
     Vector3,
     CatmullRomCurve3,
-    TubeBufferGeometry,
-    RingBufferGeometry, SphereBufferGeometry,
+    TubeGeometry,
+    RingGeometry, SphereGeometry,
 } from "../../../3party/three/build/three.module.js";
 import {ParametricGeometry} from "../../../3party/three/examples/jsm/geometries/ParametricGeometry.js";
 
@@ -174,7 +174,7 @@ class BoundaryCurve extends Mesh {
             pts.push(pt);
         }
         let curve = new CatmullRomCurve3(pts);
-        return new TubeBufferGeometry(curve,64,0.05,8,true);
+        return new TubeGeometry(curve,64,0.05,8,true);
     }
 
     update(radius,height){
@@ -213,7 +213,7 @@ class Slice{
         let outerRad = outerRadius(origIn,origOut,innerRad);
 
 
-        let ringGeo = new RingBufferGeometry(innerRad,outerRad,32,1);
+        let ringGeo = new RingGeometry(innerRad,outerRad,32,1);
         ringGeo.rotateX(Math.PI/2);
         ringGeo.translate(0,sliceHeight,0);
 
@@ -250,7 +250,7 @@ class Slice{
         let outerRad = outerRadius(origIn,origOut,innerRad);
 
         this.ring.geometry.dispose();
-        this.ring.geometry = new RingBufferGeometry(innerRad,outerRad,32,1);
+        this.ring.geometry = new RingGeometry(innerRad,outerRad,32,1);
         this.ring.geometry.rotateX(Math.PI/2);
         this.ring.geometry.translate(0,sliceHeight,0);
 

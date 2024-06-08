@@ -1,7 +1,7 @@
 import {
     MeshPhysicalMaterial,
     PlaneBufferGeometry,
-    SphereBufferGeometry,
+    SphereGeometry,
     Mesh, Vector3, DoubleSide,
 } from "../../../3party/three/build/three.module.js";
 
@@ -113,7 +113,7 @@ class LevelSetSlice {
         this.contour.setPosition(0,-7,0);
 
         //making the apparatus for showing the slicing:
-        let pointGeometry = new SphereBufferGeometry(0.4);
+        let pointGeometry = new SphereGeometry(0.4);
         let planeGeometry = new PlaneBufferGeometry(20,20);
 
         this.slicePlane = new Mesh(planeGeometry,planeMaterial);

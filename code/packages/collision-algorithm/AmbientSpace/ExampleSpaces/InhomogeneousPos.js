@@ -1,6 +1,6 @@
 import {
     Matrix3,
-    SphereBufferGeometry,
+    SphereGeometry,
     BoxBufferGeometry,
     Vector3
 } from "../../../../../3party/three/build/three.module.js";
@@ -162,7 +162,7 @@ let distToSphere = function(pos){
     return sphereSize - dist;
 }
 
-let sphereGeom = new SphereBufferGeometry(zoom*coordSize, 64,32);
+let sphereGeom = new SphereGeometry(zoom*coordSize, 64,32);
 
 let generateState = function(){
     let pos = randomVec3Sphere(0.5*coordSize);

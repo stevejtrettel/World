@@ -1,6 +1,6 @@
 import {
     Matrix3,
-    SphereBufferGeometry,
+    SphereGeometry,
     Vector3,
     Vector4
 } from "../../../../../3party/three/build/three.module.js";
@@ -163,7 +163,7 @@ let distToSphere = function(pos){
 
 let rad = modelScale * Math.tan(obstacleSize);
 
-let sphereGeom = new SphereBufferGeometry(rad, 64, 32);
+let sphereGeom = new SphereGeometry(rad, 64, 32);
 
 let sphereObstacle = new Obstacle(
     distToSphere,

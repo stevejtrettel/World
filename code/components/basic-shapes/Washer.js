@@ -2,7 +2,7 @@ import {
     DoubleSide,
     Mesh,
     MeshPhysicalMaterial,
-    RingBufferGeometry,
+    RingGeometry,
     Vector3,
     Color
 } from "../../../3party/three/build/three.module.js";
@@ -83,7 +83,7 @@ class Washer{
     createRingGeometry(params){
         let outerRadius = this.top(this.x,params)-this.axis;
         let innerRadius = this.bottom(this.x,params)-this.axis;
-        return new RingBufferGeometry(innerRadius,outerRadius,32,1,Math.PI/2,this.angle);
+        return new RingGeometry(innerRadius,outerRadius,32,1,Math.PI/2,this.angle);
     }
 
     setColor(surfColor, bdyColor){

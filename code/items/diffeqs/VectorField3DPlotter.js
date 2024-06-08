@@ -3,7 +3,7 @@ import {
     Vector2,
     Vector3,
     DoubleSide,
-    SphereBufferGeometry,
+    SphereGeometry,
     MeshPhysicalMaterial,
     Mesh
 } from "../../../3party/three/build/three.module.js";

@@ -44,10 +44,11 @@ let globalSettings={
 function main(globalSettings) {
 
     // Get a reference to the container element, set options
-     const container = document.getElementById(globalSettings.name);
+    const container = document.getElementById(globalSettings.name);
+    console.log(container);
 
     // Create an instance of the World class
-    const world = new World( container, globalSettings );
+    const world = new World(globalSettings );
 
     const environment = createEnvironment(globalSettings.environment, world.pmrem);
     world.setEnvironment( environment ) ;

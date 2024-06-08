@@ -3,15 +3,15 @@ import {
     CircleBufferGeometry,
     Color,
     ConeBufferGeometry,
-    CylinderBufferGeometry,
+    CylinderGeometry,
     DoubleSide,
     Mesh,
     MeshPhysicalMaterial,
-    SphereBufferGeometry,
+    SphereGeometry,
     Vector3,
     CatmullRomCurve3,
-    TubeBufferGeometry,
-    RingBufferGeometry,
+    TubeGeometry,
+    RingGeometry,
 } from "../../../3party/three/build/three.module.js";
 
 
@@ -31,7 +31,7 @@ class ConeExterior{
         outerMat.opacity=0.05;
         outerMat.transmission=0;
 
-        let cylGeom = new CylinderBufferGeometry(this.radius,this.radius,2.*this.radius,32,1,true);
+        let cylGeom = new CylinderGeometry(this.radius,this.radius,2.*this.radius,32,1,true);
         this.cylinder = new Mesh(cylGeom, outerMat);
 
         //MAKE THE CONE
@@ -86,7 +86,7 @@ class BoundaryCurve extends Mesh {
             pts.push(pt);
         }
         let curve = new CatmullRomCurve3(pts);
-        return new TubeBufferGeometry(curve,64,0.05,8,true);
+        return new TubeGeometry(curve,64,0.05,8,true);
     }
 
     update(radius,height){
@@ -165,7 +165,7 @@ class CylinderSlice{
         let sliceHeight = this.radius*this.slice;
         let innerSliceRadius = this.radius*Math.abs(this.slice);
 
-        let ringGeo = new RingBufferGeometry(innerSliceRadius,this.radius,32,1);
+        let ringGeo = new RingGeometry(innerSliceRadius,this.radius,32,1);
         ringGeo.rotateX(Math.PI/2);
         ringGeo.translate(0,sliceHeight,0);
 
@@ -196,7 +196,7 @@ class CylinderSlice{
         let innerSliceRadius = this.radius*Math.abs(this.slice);
 
         this.ring.geometry.dispose();
-        this.ring.geometry = new RingBufferGeometry(innerSliceRadius,this.radius,32,1);
+        this.ring.geometry = new RingGeometry(innerSliceRadius,this.radius,32,1);
         this.ring.geometry.rotateX(Math.PI/2);
         this.ring.geometry.translate(0,sliceHeight,0);
 
@@ -252,7 +252,7 @@ class SphereAndCylinder{
         });
 
         //MAKE THE SPHERE
-        let sphGeom = new SphereBufferGeometry(this.radius,64,32);
+        let sphGeom = new SphereGeometry(this.radius,64,32);
         this.sphere = new Mesh(sphGeom, glassMat);
         this.sphere.position.set(-1.5*this.radius,0,0);
 

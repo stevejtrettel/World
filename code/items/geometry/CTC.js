@@ -1,10 +1,10 @@
 import {
     Vector3,
     CatmullRomCurve3,
-    CylinderBufferGeometry,
+    CylinderGeometry,
     Mesh,
     MeshPhysicalMaterial,
-    TubeBufferGeometry,
+    TubeGeometry,
     TextureLoader,
 } from "../../../3party/three/build/three.module.js";
 
@@ -32,7 +32,7 @@ class CTC{
         const metal = new TextureLoader().load( '../../../assets/textures/foil.webp' );
 
 
-        let baseGeom = new CylinderBufferGeometry(3,3,0.75,128);
+        let baseGeom = new CylinderGeometry(3,3,0.75,128);
         let baseMat = new MeshPhysicalMaterial({
             clearcoat:0.75,
             roughness:0.1,
@@ -57,7 +57,7 @@ class CTC{
             pts.push( ctc(s) );
         }
         let curve = new CatmullRomCurve3(pts);
-        let ctcGeom = new TubeBufferGeometry(curve, sampleRes,0.3,32,true);
+        let ctcGeom = new TubeGeometry(curve, sampleRes,0.3,32,true);
 
         let ctcMat = new MeshPhysicalMaterial({
             metalness: 1,

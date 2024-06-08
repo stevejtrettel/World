@@ -1,7 +1,7 @@
 
 import {
     InstancedBufferAttribute, InstancedBufferGeometry, Mesh,
-    ShaderMaterial, SphereBufferGeometry,
+    ShaderMaterial, SphereGeometry,
     Vector2
 } from "../../../../3party/three/build/three.module.js";
 
@@ -70,7 +70,7 @@ class CSSpheres extends Mesh {
 
     init() {
 
-        let baseGeometry = new SphereBufferGeometry(0.1, 8, 8);
+        let baseGeometry = new SphereGeometry(0.1, 8, 8);
         let instancedGeometry = new InstancedBufferGeometry().copy(baseGeometry);
         instancedGeometry.instanceCount=this.numSpheres;
         instancedGeometry.maxInstancedCount = this.numSpheres;

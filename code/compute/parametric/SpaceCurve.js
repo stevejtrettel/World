@@ -1,4 +1,4 @@
-import {CatmullRomCurve3, TubeBufferGeometry, Vector2,
+import {CatmullRomCurve3, TubeGeometry, Vector2,
     MeshPhysicalMaterial, Vector3, Mesh,
 DoubleSide,} from "../../../3party/three/build/three.module.js";
 
@@ -96,7 +96,7 @@ class SpaceCurve {
         // mat.metalness=0;
         // mat.side= DoubleSide;
         //
-        // let geom = new TubeBufferGeometry(this.curve, 1200,0.05,8,false);
+        // let geom = new TubeGeometry(this.curve, 1200,0.05,8,false);
         //
         // this.tube = new Mesh(geom, mat);
 
@@ -160,7 +160,7 @@ class SpaceCurve {
         this.integrate();
 
         // this.tube.geometry.dispose();
-        // this.tube.geometry= new TubeBufferGeometry(this.curve, 1200,0.05, 8,false);
+        // this.tube.geometry= new TubeGeometry(this.curve, 1200,0.05, 8,false);
         this.tube.resetCurve(this.curve);
 
     }

@@ -3,7 +3,7 @@ import {
     DoubleSide,
     Mesh,
     MeshPhysicalMaterial,
-    SphereBufferGeometry, TubeBufferGeometry
+    SphereGeometry, TubeGeometry
 } from "../../../3party/three/build/three.module.js";
 import {randomVec3Ball} from "../../utils/math/random.js";
 
@@ -27,7 +27,7 @@ class Planet{
                 clearcoat: 1,
             }
         );
-        const planetGeometry = new SphereBufferGeometry(this.radius,32,16);
+        const planetGeometry = new SphereGeometry(this.radius,32,16);
         this.planetMesh = new Mesh(planetGeometry, planetMaterial);
         this.planetMesh.position.set(this.pos.x,this.pos.y,this.pos.z);
 
@@ -48,7 +48,7 @@ class Planet{
         );
 
         let trailCurve = new CatmullRomCurve3(this.trail);
-        let trailGeometry = new TubeBufferGeometry(trailCurve,2.*this.trailLength,0.15*this.radius,8);
+        let trailGeometry = new TubeGeometry(trailCurve,2.*this.trailLength,0.15*this.radius,8);
         this.trailMesh=new Mesh(trailGeometry, trailMaterial);
 
     }
@@ -72,14 +72,14 @@ class Planet{
     redrawTrail(){
         this.trailMesh.geometry.dispose();
         const curve = new CatmullRomCurve3(this.trail);
-        this.trailMesh.geometry=new TubeBufferGeometry(curve,this.trailLength,0.15*this.radius,8);
+        this.trailMesh.geometry=new TubeGeometry(curve,this.trailLength,0.15*this.radius,8);
     }
 
     setMass( newMass ){
         this.mass = newMass;
         this.radius = 0.3*Math.pow(this.mass, 0.333);
         this.planetMesh.geometry.dispose();
-        this.planetMesh.geometry = new SphereBufferGeometry(this.radius, 32,16);
+        this.planetMesh.geometry = new SphereGeometry(this.radius, 32,16);
     }
 
     resetTrail(){

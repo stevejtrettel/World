@@ -1,6 +1,6 @@
 import {
     Matrix3,
-    SphereBufferGeometry,
+    SphereGeometry,
     BoxBufferGeometry,
     Vector3,
     Vector4
@@ -169,7 +169,7 @@ let distToSphere = function(pos){
 
 let rad = modelScale * Math.tanh(obstacleSize);
 
-let sphereGeom = new SphereBufferGeometry(rad, 64, 32);
+let sphereGeom = new SphereGeometry(rad, 64, 32);
 
 let obstacle = new Obstacle(
     distToSphere,

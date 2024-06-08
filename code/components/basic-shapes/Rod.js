@@ -4,7 +4,7 @@ import {
     Group,
     Mesh,
     MeshPhysicalMaterial,
-    SphereBufferGeometry, TubeBufferGeometry
+    SphereGeometry, TubeGeometry
 } from "../../../3party/three/build/three.module.js";
 
 
@@ -17,7 +17,7 @@ class Rod{
         this.end2=options.end2;
         this.radius = options.radius || 0.1;
 
-        const sph = new SphereBufferGeometry(1,32,16);
+        const sph = new SphereGeometry(1,32,16);
         let material;
 
         if('material' in options ){
@@ -50,7 +50,7 @@ class Rod{
         this.ball2.position.set(this.end2.x,this.end2.y,this.end2.z);
 
         const curve = new CatmullRomCurve3([this.end1, this.end2]);
-        const geom = new TubeBufferGeometry(curve, 1 ,this.radius, 8);
+        const geom = new TubeGeometry(curve, 1 ,this.radius, 8);
 
         this.tube = new Mesh(geom, this.material);
 
@@ -88,7 +88,7 @@ class Rod{
 
         this.tube.geometry.dispose();
         const curve = new CatmullRomCurve3([this.end1, this.end2]);
-        this.tube.geometry = new TubeBufferGeometry(curve, 1 ,this.radius, 8);
+        this.tube.geometry = new TubeGeometry(curve, 1 ,this.radius, 8);
     }
 
     setVisibility(value){

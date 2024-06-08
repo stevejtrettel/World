@@ -1,4 +1,4 @@
-import {Color, CylinderBufferGeometry, Vector3} from "../../../3party/three/build/three.module.js";
+import {Color, CylinderGeometry, Vector3} from "../../../3party/three/build/three.module.js";
 
 import SurfaceRevolutionY from "../../components/calculus/SurfaceRevolutionY.js";
 import {BlackBoard} from "../../components/basic-shapes/Blackboard.js";
@@ -123,7 +123,7 @@ class CylinderShellPlotter{
 
 
         //THE OUTER SHELL OF THE ROTATED VOLUME:
-        // this.outerWall = new CylinderBufferGeometry();
+        // this.outerWall = new CylinderGeometry();
 
 
         //IN THE BACKGROUND: THE CURVE WE INTEGRATE

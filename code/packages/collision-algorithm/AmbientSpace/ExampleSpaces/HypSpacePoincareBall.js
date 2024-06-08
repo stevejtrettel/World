@@ -1,6 +1,6 @@
 import {
     Matrix3,
-    SphereBufferGeometry,
+    SphereGeometry,
     BoxBufferGeometry,
     Vector3,
     Vector4
@@ -162,7 +162,7 @@ let distToSphere = function(pos){
     return sphereSize - dist;
 }
 
-let sphereGeom = new SphereBufferGeometry(zoom * coordSize, 64,32);
+let sphereGeom = new SphereGeometry(zoom * coordSize, 64,32);
 
 let generateState = function(){
 
