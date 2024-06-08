@@ -4,7 +4,7 @@ import params from "./params.js";
 let example = new ParametricSurfacePlotter(params);
 
 //this uses all the default settings defined in the "template" folder
-import { World } from "../../../code/World/World.js";
+import World from "../../../code/World/World.js";
 import  {createEnvironment} from "../../../code/World/template/environment.js";
 import  {lights} from "../../../code/World/template/lights.js";
 
@@ -44,11 +44,8 @@ let globalSettings={
 
 function main(globalSettings) {
 
-    // Get a reference to the container element, set options
-    const container = document.getElementById(globalSettings.name);
-
     // Create an instance of the World class
-    const world = new World( container, globalSettings );
+    const world = new World( globalSettings );
 
     const environment = createEnvironment(globalSettings.environment, world.pmrem);
     world.setEnvironment( environment ) ;

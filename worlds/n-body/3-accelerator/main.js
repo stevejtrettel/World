@@ -1,41 +1,14 @@
-import {Vector3} from "../../../3party/three/build/three.module.js";
-
 
 //set the stuff for this particular example!
 import ThreeBody from "../../../code/items/diffeqs/ThreeBody.js";
-
-
-const pA = {
-    mass:5,
-    pos: new Vector3(10,0,0),
-    vel: new Vector3(0,0,-0.15),
-    color: 0xffffff,
-    trailLength: 3000,
-}
-
-const pB = {
-    mass:5,
-    pos: new Vector3(-10,0,0),
-    vel: new Vector3(0,0,0.15),
-    color: 0xd96493,
-    trailLength: 3000,
-}
-
-const pC = {
-    mass:0.5,
-    pos: new Vector3(0,42,0),
-    vel: new Vector3(0,0,0),
-    color: 0x32a852,
-    trailLength: 3000,
-}
-
+import {pA,pB,pC} from "./params.js";
 const example = new ThreeBody(pA, pB, pC);
 
 
 
 
 //this uses all the default settings defined in the "template" folder
-import { World } from "../../../code/World/World.js";
+import World from "../../../code/World/World.js";
 import  {createEnvironment} from "../../../code/World/template/environment.js";
 import  {lights} from "../../../code/World/template/lights.js";
 
@@ -73,11 +46,8 @@ let globalSettings={
 
 function main(globalSettings) {
 
-    // Get a reference to the container element, set options
-    const container = document.getElementById(globalSettings.name);
-
     // Create an instance of the World class
-    const world = new World( container, globalSettings );
+    const world = new World( globalSettings );
 
     const environment = createEnvironment(globalSettings.environment, world.pmrem);
     world.setEnvironment( environment ) ;
