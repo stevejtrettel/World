@@ -2,7 +2,7 @@ import {Vector3} from "../../../3party/three/build/three.module.js";
 
 
 //set the stuff for this particular example!
-import ThreeBody from "../../../common/items/diffeqs/ThreeBody.js";
+import ThreeBody from "../../../code/items/diffeqs/ThreeBody.js";
 
 
 //actually building one of these
@@ -37,9 +37,9 @@ const example = new ThreeBody(pA, pB, pC);
 
 
 //this uses all the default settings defined in the "template" folder
-import { World } from "../../../common/World/World.js";
-import  {createEnvironment} from "../../../common/World/template/environment.js";
-import  {lights} from "../../../common/World/template/lights.js";
+import { World } from "../../../code/World/World.js";
+import  {createEnvironment} from "../../../code/World/template/environment.js";
+import  {lights} from "../../../code/World/template/lights.js";
 
 //global settings for the scene
 let globalSettings={

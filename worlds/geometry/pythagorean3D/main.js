@@ -1,11 +1,11 @@
 //set the stuff for this particular example!
-import Pythagorean3d from "../../../common/items/geometry/Pythagorean3d.js";
+import Pythagorean3d from "../../../code/items/geometry/Pythagorean3d.js";
 let example = new Pythagorean3d();
 
 //this uses all the default settings defined in the "template" folder
-import { World } from "../../../common/World/World.js";
-import  {createEnvironment} from "../../../common/World/template/environment.js";
-import  {lights} from "../../../common/World/template/lights.js";
+import { World } from "../../../code/World/World.js";
+import  {createEnvironment} from "../../../code/World/template/environment.js";
+import  {lights} from "../../../code/World/template/lights.js";
 
 
 

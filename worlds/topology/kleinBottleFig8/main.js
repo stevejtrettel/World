@@ -1,13 +1,13 @@
 //set the stuff for this particular example!
-import KleinBottleFig8 from "../../../common/items/topology/KleinBottleFig8.js";
+import KleinBottleFig8 from "../../../code/items/topology/KleinBottleFig8.js";
 import params from "./params.js";
 let example = new KleinBottleFig8(params);
 
 
 //this uses all the default settings defined in the "template" folder
-import { World } from "../../../common/World/World.js";
-import  {createEnvironment} from "../../../common/World/template/environment.js";
-import  {lights} from "../../../common/World/template/lights.js";
+import { World } from "../../../code/World/World.js";
+import  {createEnvironment} from "../../../code/World/template/environment.js";
+import  {lights} from "../../../code/World/template/lights.js";
 
 
 //global settings for the scene

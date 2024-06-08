@@ -1,11 +1,11 @@
 //set the stuff for this particular example!
-import SlopeField2DPlotter from "../../../common/items/diffeqs/SlopeField2DPlotter.js";
+import SlopeField2DPlotter from "../../../code/items/diffeqs/SlopeField2DPlotter.js";
 let example = new SlopeField2DPlotter();
 
 //this uses all the default settings defined in the "template" folder
-import { World } from "../../../common/World/World.js";
-import  {createEnvironment} from "../../../common/World/template/environment.js";
-import  {lights} from "../../../common/World/template/lights.js";
+import { World } from "../../../code/World/World.js";
+import  {createEnvironment} from "../../../code/World/template/environment.js";
+import  {lights} from "../../../code/World/template/lights.js";
 
 
 

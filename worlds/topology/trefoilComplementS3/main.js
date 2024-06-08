@@ -1,12 +1,12 @@
 //set the stuff for this particular example!
-import KnotComplementS3 from "../../../common/items/topology/KnotComplementS3.js";
+import KnotComplementS3 from "../../../code/items/topology/KnotComplementS3.js";
 import {trefoilKnot, trefoilUniforms} from "./knot.js";
 let example = new KnotComplementS3(trefoilKnot, trefoilUniforms);
 
 //this uses all the default settings defined in the "template" folder
-import { World } from "../../../common/World/World.js";
-import  {createEnvironment} from "../../../common/World/template/environment.js";
-import  {lights} from "../../../common/World/template/lights.js";
+import { World } from "../../../code/World/World.js";
+import  {createEnvironment} from "../../../code/World/template/environment.js";
+import  {lights} from "../../../code/World/template/lights.js";
 
 
 

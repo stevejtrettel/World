@@ -1,7 +1,7 @@
 
 
 
-import {colorConversion} from "../../../common/shaders/colors/colorConversion.js";
+import {colorConversion} from "../../../code/shaders/colors/colorConversion.js";
 
 
 let uniforms = {

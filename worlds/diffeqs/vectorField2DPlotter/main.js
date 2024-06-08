@@ -1,11 +1,11 @@
 //set the stuff for this particular example!
-import VectorField2DPlotter from "../../../common/items/diffeqs/VectorField2DPlotter.js";
+import VectorField2DPlotter from "../../../code/items/diffeqs/VectorField2DPlotter.js";
 let example = new VectorField2DPlotter();
 
 //this uses all the default settings defined in the "template" folder
-import { World } from "../../../common/World/World.js";
-import  {createEnvironment} from "../../../common/World/template/environment.js";
-import  {lights} from "../../../common/World/template/lights.js";
+import { World } from "../../../code/World/World.js";
+import  {createEnvironment} from "../../../code/World/template/environment.js";
+import  {lights} from "../../../code/World/template/lights.js";
 
 
 

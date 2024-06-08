@@ -1,11 +1,11 @@
 //set the stuff for this particular example!
-import ModulusPlot from "../../../common/items/complex-analysis/ModulusPlot.js";
+import ModulusPlot from "../../../code/items/complex-analysis/ModulusPlot.js";
 let example = new ModulusPlot();
 
 //this uses all the default settings defined in the "template" folder
-import { World } from "../../../common/World/World.js";
-import  {createEnvironment} from "../../../common/World/template/environment.js";
-import  {lights} from "../../../common/World/template/lights.js";
+import { World } from "../../../code/World/World.js";
+import  {createEnvironment} from "../../../code/World/template/environment.js";
+import  {lights} from "../../../code/World/template/lights.js";
 
 
 //global settings for the scene

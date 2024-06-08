@@ -7,8 +7,8 @@
 
 
 
-import sphericalHarmonic from "../../../common/shaders/math/sphericalHarmonic.js";
-import {colorConversion} from "../../../common/shaders/colors/colorConversion.js";
+import sphericalHarmonic from "../../../code/shaders/math/sphericalHarmonic.js";
+import {colorConversion} from "../../../code/shaders/colors/colorConversion.js";
 
 let uniforms = {
     l:{

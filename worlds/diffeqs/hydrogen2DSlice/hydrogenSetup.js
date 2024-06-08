@@ -6,8 +6,8 @@
 
 
 
-import hydrogenOrbital from "../../../common/shaders/math/hydrogenOrbital.js";
-import {colorConversion} from "../../../common/shaders/colors/colorConversion.js";
+import hydrogenOrbital from "../../../code/shaders/math/hydrogenOrbital.js";
+import {colorConversion} from "../../../code/shaders/colors/colorConversion.js";
 
 let uniforms = {
     n:{

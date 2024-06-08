@@ -6,8 +6,8 @@
 
 
 
-import bessel from "../../../common/shaders/math/bessel.js";
-import {colorConversion} from "../../../common/shaders/colors/colorConversion.js";
+import bessel from "../../../code/shaders/math/bessel.js";
+import {colorConversion} from "../../../code/shaders/colors/colorConversion.js";
 
 
 let uniforms = {

@@ -1,11 +1,11 @@
 //set the stuff for this particular example!
-import CTC from "../../../common/items/geometry/CTC.js";
+import CTC from "../../../code/items/geometry/CTC.js";
 let example = new CTC();
 
 //this uses all the default settings defined in the "template" folder
-import { World } from "../../../common/World/World.js";
-import  {createEnvironment} from "../../../common/World/template/environment.js";
-import  {lights} from "../../../common/World/template/lights.js";
+import { World } from "../../../code/World/World.js";
+import  {createEnvironment} from "../../../code/World/template/environment.js";
+import  {lights} from "../../../code/World/template/lights.js";
 
 
 

@@ -1,5 +1,5 @@
-import {setIJK} from "../../../common/shaders/springs/setup.js";
-import {grid3D_texLookup} from "../../../common/shaders/springs/grid3D/grid3D_texLookup.js";
+import {setIJK} from "../../../code/shaders/springs/setup.js";
+import {grid3D_texLookup} from "../../../code/shaders/springs/grid3D/grid3D_texLookup.js";
 
 
 

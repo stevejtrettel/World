@@ -1,11 +1,11 @@
 //set the stuff for this particular example!
-import CuttingTorus from "../../../common/items/topology/CuttingTorus.js";
+import CuttingTorus from "../../../code/items/topology/CuttingTorus.js";
 let example = new CuttingTorus();
 
 //this uses all the default settings defined in the "template" folder
-import { World } from "../../../common/World/World.js";
-import  {createEnvironment} from "../../../common/World/template/environment.js";
-import  {lights} from "../../../common/World/template/lights.js";
+import { World } from "../../../code/World/World.js";
+import  {createEnvironment} from "../../../code/World/template/environment.js";
+import  {lights} from "../../../code/World/template/lights.js";
 
 
 

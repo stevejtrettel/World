@@ -1,4 +1,4 @@
-import {allAttractors} from "../../../common/shaders/odes/attractors.js";
+import {allAttractors} from "../../../code/shaders/odes/attractors.js";
 
 
 //------------------------------------------------------------------

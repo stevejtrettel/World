@@ -9,7 +9,7 @@ import ParametricCurveCPU from "../../compute/parametric/ParametricCurveCPU.js";
 import ParametricCurve from "../../compute/parametric/ParametricCurve.js";
 import Vector from "../../components/basic-shapes/Vector.js";
 import {Rod} from "../../components/basic-shapes/Rod.js";
-import {TangentLine} from "../../components/calculus/TangentLine.js";
+import TangentLine from "../../components/calculus/TangentLine.js";
 
 
 
@@ -270,7 +270,7 @@ class ComplexSpiral {
         this.yConnection.setPos(pos.clone().add(new Vector3(0, 0, vel.z)));
 
         this.imPos.resize(new Vector3(s, 0, 0), this.imEqn(s, this.params));
-        this.imSlope.resetX(s);
+        this.imSlope.setX(s);
     }
 
     tick(time,dTime) {

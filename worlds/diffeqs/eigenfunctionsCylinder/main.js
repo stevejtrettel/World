@@ -1,13 +1,13 @@
 //set the stuff for this particular example!
-import ParametricMaterial from "../../../common/compute/materials/ParametricMaterial.js";
+import ParametricMaterial from "../../../code/compute/materials/ParametricMaterial.js";
 import {res, vert,frag, uniforms} from "./cylinderSetup.js";
 let example = new ParametricMaterial(res, vert, frag, uniforms);
 example.setName('Cylinder Eigenfunctions');
 
 //this uses all the default settings defined in the "template" folder
-import { World } from "../../../common/World/World.js";
-import  {createEnvironment} from "../../../common/World/template/environment.js";
-import  {lights} from "../../../common/World/template/lights.js";
+import { World } from "../../../code/World/World.js";
+import  {createEnvironment} from "../../../code/World/template/environment.js";
+import  {lights} from "../../../code/World/template/lights.js";
 
 
 //global settings for the scene

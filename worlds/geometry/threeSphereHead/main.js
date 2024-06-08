@@ -1,11 +1,11 @@
 //import the class
-import ThreeSphereMesh from "../../../common/items/geometry/ThreeSphereMesh.js";
+import ThreeSphereMesh from "../../../code/items/geometry/ThreeSphereMesh.js";
 let example = new ThreeSphereMesh('./WaltHead.obj');
 
 //this uses all the default settings defined in the "template" folder
-import { World } from "../../../common/World/World.js";
-import  {createEnvironment} from "../../../common/World/template/environment.js";
-import  {lights} from "../../../common/World/template/lights.js";
+import { World } from "../../../code/World/World.js";
+import  {createEnvironment} from "../../../code/World/template/environment.js";
+import  {lights} from "../../../code/World/template/lights.js";
 
 
 //global settings for the scene

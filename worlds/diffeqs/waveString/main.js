@@ -1,11 +1,11 @@
 //set the stuff for this particular example!
-import WaveString from "../../../common/items/diffeqs/WaveString.js";
+import WaveString from "../../../code/items/diffeqs/WaveString.js";
 let example = new WaveString();
 
 //this uses all the default settings defined in the "template" folder
-import { World } from "../../../common/World/World.js";
-import  {createEnvironment} from "../../../common/World/template/environment.js";
-import  {lights} from "../../../common/World/template/lights.js";
+import { World } from "../../../code/World/World.js";
+import  {createEnvironment} from "../../../code/World/template/environment.js";
+import  {lights} from "../../../code/World/template/lights.js";
 
 
 

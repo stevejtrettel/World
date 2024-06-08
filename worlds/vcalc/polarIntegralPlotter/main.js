@@ -1,12 +1,12 @@
 //set the stuff for this particular example!
-import PolarIntegralPlotter from "../../../common/items/vector-calculus/PolarIntegralPlotter.js";
+import PolarIntegralPlotter from "../../../code/items/vector-calculus/PolarIntegralPlotter.js";
 import params from "./params.js";
 let example = new PolarIntegralPlotter(params);
 
 //this uses all the default settings defined in the "template" folder
-import { World } from "../../../common/World/World.js";
-import  {createEnvironment} from "../../../common/World/template/environment.js";
-import  {lights} from "../../../common/World/template/lights.js";
+import { World } from "../../../code/World/World.js";
+import  {createEnvironment} from "../../../code/World/template/environment.js";
+import  {lights} from "../../../code/World/template/lights.js";
 
 
 

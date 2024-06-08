@@ -1,14 +1,14 @@
 //set the stuff for this particular example!
-import MorseFunctionPlotter from "../../../common/items/topology/MorseFunctionPlotter.js";
+import MorseFunctionPlotter from "../../../code/items/topology/MorseFunctionPlotter.js";
 import {settings,params} from "./settingsAndParams.js";
 
 let example = new MorseFunctionPlotter(params,settings);
 
 
 //this uses all the default settings defined in the "template" folder
-import { World } from "../../../common/World/World.js";
-import  {createEnvironment} from "../../../common/World/template/environment.js";
-import  {lights} from "../../../common/World/template/lights.js";
+import { World } from "../../../code/World/World.js";
+import  {createEnvironment} from "../../../code/World/template/environment.js";
+import  {lights} from "../../../code/World/template/lights.js";
 
 
 //global settings for the scene
