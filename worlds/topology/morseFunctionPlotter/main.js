@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import MorseFunctionPlotter from "../../../code/items/topology/MorseFunctionPlotter.js";
+import MorseFunctionPlotter from "../../../code/vignettes/topology/MorseFunctionPlotter.js";
 import {settings,params} from "./settingsAndParams.js";
 let example = new MorseFunctionPlotter(params,settings);
 

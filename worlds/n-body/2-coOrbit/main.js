@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import TwoBody from "../../../code/items/diffeqs/TwoBody.js";
+import TwoBody from "../../../code/vignettes/diffeqs/TwoBody.js";
 import {pA,pB} from "./params.js";
 let example = new TwoBody(pA, pB);
 

@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import SurfaceCurvature from "../../../code/items/computeSystem/SurfaceCurvature.js";
+import SurfaceCurvature from "../../../code/vignettes/computeSystem/SurfaceCurvature.js";
 
 
 //this uses all the default settings defined in the "template" folder

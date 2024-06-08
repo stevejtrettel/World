@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import KnotComplementS3 from "../../../code/items/topology/KnotComplementS3.js";
+import KnotComplementS3 from "../../../code/vignettes/topology/KnotComplementS3.js";
 import {trefoilKnot, trefoilUniforms} from "./knot.js";
 let example = new KnotComplementS3(trefoilKnot, trefoilUniforms);
 

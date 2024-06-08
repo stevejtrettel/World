@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import Map from "../../../code/items/maps/ArchimedesMap.js";
+import Map from "../../../code/vignettes/maps/ArchimedesMap.js";
 let example = new Map();
 
 //this uses all the default settings defined in the "template" folder

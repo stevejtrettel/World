@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import SudaneseMobius from "../../../code/items/topology/SudaneseMobius.js";
+import SudaneseMobius from "../../../code/vignettes/topology/SudaneseMobius.js";
 import params from "./params.js";
 let example = new SudaneseMobius(params);
 

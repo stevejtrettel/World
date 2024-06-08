@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import ModulusPlot from "../../../code/items/complex-analysis/ModulusPlot.js";
+import ModulusPlot from "../../../code/vignettes/complex-analysis/ModulusPlot.js";
 let example = new ModulusPlot();
 
 //this uses all the default settings defined in the "template" folder

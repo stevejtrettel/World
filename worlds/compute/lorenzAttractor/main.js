@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import Attractor3D from "../../../code/items/computeSystem/Attractor3D.js";
+import Attractor3D from "../../../code/vignettes/computeSystem/Attractor3D.js";
 import {res, uniforms, vecField} from "./lorenzSystem.js";
 
 //this uses all the default settings defined in the "template" folder

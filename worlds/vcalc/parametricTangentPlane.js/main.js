@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import ParametricTangentPlane from "../../../code/items/vector-calculus/ParametricTangentPlane.js";
+import ParametricTangentPlane from "../../../code/vignettes/vector-calculus/ParametricTangentPlane.js";
 import params from "./params.js";
 
 //this uses all the default settings defined in the "template" folder

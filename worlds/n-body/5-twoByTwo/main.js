@@ -1,6 +1,6 @@
 
 //set the stuff for this particular example!
-import FiveBody from "../../../code/items/diffeqs/FiveBody.js";
+import FiveBody from "../../../code/vignettes/diffeqs/FiveBody.js";
 import {pA,pB,pC,pD,pE} from "./params.js";
 const example = new FiveBody(pA, pB, pC, pD, pE);
 

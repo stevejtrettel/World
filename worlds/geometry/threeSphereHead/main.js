@@ -1,5 +1,5 @@
 //import the class
-import ThreeSphereMesh from "../../../code/items/geometry/ThreeSphereMesh.js";
+import ThreeSphereMesh from "../../../code/vignettes/geometry/ThreeSphereMesh.js";
 let example = new ThreeSphereMesh('./WaltHead.obj');
 
 //this uses all the default settings defined in the "template" folder

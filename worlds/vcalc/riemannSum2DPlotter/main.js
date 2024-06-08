@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import RiemannSum2DPlotter from "../../../code/items/vector-calculus/RiemannSum2DPlotter.js";
+import RiemannSum2DPlotter from "../../../code/vignettes/vector-calculus/RiemannSum2DPlotter.js";
 import params from "./params.js";
 let example = new RiemannSum2DPlotter(params);
 

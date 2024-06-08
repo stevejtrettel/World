@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import Graph3DPlotter from "../../../code/items/vector-calculus/Graph3DPlotter.js";
+import Graph3DPlotter from "../../../code/vignettes/vector-calculus/Graph3DPlotter.js";
 import params from "./params.js";
 let example = new Graph3DPlotter(params);
 

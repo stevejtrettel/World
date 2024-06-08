@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import Pythagorean3d from "../../../code/items/geometry/Pythagorean3d.js";
+import Pythagorean3d from "../../../code/vignettes/geometry/Pythagorean3d.js";
 let example = new Pythagorean3d();
 
 //this uses all the default settings defined in the "template" folder

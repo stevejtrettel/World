@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import Graph3DSystem from "../../../code/items/vector-calculus/Graph3DSystem.js";
+import Graph3DSystem from "../../../code/vignettes/vector-calculus/Graph3DSystem.js";
 import params from "./params.js";
 
 //this uses all the default settings defined in the "template" folder

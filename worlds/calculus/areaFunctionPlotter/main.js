@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import AreaFunctionPlotter from "../../../code/items/calculus/AreaFunctionPlotter.js";
+import AreaFunctionPlotter from "../../../code/vignettes/calculus/AreaFunctionPlotter.js";
 import params from "./params.js";
 let example = new AreaFunctionPlotter(params);
 

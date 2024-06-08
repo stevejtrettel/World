@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import CrossProduct from "../../../code/items/vector-calculus/CrossProduct.js";
+import CrossProduct from "../../../code/vignettes/vector-calculus/CrossProduct.js";
 let example = new CrossProduct();
 
 //this uses all the default settings defined in the "template" folder

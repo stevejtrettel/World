@@ -1,7 +1,7 @@
 import {Vector3} from "../../../3party/three/build/three.module.js";
 import {RungeKutta} from "../../../code/compute/cpu/RungeKutta.js";
-import {FlowLine} from "../../../code/components/odes/FlowLine.js";
-import {FlowLineField} from "../../../code/components/odes/FlowLineField.js";
+import {FlowLine} from "../../../code/items/odes/FlowLine.js";
+import {FlowLineField} from "../../../code/items/odes/FlowLineField.js";
 
 
 const ep = 0.01;

@@ -1,12 +1,12 @@
 //set the stuff for this particular example!
-import SphereAndCylinder from "../../../code/items/geometry/SphereAndCylinder2.js";
+import SphereAndCylinder from "../../../code/vignettes/geometry/SphereAndCylinder2.js";
 let example = new SphereAndCylinder();
 
 //this uses all the default settings defined in the "template" folder
 import World from "../../../code/World/World.js";
 import  {createEnvironment} from "../../../code/World/template/environment.js";
 import  {lights} from "../../../code/World/template/lights.js";
-import Pythagorean3d from "../../../code/items/euclidean-geometry/Pythagorean3d.js";
+import Pythagorean3d from "../../../code/vignettes/euclidean-geometry/Pythagorean3d.js";
 
 
 

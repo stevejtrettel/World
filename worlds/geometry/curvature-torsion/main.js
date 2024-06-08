@@ -1,6 +1,6 @@
 
 //this example is already an object
-import object from "../../../code/items/geometry/curveAndTorsion.js";
+import object from "../../../code/vignettes/geometry/curveAndTorsion.js";
 
 
 //this uses all the default settings defined in the "template" folder

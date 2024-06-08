@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import WobbleSphere from "../../../code/items/topology/WobbleSphere.js";
+import WobbleSphere from "../../../code/vignettes/topology/WobbleSphere.js";
 let example = new WobbleSphere();
 
 //this uses all the default settings defined in the "template" folder

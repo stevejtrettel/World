@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import CuttingTorus from "../../../code/items/topology/CuttingTorus.js";
+import CuttingTorus from "../../../code/vignettes/topology/CuttingTorus.js";
 let example = new CuttingTorus();
 
 //this uses all the default settings defined in the "template" folder

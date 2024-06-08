@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import DoublePendulumSim from "../../../code/items/diffeqs/DoublePendulumSim.js";
+import DoublePendulumSim from "../../../code/vignettes/diffeqs/DoublePendulumSim.js";
 let example = new DoublePendulumSim(200);
 
 //this uses all the default settings defined in the "template" folder

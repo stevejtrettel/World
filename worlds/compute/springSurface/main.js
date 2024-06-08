@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import SpringSurface from "../../../code/items/computeSystem/SpringSurface.js";
+import SpringSurface from "../../../code/vignettes/computeSystem/SpringSurface.js";
 
 
 //this uses all the default settings defined in the "template" folder

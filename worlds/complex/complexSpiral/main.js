@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import ComplexSpiral from "../../../code/items/complex-analysis/ComplexSpiral.js";
+import ComplexSpiral from "../../../code/vignettes/complex-analysis/ComplexSpiral.js";
 let example = new ComplexSpiral();
 
 //this uses all the default settings defined in the "template" folder

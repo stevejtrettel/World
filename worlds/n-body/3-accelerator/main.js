@@ -1,6 +1,6 @@
 
 //set the stuff for this particular example!
-import ThreeBody from "../../../code/items/diffeqs/ThreeBody.js";
+import ThreeBody from "../../../code/vignettes/diffeqs/ThreeBody.js";
 import {pA,pB,pC} from "./params.js";
 const example = new ThreeBody(pA, pB, pC);
 

@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import IteratedIntegralPlotter from "../../../code/items/vector-calculus/CartesianIntegralPlotter.js";
+import IteratedIntegralPlotter from "../../../code/vignettes/vector-calculus/CartesianIntegralPlotter.js";
 import params from "./params.js";
 let example = new IteratedIntegralPlotter(params);
 

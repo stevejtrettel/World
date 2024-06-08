@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import ParametricCurveSystem from "../../../code/items/vector-calculus/ParametricCurveSystem.js";
+import ParametricCurveSystem from "../../../code/vignettes/vector-calculus/ParametricCurveSystem.js";
 import params from "./params.js";
 let example = new ParametricCurveSystem(params);
 

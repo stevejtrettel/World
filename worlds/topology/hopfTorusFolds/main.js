@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import HopfTorus from "../../../code/items/topology/HopfTorus.js";
+import HopfTorus from "../../../code/vignettes/topology/HopfTorus.js";
 import {sphereCurve, uniforms} from "./curve.js";
 let example = new HopfTorus(sphereCurve, uniforms);
 

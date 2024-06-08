@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import TorusFundamentalGroup from "../../../code/items/topology/TorusFundamentalGroup.js";
+import TorusFundamentalGroup from "../../../code/vignettes/topology/TorusFundamentalGroup.js";
 let example = new TorusFundamentalGroup();
 
 //this uses all the default settings defined in the "template" folder
