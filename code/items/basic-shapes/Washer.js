@@ -8,7 +8,7 @@ import {
 } from "../../../3party/three/build/three.module.js";
 
 import {Rod} from "./Rod.js";
-import ParametricCurve from "../VectorCalculus/ParametricCurveCPU.js";
+import ParametricCurve from "../../compute/parametric/ParametricCurveCPU.js";
 
 
 //a class for drawing a washer between two curves

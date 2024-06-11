@@ -7,6 +7,7 @@ import Graph2D from "../../items/calculus/Graph2D.js";
 import AreaBetweenCurves from "../../items/calculus/AreaBetweenCurves.js";
 import Washer from "../../items/basic-shapes/Washer.js";
 
+// import {parser} from "../../../3party/math-esm.js";
 
 //using GLOBAL object math.parser: this is from the 3rd party math file loaded in the html
 const parser = math.parser();
@@ -20,26 +21,36 @@ let lightGreen = new Color().setHSL(0.3,0.5,0.6);
 let yellow = new Color().setHSL(0.13,0.8,0.4);
 let lightYellow = new Color().setHSL(0.15,0.7,0.8);
 
-class DiskAndWasherPlotter{
-   constructor(domain) {
 
-       this.domain = domain;
+let defaultParams = {
+    outerCurve:'2',
+    innerCurve: '1/(1+x^2)',
+    domain: {min:-10,max:10},
+    showArea:true,
+    showCurves:true,
+}
+
+
+class DiskAndWasherPlotter{
+   constructor(settings=defaultParams) {
+
+       this.domain = settings.domain;
 
        this.params = {
 
            xMin: this.domain.min,
            xMax: this.domain.max,
 
-           outerCurveText: '2',
-           innerCurveText:'1/(1+x^2)',
+           outerCurveText: settings.outerCurve,
+           innerCurveText: settings.innerCurve,
 
            x: 0.75,
 
            axis: 0,
            angle: 0,
 
-           showArea:true,
-           showCurves:true,
+           showArea:settings.showArea,
+           showCurves:settings.showCurves,
 
            a:0,
            b:0,
@@ -98,8 +109,8 @@ class DiskAndWasherPlotter{
 
        //THE BLACKBOARD
        this.blackboard = new BlackBoard({
-           xRange:domain,
-           yRange:domain,
+           xRange:this.domain,
+           yRange:this.domain,
            radius:0.02,
        });
 
@@ -120,8 +131,8 @@ class DiskAndWasherPlotter{
 
        //IN THE BACKGROUND: THE CURVE WE INTEGRATE
        this.integralBoard = new BlackBoard({
-           xRange:domain,
-           yRange:domain,
+           xRange:this.domain,
+           yRange:this.domain,
            radius:0.02,
        });
 
@@ -379,7 +390,4 @@ class DiskAndWasherPlotter{
 }
 
 
-
-let example = new DiskAndWasherPlotter({min:-10,max:10});
-
-export default {example};
+export default DiskAndWasherPlotter;
