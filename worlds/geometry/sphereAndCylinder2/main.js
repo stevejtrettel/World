@@ -6,7 +6,6 @@ let example = new SphereAndCylinder();
 import World from "../../../code/World/World.js";
 import  {createEnvironment} from "../../../code/World/template/environment.js";
 import  {lights} from "../../../code/World/template/lights.js";
-import Pythagorean3d from "../../../code/vignettes/euclidean-geometry/Pythagorean3d.js";
 
 
 

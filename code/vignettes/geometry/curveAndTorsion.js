@@ -1,4 +1,4 @@
-import { globals } from "../../World/globals.js";
+
 import {SpaceCurve} from "../../compute/parametric/SpaceCurve.js";
 
 

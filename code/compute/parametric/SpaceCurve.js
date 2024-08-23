@@ -5,7 +5,7 @@ DoubleSide,} from "../../../3party/three/build/three.module.js";
 import { RungeKutta } from "../cpu/RungeKutta.js";
 import { TNB } from "../cpu/components/TNB.js";
 import {colorConversion} from "../../shaders/colors/colorConversion.js";
-import {ParametricTube} from "../materials/ParametricTube.js";
+import ParametricTube from "../materials/ParametricTube.js";
 
 
 
