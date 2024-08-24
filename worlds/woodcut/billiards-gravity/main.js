@@ -1,12 +1,16 @@
+//set the stuff for this particular example!
+import Eggcarton from "../../../code/packages/GeoProgram/FinishedExamples/SurfaceSetMarch/EggCarton/Eggcarton.js";
+import Billiards from "../../../code/packages/GeoProgram/Billiards.js";
+let surf = new Eggcarton();
+let billiards = new Billiards(surf);
 
-//this example is already an object
-import object from "../../../code/vignettes/BlackHoleGeodesics.js";
 
 
 //this uses all the default settings defined in the "template" folder
 import World from "../../../code/World/World.js";
 import  {createEnvironment} from "../../../code/World/template/environment.js";
 import  {lights} from "../../../code/World/template/lights.js";
+
 
 
 //global settings for the scene
@@ -16,9 +20,8 @@ let globalSettings={
     stats:false,
 
     environment:{
-        color:0xffffff,
-            //0x292b36,
-        cube: false,
+        color:0x292b36,
+        cube: true,
     },
 
     camera:{
@@ -45,12 +48,13 @@ let globalSettings={
 function main(globalSettings) {
 
     // Create an instance of the World class
-    const world = new World(globalSettings);
+    const world = new World( globalSettings );
 
     const environment = createEnvironment(globalSettings.environment, world.pmrem);
     world.setEnvironment( environment ) ;
 
     // Fill this world with objects
+    let object = {example:billiards};
     world.addObjects(object);
     world.addObjects( lights );
 
