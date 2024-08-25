@@ -6,7 +6,7 @@ import LevelSet from "../../items/geodesic-program/plot/LevelSet.js";
 import GlassDomain from "../../items/geodesic-program/plot/GlassDomain.js";
 import GraphingCalc from "../../items/geodesic-program/surface/Examples/GraphingCalc.js";
 import ParticleDisk from "../../items/geodesic-program/trajectories/ParticleDisk.js";
-
+import GradientVF from "../../items/geodesic-program/plot/GradientVF.js";
 
 
 
@@ -15,6 +15,7 @@ class GravityDisk{
         this.surface = new GraphingCalc();
         this.plot = new Graph(this.surface);
         this.dom = new GlassDomain(this.surface);
+        this.grad = new GradientVF(this.surface);
 
         //set integrator options:
         let integratorOptions = {
@@ -46,6 +47,7 @@ class GravityDisk{
         this.dom.addToScene(scene);
         this.plot.addToScene(scene);
         this.particles.addToScene(scene);
+        this.grad.addToScene(scene);
     }
 
     addToUI(ui){
@@ -56,6 +58,7 @@ class GravityDisk{
             test.plot.updateSurface();
             test.setIniState();
             test.particles.updateState(test.iniState);
+            test.grad.updateSurface();
         };
 
         this.surface.buildUIFolder(ui,resetScene);
