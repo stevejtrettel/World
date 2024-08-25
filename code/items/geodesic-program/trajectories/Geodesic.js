@@ -31,8 +31,8 @@ class Geodesic{
         //initialize the curve parameters in the integrator
         this.length = curveOptions.length;
         //number of steps to integrate out.
-        this.N = Math.floor(curveOptions.length/this.surface.integrator[this.integratorChoice].ep);
-
+        this.Nmax = Math.floor(curveOptions.length/this.surface.integrator[this.integratorChoice].ep);
+        this.N = this.Nmax;
 
         //initialize the material parameters for the tube:
         let curveMaterial = new MeshPhysicalMaterial({
@@ -62,9 +62,10 @@ class Geodesic{
         let p,uv;
         let currentState = this.state.clone();
 
-        for(let i=0; i<this.N; i++){
+        for(let i=0; i<this.Nmax; i++){
 
             uv = currentState.pos.clone();
+            this.N=i;
 
             if(this.surface.stop(uv)){
 
