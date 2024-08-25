@@ -87,6 +87,16 @@ class GraphingCalc extends Surface {
                 resetScene();
             });
      }
+
+     setFunction(fn){
+        this.params.func = fn;
+         let func = parser.evaluate('f(u,v,a,b,c)='.concat(this.params.func));
+         this.F = function(u,v){
+             let z = func(u,v, a,b,c);
+             return z;
+         }
+         this.update({});
+     }
  }
 
 

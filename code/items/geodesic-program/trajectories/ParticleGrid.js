@@ -54,7 +54,7 @@ class ParticleGrid {
         this.stopAtEdge = integratorOptions.stopAtEdge;
 
         //show in domain, or on graph
-        this.flatten=false;
+        this.flatten=particleOptions.flatten;
 
         let mat = new MeshPhysicalMaterial({
             color:particleOptions.color,
