@@ -2,6 +2,9 @@ import {Matrix3,Vector2,Vector3} from "../../../../3party/three/build/three.modu
 
 import SymplecticIntegrator from "./Integrators/Symplectic.js";
 import EulerIntegrator from "./Integrators/Euler.js";
+import CustomSchemeIntegrator from "./Integrators/CustomScheme.js";
+
+import State from "./Integrators/States/State.js";
 import dState from "./Integrators/States/dState.js";
 
 
@@ -292,7 +295,7 @@ class Surface{
 
     buildIntegrators(){
 
-        let ep = 0.01;
+        let ep = 0.005;
         let gravForce  = 5.;
         let derivatives = this.derivatives;
         let gradient = this.gradient;
@@ -337,20 +340,26 @@ class Surface{
             return new dState(vel, acc);
         }
 
-        let gradientMomentumVF = function(state){
-            const gamma = 1.;
-            let grad = gradient(state.pos);
+        let heavyBallScheme = function(state,eps){
 
-            let vel = grad.clone().multiplyScalar(-1);
-            let acc = new Vector2(0,0);
-            return new dState(vel, acc);
+            let beta = 0.75;
+            let pos = state.pos.clone();
+            let mom = state.vel.clone();
+
+            let newMom = gradient(pos.clone()).multiplyScalar(-1);
+            newMom.add(mom.clone().multiplyScalar(beta));
+
+            let newPos = pos.add(newMom.clone().multiplyScalar(eps));
+
+
+            return new State(newPos, newMom);
         }
 
         //four different integrators we can use, depending on what we want to do
         let geodesicIntegrator = new SymplecticIntegrator(geodesicAcceleration,ep,this.stop);
         let gravityIntegrator = new SymplecticIntegrator(gravityAcceleration, ep, this.stop);
         let gradientIntegrator = new EulerIntegrator(gradientVF,ep, this.stop);
-        let gradientMomentumIntegrator = new EulerIntegrator(gradientMomentumVF, ep, this.stop);
+        let gradientMomentumIntegrator = new CustomSchemeIntegrator(heavyBallScheme, ep, this.stop);
 
         //ordered list to choose from
         this.integrator = [

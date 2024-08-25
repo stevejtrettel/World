@@ -11080,6 +11080,17 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/code\/items\/geodesic-program\/surface\/Integrators\/CustomScheme.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/code\/items\/geodesic-program\/surface\/Integrators\/CustomScheme-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/code\/items\/geodesic-program\/surface\/Integrators\/Euler.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -13511,6 +13522,17 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/code\/vignettes\/geodesic-program\/GradientDescentComparison.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/code\/vignettes\/geodesic-program\/GradientDescentComparison-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/code\/vignettes\/geodesic-program\/GradientDescentGrid.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -14931,6 +14953,25 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/worlds\/geodesic-program\/gradientDescentComparison\/index.html" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/geodesic-program\/gradientDescentComparison\/index.html",
+      "oF" : 0
+    },
+    "\/worlds\/geodesic-program\/gradientDescentComparison\/main.js" : {
+      "bF" : 4,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/geodesic-program\/gradientDescentComparison\/main-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/worlds\/geodesic-program\/gradientDescentGrid\/index.html" : {
       "cB" : 0,
       "ft" : 8192,
@@ -14938,6 +14979,17 @@
       "oA" : 0,
       "oAP" : "\/worlds\/geodesic-program\/gradientDescentGrid\/index.html",
       "oF" : 0
+    },
+    "\/worlds\/geodesic-program\/gradientDescentGrid\/main-min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/geodesic-program\/gradientDescentGrid\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
     },
     "\/worlds\/geodesic-program\/gradientDescentGrid\/main.js" : {
       "bF" : 4,

@@ -2,7 +2,6 @@ import {Vector2} from "../../../3party/three/build/three.module.js";
 
 import State from "../../items/geodesic-program/surface/Integrators/States/State.js";
 import Graph from "../../items/geodesic-program/plot/Graph.js";
-import LevelSet from "../../items/geodesic-program/plot/LevelSet.js";
 import GlassDomain from "../../items/geodesic-program/plot/GlassDomain.js";
 import GraphingCalc from "../../items/geodesic-program/surface/Examples/GraphingCalc.js";
 import ParticleDisk from "../../items/geodesic-program/trajectories/ParticleDisk.js";
@@ -29,7 +28,7 @@ class GravityDisk{
         let particleOptions = {
             color: 0xffffff,
             radius: 0.075,
-            flatten:true,
+            flatten:false,
         }
 
         this.setIniState();

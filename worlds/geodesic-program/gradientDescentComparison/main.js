@@ -1,6 +1,6 @@
 //set the stuff for this particular example!
-import Test from "../../../code/vignettes/geodesic-program/Test.js";
-let example = new Test();
+import GradientDescentComparison from "../../../code/vignettes/geodesic-program/GradientDescentComparison.js";
+let example = new GradientDescentComparison();
 
 //this uses all the default settings defined in the "template" folder
 import World from "../../../code/World/World.js";

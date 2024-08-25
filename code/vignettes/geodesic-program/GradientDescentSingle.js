@@ -4,13 +4,16 @@ import State from "../../items/geodesic-program/surface/Integrators/States/State
 import Graph from "../../items/geodesic-program/plot/Graph.js";
 import GraphingCalc from "../../items/geodesic-program/surface/Examples/GraphingCalc.js";
 import Geodesic from "../../items/geodesic-program/trajectories/Geodesic.js";
+import GradientVF from "../../items/geodesic-program/plot/GradientVF.js";
+import GlassDomain from "../../items/geodesic-program/plot/GlassDomain.js";
 
-
-class SingleGeodesic{
+class GradientDescentSingle{
     constructor() {
 
         this.surface = new GraphingCalc();
         this.plot = new Graph(this.surface);
+        this.glass = new GlassDomain(this.surface);
+        this.grad = new GradientVF(this.surface);
 
         this.params = {
             posx: 0,
@@ -19,7 +22,7 @@ class SingleGeodesic{
         };
 
         this.buildIniState();
-        this.geodesic = new Geodesic(this.surface, this.iniState, 0);
+        this.geodesic = new Geodesic(this.surface, this.iniState, 2);
 
     }
 
@@ -32,6 +35,8 @@ class SingleGeodesic{
     addToScene(scene){
         this.plot.addToScene(scene);
         this.geodesic.addToScene(scene);
+        this.grad.addToScene(scene);
+        this.glass.addToScene(scene);
     }
 
     addToUI(ui){
@@ -41,16 +46,17 @@ class SingleGeodesic{
         let resetScene = function(){
             test.plot.updateSurface();
             test.geodesic.updateSurface();
+            test.grad.updateSurface();
         };
 
         this.surface.buildUIFolder(ui,resetScene);
 
-        ui.add(test.params, 'posx',0,1,0.01).name('Starting-x').onChange(function(value){
+        ui.add(test.params, 'posx',-5,5,0.01).name('Starting-x').onChange(function(value){
             test.buildIniState();
             test.geodesic.updateState(test.iniState);
         })
 
-        ui.add(test.params, 'posy',0,1,0.01).name('Starting-y').onChange(function(value){
+        ui.add(test.params, 'posy',-4,4,0.01).name('Starting-y').onChange(function(value){
             test.buildIniState();
             test.geodesic.updateState(test.iniState);
         })
@@ -69,4 +75,4 @@ class SingleGeodesic{
 }
 
 
-export default SingleGeodesic;
+export default GradientDescentSingle;
