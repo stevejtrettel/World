@@ -1,20 +1,51 @@
 import {Vector2} from "../../../3party/three/build/three.module.js";
 
 import State from "../../items/geodesic-program/surface/Integrators/States/State.js";
-import PlotGPU from "../../items/geodesic-program/plot/PlotGPU.js";
+import Graph from "../../items/geodesic-program/plot/Graph.js";
+import LevelSet from "../../items/geodesic-program/plot/LevelSet.js";
+import GlassDomain from "../../items/geodesic-program/plot/GlassDomain.js";
 import GraphingCalc from "../../items/geodesic-program/surface/Examples/GraphingCalc.js";
 import ParticleDisk from "../../items/geodesic-program/trajectories/ParticleDisk.js";
+
+
+
 
 class GravityDisk{
     constructor() {
         this.surface = new GraphingCalc();
-        this.plot = new PlotGPU(this.surface);
-        this.gradientGrid = new ParticleDisk(this.surface,1);
+        this.plot = new Graph(this.surface);
+        this.dom = new GlassDomain(this.surface);
+
+        //set integrator options:
+        let integratorOptions = {
+            choice: 1, //gravitational
+            numBalls: 1000,
+            error: 0.1,
+            stopAtEdge: false,
+        }
+
+        //set particle options:
+        let particleOptions = {
+            color: 0xffffff,
+            radius: 0.075,
+            flatten:true,
+        }
+
+        this.setIniState();
+        this.particles = new ParticleDisk(this.surface, this.iniState, integratorOptions, particleOptions);
+    }
+
+    setIniState(){
+        let pos = new Vector2(0,0);
+        let vel = this.surface.geomNormalize(pos, new Vector2(0.5,0.3));
+        let iniState = new State( pos,vel);
+        this.iniState = iniState;
     }
 
     addToScene(scene){
+        this.dom.addToScene(scene);
         this.plot.addToScene(scene);
-        this.gradientGrid.addToScene(scene);
+        this.particles.addToScene(scene);
     }
 
     addToUI(ui){
@@ -23,7 +54,8 @@ class GravityDisk{
 
         let resetScene = function(){
             test.plot.updateSurface();
-            test.gradientGrid.updateSurface();
+            test.setIniState();
+            test.particles.updateState(test.iniState);
         };
 
         this.surface.buildUIFolder(ui,resetScene);
@@ -31,7 +63,7 @@ class GravityDisk{
     }
 
     tick(time,dTime){
-        this.gradientGrid.stepForward();
+        this.particles.stepForward();
     }
 }
 

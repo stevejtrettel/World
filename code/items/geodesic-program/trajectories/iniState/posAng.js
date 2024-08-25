@@ -1,18 +1,28 @@
 import {Vector2} from "../../../../../3party/three/build/three.module.js";
 
-let pointGrid = function(i, row,col, domain){
-    let rowPos = Math.floor(i/row);
-    let colPos = i-rowPos*row;
+//creates and keeps track of an initial state
+// State(pos, vel)
+//pos is controlled by x,y in [-1,1]; rescaled to domain
+//vel is controlled by angle and magnitude
 
-    let deltaRow = (domain.u.max-domain.u.min)/row;
-    let deltaCol = (domain.v.max-domain.v.min)/col;
+class posAng{
 
-    let u = domain.u.min + deltaRow*rowPos+deltaRow/2;
-    let v = domain.v.min + deltaCol*colPos+deltaCol/2;
+    constructor(surface) {
+        this.surface = surface;
+        this.params = {
+            x: 0,
+            y: 0,
+            ang: 0,
+            mag: 1,
+        }
 
-    return new Vector2(u,v);
+    }
+
+
+    addToUI(ui){
+
+    }
+
 }
 
-export default pointGrid;
-
-
+export default posAng;

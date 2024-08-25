@@ -114,6 +114,14 @@ class Surface{
         }
         this.parameterization = parameterization;
 
+        let domainParameterization = function(uv){
+            let u = uv.x;
+            let v = uv.y;
+            //switch order so z is up on screen
+            return new Vector3(u,-4,-v);
+        }
+        this.domainParameterization = domainParameterization;
+
 
         let uDom = this.domain.u;
         let vDom = this.domain.v;
@@ -136,6 +144,15 @@ class Surface{
             let res = parameterization(UV);
             result.set(res.x,res.y,res.z);
         }
+
+
+        this.parametricDomain = function(u,v,result){
+            let uv = new Vector2(u,v);
+            let UV = rescale(uv);
+            let res = domainParameterization(UV);
+            result.set(res.x,res.y,res.z);
+        }
+
     }
 
 
@@ -202,6 +219,20 @@ class Surface{
             }
         }
 
+        let geomNormalize = function(p,v){
+            let D = derivatives(p);
+            let g = new Matrix3().set(
+                D.fu*D.fu+1, D.fu*D.fv,0,
+                D.fu*D.fv, D.fv*D.fv+1,0,
+                0,0,1
+            );
+            let V = new Vector3(v.x,v.y,0);
+            let mag =  Math.sqrt(V.dot(V.applyMatrix3(g)));
+
+            return v.clone().multiplyScalar(1./mag);
+
+        }
+
 
         let nVec = function( uv ){
             let D = derivatives(uv);
@@ -254,6 +285,7 @@ class Surface{
         this.derivatives = derivatives;
         this.gradient = gradient;
         this.nVec = nVec;
+        this.geomNormalize = geomNormalize;
         this.boundaryReflect = boundaryReflect;
     }
 
@@ -261,7 +293,7 @@ class Surface{
     buildIntegrators(){
 
         let ep = 0.01;
-        let gravForce  = 1.;
+        let gravForce  = 5.;
         let derivatives = this.derivatives;
         let gradient = this.gradient;
 
@@ -314,7 +346,6 @@ class Surface{
             return new dState(vel, acc);
         }
 
-
         //four different integrators we can use, depending on what we want to do
         let geodesicIntegrator = new SymplecticIntegrator(geodesicAcceleration,ep,this.stop);
         let gravityIntegrator = new SymplecticIntegrator(gravityAcceleration, ep, this.stop);
@@ -322,7 +353,12 @@ class Surface{
         let gradientMomentumIntegrator = new EulerIntegrator(gradientMomentumVF, ep, this.stop);
 
         //ordered list to choose from
-        this.integrator = [geodesicIntegrator, gravityIntegrator,gradientIntegrator, gradientMomentumIntegrator];
+        this.integrator = [
+            geodesicIntegrator,
+            gravityIntegrator,
+            gradientIntegrator,
+            gradientMomentumIntegrator
+        ];
     }
 
 
