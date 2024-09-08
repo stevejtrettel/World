@@ -1,13 +1,19 @@
 //set the stuff for this particular example!
-import RiemannSum2DPlotter from "./RiemannSum2DPlotter.js";
-import params from "./params.js";
-let example = new RiemannSum2DPlotter(params);
+import DiskRiemannSumPlotter from "./DiskRiemannSumPlotter.js";
+
+
+let fnText = '2/(1+x^2)';
+let range = { min:-10,max:10};
+let N = 100;
+
+let example = new DiskRiemannSumPlotter(fnText, range, N);
+
+
 
 //this uses all the default settings defined in the "template" folder
 import World from "../../../code/World/World.js";
 import  {createEnvironment} from "../../../code/World/template/environment.js";
 import  {lights} from "../../../code/World/template/lights.js";
-
 
 
 //global settings for the scene
@@ -45,7 +51,7 @@ let globalSettings={
 function main(globalSettings) {
 
     // Create an instance of the World class
-    const world = new World( globalSettings );
+    const world = new World(globalSettings );
 
     const environment = createEnvironment(globalSettings.environment, world.pmrem);
     world.setEnvironment( environment ) ;

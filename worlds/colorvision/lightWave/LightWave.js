@@ -1,4 +1,4 @@
-import EMWave from "../../items/misc/EMWave.js";
+import EMWave from "../../../code/items/misc/EMWave.js";
 
 
 let defaultParams = {

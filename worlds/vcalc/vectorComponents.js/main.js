@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import VectorComponents from "../../../code/vignettes/vector-calculus/VectorComponents.js";
+import VectorComponents from "./VectorComponents.js";
 let example = new VectorComponents();
 
 //this uses all the default settings defined in the "template" folder

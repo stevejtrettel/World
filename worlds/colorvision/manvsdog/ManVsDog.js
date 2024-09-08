@@ -1,6 +1,6 @@
 import {Color} from "../../../3party/three/build/three.module.js";
-import Spectrum from "../../items/misc/Spectrum.js";
-import ConeCell from "../../items/misc/ConeCell.js";
+import Spectrum from "../../../code/items/misc/Spectrum.js";
+import ConeCell from "../../../code/items/misc/ConeCell.js";
 
 
 

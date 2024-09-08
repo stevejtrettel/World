@@ -1,5 +1,5 @@
 
-import RiemannSum from "../../items/calculus/RiemannSum.js";
+import RiemannSum from "../../../code/items/calculus/RiemannSum.js";
 
 
 //using GLOBAL object math.parser: this is from the 3rd party math file loaded in the html
@@ -184,10 +184,4 @@ class RiemannSumSequencePlotter {
 }
 
 
-let fnText = 'cos(x)';
-let range = {min:-5,max:5};
-
-let example = new RiemannSumSequencePlotter(fnText,range);
-export default { example };
-
-
+export default RiemannSumSequencePlotter;

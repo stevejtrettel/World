@@ -1,8 +1,8 @@
 import {Color, Vector3,} from "../../../3party/three/build/three.module.js";
-import Spectrum from "../../items/misc/Spectrum.js";
-import EMWave from "../../items/misc/EMWave.js";
-import {Rod} from "../../items/basic-shapes/Rod.js";
-import {spectralColor} from "../../utils/colors.js";
+import Spectrum from "../../../code/items/misc/Spectrum.js";
+import EMWave from "../../../code/items/misc/EMWave.js";
+import {Rod} from "../../../code/items/basic-shapes/Rod.js";
+import {spectralColor} from "../../../code/utils/colors.js";
 
 
 let simpleCurve = function(f){
@@ -30,7 +30,7 @@ let defaultParams = {
 
 
 
-class SpectrumWave{
+class SpectrumDecomposition{
     constructor(params=defaultParams){
         this.params=params;
 
@@ -143,4 +143,4 @@ class SpectrumWave{
 
 
 
-export default SpectrumWave;
+export default SpectrumDecomposition;

@@ -12,8 +12,8 @@ import {
 } from "../../../3party/three/build/three.module.js";
 
 
+import ParametricCurve from "../../compute/parametric/ParametricCurve.js";
 
-import ParametricCurve from "../VectorCalculus/ParametricCurveCPU.js";
 import {Rod} from "./Rod.js";
 
 class Cylinder {

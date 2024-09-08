@@ -1,6 +1,6 @@
-import  Graph2D  from '../../items/calculus/Graph2D.js';
-import NewtonsMethod from "../../items/calculus/NewtonsMethod.js";
-import {BlackBoard} from "../../items/basic-shapes/Blackboard.js";
+import  Graph2D  from '../../../code/items/calculus/Graph2D.js';
+import NewtonsMethod from "../../../code/items/calculus/NewtonsMethod.js";
+import {BlackBoard} from "../../../code/items/basic-shapes/Blackboard.js";
 
 
 let parser = math.parser();
@@ -128,6 +128,4 @@ class NewtonsMethodPlotter{
 
 
 
-let example = new NewtonsMethodPlotter();
-
-export default {example};
+export default NewtonsMethodPlotter;

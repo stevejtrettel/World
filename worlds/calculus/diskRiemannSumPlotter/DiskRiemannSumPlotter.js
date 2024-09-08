@@ -1,7 +1,7 @@
 
-import DiskRiemannSum from "../../items/calculus/DiskRiemannSum.js";
-import Graph2D from "../../items/calculus/Graph2D.js";
-import RiemannSum from "../../items/calculus/RiemannSum.js";
+import DiskRiemannSum from "../../../code/items/calculus/DiskRiemannSum.js";
+import Graph2D from "../../../code/items/calculus/Graph2D.js";
+import RiemannSum from "../../../code/items/calculus/RiemannSum.js";
 
 
 //using GLOBAL object math.parser: this is from the 3rd party math file loaded in the html
@@ -191,10 +191,4 @@ class DiskRiemannSumPlotter{
 
 
 
-let fnText = '2/(1+x^2)';
-let range = { min:-10,max:10};
-let N = 100;
-
-let example = new DiskRiemannSumPlotter(fnText, range, N);
-
-export default {example};
+export default DiskRiemannSumPlotter;

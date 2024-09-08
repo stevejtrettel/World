@@ -1,12 +1,12 @@
 import {Color, CylinderGeometry, Vector3} from "../../../3party/three/build/three.module.js";
 
-import SurfaceRevolutionY from "../../items/calculus/SurfaceRevolutionY.js";
-import {BlackBoard} from "../../items/basic-shapes/Blackboard.js";
-import {Rod} from "../../items/basic-shapes/Rod.js";
-import Graph2D from "../../items/calculus/Graph2D.js";
-import AreaBetweenCurves from "../../items/calculus/AreaBetweenCurves.js";
-import Washer from "../../items/basic-shapes/Washer.js";
-import Cylinder from "../../items/basic-shapes/Cylinder.js";
+import SurfaceRevolutionY from "../../../code/items/calculus/SurfaceRevolutionY.js";
+import {BlackBoard} from "../../../code/items/basic-shapes/Blackboard.js";
+import {Rod} from "../../../code/items/basic-shapes/Rod.js";
+import Graph2D from "../../../code/items/calculus/Graph2D.js";
+import AreaBetweenCurves from "../../../code/items/calculus/AreaBetweenCurves.js";
+import Washer from "../../../code/items/basic-shapes/Washer.js";
+import Cylinder from "../../../code/items/basic-shapes/Cylinder.js";
 
 //using GLOBAL object math.parser: this is from the 3rd party math file loaded in the html
 const parser = math.parser()
@@ -393,7 +393,4 @@ class CylinderShellPlotter{
 }
 
 
-
-let example = new CylinderShellPlotter({min:-10,max:10});
-
-export default {example};
+export default CylinderShellPlotter;

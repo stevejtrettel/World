@@ -1,6 +1,6 @@
 
-import RiemannSum from "../../items/calculus/RiemannSum.js";
-import Graph2D from "../../items/calculus/Graph2D.js";
+import RiemannSum from "../../../code/items/calculus/RiemannSum.js";
+import Graph2D from "../../../code/items/calculus/Graph2D.js";
 import {BoxBufferGeometry, MeshPhysicalMaterial, Mesh} from "../../../3party/three/build/three.module.js";
 
 //using GLOBAL object math.parser: this is from the 3rd party math file loaded in the html
@@ -255,10 +255,4 @@ class RiemannSumPlotter{
 
 
 
-let fnText = 'cos(x)+x/(1+x*x)';
-let range = { min:-10,max:10};
-let N = 100;
-
-let example = new RiemannSumPlotter(fnText, range, N);
-
-export default example;
+export default RiemannSumPlotter;

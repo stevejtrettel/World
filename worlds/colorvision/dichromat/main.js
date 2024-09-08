@@ -1,13 +1,12 @@
 //set the stuff for this particular example!
-import RiemannSum2DPlotter from "./RiemannSum2DPlotter.js";
-import params from "./params.js";
-let example = new RiemannSum2DPlotter(params);
+import Dichromat from "./Dichromat.js";
+let example = new Dichromat();
+
 
 //this uses all the default settings defined in the "template" folder
 import World from "../../../code/World/World.js";
 import  {createEnvironment} from "../../../code/World/template/environment.js";
 import  {lights} from "../../../code/World/template/lights.js";
-
 
 
 //global settings for the scene
@@ -45,7 +44,7 @@ let globalSettings={
 function main(globalSettings) {
 
     // Create an instance of the World class
-    const world = new World( globalSettings );
+    const world = new World(globalSettings );
 
     const environment = createEnvironment(globalSettings.environment, world.pmrem);
     world.setEnvironment( environment ) ;

@@ -1,11 +1,11 @@
 import {Vector3} from "../../../3party/three/build/three.module.js";
 
-import RiemannSum from "../../items/calculus/RiemannSum.js";
-import Graph2D from "../../items/calculus/Graph2D.js";
-import {Rod} from "../../items/basic-shapes/Rod.js";
-import Graph2DIntegral from "../../items/calculus/Graph2DIntegral.js";
-import {BlackBoard} from "../../items/basic-shapes/Blackboard.js";
-import SecantLine from "../../items/calculus/SecantLine.js";
+import RiemannSum from "../../../code/items/calculus/RiemannSum.js";
+import Graph2D from "../../../code/items/calculus/Graph2D.js";
+import {Rod} from "../../../code/items/basic-shapes/Rod.js";
+import Graph2DIntegral from "../../../code/items/calculus/Graph2DIntegral.js";
+import {BlackBoard} from "../../../code/items/basic-shapes/Blackboard.js";
+import SecantLine from "../../../code/items/calculus/SecantLine.js";
 
 //using GLOBAL object math.parser: this is from the 3rd party math file loaded in the html
 const parser = math.parser();
@@ -259,10 +259,4 @@ class FTCPlotter{
 
 
 
-
-let fnText = 'cos(x)+x/(1+x*x)';
-let range = { min:-10,max:10};
-
-let example = new FTCPlotter(fnText, range );
-
-export default {example};
+export default FTCPlotter;
