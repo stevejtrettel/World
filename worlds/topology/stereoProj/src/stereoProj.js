@@ -7,13 +7,11 @@ import {
     Vector3,
     Vector2,
     CatmullRomCurve3,
-} from "../../../3party/three/build/three.module.js";
+} from "../../../../3party/three/build/three.module.js";
 
-import { ParametricGeometry } from "../../../3party/three/examples/jsm/geometries/ParametricGeometry.js";
-import {ParametricTube} from "../../compute/materials/ParametricTube.js";
-import {colorConversion} from "../../shaders/colors/colorConversion.js";
-// import {ParametricMaterial} from "../../../common/materials/ParametricMaterial.js";
-//
+import { ParametricGeometry } from "../../../../3party/three/examples/jsm/geometries/ParametricGeometry.js";
+import ParametricTube from "../../../../code/compute/materials/ParametricTube.js";
+import {colorConversion} from "../../../../code/shaders/colors/colorConversion.js";
 
 
 let params = {rad:1};

@@ -9,14 +9,7 @@ import {
     Vector2,
     CatmullRomCurve3,
     Group,
-} from "../../../3party/three/build/three.module.js";
-
-import { ParametricGeometry } from "../../../3party/three/examples/jsm/geometries/ParametricGeometry.js";
-import {ParametricTube} from "../../compute/materials/ParametricTube.js";
-import {colorConversion} from "../../shaders/colors/colorConversion.js";
-// import {ParametricMaterial} from "../../../common/materials/ParametricMaterial.js";
-//
-
+} from "../../../../3party/three/build/three.module.js";
 
 
 
@@ -379,14 +372,9 @@ sphCube.addToUI = (ui)=>{};
 
 
 let stereoCube = {
-  //  params:params,
     plane: plane,
     sphere:sphere,
     sphCube:sphCube,
-    // planeTube:planeTube,
-    // sphereTube:sphereTube,
-    // surface:surface,
-    // insideSurface:insideSurface,
 }
 
 
