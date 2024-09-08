@@ -1,6 +1,6 @@
 //set the stuff for this particular example!
 import HopfTorus from "../HopfTorus.js";
-import {sphereCurve, uniforms} from "./curve.js";
+import {sphereCurve, uniforms} from "./src/curve.js";
 let example = new HopfTorus(sphereCurve, uniforms);
 
 //this uses all the default settings defined in the "template" folder

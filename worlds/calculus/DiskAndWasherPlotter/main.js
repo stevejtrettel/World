@@ -1,6 +1,6 @@
 //set the stuff for this particular example!
-import DiskAndWasherPlotter from "./DiskAndWasherPlotter.js";
-import params from "./params.js";
+import DiskAndWasherPlotter from "./src/DiskAndWasherPlotter.js";
+import params from "./src/params.js";
 let example = new DiskAndWasherPlotter(params);
 
 //this uses all the default settings defined in the "template" folder

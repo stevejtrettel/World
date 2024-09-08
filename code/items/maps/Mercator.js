@@ -53,10 +53,10 @@ vec3 getTexOnSph(vec3 v){
 
 
 class Mercator{
-    constructor() {
+    constructor(mapURL) {
         this.position = new Vector3(0,0,0);
         this.orientation = new Matrix3();
-        this.tex = new TextureLoader().load('./earth.jpeg');
+        this.tex = new TextureLoader().load(mapURL);
         this.geometry = new PlaneGeometry(1,1,100,100);
         this.buildMaterial();
         this.map = new Mesh(this.geometry,this.material);

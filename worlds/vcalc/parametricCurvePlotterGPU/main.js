@@ -1,6 +1,6 @@
 //set the stuff for this particular example!
-import ParametricCurvePlotterGPU from "./ParametricCurvePlotterGPU.js";
-import params from "./params.js";
+import ParametricCurvePlotterGPU from "./src/ParametricCurvePlotterGPU.js";
+import params from "./src/params.js";
 let example = new ParametricCurvePlotterGPU(params);
 
 //this uses all the default settings defined in the "template" folder

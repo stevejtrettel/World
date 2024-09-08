@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import SurfaceCurvature from "./SurfaceCurvature.js";
+import SurfaceCurvature from "./src/SurfaceCurvature.js";
 
 
 //this uses all the default settings defined in the "template" folder

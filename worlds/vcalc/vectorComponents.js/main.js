@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import VectorComponents from "./VectorComponents.js";
+import VectorComponents from "./src/VectorComponents.js";
 let example = new VectorComponents();
 
 //this uses all the default settings defined in the "template" folder

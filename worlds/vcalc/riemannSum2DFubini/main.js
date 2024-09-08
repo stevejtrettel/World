@@ -1,6 +1,6 @@
 //set the stuff for this particular example!
-import RiemannSum2DFubini from "./RiemannSum2DFubini.js";
-import params from "./params.js";
+import RiemannSum2DFubini from "./src/RiemannSum2DFubini.js";
+import params from "./src/params.js";
 let example = new RiemannSum2DFubini(params);
 
 //this uses all the default settings defined in the "template" folder

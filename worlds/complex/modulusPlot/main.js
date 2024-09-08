@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import ModulusPlot from "./ModulusPlot.js";
+import ModulusPlot from "./src/ModulusPlot.js";
 let example = new ModulusPlot();
 
 //this uses all the default settings defined in the "template" folder

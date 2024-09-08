@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import Dichromat from "./Dichromat.js";
+import Dichromat from "./src/Dichromat.js";
 let example = new Dichromat();
 
 

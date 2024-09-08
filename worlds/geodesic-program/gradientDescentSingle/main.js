@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import GradientDescentSingle from "./GradientDescentSingle.js";
+import GradientDescentSingle from "./src/GradientDescentSingle.js";
 let example = new GradientDescentSingle();
 
 //this uses all the default settings defined in the "template" folder

@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import FTCPlotter from "./FTCPlotter.js";
+import FTCPlotter from "./src/FTCPlotter.js";
 
 
 let fnText = 'cos(x)+x/(1+x*x)';

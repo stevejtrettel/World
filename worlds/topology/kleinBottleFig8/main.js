@@ -1,6 +1,6 @@
 //set the stuff for this particular example!
-import KleinBottleFig8 from "./KleinBottleFig8.js";
-import params from "./params.js";
+import KleinBottleFig8 from "./src/KleinBottleFig8.js";
+import params from "./src/params.js";
 let example = new KleinBottleFig8(params);
 
 

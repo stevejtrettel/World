@@ -1,6 +1,6 @@
 //set the stuff for this particular example!
-import BoysSurface from "./BoysSurface.js";
-import params from "./params.js";
+import BoysSurface from "./src/BoysSurface.js";
+import params from "./src/params.js";
 let example = new BoysSurface(params);
 
 

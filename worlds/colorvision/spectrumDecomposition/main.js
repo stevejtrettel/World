@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import SpectrumDecomposition from "./SpectrumDecomposition.js";
+import SpectrumDecomposition from "./src/SpectrumDecomposition.js";
 let example = new SpectrumDecomposition();
 
 

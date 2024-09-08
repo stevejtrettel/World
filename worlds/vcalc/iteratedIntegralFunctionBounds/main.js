@@ -1,6 +1,6 @@
 //set the stuff for this particular example!
-import IteratedIntegralFunctionBounds from "./IteratedIntegralFunctionBounds.js";
-import params from "./params.js";
+import IteratedIntegralFunctionBounds from "./src/IteratedIntegralFunctionBounds.js";
+import params from "./src/params.js";
 let example = new IteratedIntegralFunctionBounds(params);
 
 //this uses all the default settings defined in the "template" folder

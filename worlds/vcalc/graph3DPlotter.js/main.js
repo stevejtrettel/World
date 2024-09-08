@@ -1,6 +1,6 @@
 //set the stuff for this particular example!
-import Graph3DPlotter from "./Graph3DPlotter.js";
-import params from "./params.js";
+import Graph3DPlotter from "./src/Graph3DPlotter.js";
+import params from "./src/params.js";
 let example = new Graph3DPlotter(params);
 
 //this uses all the default settings defined in the "template" folder

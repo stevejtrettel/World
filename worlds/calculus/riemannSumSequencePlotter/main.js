@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import RiemannSumSequencePlotter from "./RiemannSumSequencePlotter.js";
+import RiemannSumSequencePlotter from "./src/RiemannSumSequencePlotter.js";
 
 let fnText = 'cos(x)';
 let range = {min:-5,max:5};

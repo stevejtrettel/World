@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import GradientDescentGrid from "./GradientDescentGrid.js";
+import GradientDescentGrid from "./src/GradientDescentGrid.js";
 let example = new GradientDescentGrid();
 
 //this uses all the default settings defined in the "template" folder

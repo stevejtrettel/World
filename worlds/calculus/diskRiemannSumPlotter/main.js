@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import DiskRiemannSumPlotter from "./DiskRiemannSumPlotter.js";
+import DiskRiemannSumPlotter from "./src/DiskRiemannSumPlotter.js";
 
 
 let fnText = '2/(1+x^2)';

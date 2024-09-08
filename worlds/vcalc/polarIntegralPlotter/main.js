@@ -1,6 +1,6 @@
 //set the stuff for this particular example!
-import PolarIntegralPlotter from "./PolarIntegralPlotter.js";
-import params from "./params.js";
+import PolarIntegralPlotter from "./src/PolarIntegralPlotter.js";
+import params from "./src/params.js";
 let example = new PolarIntegralPlotter(params);
 
 //this uses all the default settings defined in the "template" folder

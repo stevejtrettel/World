@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import RiemannSumPlotter from "./RiemannSumPlotter.js";
+import RiemannSumPlotter from "./src/RiemannSumPlotter.js";
 
 let fnText = 'cos(x)+x/(1+x*x)';
 let range = { min:-10,max:10};

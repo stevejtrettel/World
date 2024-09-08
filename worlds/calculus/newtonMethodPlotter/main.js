@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import NewtonsMethodPlotter from "./NewtonsMethodPlotter.js";
+import NewtonsMethodPlotter from "./src/NewtonsMethodPlotter.js";
 let example = new NewtonsMethodPlotter();
 
 

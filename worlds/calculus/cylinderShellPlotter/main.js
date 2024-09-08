@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import CylinderShellPlotter from "./CylinderShellPlotter.js";
+import CylinderShellPlotter from "./src/CylinderShellPlotter.js";
 let example = new CylinderShellPlotter({min:-10,max:10});
 
 //this uses all the default settings defined in the "template" folder

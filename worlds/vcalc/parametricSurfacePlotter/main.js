@@ -1,6 +1,6 @@
 //set the stuff for this particular example!
-import ParametricSurfacePlotter from "./ParametricSurfacePlotter.js";
-import params from "./params.js";
+import ParametricSurfacePlotter from "./src/ParametricSurfacePlotter.js";
+import params from "./src/params.js";
 let example = new ParametricSurfacePlotter(params);
 
 //this uses all the default settings defined in the "template" folder

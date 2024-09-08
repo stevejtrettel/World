@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import ManVsDog from "./ManVsDog.js";
+import ManVsDog from "./src/ManVsDog.js";
 let example = new ManVsDog();
 
 //this uses all the default settings defined in the "template" folder

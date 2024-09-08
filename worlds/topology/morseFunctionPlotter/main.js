@@ -1,6 +1,6 @@
 //set the stuff for this particular example!
-import MorseFunctionPlotter from "./MorseFunctionPlotter.js";
-import {settings,params} from "./settingsAndParams.js";
+import MorseFunctionPlotter from "./src/MorseFunctionPlotter.js";
+import {settings,params} from "./src/settingsAndParams.js";
 let example = new MorseFunctionPlotter(params,settings);
 
 

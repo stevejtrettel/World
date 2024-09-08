@@ -1,6 +1,6 @@
 //set the stuff for this particular example!
-import ParametricSurfaceAnimation from "./ParametricSurfaceAnimation.js";
-import params from "./params.js";
+import ParametricSurfaceAnimation from "./src/ParametricSurfaceAnimation.js";
+import params from "./src/params.js";
 
 //this uses all the default settings defined in the "template" folder
 import World from "../../../code/World/World.js";

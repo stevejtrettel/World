@@ -1,6 +1,6 @@
 //set the stuff for this particular example!
-import ParametricCurveSystem from "./ParametricCurveSystem.js";
-import params from "./params.js";
+import ParametricCurveSystem from "./src/ParametricCurveSystem.js";
+import params from "./src/params.js";
 let example = new ParametricCurveSystem(params);
 
 //this uses all the default settings defined in the "template" folder

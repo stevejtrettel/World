@@ -1,6 +1,6 @@
 //set the stuff for this particular example!
-import SudaneseMobius from "./SudaneseMobius.js";
-import params from "./params.js";
+import SudaneseMobius from "./src/SudaneseMobius.js";
+import params from "./src/params.js";
 let example = new SudaneseMobius(params);
 
 

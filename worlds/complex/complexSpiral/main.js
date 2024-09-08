@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import ComplexSpiral from "./ComplexSpiral.js";
+import ComplexSpiral from "./src/ComplexSpiral.js";
 let example = new ComplexSpiral();
 
 //this uses all the default settings defined in the "template" folder

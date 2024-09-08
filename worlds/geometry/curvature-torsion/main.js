@@ -1,6 +1,6 @@
 
 //this example is already an object
-import object from "./curveAndTorsion.js";
+import object from "./src/curveAndTorsion.js";
 
 
 //this uses all the default settings defined in the "template" folder

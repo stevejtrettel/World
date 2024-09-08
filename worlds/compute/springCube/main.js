@@ -1,6 +1,6 @@
 //set the stuff for this particular example!
-import SpringCube from "./SpringCube.js";
-import {resolution,springConditions,springParameters,collision} from "./springSetup.js";
+import SpringCube from "./src/SpringCube.js";
+import {resolution,springConditions,springParameters,collision} from "./src/springSetup.js";
 
 
 //this uses all the default settings defined in the "template" folder

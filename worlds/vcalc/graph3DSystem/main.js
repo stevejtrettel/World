@@ -1,6 +1,6 @@
 //set the stuff for this particular example!
-import Graph3DSystem from "./Graph3DSystem.js";
-import params from "./params.js";
+import Graph3DSystem from "./src/Graph3DSystem.js";
+import params from "./src/params.js";
 
 //this uses all the default settings defined in the "template" folder
 import World from "../../../code/World/World.js";

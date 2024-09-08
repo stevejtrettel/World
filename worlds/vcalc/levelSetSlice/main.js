@@ -1,6 +1,6 @@
 //set the stuff for this particular example!
-import LevelSetSlice from "./LevelSetSlice.js";
-import params from "./params.js";
+import LevelSetSlice from "./src/LevelSetSlice.js";
+import params from "./src/params.js";
 
 //this uses all the default settings defined in the "template" folder
 import World from "../../../code/World/World.js";

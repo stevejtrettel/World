@@ -1,6 +1,6 @@
 //import the class
-import ThreeSphereMesh from "./ThreeSphereMesh.js";
-let example = new ThreeSphereMesh('./WaltHead.obj');
+import ThreeSphereMesh from "./src/ThreeSphereMesh.js";
+let example = new ThreeSphereMesh('./assets/WaltHead.obj');
 
 //this uses all the default settings defined in the "template" folder
 import World from "../../../code/World/World.js";

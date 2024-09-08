@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import VectorField2DPlotter from "./VectorField2DPlotter.js";
+import VectorField2DPlotter from "./src/VectorField2DPlotter.js";
 let example = new VectorField2DPlotter();
 
 //this uses all the default settings defined in the "template" folder

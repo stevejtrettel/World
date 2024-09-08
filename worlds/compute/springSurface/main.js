@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import SpringSurface from "./SpringSurface.js";
+import SpringSurface from "./src/SpringSurface.js";
 
 
 //this uses all the default settings defined in the "template" folder

@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import CExp from "./CExp.js";
+import CExp from "./src/CExp.js";
 let example = new CExp();
 
 //this uses all the default settings defined in the "template" folder

@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import CrossProduct from "./CrossProduct.js";
+import CrossProduct from "./src/CrossProduct.js";
 let example = new CrossProduct();
 
 //this uses all the default settings defined in the "template" folder

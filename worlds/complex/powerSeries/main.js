@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import object from "./CplxPowerSeries.js";
+import object from "./src/CplxPowerSeries.js";
 
 //this uses all the default settings defined in the "template" folder
 import World from "../../../code/World/World.js";

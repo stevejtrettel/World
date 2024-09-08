@@ -1,6 +1,6 @@
 //set the stuff for this particular example!
-import BSolitar from "./BSolitar.js";
-import params from "./params.js";
+import BSolitar from "./src/BSolitar.js";
+import params from "./src/params.js";
 let example = new BSolitar(params);
 
 

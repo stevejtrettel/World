@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import SlopeField2DPlotter from "./SlopeField2DPlotter.js";
+import SlopeField2DPlotter from "./src/SlopeField2DPlotter.js";
 let example = new SlopeField2DPlotter();
 
 //this uses all the default settings defined in the "template" folder

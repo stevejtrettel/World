@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import SphereAndCylinder from "./SphereAndCylinder.js";
+import SphereAndCylinder from "./src/SphereAndCylinder.js";
 let example = new SphereAndCylinder();
 
 //this uses all the default settings defined in the "template" folder

@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import TorusFundamentalGroup from "./TorusFundamentalGroup.js";
+import TorusFundamentalGroup from "./src/TorusFundamentalGroup.js";
 let example = new TorusFundamentalGroup();
 
 //this uses all the default settings defined in the "template" folder

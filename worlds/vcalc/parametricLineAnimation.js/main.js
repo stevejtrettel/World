@@ -1,6 +1,6 @@
 //set the stuff for this particular example!
-import ParametricLineAnimation from "./ParametricLineAnimation.js";
-import params from "./params.js";
+import ParametricLineAnimation from "./src/ParametricLineAnimation.js";
+import params from "./src/params.js";
 let example = new ParametricLineAnimation(params);
 
 //this uses all the default settings defined in the "template" folder

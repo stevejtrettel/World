@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import Monochromat from "./Monochromat.js";
+import Monochromat from "./src/Monochromat.js";
 let example = new Monochromat();
 
 

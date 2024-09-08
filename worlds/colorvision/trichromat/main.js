@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import Trichromat from "./Trichromat.js";
+import Trichromat from "./src/Trichromat.js";
 let example = new Trichromat();
 
 //this uses all the default settings defined in the "template" folder

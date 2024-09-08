@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import object from "./flowSetup.js";
+import object from "./src/flowSetup.js";
 
 //this uses all the default settings defined in the "template" folder
 import World from "../../../code/World/World.js";

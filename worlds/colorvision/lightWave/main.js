@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import LightWave from "./LightWave.js";
+import LightWave from "./src/LightWave.js";
 let example = new LightWave();
 
 

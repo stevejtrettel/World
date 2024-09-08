@@ -1,6 +1,6 @@
 //set the stuff for this particular example!
 import KnotComplementS3 from "../KnotComplementS3.js";
-import {trefoilKnot, trefoilUniforms} from "./knot.js";
+import {trefoilKnot, trefoilUniforms} from "./src/knot.js";
 let example = new KnotComplementS3(trefoilKnot, trefoilUniforms);
 
 //this uses all the default settings defined in the "template" folder

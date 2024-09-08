@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import PentagramMap from "./PentagramMap.js";
+import PentagramMap from "./src/PentagramMap.js";
 
 //this uses all the default settings defined in the "template" folder
 import World from "../../../code/World/World.js";

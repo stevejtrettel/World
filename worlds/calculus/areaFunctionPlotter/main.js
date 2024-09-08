@@ -1,6 +1,6 @@
 //set the stuff for this particular example!
-import AreaFunctionPlotter from "./AreaFunctionPlotter.js";
-import params from "./params.js";
+import AreaFunctionPlotter from "./src/AreaFunctionPlotter.js";
+import params from "./src/params.js";
 let example = new AreaFunctionPlotter(params);
 
 //this uses all the default settings defined in the "template" folder
