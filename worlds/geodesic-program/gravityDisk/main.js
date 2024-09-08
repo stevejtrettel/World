@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import GravityDisk from "../../../code/vignettes/geodesic-program/GravityDisk.js";
+import GravityDisk from "./GravityDisk.js";
 let example = new GravityDisk();
 
 //this uses all the default settings defined in the "template" folder

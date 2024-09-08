@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import SpringGrid from "../../../code/vignettes/computeSystem/SpringGrid.js";
+import SpringGrid from "./SpringGrid.js";
 
 
 //this uses all the default settings defined in the "template" folder

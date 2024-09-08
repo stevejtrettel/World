@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import CuttingCylinder from "../../../code/vignettes/topology/CuttingCylinder.js";
+import CuttingCylinder from "../cuttingCylinder/CuttingCylinder.js";
 let example = new CuttingCylinder();
 
 //this uses all the default settings defined in the "template" folder

@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import GradientDescentComparison from "../../../code/vignettes/geodesic-program/GradientDescentComparison.js";
+import GradientDescentComparison from "./GradientDescentComparison.js";
 let example = new GradientDescentComparison();
 
 //this uses all the default settings defined in the "template" folder

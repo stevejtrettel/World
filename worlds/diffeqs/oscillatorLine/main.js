@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import OscillatorLine from "../../../code/vignettes/diffeqs/OscillatorLine.js";
+import OscillatorLine from "./OscillatorLine.js";
 let example = new OscillatorLine(60);
 
 //this uses all the default settings defined in the "template" folder

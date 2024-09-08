@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import ParametricPlaneAnimation from "../../../code/vignettes/vector-calculus/ParametricPlaneAnimation.js";
+import ParametricPlaneAnimation from "./ParametricPlaneAnimation.js";
 
 //this uses all the default settings defined in the "template" folder
 import World from "../../../code/World/World.js";

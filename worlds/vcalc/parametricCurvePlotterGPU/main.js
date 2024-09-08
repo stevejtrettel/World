@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import ParametricCurvePlotterGPU from "../../../code/vignettes/vector-calculus/ParametricCurvePlotterGPU.js";
+import ParametricCurvePlotterGPU from "./ParametricCurvePlotterGPU.js";
 import params from "./params.js";
 let example = new ParametricCurvePlotterGPU(params);
 

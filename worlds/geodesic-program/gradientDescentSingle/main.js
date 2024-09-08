@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import GradientDescentSingle from "../../../code/vignettes/geodesic-program/GradientDescentSingle.js";
+import GradientDescentSingle from "./GradientDescentSingle.js";
 let example = new GradientDescentSingle();
 
 //this uses all the default settings defined in the "template" folder

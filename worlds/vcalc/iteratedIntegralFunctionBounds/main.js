@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import IteratedIntegralFunctionBounds from "../../../code/vignettes/vector-calculus/IteratedIntegralFunctionBounds.js";
+import IteratedIntegralFunctionBounds from "./IteratedIntegralFunctionBounds.js";
 import params from "./params.js";
 let example = new IteratedIntegralFunctionBounds(params);
 

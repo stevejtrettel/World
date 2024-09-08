@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import CTC from "../../../code/vignettes/geometry/CTC.js";
+import CTC from "./CTC.js";
 let example = new CTC();
 
 //this uses all the default settings defined in the "template" folder

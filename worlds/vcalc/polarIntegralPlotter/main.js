@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import PolarIntegralPlotter from "../../../code/vignettes/vector-calculus/PolarIntegralPlotter.js";
+import PolarIntegralPlotter from "./PolarIntegralPlotter.js";
 import params from "./params.js";
 let example = new PolarIntegralPlotter(params);
 

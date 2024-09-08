@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import BoysSurface from "../../../code/vignettes/topology/BoysSurface.js";
+import BoysSurface from "./BoysSurface.js";
 import params from "./params.js";
 let example = new BoysSurface(params);
 

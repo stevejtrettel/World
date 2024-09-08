@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import SingleGeodesic from "../../../code/vignettes/geodesic-program/SingleGeodesic.js";
+import SingleGeodesic from "./SingleGeodesic.js";
 let example = new SingleGeodesic();
 
 //this uses all the default settings defined in the "template" folder

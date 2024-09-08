@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import BSolitar from "../../../code/vignettes/topology/BSolitar.js";
+import BSolitar from "./BSolitar.js";
 import params from "./params.js";
 let example = new BSolitar(params);
 

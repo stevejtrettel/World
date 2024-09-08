@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import PartialDerivativePlotter from "../../../code/vignettes/vector-calculus/PartialDerivativePlotter.js";
+import PartialDerivativePlotter from "./PartialDerivativePlotter.js";
 import params from "./params.js";
 
 //this uses all the default settings defined in the "template" folder

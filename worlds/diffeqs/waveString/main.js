@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import WaveString from "../../../code/vignettes/diffeqs/WaveString.js";
+import WaveString from "./WaveString.js";
 let example = new WaveString();
 
 //this uses all the default settings defined in the "template" folder

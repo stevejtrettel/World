@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import RiemannSum2DFubini from "../../../code/vignettes/vector-calculus/RiemannSum2DFubini_NEW.js";
+import RiemannSum2DFubini from "./RiemannSum2DFubini.js";
 import params from "./params.js";
 let example = new RiemannSum2DFubini(params);
 

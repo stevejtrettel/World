@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import ParametricSurfacePlotter from "../../../code/vignettes/vector-calculus/ParametricSurfacePlotter.js";
+import ParametricSurfacePlotter from "./ParametricSurfacePlotter.js";
 import params from "./params.js";
 let example = new ParametricSurfacePlotter(params);
 

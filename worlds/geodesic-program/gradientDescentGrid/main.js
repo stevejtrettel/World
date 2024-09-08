@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import GradientDescentGrid from "../../../code/vignettes/geodesic-program/GradientDescentGrid.js";
+import GradientDescentGrid from "./GradientDescentGrid.js";
 let example = new GradientDescentGrid();
 
 //this uses all the default settings defined in the "template" folder

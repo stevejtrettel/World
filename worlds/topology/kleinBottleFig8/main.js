@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import KleinBottleFig8 from "../../../code/vignettes/topology/KleinBottleFig8.js";
+import KleinBottleFig8 from "./KleinBottleFig8.js";
 import params from "./params.js";
 let example = new KleinBottleFig8(params);
 

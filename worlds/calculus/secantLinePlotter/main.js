@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import SecantLinePlotter from "../../../code/vignettes/calculus/SecantLinePlotter.js";
+import SecantLinePlotter from "./SecantLinePlotter.js";
 import params from "./params.js";
 let example = new SecantLinePlotter(params);
 

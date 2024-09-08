@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import ParametricLineAnimation from "../../../code/vignettes/vector-calculus/ParametricLineAnimation.js";
+import ParametricLineAnimation from "./ParametricLineAnimation.js";
 import params from "./params.js";
 let example = new ParametricLineAnimation(params);
 

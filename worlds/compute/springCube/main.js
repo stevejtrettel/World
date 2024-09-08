@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import SpringCube from "../../../code/vignettes/computeSystem/SpringCube.js";
+import SpringCube from "./SpringCube.js";
 import {resolution,springConditions,springParameters,collision} from "./springSetup.js";
 
 
@@ -43,11 +43,8 @@ let globalSettings={
 
 function main(globalSettings) {
 
-    // Get a reference to the container element, set options
-    const container = document.getElementById(globalSettings.name);
-
     // Create an instance of the World class
-    const world = new World( container, globalSettings );
+    const world = new World(globalSettings );
 
     const environment = createEnvironment(globalSettings.environment, world.pmrem);
     world.setEnvironment( environment ) ;
@@ -55,6 +52,7 @@ function main(globalSettings) {
     // BUILD THE COMPUTE OBJECT (which needs the renderer)
     let example = new SpringCube(world.renderer,resolution,springParameters,springConditions,collision);
     example.setIterations(10);
+
 
     //Add objects to scene
     let object = {example: example};
@@ -68,3 +66,5 @@ function main(globalSettings) {
 
 
 main(globalSettings);
+
+

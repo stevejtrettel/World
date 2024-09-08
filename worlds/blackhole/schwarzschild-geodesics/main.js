@@ -1,6 +1,6 @@
 
 //this example is already an object
-import object from "../../../code/vignettes/BlackHoleGeodesics.js";
+import object from "./BlackHoleGeodesics.js";
 
 
 //this uses all the default settings defined in the "template" folder

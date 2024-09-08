@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import ParametricSurfaceAnimation from "../../../code/vignettes/vector-calculus/ParametricSurfaceAnimation.js";
+import ParametricSurfaceAnimation from "./ParametricSurfaceAnimation.js";
 import params from "./params.js";
 
 //this uses all the default settings defined in the "template" folder

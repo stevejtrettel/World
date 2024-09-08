@@ -1,5 +1,5 @@
 //set the stuff for this particular example!
-import VectorField3DPlotter from "../../../code/vignettes/diffeqs/VectorField3DPlotter.js";
+import VectorField3DPlotter from "./VectorField3DPlotter.js";
 let example = new VectorField3DPlotter();
 
 //this uses all the default settings defined in the "template" folder
