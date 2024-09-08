@@ -34,7 +34,7 @@ class GradientDescentSingle{
 
     addToScene(scene){
         this.plot.addToScene(scene);
-        this.geodesic.addToScene(scene);
+        //this.geodesic.addToScene(scene);
         this.grad.addToScene(scene);
         this.glass.addToScene(scene);
     }

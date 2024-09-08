@@ -13,8 +13,9 @@ class GlassDomain{
         const domainGeometry = new ParametricGeometry(this.surface.parametricDomain,5,5);
         const domainMaterial = new MeshPhysicalMaterial(
             {
-                transparent:true,
-                opacity: 0.05,
+                color: 0x708bdb,
+               // transparent:true,
+                //opacity: 0.05,
                 // ior:1.,
                 // transmission: 0.98,
                 clearcoat: 1,

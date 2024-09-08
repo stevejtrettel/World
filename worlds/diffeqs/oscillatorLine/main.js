@@ -1,6 +1,6 @@
 //set the stuff for this particular example!
-import GradientDescentGrid from "../../../code/vignettes/geodesic-program/GradientDescentGrid.js";
-let example = new GradientDescentGrid();
+import OscillatorLine from "../../../code/vignettes/diffeqs/OscillatorLine.js";
+let example = new OscillatorLine(60);
 
 //this uses all the default settings defined in the "template" folder
 import World from "../../../code/World/World.js";
@@ -16,9 +16,8 @@ let globalSettings={
     stats:false,
 
     environment:{
-        color:0xffffff,
-            //0x292b36,
-        cube: false,
+        color:0x292b36,
+        cube: true,
     },
 
     camera:{

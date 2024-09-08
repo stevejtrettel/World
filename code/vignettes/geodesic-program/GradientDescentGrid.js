@@ -22,17 +22,19 @@ class GradientDescentGrid{
 
         //set integrator options:
         let integratorOptions = {
-            choice: 2, //gradient descent
+            choice: 1, //gradient descent
             rows: 30,
             cols: 30,
-            stopAtEdge: true,
+            stopAtEdge: false,
         }
 
         //set particle options:
         let particleOptions = {
-            color: 0x54ab54,
-            radius: 0.075,
-            flatten:true,
+            color: 0x22156b,
+                //0x782545,
+                //0x54ab54,
+            radius: 0.07,
+            flatten:false,
         }
 
         this.particles = new ParticleGrid(this.surface, integratorOptions, particleOptions);
@@ -42,7 +44,7 @@ class GradientDescentGrid{
     addToScene(scene){
         this.plot.addToScene(scene);
         this.dom.addToScene(scene);
-        this.grad.addToScene(scene);
+        //this.grad.addToScene(scene);
         this.particles.addToScene(scene)
     }
 

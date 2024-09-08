@@ -328,7 +328,7 @@ class Surface{
             let coef = -num/denom;
 
             let acc = new Vector2(D.fu,D.fv).multiplyScalar(coef);
-
+            acc.add(new Vector2(uP,vP).multiplyScalar(-0.2*Math.sqrt(uP*uP+vP*vP)));
             return new dState(state.vel, acc);
         }
 

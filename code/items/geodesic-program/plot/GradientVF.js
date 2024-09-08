@@ -13,9 +13,10 @@ import State from "../surface/Integrators/States/State.js";
 
 
 let defaultOptions = {
-    color: 0xffffff,
-    rows: 50,
-    cols: 50,
+    color:0x211c66,
+        //0xffffff,
+    rows: 35,
+    cols: 35,
     negate: true,
 }
 
@@ -99,7 +100,7 @@ class GradientVF{
 
             //set the scale based on the vectors magnitude:
             let mag = grad.length();
-            let rescale = 2*Math.tanh(mag/2)+0.5;
+            let rescale = 3*Math.tanh(mag/2)+0.5;
             size = rescale*size;
             this.dummy.scale.set(size,size,size);
 
