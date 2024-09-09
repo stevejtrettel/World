@@ -1,5 +1,5 @@
 
-import {SpaceCurve} from "../../../../code/compute/parametric/SpaceCurve.js";
+import SpaceCurve from "./SpaceCurve.js";
 
 
 

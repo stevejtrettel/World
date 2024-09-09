@@ -2,8 +2,8 @@ import {
     MeshPhysicalMaterial,
     DoubleSide,
 } from "../../../3party/three/build/three.module.js";
-import {colorConversion} from "../../shaders/colors/colorConversion.js";
-import ContourPlot2D from "../../items/vector-calculus/ContourPlot2D.js";
+import {colorConversion} from "../../../code/shaders/colors/colorConversion.js";
+import ContourPlot2D from "../../../code/items/vector-calculus/ContourPlot2D.js";
 
 
 class LevelSets{

@@ -6,8 +6,8 @@ import {
     Mesh
 } from "../../../3party/three/build/three.module.js";
 
-import ParametricCurve from "../../compute/parametric/ParametricCurve.js";
-import FrenetFrame from "../../items/geometry/FrenetFrame.js";
+import ParametricCurve from "../../../code/compute/parametric/ParametricCurve.js";
+import FrenetFrame from "../../../code/items/geometry/FrenetFrame.js";
 
 let surfaceOptions = {
     clearcoat:1,

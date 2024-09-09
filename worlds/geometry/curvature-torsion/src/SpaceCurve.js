@@ -1,11 +1,11 @@
 import {CatmullRomCurve3, TubeGeometry, Vector2,
     MeshPhysicalMaterial, Vector3, Mesh,
-DoubleSide,} from "../../../3party/three/build/three.module.js";
+DoubleSide,} from "../../../../3party/three/build/three.module.js";
 
-import { RungeKutta } from "../cpu/RungeKutta.js";
-import { TNB } from "../cpu/components/TNB.js";
-import {colorConversion} from "../../shaders/colors/colorConversion.js";
-import ParametricTube from "../materials/ParametricTube.js";
+import { RungeKutta } from "../../../../code/compute/cpu/RungeKutta.js";
+import { TNB } from "../../../../code/compute/cpu/components/TNB.js";
+import {colorConversion} from "../../../../code/shaders/colors/colorConversion.js";
+import ParametricTube from "../../../../code/compute/materials/ParametricTube.js";
 
 
 
@@ -177,4 +177,4 @@ class SpaceCurve {
 
 
 
-export { SpaceCurve };
+export default SpaceCurve;

@@ -6,14 +6,14 @@ import {
 } from "../../../3party/three/build/three.module.js";
 
 
-import RiemannSum2D from "../../items/vector-calculus/RiemannSum2D.js";
+import RiemannSum2D from "../../../code/items/vector-calculus/RiemannSum2D.js";
 
 import {
     IteratedIntegralX,
     IteratedIntegralY,
-} from "../../items/vector-calculus/IteratedIntegral.js";
+} from "../../../code/items/vector-calculus/IteratedIntegral.js";
 
-import {posNegColor } from "../../utils/colors.js";
+import {posNegColor } from "../../../code/utils/colors.js";
 
 
 //using GLOBAL object math.parser: this is from the 3rd party math file loaded in the html

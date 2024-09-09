@@ -7,9 +7,9 @@
 
 import { Vector2, Vector3 } from "../../../3party/three/build/three.module.js";
 
-import { IntegralCurve } from "../../items/odes/IntegralCurve.js";
-import { State, dState } from "../../compute/cpu/components/State.js";
-import { RungeKutta } from "../../compute/cpu/RungeKutta.js";
+import { IntegralCurve } from "../../../code/items/odes/IntegralCurve.js";
+import { State, dState } from "../../../code/compute/cpu/components/State.js";
+import { RungeKutta } from "../../../code/compute/cpu/RungeKutta.js";
 
 
 const accel = ( state ) => {

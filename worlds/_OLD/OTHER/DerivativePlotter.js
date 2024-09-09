@@ -4,10 +4,10 @@
 //------------------------------
 
 
-import {BlackBoard} from "../../items/basic-shapes/Blackboard.js";
+import {BlackBoard} from "../../../code/items/basic-shapes/Blackboard.js";
 
-import{ getRange, differentiate } from "../../utils/math/functions_singleVar.js";
-import Graph2D from "../../items/calculus/Graph2D.js";
+import{ getRange, differentiate } from "../../../code/utils/math/functions_singleVar.js";
+import Graph2D from "../../../code/items/calculus/Graph2D.js";
 
 
 const defaultSetup = {

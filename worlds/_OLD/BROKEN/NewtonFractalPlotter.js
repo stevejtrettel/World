@@ -1,4 +1,4 @@
-import NewtonFractal from "../../items/geometry/NewtonFractal2.js";
+import NewtonFractal from "../../../code/items/geometry/NewtonFractal2.js";
 
 let defaultFn = 'cmult(z-vec2(1,0),z-vec2(0,1),z-vec2(1,1))';
 
