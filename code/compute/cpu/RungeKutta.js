@@ -1,4 +1,4 @@
-import { Integrator } from "./Integrator.js";
+import Integrator from "./Integrator.js";
 
 //derive is a function taking a state to dState
 //items fed into RungeKutta need to have the following methods available:

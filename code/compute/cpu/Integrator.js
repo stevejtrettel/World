@@ -13,4 +13,4 @@ class Integrator {
 }
 
 
-export { Integrator };
+export default Integrator;

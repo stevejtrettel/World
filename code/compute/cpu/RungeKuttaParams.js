@@ -1,4 +1,4 @@
-import { Integrator } from "./Integrator.js";
+import Integrator from "./Integrator.js";
 
 //derive is a function taking a state to dState
 // this version of the algorithm takes a function derive that also allows a set of parameters:
