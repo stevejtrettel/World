@@ -2,14 +2,14 @@ import {Mesh, MeshPhysicalMaterial, SphereGeometry} from "../../../3party/three/
 
 
 let defaultBallOptions = {
-    radius:0.25,
+    radius:0.35,
 
 };
 
 
 // a string of balls, that can be placed anywhere by giving a 1D array of vec3 to update()
 
-class BallString{
+class BallChain {
     constructor(N, ballOptions=defaultBallOptions) {
         this.N = N;
 
@@ -19,7 +19,7 @@ class BallString{
             color:0xffffff,
             clearcoat:true,
         });
-        let geom = new SphereGeometry(0.1,32,16);
+        let geom = new SphereGeometry(0.2,32,16);
 
         this.balls = [];
 
@@ -41,15 +41,19 @@ class BallString{
         }
     }
 
-    update(posArray){
-        for(let i=0; i<this.N;i++){
-            let x = posArray[i].x;
-            let y = posArray[i].y;
-            let z = posArray[i].z;
-            this.balls[i].position.set(x,y,z);
-        }
+
+    updatePosition(index, pos){
+        this.balls[index].position.set(pos.x,pos.y,pos.z);
+    }
+
+    updateColor(index,color){
+        this.balls[index].material.color.set(color);
+    }
+
+    updateScale(index,height){
+        this.balls[index].scale.set(1,height,1);
     }
 
 }
 
-export default BallString;
+export default BallChain;

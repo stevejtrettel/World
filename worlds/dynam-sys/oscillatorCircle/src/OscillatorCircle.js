@@ -7,7 +7,7 @@ import CoordArray from "../../../../code/compute/cpu/components/CoordArray.js";
 
 //a 1 dimensional line of coupled harmonic oscillators
 
-class OscillatorLine{
+class OscillatorCircle {
     constructor(N) {
 
         this. N = N;
@@ -26,7 +26,7 @@ class OscillatorLine{
             vel.push(new Vector2(0,0));
         }
         //initial velocity of one of the balls is nonzero
-        vel[30].x=2;
+        vel[0].x=2;
 
         this.states = new State(pos,vel);
 
@@ -40,19 +40,19 @@ class OscillatorLine{
 
             //special case: first ball:
             vel.push(state.vel[0].clone());
-            currentForce = - 2.*state.pos[0].x + state.pos[1].x;
+            currentForce = state.pos[N-1].x - 2.*state.pos[0].x + state.pos[1].x;
             acc.push(new Vector2(currentForce,0));
 
             //generic case:
             for(let i=1;i<N-1; i++){
                 vel.push(state.vel[i].clone());
-                currentForce = state.pos[i-1].x -2.*state.pos[i].x+state.pos[i+1].x;
+                currentForce = state.pos[i-1].x -2.*state.pos[i].x + state.pos[i+1].x;
                 acc.push(new Vector2(currentForce,0));
             }
 
             //special case: last ball
             vel.push(state.vel[N-1].clone());
-            currentForce = state.pos[N-2].x - 2.*state.pos[N-1].x;
+            currentForce = state.pos[N-2].x - 2.*state.pos[N-1].x + state.pos[0].x;
             acc.push(new Vector2(currentForce,0));
 
 
@@ -62,61 +62,44 @@ class OscillatorLine{
         this.integrator = new RungeKutta(derive, 0.05);
 
 
-
-
-
-        ///some extra graphics:
-        let sph = new SphereGeometry(0.25,32,16);
-        let sphMat = new MeshPhysicalMaterial({color: 0x000000, clearcoat:true});
-
-        this.startBall = new Mesh(sph,sphMat);
-        this.startBall.position.set(-10,0,-10);
-        this.endBall = new Mesh(sph,sphMat);
-        this.endBall.position.set(10.5,0,-10);
-        // this.spring;
-
     }
 
     getBallPosition(index){
         //take the coordinates used in solving the ODE and convert them to actual positions along a line
         //then convert these to Vec3 and return
 
-        //HARD CODED MAX/MIN:
-        let range = 20;
+        //HARD CODED radius
+        let rad = 10;
 
             let pos = (index+1)+this.states.pos[index].x;
-            //let pos = (i+1);//for vertical
-            pos = pos/this.N-0.5;
-            pos *= range;
+            //this is now on the interval [1,N]:
+            pos = 2.*Math.PI* pos/this.N;
 
-            return new Vector3(pos,0,-10);
+            return new Vector3(rad*Math.sin(pos),0,rad*Math.cos(pos)-20);
     }
 
     getBallDensity(index){
         let density;
         //the end cases
         if(index == 0){
-            density = -this.states.pos[0].x;
+            density = this.states.pos[this.N-1].x-this.states.pos[0].x;
         }
         else if(index == this.N-1){
-            density =  this.states.pos[index].x;
+            density =  this.states.pos[index].x-this.states.pos[0].x;
         }
         else {
             //the deviation from standard density (zero) using neighboring balls:
             density = this.states.pos[index - 1].x - this.states.pos[index + 1].x;
         }
-        let scale =1.;
+        let scale =2.;
         return 1 + scale * density;
     }
 
     addToScene(scene){
         this.balls.addToScene(scene);
-        scene.add(this.startBall);
-        scene.add(this.endBall);
     }
 
     addToUI(ui){
-
     }
 
     tick(time,dTime){
@@ -134,4 +117,4 @@ class OscillatorLine{
 }
 
 
-export default OscillatorLine;
+export default OscillatorCircle;
