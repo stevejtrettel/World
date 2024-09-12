@@ -13,19 +13,9 @@ import GridDynamics from "../../GridDynamics.js";
 
 
 
-class SquareDynamics extends GridDynamics{
+class RectangleDynamics extends GridDynamics{
     constructor(N,M) {
         super(N,M);
-
-        ///some extra graphics:
-        // let sph = new SphereGeometry(0.25,32,16);
-        // let sphMat = new MeshPhysicalMaterial({color: 0x000000, clearcoat:true});
-        //
-        // this.startBall = new Mesh(sph,sphMat);
-        // this.startBall.position.set(-10,0,-10);
-        // this.endBall = new Mesh(sph,sphMat);
-        // this.endBall.position.set(10.5,0,-10);
-
     }
 
     setInitialCondition() {
@@ -55,34 +45,8 @@ class SquareDynamics extends GridDynamics{
             }
         }
 
-
-        // //special case: i=0 edge
-        // for(let j=0;j<M;j++){
-        //     vel[0][j]=new Vector2(0,0);
-        //     acc[0][j] = new Vector2(0,0);
-        // }
-        //
-        //
-        // //special case: i=N-1 edge
-        // for(let j=0;j<M;j++){
-        //     vel[N-1][j]=new Vector2(0,0);
-        //     acc[N-1][j] = new Vector2(0,0);
-        // }
-        //
-        // //special case: j=0 edge
-        // for(let i=0;i<N;i++){
-        //     vel[i][0]=new Vector2(0,0);
-        //     acc[i][0] = new Vector2(0,0);
-        // }
-        //
-        //
-        // //special case: j=M-1 edge
-        // for(let i=0;i<M;i++){
-        //     vel[i][M-1]=new Vector2(0,0);
-        //     acc[i][M-1] = new Vector2(0,0);
-        // }
-
-        //generic case:
+        //leave zeroes for the boundary terms.
+        //on the inside, coupled oscillators
         for(let i=1;i<N-1; i++) {
             for (let j = 1; j < M - 1; j++) {
                 vel[i][j]= state.vel[i][j].clone();
@@ -92,6 +56,7 @@ class SquareDynamics extends GridDynamics{
                 force.add(state.pos[i+1][j]);
                 force.add(state.pos[i-1][j]);
                 force.add(state.pos[i][j].clone().multiplyScalar(-4));
+                //xsforce.add(new Vector2(0.2,0));
                 acc[i][j] = force;
             }
         }
@@ -122,6 +87,7 @@ class SquareDynamics extends GridDynamics{
 
 
     getBallDensity(index) {
+
         let densityX,densityY;
         let i = index[0];
         let j=index[1];
@@ -139,14 +105,8 @@ class SquareDynamics extends GridDynamics{
         return 1 + scale * Math.sqrt(densityX.lengthSq()+ densityY.lengthSq());
     }
 
-    // addToScene(scene) {
-    //     super.addToScene(scene);
-    //     scene.add(this.startBall);
-    //     scene.add(this.endBall);
-    // }
-
-    // addToUI and tick are all unchanged from default
+    // addToScene, addToUI and tick are all unchanged from default
 
 }
 
-export default SquareDynamics;
+export default RectangleDynamics;

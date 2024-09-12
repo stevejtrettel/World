@@ -1,6 +1,6 @@
 //set the stuff for this particular example!
-import SquareDynamics from "./src/SquareDynamics.js";
-let example = new SquareDynamics(30,30);
+import RectangleDynamics from "./src/RectangleDynamics.js";
+let example = new RectangleDynamics(30,30);
 
 //this uses all the default settings defined in the "template" folder
 import World from "../../../../code/World/World.js";

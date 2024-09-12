@@ -5,7 +5,8 @@ import {dState, State} from "../../../code/compute/cpu/components/State.js";
 import {Vector2, Vector3 } from "../../../3party/three/build/three.module.js";
 import CoordArray from "../../../code/compute/cpu/components/CoordArray.js";
 
-//a 1 dimensional system coupled harmonic oscillators
+//a 2 dimensional system coupled harmonic oscillators
+// they are in the plane, stored as (x,y) coordinates
 
 class GridDynamics {
     constructor(N,M) {
@@ -42,20 +43,9 @@ class GridDynamics {
     }
 
     setMassesAndSprings(){
-        this.masses=[];
-        this.springs=[];
-        for(let i=0;i<this.N;i++){
-            this.masses.push([]);
-            this.springs.push([]);
-        }
-
-        //default: all are 1
-        for(let i=0;i<this.N;i++) {
-            for (let j = 0; j < this.M; j++) {
-                this.masses.push(1);
-                this.springs.push(1);
-            }
-        }
+        this.mass = 1;
+        this.springK = 1;
+        this.equalib = 0.;
     }
 
     derive(state) {
