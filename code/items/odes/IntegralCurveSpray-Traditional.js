@@ -34,7 +34,7 @@ class IntegralCurveSpray{
     update(t){
         let i,state;
         for( let n=this.range.min; n<this.range.max+1; n++ ){
-            state=this.ini(n,t);
+            state=this.ini(n,9);
             i=n-this.range.min;
             this.curves[i].integrate(state);
             this.curves[i].resetCurve();
