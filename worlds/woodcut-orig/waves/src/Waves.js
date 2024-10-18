@@ -1,26 +1,26 @@
-import Surface from "../_Components/Surface.js";
+import Surface from "../../Surface.js";
 
-class Eggcarton extends Surface {
+class Waves extends Surface {
     constructor(domain) {
         super(domain);
     }
 
     setParamData(){
-        this.settingsAndParams = {
-            a: 0.375,
-            b: 5,
+        this.params = {
+            a: 0.5,
+            b: 1.3,
         };
 
         this.paramData = {
             a: {
                 min: 0,
-                max: 0.375,
+                max: 0.75,
                 step: 0.0001,
                 name: 'Amplitude'
             },
             b: {
                 min: 0,
-                max: 6,
+                max: 2,
                 step: 0.0001,
                 name: 'Frequency'
             },
@@ -32,19 +32,19 @@ class Eggcarton extends Surface {
         super.setFunctionData();
 
         const a = this.params.a;
-        const kU = this.params.b*3.14159/this.domain.u.max;
-        const kV = kU;
+        const b = this.params.b;
+
 
         let F = function (u, v) {
-            return  a*(Math.sin(kU*u)+Math.sin(kV*v));
+            return  a*(Math.sin(b*(u+v)));
         }
         this.F = F;
 
-        this.name = 'Sinusoid';
-        this.Ftxt = `f(u,v)=${a}*(sin(${kU}*u)+sin(${kV}*v))`;
+        this.name = 'Wave';
+        this.Ftxt = `f(u,v)=${a}*(sin(${b}*(u+v)))`;
 
     }
 }
 
 
-export default Eggcarton;
+export default Waves;

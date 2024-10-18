@@ -1,16 +1,15 @@
 //set the stuff for this particular example!
-import Eggcarton from "../../../code/packages/GeoProgram/FinishedExamples/SurfaceSetMarch/EggCarton/Eggcarton.js";
-import Billiards from "../../../code/packages/GeoProgram/Billiards.js";
-let surf = new Eggcarton();
-let billiards = new Billiards(surf);
+import Ripples from "./src/Ripples.js"
+import geodesicData from "./src/geodesicData.js"
+import WoodCut from "../WoodCut.js";
 
-
+let surf = new Ripples();
+let example = new WoodCut(surf,geodesicData);
 
 //this uses all the default settings defined in the "template" folder
 import World from "../../../code/World/World.js";
 import  {createEnvironment} from "../../../code/World/template/environment.js";
 import  {lights} from "../../../code/World/template/lights.js";
-
 
 
 //global settings for the scene
@@ -54,7 +53,7 @@ function main(globalSettings) {
     world.setEnvironment( environment ) ;
 
     // Fill this world with objects
-    let object = {example:billiards};
+    let object = {example:example};
     world.addObjects(object);
     world.addObjects( lights );
 
