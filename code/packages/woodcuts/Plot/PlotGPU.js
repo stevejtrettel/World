@@ -43,7 +43,7 @@ class PlotGPU {
 
     compileMaterial(){
         //build shaders from our inputs
-        console.log(this.surface.domain.v.min);
+       // console.log(this.surface.domain.v.min);
         this.domainVariables = `
                 float uMin = ${this.surface.domain.u.min};
                 float uMax = ${this.surface.domain.u.max};
@@ -51,7 +51,7 @@ class PlotGPU {
                 float vMax = ${this.surface.domain.v.max};
                 float edge = ${this.surface.domainParams.edge};`;
 
-        console.log(this.domainVariables);
+        //console.log(this.domainVariables);
         let fragMain = this.domainVariables + this.colorFn +
             `
             vec3 fragColor(){

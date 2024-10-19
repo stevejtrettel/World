@@ -9,9 +9,9 @@ import {
 
 const defaultOptions = {
     length:20,
-    segments: 1024,
+    segments: 512,
     radius: 0.1,
-    tubeRes: 32,
+    tubeRes: 8,
     color: 0xffffff,
     roughness:0,
 };

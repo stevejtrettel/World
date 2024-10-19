@@ -93,7 +93,7 @@ class Surface{
     }
 
     setParamData(){
-        this.gravity=undefined;
+        // this.gravity=undefined;
         this.params = null;
         this.paramData = null;
     }
@@ -219,10 +219,10 @@ class Surface{
 
     buildAcceleration(){
         let derivatives = this.derivatives;
-        let gravity = 0;
-        if(this.gravity){
-            gravity = this.gravity;
-        }
+        // let gravity = 0;
+        // if(this.gravity){
+        //     gravity = this.gravity;
+        // }
         let acceleration = function(state){
             let uv = state.pos;
             let u = state.pos.x;
@@ -232,7 +232,8 @@ class Surface{
 
             let D = derivatives(uv);
 
-            let num = uP*uP*D.fuu + 2*uP*vP*D.fuv + vP*vP*D.fvv+gravity;
+            let num = uP*uP*D.fuu + 2*uP*vP*D.fuv + vP*vP*D.fvv;
+            // let num = uP*uP*D.fuu + 2*uP*vP*D.fuv + vP*vP*D.fvv+gravity;
             let denom = 1+ D.fu*D.fu + D.fv*D.fv;
             let coef = -num/denom;
 
@@ -316,6 +317,7 @@ class Surface{
         let resetParam={
             reset:resetScene,
         }
+
         //
         // let woodFolder = ui.addFolder('Wood Block');
         // woodFolder.close();
@@ -334,18 +336,18 @@ class Surface{
         //
         // woodFolder.add(resetParam,'reset');
         //
-        // let folder = ui.addFolder('Surface');
-        // folder.close();
+        let folder = ui.addFolder('Surface');
+        folder.close();
 
-        //
-        // for(const key in surf.paramData){
-        //     folder.add(surf.params,key,surf.paramData[key].min,surf.paramData[key].max,surf.paramData[key].step).name(surf.paramData[key].name).onChange(
-        //         function(value){
-        //             surf.params[key]=value;
-        //             surf.update({key:value});
-        //             resetScene();
-        //         });
-        // }
+
+        for(const key in surf.paramData){
+            folder.add(surf.params,key,surf.paramData[key].min,surf.paramData[key].max,surf.paramData[key].step).name(surf.paramData[key].name).onChange(
+                function(value){
+                    surf.params[key]=value;
+                    surf.update({key:value});
+                    resetScene();
+                });
+        }
     }
 }
 

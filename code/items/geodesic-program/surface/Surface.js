@@ -9,7 +9,7 @@ import dState from "./Integrators/States/dState.js";
 
 
 let width = 6.;
-let length = 9.66;
+let length = 12;
 let defaultDomain = {
     u: {
         min: -length/2.,
