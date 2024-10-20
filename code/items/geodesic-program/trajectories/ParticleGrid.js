@@ -7,7 +7,7 @@ import {
     Object3D,
 } from "../../../../3party/three/build/three.module.js";
 
-import State from "../Surface/Integrators/States/State.js";
+import State from "../Integrators/States/State.js";
 
 
 function placeBall(i, domain, row, col){

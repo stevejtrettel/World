@@ -5,7 +5,7 @@ import {
     InstancedMesh,
     DynamicDrawUsage, Object3D
 } from "../../../../3party/three/build/three.module.js";
-import State from "../surface/Integrators/States/State.js";
+import State from "../Integrators/States/State.js";
 
 
 

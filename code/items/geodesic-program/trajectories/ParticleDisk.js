@@ -8,7 +8,7 @@ import {
 } from "../../../../3party/three/build/three.module.js";
 
 
-import State from "../Surface/Integrators/States/State.js";
+import State from "../Integrators/States/State.js";
 
 function randomDisk(){
     let theta = 2*Math.PI * Math.random();

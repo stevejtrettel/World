@@ -1,6 +1,6 @@
 import {Vector2} from "../../../../3party/three/build/three.module.js";
 
-import State from "../../../../code/items/geodesic-program/surface/Integrators/States/State.js";
+import State from "../../../../code/items/geodesic-program/Integrators/States/State.js";
 import Graph from "../../../../code/items/geodesic-program/plot/Graph.js";
 import GraphingCalc from "../../../../code/items/geodesic-program/surface/Examples/GraphingCalc.js";
 import Geodesic from "../../../../code/items/geodesic-program/trajectories/Geodesic.js";

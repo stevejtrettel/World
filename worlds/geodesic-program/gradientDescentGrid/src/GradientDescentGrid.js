@@ -1,6 +1,6 @@
 import {Vector2} from "../../../../3party/three/build/three.module.js";
 
-import State from "../../../../code/items/geodesic-program/surface/Integrators/States/State.js";
+import State from "../../../../code/items/geodesic-program/Integrators/States/State.js";
 import Graph from "../../../../code/items/geodesic-program/plot/Graph.js";
 import GlassDomain from "../../../../code/items/geodesic-program/plot/GlassDomain.js";
 import GradientVF from "../../../../code/items/geodesic-program/plot/GradientVF.js";
@@ -22,7 +22,7 @@ class GradientDescentGrid{
 
         //set integrator options:
         let integratorOptions = {
-            choice: 1, //gradient descent
+            choice: 2, //gradient descent
             rows: 30,
             cols: 30,
             stopAtEdge: false,

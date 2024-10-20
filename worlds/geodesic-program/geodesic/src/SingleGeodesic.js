@@ -1,9 +1,20 @@
 import {Vector2} from "../../../../3party/three/build/three.module.js";
 
-import State from "../../../../code/items/geodesic-program/surface/Integrators/States/State.js";
+import State from "../../../../code/items/geodesic-program/Integrators/States/State.js";
 import Graph from "../../../../code/items/geodesic-program/plot/Graph.js";
 import GraphingCalc from "../../../../code/items/geodesic-program/surface/Examples/GraphingCalc.js";
 import Geodesic from "../../../../code/items/geodesic-program/trajectories/Geodesic.js";
+
+
+
+let defaultCurveOptions = {
+    length:60,
+    segments: 256,
+    radius: 0.02,
+    tubeRes: 8,
+    color: 0x000000,
+    roughness:0,
+};
 
 
 class SingleGeodesic{
@@ -19,7 +30,7 @@ class SingleGeodesic{
         };
 
         this.buildIniState();
-        this.geodesic = new Geodesic(this.surface, this.iniState, 0);
+        this.geodesic = new Geodesic(this.surface, this.iniState, 0,defaultCurveOptions);
 
     }
 

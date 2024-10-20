@@ -1,11 +1,11 @@
 import {Matrix3,Vector2,Vector3} from "../../../../3party/three/build/three.module.js";
 
-import SymplecticIntegrator from "./Integrators/Symplectic.js";
-import EulerIntegrator from "./Integrators/Euler.js";
-import CustomSchemeIntegrator from "./Integrators/CustomScheme.js";
+import SymplecticIntegrator from "../Integrators/Symplectic.js";
+import EulerIntegrator from "../Integrators/Euler.js";
+import CustomSchemeIntegrator from "../Integrators/CustomScheme.js";
 
-import State from "./Integrators/States/State.js";
-import dState from "./Integrators/States/dState.js";
+import State from "../Integrators/States/State.js";
+import dState from "../Integrators/States/dState.js";
 
 
 let width = 6.;

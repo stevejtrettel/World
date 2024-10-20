@@ -1,5 +1,5 @@
 import {SplineCurve} from "../../../../3party/three/build/three.module.js";
-import State from "../surface/Integrators/States/State.js";
+import State from "../Integrators/States/State.js";
 import TransportIntegrator from "./TransportIntegrator.js";
 
 class ParallelTransport{

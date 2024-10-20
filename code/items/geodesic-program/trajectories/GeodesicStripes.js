@@ -1,8 +1,8 @@
 
 // class Geodesic{
-//     constructor(surface, iniState, integratorChoice=0, curveOptions=defaultOptions) {
+//     constructor(surface, iniState,  curveOptions=defaultOptions) {
 
-import State from "../surface/Integrators/States/State.js";
+import State from "../Integrators/States/State.js";
 import {Vector2} from "../../../../3party/three/build/three.module.js";
 import Geodesic from "./Geodesic.js";
 import ParallelTransport from "../parallel-transport/ParallelTransport.js";
@@ -37,7 +37,6 @@ class GeodesicStripes {
 
         this.surface = surface;
         this.iniState = iniState;
-        this.integratorChoice = integratorChoice;
 
         this.params = params;
 
@@ -57,7 +56,7 @@ class GeodesicStripes {
 
         this.stripes =  new Array(this.maxN);
         for(let i=0;i<this.maxN;i++){
-            this.stripes[i] = new Geodesic(this.surface,this.iniStates[i], this.integratorChoice, this.curveOptions);
+            this.stripes[i] = new Geodesic(this.surface,this.iniStates[i], 0, this.curveOptions);
         }
         this.buildGeodesics();
     }
