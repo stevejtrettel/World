@@ -9,7 +9,7 @@ let defaultBallOptions = {
 
 // a string of balls, that can be placed anywhere by giving a 1D array of vec3 to update()
 
-class BallChain {
+class BallList {
     constructor(N, ballOptions=defaultBallOptions) {
         this.N = N;
 
@@ -33,8 +33,6 @@ class BallChain {
     }
 
 
-
-
     addToScene(scene){
         for(let i=0; i<this.N; i++){
             scene.add(this.balls[i]);
@@ -56,4 +54,4 @@ class BallChain {
 
 }
 
-export default BallChain;
+export default BallList;

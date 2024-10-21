@@ -1,11 +1,11 @@
 //set the stuff for this particular example!
-import CircleDynamics from "./src/CircleDynamics.js";
-let example = new CircleDynamics(300);
+import RodTest from "./src/test.js";
+let example = new RodTest();
 
 //this uses all the default settings defined in the "template" folder
-import World from "../../../../code/World/World.js";
-import  {createEnvironment} from "../../../../code/World/template/environment.js";
-import  {lights} from "../../../../code/World/template/lights.js";
+import World from "../../../code/World/World.js";
+import  {createEnvironment} from "../../../code/World/template/environment.js";
+import  {lights} from "../../../code/World/template/lights.js";
 
 
 //global settings for the scene
@@ -22,7 +22,7 @@ let globalSettings={
     camera:{
         animate:false,
         fov:55,
-        pos:{x:0,y:2,z:0},
+        pos:{x:2,y:4,z:8},
         look:{x:0,y:0,z:0},
         posAnimate: (t)=>{
             return {x:15.*Math.sin(Math.sin(t/5)),y:7,z:15.*Math.cos(Math.sin(t/5))}},

@@ -1,5 +1,5 @@
 
-import BallChain from "../../../code/items/basic-shapes/BallChain.js";
+import BallList from "../../../code/items/basic-shapes/BallList.js";
 import {RungeKutta} from "../../../code/compute/cpu/RungeKutta.js";
 import {dState, State} from "../../../code/compute/cpu/components/State.js";
 import {Vector2, Vector3 } from "../../../3party/three/build/three.module.js";
@@ -11,7 +11,7 @@ class OscillatorDynamics {
     constructor(N) {
         this. N = N;
 
-        this.balls = new BallChain(this.N);
+        this.balls = new BallList(this.N);
         //right now all the balls are at the origin until we call update() on a set of positions
 
         //initialize the coordinates: zero at equalibrium positions

@@ -1,11 +1,11 @@
-import BallChain from "../../../code/items/basic-shapes/BallChain";
-import {Vector3} from "../../../3party/three/build/three.module";
+import BallList from "../../../code/items/basic-shapes/BallList.js";
+import {Vector3} from "../../../3party/three/build/three.module.js";
 
 
 class OscillatorEigenmodes{
     constructor(N) {
         this. N = N;
-        this.balls = new BallChain(this.N);
+        this.balls = new BallList(this.N);
         //right now all the balls are at the origin until we call update() on a set of positions
         //initialize the coordinates: zero at equalibrium positions
         this.pos = [];
