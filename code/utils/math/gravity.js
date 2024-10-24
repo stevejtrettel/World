@@ -4,7 +4,7 @@ function gravForce(pos1, mass1, pos2, mass2){
     let r2 = relPos.lengthSq();
     let dir = relPos.normalize();
 
-    let force = dir.multiplyScalar(5.*mass1*mass2/r2);
+    let force = dir.multiplyScalar(mass1*mass2/r2);
     return force;
 }
 

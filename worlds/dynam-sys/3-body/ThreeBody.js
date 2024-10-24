@@ -10,9 +10,21 @@ import {
 
 
 
-import{ gravForce} from "../../../code/utils/math/gravity.js";
+// import{ gravForce} from "../../../code/utils/math/gravity.js";
 
 import Planet from "../../../code/items/basic-shapes/Planet.js";
+
+
+
+function gravForce(pos1, mass1, pos2, mass2){
+    let relPos = pos2.clone().sub(pos1);
+    let r2 = relPos.lengthSq();
+    let dir = relPos.normalize();
+
+    let force = dir.multiplyScalar(mass1*mass2/r2);
+    return force;
+}
+
 
 
 //store position, velocity, or acceleration for three bodies
@@ -99,7 +111,7 @@ class ThreeBody{
             return new dState( vel, acc );
         };
 
-        const ep=0.002;
+        const ep=0.005;
         this.integrator= new RungeKutta(this.derive, ep);
 
 
@@ -137,7 +149,7 @@ class ThreeBody{
     addToUI( ui ){
 
         let massFolder = ui.addFolder('Masses');
-        console.log('made it');
+        //console.log('made it');
         let ThreeB = this;
         let planetA=this.a;
         let planetB=this.b;
