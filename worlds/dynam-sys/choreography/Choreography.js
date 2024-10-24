@@ -61,7 +61,7 @@ class Choreography{
         this.setIniCond(params);
 
         //set up the integrator
-        this.NSteps = 20000;
+        this.NSteps = 100000;
         const ep= this.T/this.NSteps;
         this.integrator= new SymplecticIntegrator(derive, ep);
 
@@ -92,6 +92,8 @@ class Choreography{
 
     setIniCond(params){
 
+        //the inital conditions are coming from a list generated here:
+        //https://analyticphysics.com/Gravitational%20Choreographies/Sim%C3%B3's%20Three-Body%20Choreographies%20in%20Action.htm
 
         //rescale the problem:
         let scaleFactor = 8;

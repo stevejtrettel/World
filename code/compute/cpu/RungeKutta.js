@@ -43,9 +43,11 @@ class RungeKutta extends Integrator {
 
 
         //move ahead one step
-        let nextState = state.clone().add(total);
+        //let nextState = state.clone().add(total);
+        state.add(total);
+        return state;
 
-        return nextState;
+        //return nextState;
 
 
     }

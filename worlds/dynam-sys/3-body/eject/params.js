@@ -3,7 +3,7 @@
 import {Vector3} from "../../../../3party/three/build/three.module.js";
 
 const pA = {
-    mass:1,
+    mass:1*5,
     pos: new Vector3(0,0,0),
     vel: new Vector3(0,-0.5,-0.5),
     color: 0xffffff,
@@ -11,7 +11,7 @@ const pA = {
 }
 
 const pB = {
-    mass:0.5,
+    mass:0.5*5,
     pos: new Vector3(0,5,0),
     vel: new Vector3(0,0,.5),
     color: 0xd96493,
@@ -19,7 +19,7 @@ const pB = {
 }
 
 const pC = {
-    mass:0.3,
+    mass:0.3*5,
     pos: new Vector3(0,0,5),
     vel: new Vector3(-0.2,0.5,0.),
     color: 0x32a852,

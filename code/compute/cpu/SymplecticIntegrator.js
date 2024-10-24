@@ -18,7 +18,7 @@ class SymplecticIntegrator extends Integrator {
         // //cube root of 2;
         // let cubrt = 1.25992104989;
         // let coef = 1/(2-cubrt);
-
+        //
         // let a1 = 1/2*coef;
         // let a2 = (1-cubrt)/2*coef;
         // let a3 = (1-cubrt)/2*coef;
