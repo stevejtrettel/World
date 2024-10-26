@@ -25,6 +25,11 @@ class Sphere extends Object{
 
     }
 
+
+
+
+
+
     sdf(pos){
         let dist = pos.clone().sub(this.center).length();
         return dist - this.radius;

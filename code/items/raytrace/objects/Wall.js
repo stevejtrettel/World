@@ -23,9 +23,27 @@ class Wall extends Object{
         }
         let material = new MeshPhysicalMaterial({
             color: this.mat.properties.color,
+
+
+            //make walls slightly transparent to help with visualization
+            opacity:1,
+            transmission: 0.5,
+            ior:1,
         });
         this.mesh = new Mesh(geom,material);
-        this.mesh.position.set(this.pt.x,this.pt.y,this.pt.z);
+
+
+
+        //depending on which wall, offset a little bit too because of the thickness:
+        if(Math.abs(normal.x) === 1){
+            this.mesh.position.set(this.pt.x-0.05*normal.x,this.pt.y,this.pt.z);
+        }
+        else if(Math.abs(normal.y) === 1){
+            this.mesh.position.set(this.pt.x,this.pt.y-0.05*normal.y,this.pt.z);
+        }
+        else{
+            this.mesh.position.set(this.pt.x,this.pt.y,this.pt.z-0.05*normal.z);
+        }
 
     }
 

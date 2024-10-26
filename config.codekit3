@@ -16287,36 +16287,6 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/worlds\/raytrace\/diorama-test\/index.html" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/worlds\/raytrace\/diorama-test\/index.html",
-      "oF" : 0
-    },
-    "\/worlds\/raytrace\/diorama-test\/main.js" : {
-      "bF" : 4,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 0,
-      "oAP" : "\/worlds\/raytrace\/diorama-test\/main-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/worlds\/raytrace\/diorama-test\/src\/test.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/worlds\/raytrace\/diorama-test\/src\/test-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
     "\/worlds\/raytrace\/lightray-test\/index.html" : {
       "cB" : 0,
       "ft" : 8192,
@@ -16343,6 +16313,58 @@
       "mi" : 1,
       "oA" : 1,
       "oAP" : "\/worlds\/raytrace\/lightray-test\/src\/test-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/raytrace\/single-path\/index.html" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/raytrace\/single-path\/index.html",
+      "oF" : 0
+    },
+    "\/worlds\/raytrace\/single-path\/main-min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/raytrace\/single-path\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/raytrace\/single-path\/main.js" : {
+      "bF" : 4,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/raytrace\/single-path\/main-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/raytrace\/single-path\/src\/boxScene.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/raytrace\/single-path\/src\/boxScene-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/raytrace\/single-path\/src\/test.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/raytrace\/single-path\/src\/test-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0

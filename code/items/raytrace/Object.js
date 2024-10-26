@@ -12,12 +12,12 @@ class Object {
         this.isLight = false;
     }
 
+    //this needs to be rewritten for each geometry
     sdf(pos){
         return 1.;
     }
 
-    //the rest of these dont need to be redefined for each object, they're built from the sdf;
-
+    //this should be rewritten to be efficient when we know the normal.  But here's a general method using the gradient
     getNormal(pos){
 
         let ep = 0.0001;
@@ -41,6 +41,10 @@ class Object {
         return new TVec(pos,dir);
 
     }
+
+
+    //the rest of these dont need to be redefined for each object, they're built from the sdf;
+
 
     at(pos){
         let dist = this.sdf(pos);

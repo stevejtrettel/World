@@ -65,7 +65,6 @@ class TVec{
     }
 
 
-
 }
 
 export default TVec;

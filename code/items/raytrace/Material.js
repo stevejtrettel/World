@@ -1,21 +1,18 @@
-import {Vector3} from "../../../3party/three/build/three.module.js";
-import TVec from "./TVec.js";
 
-//raymarching material: list of properties, with a method "interact"
+//raymarching material: list of properties
+//and some methods to make basic ones?
+
 class Material{
 
     constructor() {
-        this.properties = {};
+        this.properties = {
+            //set some default values for all the properties one could need here
+            color: 0xffffff,
+        };
     }
 
-    interact(tv,normal){
-        //take in a tangent vector, return a new tangent vector
-        // let pos = tv.pos;
-        // let dir = tv.dir;
-
-        tv = tv.reflectIn(normal);
-        return tv;
-    }
+    //modify these properties by calling a method below
+    //to make specific materials
 
     makeDielectric(color){
         this.properties = {

@@ -1,11 +1,13 @@
-import RodBallChain from "../basic-shapes/RodBallChain.js";
+import LightRay from "./lightray/LightRay.js";
 import TVec from "./TVec.js";
+
+import reflectIn from "./interaction/reflect.js";
 
 class Path {
     constructor(tv,N=50) {
+
         this.N = N;
         this.tv = tv;
-        this.totalDist =0.;
 
         //initialize the trajectory with all points at tv.pos
         this.pts = [];
@@ -13,26 +15,19 @@ class Path {
             this.pts.push(this.tv.pos);
         }
 
-        this.traj = new RodBallChain(this.pts);
+        this.traj = new LightRay(this.pts);
     }
+
 
     addToScene(scene){
         this.traj.addToScene(scene);
     }
 
 
-
-    stepForward(diorama){
-
-        let currentMat;
-        let currentNormal=new TVec();
-
-        //take to the next point in the diorama
-        let totalDist=0.;
+    raymarch(diorama){
+        //march to next intersection in the scene:
         let distToScene=0.;
 
-
-        //the raymarching loop
         for(let i = 0; i < 100; i++){
 
             //this is the safe dist to move:
@@ -40,7 +35,6 @@ class Path {
 
             //move ahead this much
             this.tv.flow(distToScene);
-            totalDist += distToScene;
 
             //did we hit something?
             if (distToScene< 0.001){
@@ -54,43 +48,35 @@ class Path {
             }
 
         }
+    }
 
-        //modifying the tv at the endpoint
-        if(this.tv.keepGoing){
 
-            //we are at some object! Let's figure out which one:
-            for(let i=0; i< diorama.objList.length; i++){
+    stepForward(diorama){
 
-                if(diorama.objList[i].at(this.tv.pos)){
+        //raymarch to the next intersection
+        this.raymarch(diorama);
 
-                    if(diorama.objList[i].isLight){
-                        this.tv.keepGoing=false;
-                    }
-                    currentMat = diorama.objList[i].mat;
-                    currentNormal = diorama.objList[i].getNormal(this.tv.pos);
-                    //get out of the object-search-loop
-                    break;
-                }
-            }
-
-            //REFLECT IN THE SURFACE
-            //IDK WHY THIS ISNT WORKING AS A METHOD ON TVEC
-            let proj = this.tv.dir.dot(currentNormal.dir);
-            let dir = this.tv.dir.sub(currentNormal.dir.clone().multiplyScalar(2.*proj));
-            this.tv.dir = dir;
-            //move a little so you don't register as being on the object
-            this.tv.flow(0.05);
-
+        //get the current object (if one exists) at the location
+        let currentObject = diorama.getObjectAt(this.tv.pos);
+        //stop if we hit a light
+        if(currentObject === undefined || currentObject.isLight ){
+            this.tv.keepGoing = false;
         }
 
-        //accumulate the distance traveled
-        this.totalDist += totalDist;
+        //otherwise, interact and get ready for next raymarch
+        if(this.tv.keepGoing){
+                let currentNormal = currentObject.getNormal(this.tv.pos);
+                this.tv = reflectIn(this.tv,currentNormal);
+
+                //move a little so you don't register as being on the object
+                this.tv.flow(0.002);
+        }
 
     }
 
     trace(diorama){
 
-        this.totalDist=0.;
+       // this.totalDist=0.;
 
         //given our diorama, run a trace to get points
         this.pts = [];
@@ -111,6 +97,14 @@ class Path {
         }
 
         this.traj.setPoints(this.pts);
+    }
+
+
+    showBounces(N){
+        //only show first N bounces
+        //take into account how many points there *actually* are in the list
+        let showN = Math.min(N,this.pts.length-2);
+        this.traj.showBounces(showN);
     }
 
 
