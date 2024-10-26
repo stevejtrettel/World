@@ -10821,7 +10821,7 @@
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 1,
+      "oA" : 0,
       "oAP" : "\/code\/items\/basic-shapes\/RodBallChain-min.js",
       "oF" : 0,
       "sC" : 3,
@@ -11538,6 +11538,50 @@
       "mi" : 1,
       "oA" : 1,
       "oAP" : "\/code\/items\/raytrace\/Diorama-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/code\/items\/raytrace\/interaction\/reflect.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/code\/items\/raytrace\/interaction\/reflect-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/code\/items\/raytrace\/lightray\/BallList.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/code\/items\/raytrace\/lightray\/BallList-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/code\/items\/raytrace\/lightray\/LightRay.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/code\/items\/raytrace\/lightray\/LightRay-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/code\/items\/raytrace\/lightray\/PolyLine.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/code\/items\/raytrace\/lightray\/PolyLine-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -16287,84 +16331,54 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/worlds\/raytrace\/lightray-test\/index.html" : {
+    "\/worlds\/raytrace\/single-pixel\/index.html" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
-      "oAP" : "\/worlds\/raytrace\/lightray-test\/index.html",
+      "oAP" : "\/worlds\/raytrace\/single-pixel\/index.html",
       "oF" : 0
     },
-    "\/worlds\/raytrace\/lightray-test\/main.js" : {
+    "\/worlds\/raytrace\/single-pixel\/main-min.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 0,
-      "oAP" : "\/worlds\/raytrace\/lightray-test\/main-min.js",
+      "oAP" : "\/worlds\/raytrace\/single-pixel\/main-min-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/worlds\/raytrace\/lightray-test\/src\/test.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/worlds\/raytrace\/lightray-test\/src\/test-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/worlds\/raytrace\/single-path\/index.html" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/worlds\/raytrace\/single-path\/index.html",
-      "oF" : 0
-    },
-    "\/worlds\/raytrace\/single-path\/main-min.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 0,
-      "oAP" : "\/worlds\/raytrace\/single-path\/main-min-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/worlds\/raytrace\/single-path\/main.js" : {
+    "\/worlds\/raytrace\/single-pixel\/main.js" : {
       "bF" : 4,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 0,
-      "oAP" : "\/worlds\/raytrace\/single-path\/main-min.js",
+      "oAP" : "\/worlds\/raytrace\/single-pixel\/main-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/worlds\/raytrace\/single-path\/src\/boxScene.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 0,
-      "oAP" : "\/worlds\/raytrace\/single-path\/src\/boxScene-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/worlds\/raytrace\/single-path\/src\/test.js" : {
+    "\/worlds\/raytrace\/single-pixel\/src\/boxScene.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/worlds\/raytrace\/single-path\/src\/test-min.js",
+      "oAP" : "\/worlds\/raytrace\/single-pixel\/src\/boxScene-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/raytrace\/single-pixel\/src\/test.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/raytrace\/single-pixel\/src\/test-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0

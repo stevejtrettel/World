@@ -8,6 +8,7 @@ class Path {
 
         this.N = N;
         this.tv = tv;
+        this.hitLight = false;
 
         //initialize the trajectory with all points at tv.pos
         this.pts = [];
@@ -37,7 +38,7 @@ class Path {
             this.tv.flow(distToScene);
 
             //did we hit something?
-            if (distToScene< 0.001){
+            if (distToScene< 0.0005){
                 this.tv.keepGoing = true;
                 break;
             }
@@ -58,9 +59,11 @@ class Path {
 
         //get the current object (if one exists) at the location
         let currentObject = diorama.getObjectAt(this.tv.pos);
+        if(currentObject === undefined){ this.tv.keepGoing = false; }
         //stop if we hit a light
-        if(currentObject === undefined || currentObject.isLight ){
+        else if( currentObject.isLight ){
             this.tv.keepGoing = false;
+            this.hitLight = true;
         }
 
         //otherwise, interact and get ready for next raymarch
@@ -69,6 +72,7 @@ class Path {
                 this.tv = reflectIn(this.tv,currentNormal);
 
                 //move a little so you don't register as being on the object
+                this.tv.pos.add(currentNormal.dir.multiplyScalar(0.002));
                 this.tv.flow(0.002);
         }
 
@@ -76,27 +80,28 @@ class Path {
 
     trace(diorama){
 
-       // this.totalDist=0.;
+        this.hitLight = false;
 
-        //given our diorama, run a trace to get points
         this.pts = [];
         //add the starting point
         this.pts.push(this.tv.pos.clone());
 
         for(let i=0;i<this.N;i++){
 
+            //step forward and save the new point
             this.stepForward(diorama);
-
             this.pts.push(this.tv.pos.clone());
 
-            //if we are told to stop
+            //stop if we are told to
             if(!this.tv.keepGoing){
                 break;
             }
-
         }
 
+        //draw this trajectory
         this.traj.setPoints(this.pts);
+        this.traj.hitLight(this.hitLight);
+
     }
 
 

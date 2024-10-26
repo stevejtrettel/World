@@ -22,7 +22,7 @@ let globalSettings={
     camera:{
         animate:false,
         fov:55,
-        pos:{x:2,y:4,z:8},
+        pos:{x:4,y:4,z:16},
         look:{x:0,y:0,z:0},
         posAnimate: (t)=>{
             return {x:15.*Math.sin(Math.sin(t/5)),y:7,z:15.*Math.cos(Math.sin(t/5))}},

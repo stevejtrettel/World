@@ -11,7 +11,6 @@ import {
 let defaultOptions = {
     color: 0xffffff,
     radius:0.1,
-    clearcoat:true,
 };
 
 
@@ -22,13 +21,15 @@ class PolyLine{
         this.maxN=100;
         this.pts = pts;
         this.N = pts.length-1;
-        this.options = options;
+
+        this.radius = options.radius;
+        this.color = options.color;
 
 
         let geom = new SphereGeometry();
-        let mat = new MeshPhysicalMaterial({
+        this.mat = new MeshPhysicalMaterial({
             color:options.color,
-            clearcoat: options.clearcoat,
+            clearcoat: true,
         });
 
         //set up defaults
@@ -36,7 +37,7 @@ class PolyLine{
         this.lines = [];
         for(let i=0;i<this.maxN;i++){
             this.lines.push(0);
-            this.rods.push(new Mesh(geom,mat));
+            this.rods.push(new Mesh(geom,this.mat));
         }
 
         //build the actual segments
@@ -51,7 +52,7 @@ class PolyLine{
                 let line = new LineCurve3(this.pts[i], this.pts[i + 1]);
                 this.lines[i] = line;
                 this.rods[i].geometry.dispose();
-                this.rods[i].geometry = new TubeGeometry(line, 1, this.options.radius, 8, false);
+                this.rods[i].geometry = new TubeGeometry(line, 1, this.radius, 8, false);
                 this.rods[i].visible =true;
             }
             else{
@@ -82,6 +83,12 @@ class PolyLine{
             scene.add(this.rods[i]);
         }
     }
+
+    setColor(color){
+        this.mat.color.setHex(color);
+    }
+
+
 }
 
 

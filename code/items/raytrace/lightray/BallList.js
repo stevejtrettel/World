@@ -2,8 +2,7 @@ import {Mesh, MeshPhysicalMaterial, SphereGeometry,Object3D} from "../../../../3
 
 
 let defaultOptions = {
-    color: 0x000000,
-    clearcoat: true,
+    color: 0xffffff,
     radius:0.1,
 };
 
@@ -12,16 +11,21 @@ class BallList{
     constructor(pts,options=defaultOptions, maxN=1000) {
 
         this.maxN = maxN;
-        this.options = options;
+
+        this.radius = options.radius;
+        this.color = options.color;
 
         //fix the geometry of the balls
-        let geo = new SphereGeometry(options.radius, 32, 16);
-        let mat = new MeshPhysicalMaterial(this.options);
+        let geo = new SphereGeometry(this.radius, 32, 16);
+        this.mat = new MeshPhysicalMaterial({
+            color: this.color,
+            clearcoat:true,
+        });
 
         //build the initial list
         this.balls = [];
         for(let i=0;i< this.maxN;i++){
-            this.balls.push(new Mesh(geo,mat));
+            this.balls.push(new Mesh(geo,this.mat));
         }
 
         //move them around and set visibility
@@ -62,6 +66,10 @@ class BallList{
             }
             else{this.balls[i].visible=false;}
         }
+    }
+
+    setColor(color){
+        this.mat.color.setHex(color);
     }
 }
 

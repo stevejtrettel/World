@@ -10,20 +10,27 @@ let defaultOptions = {
 
 
 class LightRay{
-    constructor(pts, options=defaultOptions) {
+    constructor(pts) {
 
         this.pts = pts;
 
-        let rodOptions = options;
+        let rodOptions = {
+            radius: 0.02,
+            color:0xffffff,
+        };
         this.rods = new PolyLine(pts,rodOptions,100);
 
         let ballOptions = {
-            color: options.color,
-            clearcoat: options.clearcoat,
-            radius: 3*options.radius,
-        }
+            radius:0.04,
+            color: 0xffffff,
+        };
         this.balls = new BallList(this.pts,ballOptions,100);
 
+    }
+
+    setColor(color){
+        this.rods.setColor(color);
+        this.balls.setColor(color);
     }
 
     addToScene(scene){
@@ -45,6 +52,22 @@ class LightRay{
         //this means the first N+2 points and N+1 rods
         this.balls.setVisibility(N+2);
         this.rods.setVisibility(N+1);
+    }
+
+
+
+    hitLight(bool){
+        let color;
+        if(bool){
+            //make everything yellow
+            color = 0xf0cd1d;
+        }
+        else{
+            //make it dark red
+            color = 0x2e0601;
+        }
+
+        this.setColor(color);
     }
 
 }
