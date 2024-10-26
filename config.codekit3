@@ -11536,7 +11536,7 @@
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 0,
+      "oA" : 1,
       "oAP" : "\/code\/items\/raytrace\/Diorama-min.js",
       "oF" : 0,
       "sC" : 3,
@@ -11547,7 +11547,7 @@
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 0,
+      "oA" : 1,
       "oAP" : "\/code\/items\/raytrace\/Material-min.js",
       "oF" : 0,
       "sC" : 3,
@@ -11558,30 +11558,41 @@
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 0,
+      "oA" : 1,
       "oAP" : "\/code\/items\/raytrace\/Object-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/code\/items\/raytrace\/Ray.js" : {
+    "\/code\/items\/raytrace\/objects\/Sphere.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 0,
-      "oAP" : "\/code\/items\/raytrace\/Ray-min.js",
+      "oA" : 1,
+      "oAP" : "\/code\/items\/raytrace\/objects\/Sphere-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/code\/items\/raytrace\/TheLoop\/Raymarch.js" : {
+    "\/code\/items\/raytrace\/objects\/Wall.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 0,
-      "oAP" : "\/code\/items\/raytrace\/TheLoop\/Raymarch-min.js",
+      "oA" : 1,
+      "oAP" : "\/code\/items\/raytrace\/objects\/Wall-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/code\/items\/raytrace\/Path.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/code\/items\/raytrace\/Path-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -15133,6 +15144,17 @@
       "oAP" : "\/worlds\/geodesic-program\/geodesic\/index.html",
       "oF" : 0
     },
+    "\/worlds\/geodesic-program\/geodesic\/main-min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/geodesic-program\/geodesic\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/worlds\/geodesic-program\/geodesic\/main.js" : {
       "bF" : 4,
       "ft" : 64,
@@ -15162,6 +15184,17 @@
       "oA" : 0,
       "oAP" : "\/worlds\/geodesic-program\/geodesicSpray\/index.html",
       "oF" : 0
+    },
+    "\/worlds\/geodesic-program\/geodesicSpray\/main-min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/geodesic-program\/geodesicSpray\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
     },
     "\/worlds\/geodesic-program\/geodesicSpray\/main.js" : {
       "bF" : 4,
@@ -15305,6 +15338,17 @@
       "oAP" : "\/worlds\/geodesic-program\/gradientDescentSingle\/index.html",
       "oF" : 0
     },
+    "\/worlds\/geodesic-program\/gradientDescentSingle\/main-min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/geodesic-program\/gradientDescentSingle\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/worlds\/geodesic-program\/gradientDescentSingle\/main.js" : {
       "bF" : 4,
       "ft" : 64,
@@ -15334,6 +15378,17 @@
       "oA" : 0,
       "oAP" : "\/worlds\/geodesic-program\/gradientSurface\/index.html",
       "oF" : 0
+    },
+    "\/worlds\/geodesic-program\/gradientSurface\/main-min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/geodesic-program\/gradientSurface\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
     },
     "\/worlds\/geodesic-program\/gradientSurface\/main.js" : {
       "bF" : 4,
@@ -15405,6 +15460,17 @@
       "oA" : 0,
       "oAP" : "\/worlds\/geodesic-program\/gravityDisk\/index.html",
       "oF" : 0
+    },
+    "\/worlds\/geodesic-program\/gravityDisk\/main-min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/geodesic-program\/gravityDisk\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
     },
     "\/worlds\/geodesic-program\/gravityDisk\/main.js" : {
       "bF" : 4,
@@ -16221,32 +16287,62 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/worlds\/raytrace\/test\/index.html" : {
+    "\/worlds\/raytrace\/diorama-test\/index.html" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
-      "oAP" : "\/worlds\/raytrace\/test\/index.html",
+      "oAP" : "\/worlds\/raytrace\/diorama-test\/index.html",
       "oF" : 0
     },
-    "\/worlds\/raytrace\/test\/main.js" : {
-      "bF" : 0,
+    "\/worlds\/raytrace\/diorama-test\/main.js" : {
+      "bF" : 4,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 0,
-      "oAP" : "\/worlds\/raytrace\/test\/main-min.js",
+      "oAP" : "\/worlds\/raytrace\/diorama-test\/main-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
     },
-    "\/worlds\/raytrace\/test\/src\/test.js" : {
+    "\/worlds\/raytrace\/diorama-test\/src\/test.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 1,
-      "oAP" : "\/worlds\/raytrace\/test\/src\/test-min.js",
+      "oAP" : "\/worlds\/raytrace\/diorama-test\/src\/test-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/raytrace\/lightray-test\/index.html" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/raytrace\/lightray-test\/index.html",
+      "oF" : 0
+    },
+    "\/worlds\/raytrace\/lightray-test\/main.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/raytrace\/lightray-test\/main-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/raytrace\/lightray-test\/src\/test.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/raytrace\/lightray-test\/src\/test-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0

@@ -90,14 +90,21 @@ class Test{
         let back = new Wall(new Vector3(0,0,-5),new Vector3(0,0,1),backMat);
         this.diorama.addObject(back);
 
-        // let front = new Wall(new Vector3(0,0,5),new Vector3(0,0,-1),wallMat);
-        // this.diorama.addObject(front);
-        // front.setVisibility(false);
+        let front = new Wall(new Vector3(0,0,5),new Vector3(0,0,-1),backMat);
+        this.diorama.addObject(front);
+        front.setVisibility(false);
+
+
+
+
+
+
+
 
 
         //create the path
         this.tv = new TVec(new Vector3(0,0,4.8),new Vector3(0.59,-0.4,-1).normalize());
-        this.path = new Path(this.tv,5);
+        this.path = new Path(this.tv,8);
 
         //trace the rays through the scene.
         this.path.trace(this.diorama);
@@ -111,10 +118,12 @@ class Test{
         this.diorama.addToScene(scene);
     }
 
-    addToUI(ui){}
+    addToUI(ui){
+
+    }
 
     tick(time,dTime){
-        this.path.tv = new TVec(new Vector3(0,0,3),new Vector3(0.59,-0.4+0.1*Math.sin(time/100),-1).normalize());
+        this.path.tv = new TVec(new Vector3(0,0,4.8),new Vector3(0.73+0.1*Math.cos(time/30),-0.4+0.1*Math.sin(time/30),-1).normalize());
         this.path.totalDist=0.;
 
         //trace the rays through the scene.
