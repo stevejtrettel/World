@@ -107,7 +107,7 @@ class PolyLine{
 
     setPoints(pts){
         this.pts = pts;
-        this.N = pts.length;
+        this.N = pts.length-1;
         this.buildSegments();
     }
 

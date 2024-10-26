@@ -2,23 +2,25 @@
 
 class TVec{
     constructor(pos,dir) {
-        this.pos = pos;
-        this.dir = dir;
+        this.pos = pos.clone();
+        this.dir = dir.clone();
 
         this.keepGoing = true;
     }
 
+    clone(){
+        let pos = this.pos.clone();
+        let dir = this.dir.clone();
+        return new TVec(pos,dir);
+    }
+
     add(tv){
-        if(this.pos == tv.pos){
-            this.dir.add(tv.dir);
-        }
+        this.dir.add(tv.dir);
         return this;
     }
 
     sub(tv){
-        if(this.pos == tv.pos){
-            this.dir.sub(tv.dir);
-        }
+        this.dir.sub(tv.dir);
         return this;
     }
 
@@ -52,8 +54,8 @@ class TVec{
     //perhaps don't need these, as we'll do material calculations elsewhere?
 
     reflectIn(normal){
-        normal.normalize();
-        let proj = this.dir.dot(normal);
+        normal.clone().normalize();
+        let proj = this.dir.dot(normal.clone());
         this.dir.add(normal.multiplyScalar(-2.*proj));
         return this;
     }

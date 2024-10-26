@@ -17,7 +17,9 @@ class Sphere extends Object{
         let material = new MeshPhysicalMaterial({
             color: this.mat.properties.color,
             roughness: this.mat.properties.roughness,
+            clearcoat:this.mat.properties.clearcoat,
         });
+
         this.mesh = new Mesh(geom,material);
         this.mesh.position.set(this.center.x,this.center.y,this.center.z);
 

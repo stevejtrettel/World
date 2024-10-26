@@ -9,6 +9,7 @@ import Material from "./Material.js";
 class Object {
     constructor(){
         this.mat = new Material().makeDielectric('0xffffff');
+        this.isLight = false;
     }
 
     sdf(pos){

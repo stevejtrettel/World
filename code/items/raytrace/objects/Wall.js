@@ -1,5 +1,5 @@
 import Object from "../Object.js";
-import {BoxGeometry, Mesh, MeshPhysicalMaterial,} from "../../../../3party/three/build/three.module.js";
+import {BoxGeometry, Mesh, MeshPhysicalMaterial,Vector3} from "../../../../3party/three/build/three.module.js";
 import TVec from "../TVec.js";
 
 class Wall extends Object{
@@ -12,10 +12,10 @@ class Wall extends Object{
 
         let boxSize = 10;
         let geom;
-        if(Math.abs(normal.x) == 1){
+        if(Math.abs(normal.x) === 1){
             geom = new BoxGeometry(0.1,boxSize,boxSize);
         }
-        else if(Math.abs(normal.y) == 1){
+        else if(Math.abs(normal.y) === 1){
             geom = new BoxGeometry(boxSize,0.1,boxSize);
         }
         else{
@@ -39,7 +39,8 @@ class Wall extends Object{
     }
 
     getNormal(pos){
-        return new TVec(pos,this.normal);
+        let tv = new TVec(pos.clone(),this.normal.clone());
+        return tv;
     }
 
 }

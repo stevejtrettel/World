@@ -13,16 +13,15 @@ class Material{
         // let pos = tv.pos;
         // let dir = tv.dir;
 
-        //tv = tv.reflectIn(normal);
-        let dir = new Vector3(Math.random(),-1,Math.random()).normalize();
-        return new TVec(tv.pos,dir);
-      //  return tv;
+        tv = tv.reflectIn(normal);
+        return tv;
     }
 
     makeDielectric(color){
         this.properties = {
             color: color,
             roughness:0.5,
+            clearcoat:true,
         }
     }
 
