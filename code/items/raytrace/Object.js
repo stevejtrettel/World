@@ -44,7 +44,7 @@ class Object {
 
     at(pos){
         let dist = this.sdf(pos);
-        return (Math.abs(dist)<0.01);
+        return (Math.abs(dist)<0.001);
     }
 
     inside(pos){

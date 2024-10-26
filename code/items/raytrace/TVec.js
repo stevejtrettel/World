@@ -1,7 +1,7 @@
-
+import {Vector3} from "../../../3party/three/build/three.module.js";
 
 class TVec{
-    constructor(pos,dir) {
+    constructor(pos=new Vector3(0,0,0),dir=new Vector3(1,0,0)) {
         this.pos = pos.clone();
         this.dir = dir.clone();
 

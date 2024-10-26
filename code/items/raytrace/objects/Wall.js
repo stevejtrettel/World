@@ -22,7 +22,7 @@ class Wall extends Object{
             geom = new BoxGeometry(boxSize, boxSize,0.1);
         }
         let material = new MeshPhysicalMaterial({
-
+            color: this.mat.properties.color,
         });
         this.mesh = new Mesh(geom,material);
         this.mesh.position.set(this.pt.x,this.pt.y,this.pt.z);

@@ -4,10 +4,10 @@ import InstancedBall from "./InstancedBall.js";
 
 
 let defaultOptions = {
-    color: 0xd6aa4b,
+    color: 0xebc034,
         //0xffffff,
     clearcoat:true,
-    radius:0.01,
+    radius:0.02,
 };
 
 

@@ -1,5 +1,5 @@
 import Object from "../Object.js";
-import {Mesh, MeshPhysicalMaterial, SphereGeometry} from "../../../../3party/three/build/three.module.js";
+import {Mesh, MeshPhysicalMaterial, SphereGeometry,Color} from "../../../../3party/three/build/three.module.js";
 import TVec from "../TVec.js";
 
 class Sphere extends Object{
@@ -30,10 +30,10 @@ class Sphere extends Object{
         return dist - this.radius;
     }
 
-    getNormal(pos){
-        let dir = pos.clone().sub(this.center);
+    getNormal(posOnSphere){
+        let dir = posOnSphere.clone().sub(this.center);
         dir.normalize();
-        return new TVec(pos,dir);
+        return new TVec(posOnSphere,dir);
     }
 
 }
