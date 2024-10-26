@@ -6,20 +6,23 @@ import InstancedBall from "./InstancedBall.js";
 let defaultOptions = {
     color: 0xffffff,
     clearcoat:true,
-    radius:0.05,
-    ballScale:1.5,
+    radius:0.02,
+    ballScale:3,
 };
 
 
 class RodBallChain{
     constructor(pts, options=defaultOptions) {
 
-        this.options=options;
 
         this.pts = pts;
 
-        this.rods = new PolyLine(pts,options,100);
-        this.balls = new InstancedBall(this.pts,options,100);
+        let rodOptions = options;
+        this.rods = new PolyLine(pts,rodOptions,100);
+
+        let ballOptions = options;
+        ballOptions.radius =2*options.radius;
+        this.balls = new InstancedBall(this.pts,ballOptions,100);
 
     }
 

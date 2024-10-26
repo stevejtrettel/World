@@ -10684,17 +10684,6 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/code\/items\/basic-shapes\/BallChain.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/code\/items\/basic-shapes\/BallChain-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
     "\/code\/items\/basic-shapes\/BallGrid.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -10706,12 +10695,23 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/code\/items\/basic-shapes\/BallList.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/code\/items\/basic-shapes\/BallList-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/code\/items\/basic-shapes\/BallTrail.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
-      "oA" : 0,
+      "oA" : 1,
       "oAP" : "\/code\/items\/basic-shapes\/BallTrail-min.js",
       "oF" : 0,
       "sC" : 3,
@@ -10772,6 +10772,17 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/code\/items\/basic-shapes\/InstancedBall.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/code\/items\/basic-shapes\/InstancedBall-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/code\/items\/basic-shapes\/Planet.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -10783,6 +10794,17 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/code\/items\/basic-shapes\/PolyLine.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/code\/items\/basic-shapes\/PolyLine-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/code\/items\/basic-shapes\/Rod.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -10790,6 +10812,17 @@
       "mi" : 1,
       "oA" : 1,
       "oAP" : "\/code\/items\/basic-shapes\/Rod-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/code\/items\/basic-shapes\/RodBallChain.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/code\/items\/basic-shapes\/RodBallChain-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -10959,6 +10992,94 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/code\/items\/geodesic-program\/Integrators\/CustomScheme.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/code\/items\/geodesic-program\/Integrators\/CustomScheme-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/code\/items\/geodesic-program\/Integrators\/Euler.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/code\/items\/geodesic-program\/Integrators\/Euler-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/code\/items\/geodesic-program\/Integrators\/RungeKutta.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/code\/items\/geodesic-program\/Integrators\/RungeKutta-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/code\/items\/geodesic-program\/Integrators\/States\/dState.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/code\/items\/geodesic-program\/Integrators\/States\/dState-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/code\/items\/geodesic-program\/Integrators\/States\/State.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/code\/items\/geodesic-program\/Integrators\/States\/State-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/code\/items\/geodesic-program\/Integrators\/Symplectic.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/code\/items\/geodesic-program\/Integrators\/Symplectic-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/code\/items\/geodesic-program\/parallel-transport\/ParallelTransport.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/code\/items\/geodesic-program\/parallel-transport\/ParallelTransport-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/code\/items\/geodesic-program\/parallel-transport\/TransportIntegrator.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/code\/items\/geodesic-program\/parallel-transport\/TransportIntegrator-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/code\/items\/geodesic-program\/plot\/GlassDomain.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -11091,72 +11212,6 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/code\/items\/geodesic-program\/surface\/Integrators\/CustomScheme.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/code\/items\/geodesic-program\/surface\/Integrators\/CustomScheme-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/code\/items\/geodesic-program\/surface\/Integrators\/Euler.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/code\/items\/geodesic-program\/surface\/Integrators\/Euler-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/code\/items\/geodesic-program\/surface\/Integrators\/RungeKutta.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 0,
-      "oAP" : "\/code\/items\/geodesic-program\/surface\/Integrators\/RungeKutta-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/code\/items\/geodesic-program\/surface\/Integrators\/States\/dState.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/code\/items\/geodesic-program\/surface\/Integrators\/States\/dState-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/code\/items\/geodesic-program\/surface\/Integrators\/States\/State.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/code\/items\/geodesic-program\/surface\/Integrators\/States\/State-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/code\/items\/geodesic-program\/surface\/Integrators\/Symplectic.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 1,
-      "oAP" : "\/code\/items\/geodesic-program\/surface\/Integrators\/Symplectic-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
     "\/code\/items\/geodesic-program\/surface\/Surface.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -11197,6 +11252,28 @@
       "mi" : 1,
       "oA" : 1,
       "oAP" : "\/code\/items\/geodesic-program\/trajectories\/Geodesic-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/code\/items\/geodesic-program\/trajectories\/GeodesicSpray.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/code\/items\/geodesic-program\/trajectories\/GeodesicSpray-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/code\/items\/geodesic-program\/trajectories\/GeodesicStripes.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/code\/items\/geodesic-program\/trajectories\/GeodesicStripes-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -11450,6 +11527,72 @@
       "mi" : 1,
       "oA" : 1,
       "oAP" : "\/code\/items\/odes\/SlopeFIeldIntegralCurve-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/code\/items\/raytrace\/Diorama.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/code\/items\/raytrace\/Diorama-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/code\/items\/raytrace\/Material.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/code\/items\/raytrace\/Material-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/code\/items\/raytrace\/Object.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/code\/items\/raytrace\/Object-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/code\/items\/raytrace\/Ray.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/code\/items\/raytrace\/Ray-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/code\/items\/raytrace\/TheLoop\/Raymarch.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/code\/items\/raytrace\/TheLoop\/Raymarch-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/code\/items\/raytrace\/TVec.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/code\/items\/raytrace\/TVec-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -13170,6 +13313,14 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/index.html" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/index.html",
+      "oF" : 0
+    },
     "\/worlds\/_OLD\/BROKEN\/complexDomainColor.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -13654,8 +13805,19 @@
       "oAP" : "\/worlds\/colorvision\/dichromat\/index.html",
       "oF" : 0
     },
-    "\/worlds\/colorvision\/dichromat\/main.js" : {
+    "\/worlds\/colorvision\/dichromat\/main-min.js" : {
       "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/colorvision\/dichromat\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/colorvision\/dichromat\/main.js" : {
+      "bF" : 4,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -13684,8 +13846,19 @@
       "oAP" : "\/worlds\/colorvision\/lightWave\/index.html",
       "oF" : 0
     },
-    "\/worlds\/colorvision\/lightWave\/main.js" : {
+    "\/worlds\/colorvision\/lightWave\/main-min.js" : {
       "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/colorvision\/lightWave\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/colorvision\/lightWave\/main.js" : {
+      "bF" : 4,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -13714,8 +13887,19 @@
       "oAP" : "\/worlds\/colorvision\/manvsdog\/index.html",
       "oF" : 0
     },
-    "\/worlds\/colorvision\/manvsdog\/main.js" : {
+    "\/worlds\/colorvision\/manvsdog\/main-min.js" : {
       "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/colorvision\/manvsdog\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/colorvision\/manvsdog\/main.js" : {
+      "bF" : 4,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -13744,8 +13928,19 @@
       "oAP" : "\/worlds\/colorvision\/monochromat\/index.html",
       "oF" : 0
     },
-    "\/worlds\/colorvision\/monochromat\/main.js" : {
+    "\/worlds\/colorvision\/monochromat\/main-min.js" : {
       "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/colorvision\/monochromat\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/colorvision\/monochromat\/main.js" : {
+      "bF" : 4,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -13774,8 +13969,19 @@
       "oAP" : "\/worlds\/colorvision\/spectrumDecomposition\/index.html",
       "oF" : 0
     },
-    "\/worlds\/colorvision\/spectrumDecomposition\/main.js" : {
+    "\/worlds\/colorvision\/spectrumDecomposition\/main-min.js" : {
       "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/colorvision\/spectrumDecomposition\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/colorvision\/spectrumDecomposition\/main.js" : {
+      "bF" : 4,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -13804,8 +14010,19 @@
       "oAP" : "\/worlds\/colorvision\/trichromat\/index.html",
       "oF" : 0
     },
-    "\/worlds\/colorvision\/trichromat\/main.js" : {
+    "\/worlds\/colorvision\/trichromat\/main-min.js" : {
       "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/colorvision\/trichromat\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/colorvision\/trichromat\/main.js" : {
+      "bF" : 4,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -14227,8 +14444,19 @@
       "oAP" : "\/worlds\/dynam-sys\/3-body\/accelerator\/index.html",
       "oF" : 0
     },
-    "\/worlds\/dynam-sys\/3-body\/accelerator\/main.js" : {
+    "\/worlds\/dynam-sys\/3-body\/accelerator\/main-min.js" : {
       "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/dynam-sys\/3-body\/accelerator\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/dynam-sys\/3-body\/accelerator\/main.js" : {
+      "bF" : 4,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -14257,6 +14485,17 @@
       "oAP" : "\/worlds\/dynam-sys\/3-body\/eject\/index.html",
       "oF" : 0
     },
+    "\/worlds\/dynam-sys\/3-body\/eject\/main-min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/dynam-sys\/3-body\/eject\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/worlds\/dynam-sys\/3-body\/eject\/main.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -14279,12 +14518,94 @@
       "sC" : 3,
       "tS" : 0
     },
-    "\/worlds\/dynam-sys\/3-body\/ThreeBody.js" : {
+    "\/worlds\/dynam-sys\/3-body\/fig8\/index.html" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/dynam-sys\/3-body\/fig8\/index.html",
+      "oF" : 0
+    },
+    "\/worlds\/dynam-sys\/3-body\/fig8\/main-min.js" : {
       "bF" : 0,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
       "oA" : 0,
+      "oAP" : "\/worlds\/dynam-sys\/3-body\/fig8\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/dynam-sys\/3-body\/fig8\/main.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/dynam-sys\/3-body\/fig8\/main-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/dynam-sys\/3-body\/fig8\/params.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/dynam-sys\/3-body\/fig8\/params-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/dynam-sys\/3-body\/oscillator\/index.html" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/dynam-sys\/3-body\/oscillator\/index.html",
+      "oF" : 0
+    },
+    "\/worlds\/dynam-sys\/3-body\/oscillator\/main-min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/dynam-sys\/3-body\/oscillator\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/dynam-sys\/3-body\/oscillator\/main.js" : {
+      "bF" : 4,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/dynam-sys\/3-body\/oscillator\/main-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/dynam-sys\/3-body\/oscillator\/params.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/dynam-sys\/3-body\/oscillator\/params-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/dynam-sys\/3-body\/ThreeBody.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
       "oAP" : "\/worlds\/dynam-sys\/3-body\/ThreeBody-min.js",
       "oF" : 0,
       "sC" : 3,
@@ -14327,6 +14648,66 @@
       "mi" : 1,
       "oA" : 1,
       "oAP" : "\/worlds\/dynam-sys\/5-body\/twoByTwo\/params-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/dynam-sys\/choreography\/Choreography.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/dynam-sys\/choreography\/Choreography-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/dynam-sys\/choreography\/example\/index.html" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/dynam-sys\/choreography\/example\/index.html",
+      "oF" : 0
+    },
+    "\/worlds\/dynam-sys\/choreography\/example\/main-min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/dynam-sys\/choreography\/example\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/dynam-sys\/choreography\/example\/main.js" : {
+      "bF" : 4,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/dynam-sys\/choreography\/example\/main-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/dynam-sys\/choreography\/initialConditions.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/dynam-sys\/choreography\/initialConditions.txt",
+      "oF" : 0
+    },
+    "\/worlds\/dynam-sys\/choreography\/ThreeBody.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/dynam-sys\/choreography\/ThreeBody-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -14380,8 +14761,19 @@
       "oAP" : "\/worlds\/dynam-sys\/hyperbolic-spring-damped\/index.html",
       "oF" : 0
     },
-    "\/worlds\/dynam-sys\/hyperbolic-spring-damped\/main.js" : {
+    "\/worlds\/dynam-sys\/hyperbolic-spring-damped\/main-min.js" : {
       "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/dynam-sys\/hyperbolic-spring-damped\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/dynam-sys\/hyperbolic-spring-damped\/main.js" : {
+      "bF" : 4,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -14410,8 +14802,19 @@
       "oAP" : "\/worlds\/dynam-sys\/hyperbolic-spring\/index.html",
       "oF" : 0
     },
-    "\/worlds\/dynam-sys\/hyperbolic-spring\/main.js" : {
+    "\/worlds\/dynam-sys\/hyperbolic-spring\/main-min.js" : {
       "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/dynam-sys\/hyperbolic-spring\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/dynam-sys\/hyperbolic-spring\/main.js" : {
+      "bF" : 4,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -14440,8 +14843,19 @@
       "oAP" : "\/worlds\/dynam-sys\/inhomogeneous-spring\/index.html",
       "oF" : 0
     },
-    "\/worlds\/dynam-sys\/inhomogeneous-spring\/main.js" : {
+    "\/worlds\/dynam-sys\/inhomogeneous-spring\/main-min.js" : {
       "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/dynam-sys\/inhomogeneous-spring\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/dynam-sys\/inhomogeneous-spring\/main.js" : {
+      "bF" : 4,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -14470,8 +14884,19 @@
       "oAP" : "\/worlds\/dynam-sys\/OscillatorChain\/Circle-Dynamics\/index.html",
       "oF" : 0
     },
-    "\/worlds\/dynam-sys\/OscillatorChain\/Circle-Dynamics\/main.js" : {
+    "\/worlds\/dynam-sys\/OscillatorChain\/Circle-Dynamics\/main-min.js" : {
       "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/dynam-sys\/OscillatorChain\/Circle-Dynamics\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/dynam-sys\/OscillatorChain\/Circle-Dynamics\/main.js" : {
+      "bF" : 4,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -14511,8 +14936,19 @@
       "oAP" : "\/worlds\/dynam-sys\/OscillatorChain\/Interval-Dynamics\/index.html",
       "oF" : 0
     },
-    "\/worlds\/dynam-sys\/OscillatorChain\/Interval-Dynamics\/main.js" : {
+    "\/worlds\/dynam-sys\/OscillatorChain\/Interval-Dynamics\/main-min.js" : {
       "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/dynam-sys\/OscillatorChain\/Interval-Dynamics\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/dynam-sys\/OscillatorChain\/Interval-Dynamics\/main.js" : {
+      "bF" : 4,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -14574,8 +15010,19 @@
       "oAP" : "\/worlds\/dynam-sys\/OscillatorGrid\/RectangleDynamics\/index.html",
       "oF" : 0
     },
-    "\/worlds\/dynam-sys\/OscillatorGrid\/RectangleDynamics\/main.js" : {
+    "\/worlds\/dynam-sys\/OscillatorGrid\/RectangleDynamics\/main-min.js" : {
       "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/dynam-sys\/OscillatorGrid\/RectangleDynamics\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/dynam-sys\/OscillatorGrid\/RectangleDynamics\/main.js" : {
+      "bF" : 4,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -14604,8 +15051,19 @@
       "oAP" : "\/worlds\/dynam-sys\/OscillatorGrid\/Square3D\/index.html",
       "oF" : 0
     },
-    "\/worlds\/dynam-sys\/OscillatorGrid\/Square3D\/main.js" : {
+    "\/worlds\/dynam-sys\/OscillatorGrid\/Square3D\/main-min.js" : {
       "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/dynam-sys\/OscillatorGrid\/Square3D\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/dynam-sys\/OscillatorGrid\/Square3D\/main.js" : {
+      "bF" : 4,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -14663,6 +15121,96 @@
       "mi" : 1,
       "oA" : 0,
       "oAP" : "\/worlds\/dynam-sys\/pendulum\/src\/PendulumSim-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/geodesic-program\/geodesic\/index.html" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/geodesic-program\/geodesic\/index.html",
+      "oF" : 0
+    },
+    "\/worlds\/geodesic-program\/geodesic\/main.js" : {
+      "bF" : 4,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/geodesic-program\/geodesic\/main-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/geodesic-program\/geodesic\/src\/SingleGeodesic.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/geodesic-program\/geodesic\/src\/SingleGeodesic-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/geodesic-program\/geodesicSpray\/index.html" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/geodesic-program\/geodesicSpray\/index.html",
+      "oF" : 0
+    },
+    "\/worlds\/geodesic-program\/geodesicSpray\/main.js" : {
+      "bF" : 4,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/geodesic-program\/geodesicSpray\/main-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/geodesic-program\/geodesicSpray\/src\/Board.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/geodesic-program\/geodesicSpray\/src\/Board-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/geodesic-program\/geodesicStripes\/index.html" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/geodesic-program\/geodesicStripes\/index.html",
+      "oF" : 0
+    },
+    "\/worlds\/geodesic-program\/geodesicStripes\/main.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/geodesic-program\/geodesicStripes\/main-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/geodesic-program\/geodesicStripes\/src\/Board.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/geodesic-program\/geodesicStripes\/src\/Board-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -14758,7 +15306,7 @@
       "oF" : 0
     },
     "\/worlds\/geodesic-program\/gradientDescentSingle\/main.js" : {
-      "bF" : 0,
+      "bF" : 4,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -14779,6 +15327,77 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/worlds\/geodesic-program\/gradientSurface\/index.html" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/geodesic-program\/gradientSurface\/index.html",
+      "oF" : 0
+    },
+    "\/worlds\/geodesic-program\/gradientSurface\/main.js" : {
+      "bF" : 4,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/geodesic-program\/gradientSurface\/main-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/geodesic-program\/gradientSurface\/src\/GradientDescentSingle.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/geodesic-program\/gradientSurface\/src\/GradientDescentSingle-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/geodesic-program\/gravityDescentGrid\/index.html" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/geodesic-program\/gravityDescentGrid\/index.html",
+      "oF" : 0
+    },
+    "\/worlds\/geodesic-program\/gravityDescentGrid\/main-min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/geodesic-program\/gravityDescentGrid\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/geodesic-program\/gravityDescentGrid\/main.js" : {
+      "bF" : 4,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/geodesic-program\/gravityDescentGrid\/main-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/geodesic-program\/gravityDescentGrid\/src\/GravityDescentGrid.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/geodesic-program\/gravityDescentGrid\/src\/GravityDescentGrid-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/worlds\/geodesic-program\/gravityDisk\/index.html" : {
       "cB" : 0,
       "ft" : 8192,
@@ -14788,7 +15407,7 @@
       "oF" : 0
     },
     "\/worlds\/geodesic-program\/gravityDisk\/main.js" : {
-      "bF" : 0,
+      "bF" : 4,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -14805,36 +15424,6 @@
       "mi" : 1,
       "oA" : 0,
       "oAP" : "\/worlds\/geodesic-program\/gravityDisk\/src\/GravityDisk-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/worlds\/geodesic-program\/singleGeodesic\/index.html" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/worlds\/geodesic-program\/singleGeodesic\/index.html",
-      "oF" : 0
-    },
-    "\/worlds\/geodesic-program\/singleGeodesic\/main.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 0,
-      "oAP" : "\/worlds\/geodesic-program\/singleGeodesic\/main-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/worlds\/geodesic-program\/singleGeodesic\/src\/SingleGeodesic.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 0,
-      "oAP" : "\/worlds\/geodesic-program\/singleGeodesic\/src\/SingleGeodesic-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -15628,6 +16217,36 @@
       "mi" : 1,
       "oA" : 0,
       "oAP" : "\/worlds\/pde\/hydrogen2DSlice\/src\/hydrogenSetup-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/raytrace\/test\/index.html" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/raytrace\/test\/index.html",
+      "oF" : 0
+    },
+    "\/worlds\/raytrace\/test\/main.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/raytrace\/test\/main-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/raytrace\/test\/src\/test.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/raytrace\/test\/src\/test-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -16872,6 +17491,17 @@
       "oAP" : "\/worlds\/woodcut-orig\/bump-center\/index.html",
       "oF" : 0
     },
+    "\/worlds\/woodcut-orig\/bump-center\/main-min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/woodcut-orig\/bump-center\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/worlds\/woodcut-orig\/bump-center\/main.js" : {
       "bF" : 4,
       "ft" : 64,
@@ -16913,6 +17543,17 @@
       "oAP" : "\/worlds\/woodcut-orig\/bump-side\/index.html",
       "oF" : 0
     },
+    "\/worlds\/woodcut-orig\/bump-side\/main-min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/woodcut-orig\/bump-side\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/worlds\/woodcut-orig\/bump-side\/main.js" : {
       "bF" : 4,
       "ft" : 64,
@@ -16953,6 +17594,17 @@
       "oA" : 0,
       "oAP" : "\/worlds\/woodcut-orig\/eggcarton\/index.html",
       "oF" : 0
+    },
+    "\/worlds\/woodcut-orig\/eggcarton\/main-min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/woodcut-orig\/eggcarton\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
     },
     "\/worlds\/woodcut-orig\/eggcarton\/main.js" : {
       "bF" : 4,
@@ -17009,6 +17661,58 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/worlds\/woodcut-orig\/graphingCalc\/index.html" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/woodcut-orig\/graphingCalc\/index.html",
+      "oF" : 0
+    },
+    "\/worlds\/woodcut-orig\/graphingCalc\/main-min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/woodcut-orig\/graphingCalc\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/woodcut-orig\/graphingCalc\/main.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/woodcut-orig\/graphingCalc\/main-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/woodcut-orig\/graphingCalc\/src\/geodesicData.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/woodcut-orig\/graphingCalc\/src\/geodesicData-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/woodcut-orig\/graphingCalc\/src\/GraphingCalc.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/woodcut-orig\/graphingCalc\/src\/GraphingCalc-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/worlds\/woodcut-orig\/ripples\/index.html" : {
       "cB" : 0,
       "ft" : 8192,
@@ -17016,6 +17720,17 @@
       "oA" : 0,
       "oAP" : "\/worlds\/woodcut-orig\/ripples\/index.html",
       "oF" : 0
+    },
+    "\/worlds\/woodcut-orig\/ripples\/main-min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/woodcut-orig\/ripples\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
     },
     "\/worlds\/woodcut-orig\/ripples\/main.js" : {
       "bF" : 4,
@@ -17068,6 +17783,17 @@
       "oA" : 0,
       "oAP" : "\/worlds\/woodcut-orig\/waves\/index.html",
       "oF" : 0
+    },
+    "\/worlds\/woodcut-orig\/waves\/main-min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/woodcut-orig\/waves\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
     },
     "\/worlds\/woodcut-orig\/waves\/main.js" : {
       "bF" : 4,

@@ -96,7 +96,7 @@ class PolyLine{
                 let line = new LineCurve3(this.pts[i], this.pts[i + 1]);
                 this.lines[i] = line;
                 this.rods[i].geometry.dispose();
-                this.rods[i].geometry = new TubeGeometry(line, 1, 0.1, 8, false);
+                this.rods[i].geometry = new TubeGeometry(line, 1, this.options.radius, 8, false);
                 this.rods[i].visible =true;
             }
             else{

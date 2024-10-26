@@ -7,19 +7,6 @@ import Geodesic from "../../../../code/items/geodesic-program/trajectories/Geode
 import GradientVF from "../../../../code/items/geodesic-program/plot/GradientVF.js";
 import GlassDomain from "../../../../code/items/geodesic-program/plot/GlassDomain.js";
 
-
-
-
-const curveOptions = {
-    length:20,
-    segments: 512,
-    radius: 0.05,
-    tubeRes: 8,
-    color: 0x1b1b1b,
-    roughness:0,
-};
-
-
 class GradientDescentSingle{
     constructor() {
 
@@ -29,13 +16,13 @@ class GradientDescentSingle{
         this.grad = new GradientVF(this.surface);
 
         this.params = {
-            posx: 0.83,
+            posx: 0,
             posy: 0,
             ang:0,
         };
 
         this.buildIniState();
-        this.geodesic = new Geodesic(this.surface, this.iniState, 2, curveOptions);
+        this.geodesic = new Geodesic(this.surface, this.iniState, 2);
 
     }
 
@@ -47,7 +34,7 @@ class GradientDescentSingle{
 
     addToScene(scene){
         this.plot.addToScene(scene);
-        this.geodesic.addToScene(scene);
+        //this.geodesic.addToScene(scene);
         this.grad.addToScene(scene);
         this.glass.addToScene(scene);
     }
@@ -63,21 +50,6 @@ class GradientDescentSingle{
         };
 
         this.surface.buildUIFolder(ui,resetScene);
-
-        ui.add(test.params, 'posx',-5,5,0.01).name('Starting-x').onChange(function(value){
-            test.buildIniState();
-            test.geodesic.updateState(test.iniState);
-        })
-
-        ui.add(test.params, 'posy',-4,4,0.01).name('Starting-y').onChange(function(value){
-            test.buildIniState();
-            test.geodesic.updateState(test.iniState);
-        })
-
-        ui.add(test.params, 'ang',0,3.14,0.01).name('Starting-angle').onChange(function(value){
-            test.buildIniState();
-            test.geodesic.updateState(test.iniState);
-        })
 
     }
 

@@ -13,7 +13,8 @@ class Planet{
         this.pos = options.pos;
         this.vel = options.vel;
         this.mass = options.mass;
-        this.radius = 0.75*Math.pow(this.mass, 0.333);
+        this.radius = 0.2;
+            //0.75*Math.pow(this.mass, 0.333);
 
         this.trailLength = options.trailLength;
         this.trail = [];
@@ -72,7 +73,7 @@ class Planet{
     redrawTrail(){
         this.trailMesh.geometry.dispose();
         const curve = new CatmullRomCurve3(this.trail);
-        this.trailMesh.geometry=new TubeGeometry(curve,this.trailLength,0.15*this.radius,8);
+        this.trailMesh.geometry=new TubeGeometry(curve,this.trailLength,0.5*this.radius,8);
     }
 
     setMass( newMass ){

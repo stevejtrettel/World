@@ -111,7 +111,7 @@ class ThreeBody{
             return new dState( vel, acc );
         };
 
-        const ep=0.005;
+        const ep=0.003;
         this.integrator= new RungeKutta(this.derive, ep);
 
 
