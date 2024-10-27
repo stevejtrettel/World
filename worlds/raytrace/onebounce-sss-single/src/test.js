@@ -1,6 +1,5 @@
 import {Vector3} from "../../../../3party/three/build/three.module.js";
 
-import Path from "../../../../code/items/raytrace/Path.js";
 import OneBounce from "../../../../code/items/raytrace/OneBounce.js";
 import TVec from "../../../../code/items/raytrace/TVec.js";
 

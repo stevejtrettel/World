@@ -7,8 +7,6 @@ import {randomVec3Sphere,randomExponential} from "./interaction/random.js";
 
 
 
-
-
 class OneBounce {
     constructor(tv,maxN=100) {
 

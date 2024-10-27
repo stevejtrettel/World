@@ -1,22 +1,16 @@
 import { MathUtils, Vector2, Vector3} from "../../../../3party/three/build/three.module.js";
 
 
-function mix(vec1, vec2, t){
-    //convex combo of the TVecs
-    let v1 = vec1.clone().multiplyScalar(t);
-    let v2 = vec2.clone().multiplyScalar(1-t);
-    let newVec = v1.add(v2);
-    return newVec;
-}
 
-
-
-function randomVec3Sphere( Radius=1 ){
+//uniformly randomly distributed vec3 on surface of unit sphere
+function randomVec3Sphere( ){
     let theta = MathUtils.randFloat(0,6.29);
     let z = MathUtils.randFloat(-1,1);
+    //this is a random point on the cylinder (theta,z)
 
-    let pt = new Vector3( Math.cos(theta), Math.sin(theta), z);
-    pt.multiplyScalar( Radius );
+    //use archimedes area preserving horizontal projection:
+    let R = Math.sqrt(1-z*z);
+    let pt = new Vector3( R*Math.cos(theta), R*Math.sin(theta), z);
 
     return pt;
 }
@@ -33,4 +27,4 @@ function randomExponential(mean){
 }
 
 
-export {randomVec3Sphere,mix, randomExponential};
+export {randomVec3Sphere, randomExponential};
