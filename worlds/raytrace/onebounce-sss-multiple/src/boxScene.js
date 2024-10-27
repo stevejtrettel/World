@@ -42,12 +42,11 @@ let sphere2 = new Sphere(new Vector3(3,-3.5,0),1.5, sphMat2);
 boxScene.addObject(sphere2);
 
 let sphMat3 = new Material();
-sphMat3.makeGlass(0x95b888,1.5,0.95,0.2);
+sphMat3.makeSubsurface(0x95b888,0.5,0.05,1.5,0,0.1);
 //0x814fb3);
 
 let sphere3 = new Sphere(new Vector3(-2,-3,-2),2, sphMat3);
 boxScene.addObject(sphere3);
-
 
 
 

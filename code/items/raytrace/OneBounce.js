@@ -30,10 +30,11 @@ function bisect(tv,dt,obj){
 
 
 class OneBounce {
-    constructor(tv) {
+    constructor(tv,maxN=100) {
 
         this.tv = tv;
-        this.traj = new LightRay(100);
+        this.maxN = maxN;
+        this.traj = new LightRay(maxN);
 
         //the current object
         this.currentObject = undefined;
@@ -166,23 +167,23 @@ class OneBounce {
         //subsurface scattering through an object
 
         //FIRST: enter the object with a little refraction
-        // let normal = obj.getNormal(this.tv.pos);
-        // let rough2 = obj.mat.roughness * obj.mat.roughness;
-        // let randomVec = new TVec(this.tv.pos,new randomVec3Sphere());
-        // //n is the ior ratio current/entering:
-        // //we are outside, just entering
-        // let n = 1/obj.mat.ior;
-        // let reflectVec = refractIn(this.tv,normal,n);
-        // let newTV = mix(randomVec,reflectVec,rough2);
-        // this.tv = newTV;
-        // //move a little
-        // this.tv.flow(0.005);
+        let normal = obj.getNormal(this.tv.pos);
+        let rough2 = obj.mat.roughness * obj.mat.roughness;
+        let randomVec = new TVec(this.tv.pos,new randomVec3Sphere());
+        //n is the ior ratio current/entering:
+        //we are outside, just entering
+        let n = 1/obj.mat.ior;
+        let reflectVec = refractIn(this.tv,normal,n);
+        let newTV = mix(randomVec,reflectVec,rough2);
+        this.tv = newTV;
+        //move a little
+        this.tv.flow(0.005);
 
 
-        let randomVec;
+        //let randomVec;
 
         //start the SSS
-        let scatterSteps = 98;
+        let scatterSteps = this.maxN-5;
         //distances
         let depth = 0;
         let flowDist =0;
@@ -200,8 +201,7 @@ class OneBounce {
             //update tvs direction
             this.tv = temp.clone();
             //choose distance to flow
-            flowDist = 0.1;
-                //randomExponential(mfp);
+            flowDist = randomExponential(mfp);
 
             //do a trial flow
             temp.flow(flowDist);
@@ -225,11 +225,11 @@ class OneBounce {
 
         }
 
-        // n = obj.mat.ior;
-        // normal = obj.getNormal(this.tv.pos);
-        // normal.multiplyScalar(-1);
-        // this.tv = refractIn(this.tv,normal,n);
-        // this.tv.flow(0.005);
+        n = obj.mat.ior;
+        normal = obj.getNormal(this.tv.pos);
+        normal.multiplyScalar(-1);
+        this.tv = refractIn(this.tv,normal,n);
+        this.tv.flow(0.005);
 
     }
 
