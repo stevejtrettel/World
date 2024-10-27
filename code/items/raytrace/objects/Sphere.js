@@ -11,7 +11,6 @@ class Sphere extends Object{
         this.radius = radius;
         this.mat = mat;
 
-
         //build the physical version
         let geom = new SphereGeometry(this.radius);
         let material = new MeshPhysicalMaterial({
@@ -24,10 +23,6 @@ class Sphere extends Object{
         this.mesh.position.set(this.center.x,this.center.y,this.center.z);
 
     }
-
-
-
-
 
 
     sdf(pos){

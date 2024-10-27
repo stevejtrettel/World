@@ -26,9 +26,13 @@ class Wall extends Object{
 
 
             //make walls slightly transparent to help with visualization
-            opacity:1,
-            transmission: 0.5,
-            ior:1,
+           // opacity:0.75,
+           // transparent:true,
+
+
+            // opacity:1,
+            // transmission: 0.5,
+            // ior:1,
         });
         this.mesh = new Mesh(geom,material);
 

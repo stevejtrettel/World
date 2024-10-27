@@ -16,11 +16,10 @@ let defaultOptions = {
 
 class PolyLine{
 
-    constructor(pts,options = defaultOptions,maxN=100) {
+    constructor(options = defaultOptions,maxN=100) {
 
-        this.maxN=100;
-        this.pts = pts;
-        this.N = pts.length-1;
+        this.maxN=maxN;
+
 
         this.radius = options.radius;
         this.color = options.color;
@@ -40,8 +39,6 @@ class PolyLine{
             this.rods.push(new Mesh(geom,this.mat));
         }
 
-        //build the actual segments
-        this.buildSegments();
 
     }
 

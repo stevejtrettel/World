@@ -8,15 +8,15 @@ class Path {
 
         this.N = N;
         this.tv = tv;
+
+        //some useful booleans
         this.hitLight = false;
+        this.subsurface = false;
 
-        //initialize the trajectory with all points at tv.pos
-        this.pts = [];
-        for(let i=0;i<this.N;i++){
-            this.pts.push(this.tv.pos);
-        }
+        //the current object in case we need it
+        this.currentObject = undefined;
 
-        this.traj = new LightRay(this.pts);
+        this.traj = new LightRay(this.N);
     }
 
 
@@ -52,30 +52,52 @@ class Path {
     }
 
 
-    stepForward(diorama){
-
-        //raymarch to the next intersection
-        this.raymarch(diorama);
+    interact(diorama){
 
         //get the current object (if one exists) at the location
-        let currentObject = diorama.getObjectAt(this.tv.pos);
-        if(currentObject === undefined){ this.tv.keepGoing = false; }
+        this.currentObject = diorama.getObjectAt(this.tv.pos);
+        if(this.currentObject === undefined){ this.tv.keepGoing = false; }
         //stop if we hit a light
-        else if( currentObject.isLight ){
+        else if( this.currentObject.isLight ){
             this.tv.keepGoing = false;
             this.hitLight = true;
         }
 
         //otherwise, interact and get ready for next raymarch
         if(this.tv.keepGoing){
-                let currentNormal = currentObject.getNormal(this.tv.pos);
-                this.tv = reflectIn(this.tv,currentNormal);
+            let currentNormal = this.currentObject.getNormal(this.tv.pos);
+            this.tv = reflectIn(this.tv,currentNormal);
 
-                //move a little so you don't register as being on the object
-                this.tv.pos.add(currentNormal.dir.multiplyScalar(0.002));
-                this.tv.flow(0.002);
+            //move a little so you don't register as being on the object
+            this.tv.pos.add(currentNormal.dir.multiplyScalar(0.002));
+            this.tv.flow(0.002);
         }
 
+    }
+
+
+    sss(obj){
+        //subsurface scattering through an object
+
+
+    }
+
+
+    stepForward(diorama){
+
+        //raymarch to the next intersection
+        this.raymarch(diorama);
+
+        //add the point to the list!
+        this.pts.push(this.tv.pos.clone());
+
+        //interact with the location:
+        this.interact(diorama);
+
+        //if we need to subsurface scater, do it
+        if(this.subsurface){
+            this.sss(this.currentObject);
+        }
     }
 
     trace(diorama){
@@ -89,8 +111,8 @@ class Path {
         for(let i=0;i<this.N;i++){
 
             //step forward and save the new point
+            //(or points, if we subsurface scatter)
             this.stepForward(diorama);
-            this.pts.push(this.tv.pos.clone());
 
             //stop if we are told to
             if(!this.tv.keepGoing){

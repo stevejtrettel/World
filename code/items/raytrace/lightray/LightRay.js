@@ -10,21 +10,21 @@ let defaultOptions = {
 
 
 class LightRay{
-    constructor(pts) {
+    constructor(maxN=100) {
 
-        this.pts = pts;
+        this.maxN = maxN;
 
         let rodOptions = {
             radius: 0.02,
             color:0xffffff,
         };
-        this.rods = new PolyLine(pts,rodOptions,100);
+        this.rods = new PolyLine(rodOptions, maxN);
 
         let ballOptions = {
             radius:0.04,
             color: 0xffffff,
         };
-        this.balls = new BallList(this.pts,ballOptions,100);
+        this.balls = new BallList(ballOptions, maxN);
 
     }
 
