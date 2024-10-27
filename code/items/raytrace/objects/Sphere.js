@@ -18,8 +18,8 @@ class Sphere extends Object{
             roughness: this.mat.roughness,
             clearcoat:true,
         });
-        if(this.mat.refractChance>0.){
-            material.transmission = this.mat.refractChance;
+        if(this.mat.refractChance>0. || this.mat.subsurfaceChance >0.){
+            material.transmission = Math.max(this.mat.refractChance,this.mat.subsurfaceChance);
             material.opacity = 1.;
             material.ior=1;
             material.thickness=1.;

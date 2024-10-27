@@ -21,4 +21,16 @@ function randomVec3Sphere( Radius=1 ){
     return pt;
 }
 
-export {randomVec3Sphere,mix};
+
+
+// // get a single random sample from an exponential distribtution of specified mean
+// //calculated by sampling uniform, and inverting CDF:
+// //https://www.baeldung.com/cs/sampling-exponential-distribution
+function randomExponential(mean){
+    let u = Math.random();
+    let x = -mean*Math.log(1-u);
+    return x;
+}
+
+
+export {randomVec3Sphere,mix, randomExponential};

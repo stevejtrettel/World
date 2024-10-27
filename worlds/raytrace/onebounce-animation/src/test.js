@@ -51,8 +51,11 @@ class Test{
     tick(time,dTime){
 
         if(this.params.animate) {
+
+            //rerun to get a new random path
+
             let pos = new Vector3(0, 0, 4.8);
-            let dir = new Vector3(-0.13 + 0.01 * Math.cos(time / 300), -0.1 + 0.01 * Math.sin(time / 300), -0.4).normalize();
+            let dir = new Vector3(-0.13, -0.1, -0.4).normalize();
 
             this.path.tv = new TVec(pos, dir);
             this.path.totalDist = 0.;
