@@ -22,13 +22,10 @@ class Wall extends Object{
             geom = new BoxGeometry(boxSize, boxSize,0.1);
         }
         let material = new MeshPhysicalMaterial({
-            color: this.mat.properties.color,
-
-
+            color: this.mat.color,
             //make walls slightly transparent to help with visualization
            // opacity:0.75,
            // transparent:true,
-
 
             // opacity:1,
             // transmission: 0.5,

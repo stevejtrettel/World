@@ -1,7 +1,7 @@
 import LightRay from "./lightray/LightRay.js";
 import TVec from "./TVec.js";
 
-import reflectIn from "./interaction/reflect.js";
+import {reflectIn} from "./interaction/scatter.js"
 
 class Path {
     constructor(tv,N=50) {
@@ -65,6 +65,8 @@ class Path {
 
         //otherwise, interact and get ready for next raymarch
         if(this.tv.keepGoing){
+
+            //JUST DO A PURE REFLECTION
             let currentNormal = this.currentObject.getNormal(this.tv.pos);
             this.tv = reflectIn(this.tv,currentNormal);
 

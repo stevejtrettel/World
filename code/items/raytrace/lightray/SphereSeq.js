@@ -11,12 +11,12 @@ class SphereSeq{
         this.mat = new MeshPhysicalMaterial({
             color: 0xffffff,
             clearcoat:true,
-            // opacity:0.2,
-            // transparent:true,
+            opacity:0.2,
+            transparent:true,
 
-            opacity:1,
-            transmission:0.9,
-            ior:1,
+            // opacity:1,
+            // transmission:0.9,
+            // ior:1,
         });
 
         //build the initial list

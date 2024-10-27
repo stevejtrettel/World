@@ -31,6 +31,7 @@ class TVec{
 
     normalize(){
         this.dir.normalize();
+        return this;
     }
 
     dot(tv) {
