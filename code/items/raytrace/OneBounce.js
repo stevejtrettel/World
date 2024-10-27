@@ -1,29 +1,9 @@
 import {Vector3} from "../../../3party/three/build/three.module.js";
 import TVec from "./TVec.js";
-import {reflectIn, refractIn} from "./interaction/scatter.js";
+import {reflectIn, refractIn,TIR,FresnelReflectAmount,mix,bisect} from "./interaction/scatter.js";
 import LightRay from "./lightray/LightRay.js";
-import {mix, randomVec3Sphere,randomExponential} from "./interaction/random.js";
+import {randomVec3Sphere,randomExponential} from "./interaction/random.js";
 
-
-
-function bisect(tv,dt,obj){
-    let dist = 0.;
-    let testDist = dt;
-    let temp = new TVec();
-
-    for(let i=0; i<10; i++){
-        testDist = testDist/2.;
-        //test flow by this:
-        temp = tv.clone();
-        temp.flow(dist+testDist);
-        //if you are still inside, add the dist
-        if(obj.inside(temp.pos)){
-            dist += testDist;
-        }
-        //if not, dont! divide in half and try again
-    }
-    return dist;
-}
 
 
 
@@ -58,8 +38,6 @@ class OneBounce {
         //interact with the location:
         //this leaves us at the objects surface, ready to continue
         this.interact(diorama);
-        //move a little off the surface:
-        this.tv.flow(0.005);
 
         //raytrace to next location
         this.raymarch(diorama);
@@ -111,35 +89,44 @@ class OneBounce {
         //otherwise, interact and get ready for next raymarch
         if(this.tv.keepGoing){
 
+            //outward normal
+            let normal = this.currentObject.getNormal(this.tv.pos);
+            //uniform vector on sphere
+            let randomVec = new TVec(this.tv.pos.clone(),new randomVec3Sphere());
+
             //decide which we are doing:
             let random = Math.random();
-
             let dC = this.currentObject.mat.diffuseChance;
             let sC = this.currentObject.mat.specularChance;
             let rC = this.currentObject.mat.refractChance;
             let sssC = this.currentObject.mat.subsurfaceChance;
 
+            //update probabilities using Fresnel, if something is specular and refracting
+            if(sC>0. && rC >0.){
+                let n = 1/this.currentObject.mat.ior;//current over entering
+                let newSC = FresnelReflectAmount(n, this.tv, normal, sC, 1.0);
+
+                let chanceMultiplier = (1.0 - newSC) / (1.0 - sC);
+                sC = newSC;
+                rC  *= chanceMultiplier;
+                dC *= chanceMultiplier;
+                sssC *= chanceMultiplier;
+            }
 
             if(random<dC){//diffuse
-                let normal = this.currentObject.getNormal(this.tv.pos);
-                let randomVec = new TVec(this.tv.pos.clone(),new randomVec3Sphere());
                 let diffuseVec = normal.clone().add(randomVec);
                 diffuseVec.normalize();
-                let rough2 = this.currentObject.mat.roughness * this.currentObject.mat.roughness;
-
                 this.tv = diffuseVec;
             }
 
             else if(random < dC+sC){//specular
-                let normal = this.currentObject.getNormal(this.tv.pos);
-                let randomVec = new TVec(this.tv.pos.clone(),new randomVec3Sphere());
 
                 let diffuseVec = normal.clone().add(randomVec);
                 diffuseVec.normalize();
                 let reflectVec = reflectIn(this.tv,normal);
 
                 let rough2 = this.currentObject.mat.roughness * this.currentObject.mat.roughness;
-                let newTV = mix(randomVec,reflectVec,rough2);
+                let newTV = mix(reflectVec,randomVec, rough2);
 
                 this.tv = newTV;
             }
@@ -155,9 +142,11 @@ class OneBounce {
                 this.sss(this.currentObject);
             }
 
-            // let normal = this.currentObject.getNormal(this.tv.pos);
-            // this.tv.add(normal.multiplyScalar(0.002))
 
+            //move a bit off the surface to get ready to start
+            normal = this.currentObject.getNormal(this.tv.pos);
+            this.tv.add(normal.multiplyScalar(0.002));
+            this.tv.flow(0.002);
         }
 
     }
@@ -174,13 +163,11 @@ class OneBounce {
         //we are outside, just entering
         let n = 1/obj.mat.ior;
         let reflectVec = refractIn(this.tv,normal,n);
-        let newTV = mix(randomVec,reflectVec,rough2);
+        let newTV = mix(reflectVec,randomVec,rough2);
         this.tv = newTV;
         //move a little
         this.tv.flow(0.005);
 
-
-        //let randomVec;
 
         //start the SSS
         let scatterSteps = this.maxN-5;
@@ -197,7 +184,7 @@ class OneBounce {
         for(let i=0; i<scatterSteps; i++){
 
             randomVec = new TVec(this.tv.pos,new randomVec3Sphere());
-            temp = mix(randomVec,temp, iso);
+            temp = mix(temp, randomVec,iso);
             //update tvs direction
             this.tv = temp.clone();
             //choose distance to flow
@@ -229,7 +216,7 @@ class OneBounce {
         normal = obj.getNormal(this.tv.pos);
         normal.multiplyScalar(-1);
         this.tv = refractIn(this.tv,normal,n);
-        this.tv.flow(0.005);
+        // this.tv.flow(0.005);
 
     }
 
@@ -244,7 +231,7 @@ class OneBounce {
         //we are outside, just entering
         let n = 1/obj.mat.ior;
         let reflectVec = refractIn(incident,normal,n);
-        let newTV = mix(randomVec,reflectVec,rough2);
+        let newTV = mix(reflectVec,randomVec,rough2);
         this.tv = newTV;
 
         //move a little
@@ -255,42 +242,35 @@ class OneBounce {
         this.pts.push(this.tv.pos.clone());
 
         //bounce around if there is some total internal reflections
-        this.tir(obj);
+        for(let i=0; i<30; i++) {
 
-        n = obj.mat.ior;
-        normal = obj.getNormal(this.tv.pos);
-        normal.multiplyScalar(-1);
-        this.tv = refractIn(this.tv,normal,n);
-        this.tv.flow(0.005);
+            //n is the ior ratio current/entering: we are inside going to the outside
+            n = obj.mat.ior;
 
-    }
-
-    tir(obj){
-
-        //n is the ior ratio current/entering:
-        //we are inside going to the outside
-        let n = obj.mat.ior;
-
-        for(let i=0; i<10; i++) {
-            let incident = this.tv;
-            let normal = obj.getNormal(incident.pos);
+            let normal = obj.getNormal(this.tv.pos);
             normal.multiplyScalar(-1);//we are inside
 
-            let cosX = -normal.dot(incident);
-            let sinT2 = n * n * (1 - cosX * cosX);
-            if (sinT2 < 1.) {
+            if(TIR(n,this.tv,normal)) {
+                //we have reflection, continue
+                this.tv = reflectIn(this.tv, normal);
+                this.tv.flow(0.002);
+                this.raymarch(obj);
+                this.pts.push(this.tv.pos.clone());
+            }
+            else{
+                //no reflection: we're free!
                 break;
             }
-
-            //otherwise, we have reflection, continue
-            this.tv = reflectIn(incident,normal);
-            this.tv.flow(0.002);
-
-            this.raymarch(obj);
-            this.pts.push(this.tv.pos.clone());
         }
 
+        //now we are done internally reflecting
+        normal = obj.getNormal(this.tv.pos);
+        normal.multiplyScalar(-1);//still inside
+        this.tv = refractIn(this.tv,normal,n);
+        // this.tv.flow(0.005);
+
     }
+
 
 
 }

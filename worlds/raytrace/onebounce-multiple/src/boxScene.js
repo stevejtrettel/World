@@ -30,13 +30,13 @@ boxScene.addObject(light3);
 
 
 let sphMat1 = new Material();
-sphMat1.makeMirror(0xeb4034);
+sphMat1.makeDielectric(0xeb4034,0.2,0.95);
 
 let sphere1 = new Sphere(new Vector3(-1,-4,3),1, sphMat1);
 boxScene.addObject(sphere1);
 
 let sphMat2 = new Material();
-sphMat2.makeMirror(0xd18324);
+sphMat2.makeDielectric(0xd18324,0.75,0.2);
 
 let sphere2 = new Sphere(new Vector3(3,-3.5,0),1.5, sphMat2);
 boxScene.addObject(sphere2);

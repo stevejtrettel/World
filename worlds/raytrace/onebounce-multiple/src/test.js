@@ -15,7 +15,7 @@ class Test{
             t: 0,
         }
 
-        this.numPaths = 100;
+        this.numPaths = 200;
 
         //use some diorama
         this.diorama = boxScene;
@@ -65,7 +65,9 @@ class Test{
 
             //rerun to get a new random path
             let pos = new Vector3(0, 0, 4.8);
-            let dir = new Vector3(-0.13+0.2*Math.sin(time/3), -0.2, -0.4).normalize();
+            //let dir = new Vector3(-0.13+0.2*Math.sin(time/3), -0.2, -0.4).normalize();//GLASS BALL
+            //let dir = new Vector3(0.19+0.1*Math.sin(time/3), -0.2, -0.4).normalize();//YELLOW BALL
+            let dir = new Vector3(-0.1+0.1*Math.sin(time/3), -0.7, -0.4).normalize();//RED BALL
             this.tv = new TVec(pos, dir);
 
             for(let i=0;i<this.numPaths;i++) {
