@@ -29,26 +29,27 @@ boxScene.addObject(light3);
 
 
 
+
 let sphMat1 = new Material();
-sphMat1.makeDielectric(0xeb4034);
+sphMat1.makeMirror(0x95b888);
 
 let sphere1 = new Sphere(new Vector3(-1,-4,3),1, sphMat1);
 boxScene.addObject(sphere1);
 
-
 let sphMat2 = new Material();
-sphMat2.makeDielectric(0xd18324);
+sphMat2.makeMirror(0xd18324);
 
 let sphere2 = new Sphere(new Vector3(3,-3.5,0),1.5, sphMat2);
 boxScene.addObject(sphere2);
 
-
 let sphMat3 = new Material();
-sphMat3.makeDielectric(0x95b888);
+sphMat3.makeMirror(0xeb4034);
 //0x814fb3);
 
 let sphere3 = new Sphere(new Vector3(-2,-3,-2),2, sphMat3);
 boxScene.addObject(sphere3);
+
+
 
 
 let floorMat = new Material();

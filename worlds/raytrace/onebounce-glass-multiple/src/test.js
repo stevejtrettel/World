@@ -3,7 +3,7 @@ import {Vector3} from "../../../../3party/three/build/three.module.js";
 import OneBounce from "../../../../code/items/raytrace/OneBounce.js";
 import TVec from "../../../../code/items/raytrace/TVec.js";
 
-import boxScene from "./boxScene.js";
+import boxScene from "./oneBallScene.js";
 
 
 class Test{
@@ -12,6 +12,7 @@ class Test{
         this.params = {
             animate:true,
             t: 0,
+            roughness:0.2,
         }
 
         this.numPaths = 200;
@@ -27,7 +28,10 @@ class Test{
         for(let i=0; i<this.numPaths; i++) {
             this.paths.push( new OneBounce(this.tv) );
             this.paths[i].trace(this.diorama);
+            // this.paths[i].traj.hitLight(true);
         }
+
+        this.diorama.setRoughness(this.params.roughness);
     }
 
 
@@ -39,24 +43,28 @@ class Test{
     }
 
     addToUI(ui){
-        let numPaths = this.numPaths;
-        let tv = this.tv;
-         let paths = this.paths;
-         let diorama = this.diorama;
+        // let numPaths = this.numPaths;
+        // let tv = this.tv;
+        //  let paths = this.paths;
+        //  let diorama = this.diorama;
+        // //
+        // ui.add(this.params,'animate');
+        // ui.add(this.params,'t',0,1,0.001).onChange(function(time){
+        //     //rerun to get a new random path
+        //     let pos = new Vector3(0, 0, 4.8);
+        //     let dir = new Vector3(-0.13+0.2*Math.sin(time/3), -0.2, -0.4).normalize();
+        //     tv = new TVec(pos, dir);
         //
-        ui.add(this.params,'animate');
-        ui.add(this.params,'t',0,1,0.001).onChange(function(time){
-            //rerun to get a new random path
-            let pos = new Vector3(0, 0, 4.8);
-            let dir = new Vector3(-0.13+0.2*Math.sin(time/3), -0.2, -0.4).normalize();
-            tv = new TVec(pos, dir);
-
-            for(let i=0;i<numPaths;i++) {
-                paths[i].tv = tv;
-                paths[i].trace(diorama);
-            }
-
-        });
+        //     for(let i=0;i<numPaths;i++) {
+        //         paths[i].tv = tv;
+        //         paths[i].trace(diorama);
+        //     }
+        //
+        // });
+        //
+        // ui.add(this.params,'roughness',0,1,0.01).onChange(function(value){
+        //     diorama.setRoughness(value);
+        // });
     }
 
     tick(time,dTime){
@@ -66,7 +74,7 @@ class Test{
             let pos = new Vector3(0, 0, 4.8);
             //let dir = new Vector3(-0.13+0.2*Math.sin(time/3), -0.2, -0.4).normalize();//GLASS BALL
             //let dir = new Vector3(0.19+0.1*Math.sin(time/3), -0.2, -0.4).normalize();//YELLOW BALL
-            let dir = new Vector3(-0.1+0.1*Math.sin(time/3), -0.7, -0.4).normalize();//RED BALL
+            let dir = new Vector3(0+0.1*Math.sin(time/3), -0.2, -0.4).normalize();//RED BALL
             this.tv = new TVec(pos, dir);
 
             for(let i=0;i<this.numPaths;i++) {

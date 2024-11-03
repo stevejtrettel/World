@@ -57,6 +57,10 @@ class OneBounce{
         scene.add(this.bounceRay);
     }
 
+    showBounceRay(bool){
+            this.bounceRay.setVisibility(bool);
+    }
+
 }
 
 

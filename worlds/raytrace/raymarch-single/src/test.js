@@ -49,7 +49,7 @@ class Test{
 
         if(this.params.animate) {
             let pos = new Vector3(0, 0, 4.8);
-            let dir = new Vector3(-0.13 + 0.2 * Math.cos(time / 3), -0.05, -0.4).normalize();
+            let dir = new Vector3(-0.13 + 0.2 * Math.cos(time / 3), -0.05+0.1*Math.sin(time/4), -0.4).normalize();
             this.path.tv = new TVec(pos, dir);
             this.path.trace(this.diorama);
         }

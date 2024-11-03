@@ -88,9 +88,10 @@ class OneBounce {
         if(this.tv.keepGoing){
 
             //outward normal
-            let normal = this.currentObject.getNormal(this.tv.pos);
+            let normal = this.currentObject.getNormal(this.tv.pos).normalize();
             //uniform vector on sphere
             let randomVec = new TVec(this.tv.pos.clone(),new randomVec3Sphere());
+            randomVec.normalize();
 
             //decide which we are doing:
             let random = Math.random();
@@ -112,6 +113,7 @@ class OneBounce {
             }
 
             if(random<dC){//diffuse
+               // let diffuseVec = randomVec.clone().reflectIn(normal);
                 let diffuseVec = normal.clone().add(randomVec);
                 diffuseVec.normalize();
                 this.tv = diffuseVec;

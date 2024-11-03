@@ -39,14 +39,15 @@ class PhongPath{
         }
 
         //update the trajectory
-        this.traj.setPoints([this.pointOrigin,this.tv.pos.clone(), this.pointLight]);
+        this.pointScene = this.tv.pos.clone();
+        this.traj.setPoints([this.pointOrigin,this.pointScene, this.pointLight]);
 
     }
-
 
     addToScene(scene) {
         this.traj.addToScene(scene);
     }
+
 
 
 }

@@ -24,8 +24,8 @@ class Wall extends Object{
         let material = new MeshPhysicalMaterial({
             color: this.mat.color,
             //make walls slightly transparent to help with visualization
-           // opacity:0.75,
-           // transparent:true,
+           opacity:0.75,
+           transparent:true,
 
             // opacity:1,
             // transmission: 0.5,

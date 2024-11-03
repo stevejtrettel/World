@@ -4,6 +4,7 @@ import TVec from "../../../../code/items/raytrace/TVec.js";
 
 import boxScene from "./boxScene.js";
 import PhongShadowPath from "../../../../code/items/raytrace/PhongShadowPath.js";
+import SurfaceNormal from "../../../../code/items/raytrace/SurfaceNormal.js";
 
 class Test{
     constructor() {
@@ -15,6 +16,8 @@ class Test{
 
         //use some diorama
         this.diorama = boxScene;
+
+        this.nvec = new SurfaceNormal();
 
         //make some lights
         this.light1 = new Vector3(2,4,0);
@@ -34,6 +37,11 @@ class Test{
         this.path2.trace(this.diorama);
         this.path3.trace(this.diorama);
 
+        let obj = this.diorama.getObjectAt(this.path1.pointScene);
+        if(obj) {
+            this.nvec.getNormalAt(this.path1.pointScene, obj);
+        }
+
     }
 
 
@@ -42,26 +50,17 @@ class Test{
         this.path2.addToScene(scene);
         this.path3.addToScene(scene);
         this.diorama.addToScene(scene);
+        this.nvec.addToScene(scene);
     }
 
     addToUI(ui){
-        // let path = this.path;
-        // let diorama = this.diorama;
-        //
-        // ui.add(this.params,'animate');
-        // ui.add(this.params,'t',0,1,0.001).onChange(function(time){
-        //     let pos = new Vector3(0, 0, 4.8);
-        //     let dir = new Vector3(-0.13 + 0.1 * Math.cos(time), -0.1 + 0.1 * Math.sin(time/ 10), -0.4).normalize();
-        //     path.tv = new TVec(pos, dir);
-        //     path.trace(diorama);
-        // });
     }
 
     tick(time,dTime){
 
         if(this.params.animate) {
             let pos = new Vector3(0, 0, 4.8);
-            let dir = new Vector3(-0.13 + 1 * Math.cos(time / 3), -0.35 , -0.4).normalize();
+            let dir = new Vector3(-0.15 + 0.2 * Math.cos(time / 3), -0.25+ 0.05*Math.sin(3.*time) , -0.4).normalize();
             let tv =  new TVec(pos, dir);
 
             this.path1.tv = tv;
@@ -71,6 +70,11 @@ class Test{
             this.path1.trace(this.diorama);
             this.path2.trace(this.diorama);
             this.path3.trace(this.diorama);
+
+            let obj = this.diorama.getObjectAt(this.path1.pointScene);
+            if(obj) {
+                this.nvec.getNormalAt(this.path1.pointScene, obj);
+            }
         }
     }
 }

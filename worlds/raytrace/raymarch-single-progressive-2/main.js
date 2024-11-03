@@ -15,14 +15,15 @@ let globalSettings={
     stats:false,
 
     environment:{
-        color:0x292b36,
-        cube: true,
+        color:0x1f1f1f,
+            //0x292b36,
+        cube: false,
     },
 
     camera:{
         animate:false,
         fov:55,
-        pos:{x:4,y:4,z:16},
+        pos:{x:-20,y:-3,z:5},
         look:{x:0,y:0,z:0},
         posAnimate: (t)=>{
             return {x:15.*Math.sin(Math.sin(t/5)),y:7,z:15.*Math.cos(Math.sin(t/5))}},

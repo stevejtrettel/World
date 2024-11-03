@@ -3,7 +3,7 @@ import {Vector3} from "../../../../3party/three/build/three.module.js";
 import OneBounce from "../../../../code/items/raytrace/OneBounce.js";
 import TVec from "../../../../code/items/raytrace/TVec.js";
 
-import boxScene from "./boxScene.js";
+import boxScene from "./oneBallScene.js";
 
 
 class Test{
@@ -18,7 +18,7 @@ class Test{
         this.diorama = boxScene;
 
         //create the path
-        let dir = new Vector3(-0.13, -0.1+0.01*0.71, -0.4-0.01*0.71).normalize();
+        let dir = new Vector3(0.1, -0.1+0.01*0.71, -0.4-0.01*0.71).normalize();
         this.tv = new TVec(new Vector3(0,0,4.8), dir);
         this.path = new OneBounce(this.tv,1000);
 
@@ -52,8 +52,8 @@ class Test{
         if(this.params.animate) {
 
             //rerun to get a new random path
-            let pos = new Vector3(0, 0, 4.8);
-            let dir = new Vector3(-0.13, -0.1, -0.4).normalize();
+            let pos = new Vector3(0., 0., 4.8);
+            let dir = new Vector3(-0., -0.2, -0.4).normalize();
 
             this.path.tv = new TVec(pos, dir);
             this.path.totalDist = 0.;

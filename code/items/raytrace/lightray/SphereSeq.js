@@ -11,7 +11,7 @@ class SphereSeq{
         this.mat = new MeshPhysicalMaterial({
             color: 0xffffff,
             clearcoat:true,
-            opacity:0.2,
+            opacity:0.3,
             transparent:true,
 
             // opacity:1,
@@ -69,6 +69,8 @@ class SphereSeq{
     setColor(color){
         this.mat.color.setHex(color);
     }
+
+
 }
 
 

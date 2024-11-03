@@ -3,7 +3,7 @@ import {Mesh, MeshPhysicalMaterial, SphereGeometry,Object3D} from "../../../../3
 
 let defaultOptions = {
     color: 0xffffff,
-    radius:0.1,
+    radius:0.05,
 };
 
 

@@ -15,13 +15,13 @@ class LightRay{
         this.maxN = maxN;
 
         let rodOptions = {
-            radius: 0.02,
+            radius: 0.025,
             color:0xffffff,
         };
         this.rods = new PolyLine(rodOptions, maxN);
 
         let ballOptions = {
-            radius:0.04,
+            radius:0.05,
             color: 0xffffff,
         };
         this.balls = new BallList(ballOptions, maxN);

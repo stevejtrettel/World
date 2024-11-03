@@ -15,8 +15,8 @@ let globalSettings={
     stats:false,
 
     environment:{
-        color:0x292b36,
-        cube: true,
+        color:0x1f1f1f,
+        cube: false,
     },
 
     camera:{

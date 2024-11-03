@@ -58,6 +58,16 @@ class RaymarchPath{
         this.sph.addToScene(scene);
     }
 
+
+    showBounces(N){
+        //only show first N bounces
+        //take into account how many points there *actually* are in the list
+        let showN = Math.min(N,this.ray.pts.length-2);
+        this.ray.showBounces(showN);
+        this.sph.setVisibility(showN+1);
+    }
+
+
 }
 
 export default RaymarchPath;
