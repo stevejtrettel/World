@@ -50,8 +50,9 @@ class IntegralCurve {
 
         let curveMaterial = new MeshPhysicalMaterial({
             clearcoat:1,
+            environmentMapIntensity:2,
             color: this.curveOptions.color,
-            metalness:1,
+            metalness:0,
         });
         let tubeGeo = new TubeGeometry(this.curve, this.curveOptions.segments, this.curveOptions.radius,this.curveOptions.res);
 
@@ -88,6 +89,10 @@ class IntegralCurve {
 
         }
         this.curve = new CatmullRomCurve3(pts);
+    }
+
+    resetIntegrator(integrator){
+        this.integrator = integrator;
     }
 
     resetCurve(curve){

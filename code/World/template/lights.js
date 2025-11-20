@@ -3,13 +3,13 @@ import {
     DirectionalLight,
 } from "../../../3party/three/build/three.module.js";
 
-const ambient = new AmbientLight(0xffffff,0.4);
+const ambient = new AmbientLight(0xffffff,0.8);
 ambient.addToScene = (scene) => scene.add(ambient);
 ambient.setName = ()=>{};
 ambient.tick = ()=>{};
 ambient.addToUI = ()=>{};
 
-const direction = new DirectionalLight(0xffffff,1.5);
+const direction = new DirectionalLight(0xffffff,3.5);
 direction.addToScene = (scene) => scene.add(direction);
 direction.setName = ()=>{};
 direction.tick = ()=>{};

@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shader Display</title>
+    <!-- CodeMirror for code editing -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/default.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
+            background: #f5f5f5;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 600px 1fr;
+            gap: 30px;
+            align-items: start; /* Back to start */
+            min-height: calc(100vh - 80px);
+            align-content: center; /* Center the whole grid vertically */
+        }
+
+        .shader-output {
+            /* No background/padding container - just the canvas with shadow */
+        }
+
+        .shader-output h2 {
+            display: none; /* Remove "Output" header */
+        }
+
+        canvas {
+            display: block;
+            width: 560px;
+            height: 560px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border-radius: 8px;
+        }
+
+        .shader-code {
+            /* No background/padding container */
+        }
+
+        .shader-code h2 {
+            display: none; /* Remove header for minimal look */
+        }
+
+        .code-container {
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        /* CodeMirror customization */
+        .CodeMirror {
+            height: 600px;
+            font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            background: white;
+            border-radius: 8px;
+        }
+
+        .CodeMirror-gutters {
+            background: #f8f8f8;
+            border-right: 1px solid #e0e0e0;
+            border-radius: 8px 0 0 8px;
+        }
+
+        /* Error line highlighting */
+        .error-line {
+            background: #ffebee !important;
+        }
+
+        .compile-button {
+            margin-top: 15px;
+            padding: 12px 24px;
+            background: #f8f8f8;
+            color: #666;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .compile-button:hover {
+            background: #fff;
+            color: #333;
+            border-color: #ccc;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+        }
+
+        .compile-button:active {
+            transform: translateY(1px);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+        }
+
+        .error {
+            background: #fee;
+            border: 1px solid #fcc;
+            padding: 15px;
+            border-radius: 6px;
+            color: #c33;
+            font-size: 13px;
+            margin-top: 15px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="shader-output">
+        <h2>Output</h2>
+        <canvas id="glCanvas"></canvas>
+        <div id="errorDisplay"></div>
+    </div>
+
+    <div class="shader-code">
+        <h2>Fragment Shader</h2>
+        <div class="code-container">
+            <textarea id="shaderCode"></textarea>
+        </div>
+        <button id="compileButton" class="compile-button">Compile Shader</button>
+    </div>
+</div>
+
+<!-- CodeMirror scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/clike/clike.min.js"></script>
+
+<script>
+    // Example shader (Apollonian gasket with color cycling) - Shadertoy format
+    const exampleShader = `// Circle inversion helper function
+vec2 circleInvert(vec2 z, vec2 center, float radius) {
+    vec2 diff = z - center;
+    float r2 = radius * radius;
+    float d2 = dot(diff, diff);
+    return center + diff * (r2 / d2);
+}
+
+// Distance to circle
+float circleDist(vec2 p, vec2 center, float radius) {
+    return length(p - center) - radius;
+}
+
+// Smooth minimum for blending distances
+float smin(float a, float b, float k) {
+    float h = max(k - abs(a - b), 0.0) / k;
+    return min(a, b) - h * h * k * 0.25;
+}
+
+void mainImage(out vec4 fragColor, in vec2 fragCoord) {
+    // Normalized coordinates centered at origin
+    vec2 uv = (2.0 * fragCoord - iResolution.xy) / iResolution.y;
+
+    // Apply some zoom and pan
+    float zoom = 1.5;
+    uv *= zoom;
+
+    // Initial color
+    vec3 color = vec3(0.1, 0.12, 0.15);
+
+    // Keep track of inversions for coloring
+    float inversions = 0.0;
+    vec2 z = uv;
+
+    // Apply multiple circle inversions (Apollonian gasket construction)
+    for (int i = 0; i < 8; i++) {
+        float t = iTime * 0.5 + float(i) * 0.5;
+
+        // Define circles for inversion
+        vec2 c1 = vec2(cos(t), sin(t)) * 0.6;
+        vec2 c2 = vec2(cos(t + 2.094), sin(t + 2.094)) * 0.6;
+        vec2 c3 = vec2(cos(t + 4.189), sin(t + 4.189)) * 0.6;
+
+        float r = 0.8;
+
+        // Find closest circle and invert through it
+        float d1 = length(z - c1);
+        float d2 = length(z - c2);
+        float d3 = length(z - c3);
+
+        if (d1 < d2 && d1 < d3 && d1 < r) {
+            z = circleInvert(z, c1, r);
+            inversions += 1.0;
+        } else if (d2 < d3 && d2 < r) {
+            z = circleInvert(z, c2, r);
+            inversions += 1.0;
+        } else if (d3 < r) {
+            z = circleInvert(z, c3, r);
+            inversions += 1.0;
+        }
+    }
+
+    // Calculate distances to circles for rendering
+    float d = 1e10;
+    for (int i = 0; i < 6; i++) {
+        float t = iTime * 0.3 + float(i) * 1.047;
+        vec2 center = vec2(cos(t), sin(t)) * 0.5;
+        float dist = circleDist(z, center, 0.3);
+        d = smin(d, dist, 0.1);
+    }
+
+    // Color based on distance field
+    float glow = 0.02 / (abs(d) + 0.02);
+    color += glow * vec3(0.5, 0.7, 1.0);
+
+    // Add color based on number of inversions
+    color += inversions * 0.05 * vec3(
+        0.5 + 0.5 * sin(iTime + inversions),
+        0.5 + 0.5 * sin(iTime + inversions + 2.0),
+        0.5 + 0.5 * sin(iTime + inversions + 4.0)
+    );
+
+    // Add gradient based on position
+    color += 0.1 * vec3(uv.x, uv.y, -uv.x) * 0.5;
+
+    // Vignette effect
+    float vignette = 1.0 - length(uv) * 0.3;
+    color *= vignette;
+
+    fragColor = vec4(color, 1.0);
+}`;
+
+    class ShaderDisplay {
+        constructor(canvas, fragmentSource, editor) {
+            this.canvas = canvas;
+            this.gl = canvas.getContext('webgl2') || canvas.getContext('webgl');
+            this.editor = editor; // CodeMirror instance
+
+            if (!this.gl) {
+                this.showError('WebGL not supported in this browser');
+                return;
+            }
+
+            this.fragmentSource = fragmentSource;
+            this.startTime = Date.now();
+            this.mouseX = 0;
+            this.mouseY = 0;
+            this.frame = 0;
+            this.errorLineMarker = null; // Track error line highlighting
+
+            // Set up proper canvas resolution (handle high-DPI displays)
+            this.resizeCanvas();
+
+            // Setup mouse tracking
+            this.canvas.addEventListener('mousemove', (e) => {
+                const rect = this.canvas.getBoundingClientRect();
+                // Scale mouse coordinates by device pixel ratio
+                const scaleX = this.canvas.width / rect.width;
+                const scaleY = this.canvas.height / rect.height;
+                this.mouseX = (e.clientX - rect.left) * scaleX;
+                this.mouseY = (rect.height - (e.clientY - rect.top)) * scaleY; // Flip Y
+            });
+
+            this.init();
+        }
+
+        resizeCanvas() {
+            const dpr = window.devicePixelRatio || 1;
+            const rect = this.canvas.getBoundingClientRect();
+
+            // Set canvas buffer size to actual pixels (accounting for device pixel ratio)
+            this.canvas.width = rect.width * dpr;
+            this.canvas.height = rect.height * dpr;
+        }
+
+        init() {
+            const gl = this.gl;
+
+            // Vertex shader for WebGL 2 (GLSL ES 3.00)
+            const vertexShaderSource = `#version 300 es
+in vec2 position;
+void main() {
+    gl_Position = vec4(position, 0.0, 1.0);
+}
+`;
+
+            // Shadertoy-compatible fragment shader wrapper (GLSL ES 3.00)
+            const fragmentShaderPrefix = `#version 300 es
+precision highp float;
+
+// Shadertoy uniforms
+uniform vec3 iResolution;
+uniform float iTime;
+uniform vec4 iMouse;
+uniform int iFrame;
+
+// Output
+out vec4 fragColor;
+
+`;
+
+            // Shadertoy mainImage() wrapper
+            const fragmentShaderSuffix = `
+
+// Main function that calls mainImage (Shadertoy compatibility)
+void main() {
+    mainImage(fragColor, gl_FragCoord.xy);
+}
+`;
+
+            const fullFragmentSource = fragmentShaderPrefix + this.fragmentSource + fragmentShaderSuffix;
+
+            // Compile shaders
+            const vertexShader = this.compileShader(gl.VERTEX_SHADER, vertexShaderSource);
+            const fragmentShader = this.compileShader(gl.FRAGMENT_SHADER, fullFragmentSource);
+
+            if (!vertexShader || !fragmentShader) {
+                return; // Error already displayed
+            }
+
+            // Create program
+            this.program = gl.createProgram();
+            gl.attachShader(this.program, vertexShader);
+            gl.attachShader(this.program, fragmentShader);
+            gl.linkProgram(this.program);
+
+            if (!gl.getProgramParameter(this.program, gl.LINK_STATUS)) {
+                this.showError('Program link error: ' + gl.getProgramInfoLog(this.program));
+                return;
+            }
+
+            // Get attribute and uniform locations
+            this.positionLocation = gl.getAttribLocation(this.program, 'position');
+            this.iResolutionLocation = gl.getUniformLocation(this.program, 'iResolution');
+            this.iTimeLocation = gl.getUniformLocation(this.program, 'iTime');
+            this.iMouseLocation = gl.getUniformLocation(this.program, 'iMouse');
+            this.iFrameLocation = gl.getUniformLocation(this.program, 'iFrame');
+
+            // Create fullscreen quad
+            const positions = new Float32Array([
+                -1, -1,
+                1, -1,
+                -1,  1,
+                1,  1,
+            ]);
+
+            this.positionBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, this.positionBuffer);
+            gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
+
+            // Start render loop
+            this.render();
+        }
+
+        compileShader(type, source) {
+            const gl = this.gl;
+            const shader = gl.createShader(type);
+            gl.shaderSource(shader, source);
+            gl.compileShader(shader);
+
+            if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+                const typeName = type === gl.VERTEX_SHADER ? 'Vertex' : 'Fragment';
+                const errorLog = gl.getShaderInfoLog(shader);
+
+                // Try to extract line numbers from error (common format: "ERROR: 0:lineNum: message")
+                const enhancedError = this.formatShaderError(errorLog, typeName);
+
+                this.showError(enhancedError);
+                gl.deleteShader(shader);
+                return null;
+            }
+
+            return shader;
+        }
+
+        formatShaderError(errorLog, shaderType) {
+            // Many WebGL implementations use format: "ERROR: 0:lineNum: message"
+            const lines = errorLog.split('\n');
+            let firstErrorLine = null;
+
+            // The prefix has 13 lines in the Shadertoy-compatible format
+            const prefixLines = 13;
+
+            const formatted = lines.map(line => {
+                // Match patterns like "ERROR: 0:15:" or "0:15:"
+                const match = line.match(/(\d+):(\d+):/);
+                if (match) {
+                    const lineNum = parseInt(match[2]);
+                    // Subtract prefix lines to get user line number
+                    const userLineNum = Math.max(1, lineNum - prefixLines);
+
+                    // Track first error line for highlighting
+                    if (firstErrorLine === null) {
+                        firstErrorLine = userLineNum;
+                    }
+
+                    return line.replace(match[0], `Line ${userLineNum}: `);
+                }
+                return line;
+            }).join('\n');
+
+            // Highlight the error line in the editor
+            if (firstErrorLine !== null && this.editor) {
+                this.highlightErrorLine(firstErrorLine);
+            }
+
+            return `${shaderType} shader compile error:\n${formatted}`;
+        }
+
+        highlightErrorLine(lineNumber) {
+            // Clear previous error highlighting
+            this.clearErrorHighlight();
+
+            // Add background color to the error line (0-indexed)
+            const lineHandle = this.editor.addLineClass(lineNumber - 1, 'background', 'error-line');
+            this.errorLineMarker = { line: lineNumber - 1, handle: lineHandle };
+
+            // Scroll to the error line
+            this.editor.scrollIntoView({ line: lineNumber - 1, ch: 0 }, 100);
+        }
+
+        clearErrorHighlight() {
+            if (this.errorLineMarker && this.editor) {
+                this.editor.removeLineClass(this.errorLineMarker.line, 'background', 'error-line');
+                this.errorLineMarker = null;
+            }
+        }
+
+        render() {
+            const gl = this.gl;
+            if (!this.program) return;
+
+            // Calculate time
+            const currentTime = (Date.now() - this.startTime) / 1000.0;
+
+            // Set viewport
+            gl.viewport(0, 0, this.canvas.width, this.canvas.height);
+
+            // Use program
+            gl.useProgram(this.program);
+
+            // Set uniforms
+            gl.uniform3f(this.iResolutionLocation, this.canvas.width, this.canvas.height, 1.0);
+            gl.uniform1f(this.iTimeLocation, currentTime);
+            gl.uniform4f(this.iMouseLocation, this.mouseX, this.mouseY, 0.0, 0.0);
+            gl.uniform1i(this.iFrameLocation, this.frame);
+
+            // Bind position buffer
+            gl.bindBuffer(gl.ARRAY_BUFFER, this.positionBuffer);
+            gl.enableVertexAttribArray(this.positionLocation);
+            gl.vertexAttribPointer(this.positionLocation, 2, gl.FLOAT, false, 0, 0);
+
+            // Draw
+            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+
+            this.frame++;
+
+            // Continue loop
+            requestAnimationFrame(() => this.render());
+        }
+
+        showError(message) {
+            const errorDisplay = document.getElementById('errorDisplay');
+            errorDisplay.innerHTML = '<div class="error">' + message + '</div>';
+        }
+
+        clearError() {
+            const errorDisplay = document.getElementById('errorDisplay');
+            errorDisplay.innerHTML = '';
+            this.clearErrorHighlight();
+        }
+
+        updateShader(newFragmentSource) {
+            const gl = this.gl;
+
+            // Clear any previous errors
+            this.clearError();
+
+            // Update source
+            this.fragmentSource = newFragmentSource;
+
+            // Vertex shader for WebGL 2 (GLSL ES 3.00)
+            const vertexShaderSource = `#version 300 es
+in vec2 position;
+void main() {
+    gl_Position = vec4(position, 0.0, 1.0);
+}
+`;
+
+            // Shadertoy-compatible fragment shader wrapper (GLSL ES 3.00)
+            const fragmentShaderPrefix = `#version 300 es
+precision highp float;
+
+// Shadertoy uniforms
+uniform vec3 iResolution;
+uniform float iTime;
+uniform vec4 iMouse;
+uniform int iFrame;
+
+// Output
+out vec4 fragColor;
+
+`;
+
+            // Shadertoy mainImage() wrapper
+            const fragmentShaderSuffix = `
+
+// Main function that calls mainImage (Shadertoy compatibility)
+void main() {
+    mainImage(fragColor, gl_FragCoord.xy);
+}
+`;
+
+            const fullFragmentSource = fragmentShaderPrefix + this.fragmentSource + fragmentShaderSuffix;
+
+            // Compile new shaders
+            const vertexShader = this.compileShader(gl.VERTEX_SHADER, vertexShaderSource);
+            const fragmentShader = this.compileShader(gl.FRAGMENT_SHADER, fullFragmentSource);
+
+            if (!vertexShader || !fragmentShader) {
+                return false; // Error already displayed
+            }
+
+            // Create new program
+            const newProgram = gl.createProgram();
+            gl.attachShader(newProgram, vertexShader);
+            gl.attachShader(newProgram, fragmentShader);
+            gl.linkProgram(newProgram);
+
+            if (!gl.getProgramParameter(newProgram, gl.LINK_STATUS)) {
+                this.showError('Program link error: ' + gl.getProgramInfoLog(newProgram));
+                gl.deleteProgram(newProgram);
+                return false;
+            }
+
+            // Delete old program if it exists
+            if (this.program) {
+                gl.deleteProgram(this.program);
+            }
+
+            // Use new program
+            this.program = newProgram;
+
+            // Update uniform locations
+            this.positionLocation = gl.getAttribLocation(this.program, 'position');
+            this.iResolutionLocation = gl.getUniformLocation(this.program, 'iResolution');
+            this.iTimeLocation = gl.getUniformLocation(this.program, 'iTime');
+            this.iMouseLocation = gl.getUniformLocation(this.program, 'iMouse');
+            this.iFrameLocation = gl.getUniformLocation(this.program, 'iFrame');
+
+            return true;
+        }
+    }
+
+    // Initialize on load
+    window.addEventListener('load', () => {
+        const canvas = document.getElementById('glCanvas');
+        const codeTextarea = document.getElementById('shaderCode');
+        const compileButton = document.getElementById('compileButton');
+
+        // Initialize CodeMirror
+        const editor = CodeMirror.fromTextArea(codeTextarea, {
+            mode: 'text/x-csrc',  // C mode works well for GLSL
+            lineNumbers: true,
+            theme: 'default',
+            indentUnit: 4,
+            indentWithTabs: false,
+            lineWrapping: false,
+            matchBrackets: true,
+        });
+
+        // Set initial shader code
+        editor.setValue(exampleShader);
+
+        // Create shader display with editor reference
+        const shaderDisplay = new ShaderDisplay(canvas, exampleShader, editor);
+
+        // Add compile button listener
+        compileButton.addEventListener('click', () => {
+            const newSource = editor.getValue();
+            const success = shaderDisplay.updateShader(newSource);
+
+            if (success) {
+                console.log('Shader compiled successfully!');
+            }
+        });
+    });
+</script>
+</body>
+</html>

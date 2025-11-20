@@ -11311,6 +11311,17 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/code\/items\/geometry\/EMDBH.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/code\/items\/geometry\/EMDBH-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/code\/items\/geometry\/FrenetFrame.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -11318,6 +11329,17 @@
       "mi" : 1,
       "oA" : 1,
       "oAP" : "\/code\/items\/geometry\/FrenetFrame-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/code\/items\/geometry\/MPBH.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/code\/items\/geometry\/MPBH-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -11450,6 +11472,17 @@
       "mi" : 1,
       "oA" : 1,
       "oAP" : "\/code\/items\/misc\/EMWave-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/code\/items\/misc\/ExtremalBHs.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/code\/items\/misc\/ExtremalBHs-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -13574,6 +13607,501 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/worlds\/blackhole\/bh2\/index.html" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/blackhole\/bh2\/index.html",
+      "oF" : 0
+    },
+    "\/worlds\/blackhole\/bh2\/main-min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/blackhole\/bh2\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/blackhole\/bh2\/main.js" : {
+      "bF" : 4,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/blackhole\/bh2\/main-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/blackhole\/bh2\/Objects.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/blackhole\/bh2\/Objects-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/blackhole\/bh3\/index.html" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/blackhole\/bh3\/index.html",
+      "oF" : 0
+    },
+    "\/worlds\/blackhole\/bh3\/main-min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/blackhole\/bh3\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/blackhole\/bh3\/main.js" : {
+      "bF" : 4,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/blackhole\/bh3\/main-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/blackhole\/bh3\/Objects.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/blackhole\/bh3\/Objects-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/blackhole\/bh4\/index.html" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/blackhole\/bh4\/index.html",
+      "oF" : 0
+    },
+    "\/worlds\/blackhole\/bh4\/main-min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/blackhole\/bh4\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/blackhole\/bh4\/main.js" : {
+      "bF" : 4,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/blackhole\/bh4\/main-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/blackhole\/bh4\/Objects.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/blackhole\/bh4\/Objects-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/blackhole\/bh5\/index.html" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/blackhole\/bh5\/index.html",
+      "oF" : 0
+    },
+    "\/worlds\/blackhole\/bh5\/main-min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/blackhole\/bh5\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/blackhole\/bh5\/main.js" : {
+      "bF" : 4,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/blackhole\/bh5\/main-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/blackhole\/bh5\/Objects.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/blackhole\/bh5\/Objects-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/blackhole\/bh6\/index.html" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/blackhole\/bh6\/index.html",
+      "oF" : 0
+    },
+    "\/worlds\/blackhole\/bh6\/main-min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/blackhole\/bh6\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/blackhole\/bh6\/main.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/blackhole\/bh6\/main-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/blackhole\/bh6\/Objects.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/blackhole\/bh6\/Objects-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/blackhole\/emdbh-planar\/index.html" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/blackhole\/emdbh-planar\/index.html",
+      "oF" : 0
+    },
+    "\/worlds\/blackhole\/emdbh-planar\/main.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/blackhole\/emdbh-planar\/main-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/blackhole\/emdbh-planar\/src\/bhTriangle.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/blackhole\/emdbh-planar\/src\/bhTriangle-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/blackhole\/emdbh-planar\/src\/Extremal.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/blackhole\/emdbh-planar\/src\/Extremal-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/blackhole\/mpbh-binary\/index.html" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/blackhole\/mpbh-binary\/index.html",
+      "oF" : 0
+    },
+    "\/worlds\/blackhole\/mpbh-binary\/main-min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/blackhole\/mpbh-binary\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/blackhole\/mpbh-binary\/main.js" : {
+      "bF" : 4,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/blackhole\/mpbh-binary\/main-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/blackhole\/mpbh-binary\/src\/bhBinary.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/blackhole\/mpbh-binary\/src\/bhBinary-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/blackhole\/mpbh-binary\/src\/Extremal.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/blackhole\/mpbh-binary\/src\/Extremal-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/blackhole\/mpbh-colinear\/index.html" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/blackhole\/mpbh-colinear\/index.html",
+      "oF" : 0
+    },
+    "\/worlds\/blackhole\/mpbh-colinear\/main.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/blackhole\/mpbh-colinear\/main-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/blackhole\/mpbh-colinear\/src\/bhLine.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/blackhole\/mpbh-colinear\/src\/bhLine-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/blackhole\/mpbh-colinear\/src\/Extremal.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/blackhole\/mpbh-colinear\/src\/Extremal-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/blackhole\/mpbh-cube-rosette\/index.html" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/blackhole\/mpbh-cube-rosette\/index.html",
+      "oF" : 0
+    },
+    "\/worlds\/blackhole\/mpbh-cube-rosette\/main-min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/blackhole\/mpbh-cube-rosette\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/blackhole\/mpbh-cube-rosette\/main.js" : {
+      "bF" : 4,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/blackhole\/mpbh-cube-rosette\/main-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/blackhole\/mpbh-cube-rosette\/src\/bhCube.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/blackhole\/mpbh-cube-rosette\/src\/bhCube-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/blackhole\/mpbh-cube-rosette\/src\/bhTriangle.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/blackhole\/mpbh-cube-rosette\/src\/bhTriangle-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/blackhole\/mpbh-cube-rosette\/src\/Extremal.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/blackhole\/mpbh-cube-rosette\/src\/Extremal-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/blackhole\/mpbh-octahedron\/index.html" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/blackhole\/mpbh-octahedron\/index.html",
+      "oF" : 0
+    },
+    "\/worlds\/blackhole\/mpbh-octahedron\/main-min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/blackhole\/mpbh-octahedron\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/blackhole\/mpbh-octahedron\/main.js" : {
+      "bF" : 4,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/blackhole\/mpbh-octahedron\/main-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/blackhole\/mpbh-octahedron\/src\/bhOctahedron.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/blackhole\/mpbh-octahedron\/src\/bhOctahedron-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/blackhole\/mpbh-octahedron\/src\/Extremal.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/blackhole\/mpbh-octahedron\/src\/Extremal-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/blackhole\/mpbh-planar\/index.html" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/blackhole\/mpbh-planar\/index.html",
+      "oF" : 0
+    },
+    "\/worlds\/blackhole\/mpbh-planar\/main.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/blackhole\/mpbh-planar\/main-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/blackhole\/mpbh-planar\/src\/bhTriangle.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/blackhole\/mpbh-planar\/src\/bhTriangle-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/blackhole\/mpbh-planar\/src\/Extremal.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/blackhole\/mpbh-planar\/src\/Extremal-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/worlds\/blackhole\/schwarzschild-geodesics\/BlackHoleGeodesics.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -13776,6 +14304,47 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/worlds\/calculus\/monteCarloAnimation\/index.html" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/calculus\/monteCarloAnimation\/index.html",
+      "oF" : 0
+    },
+    "\/worlds\/calculus\/monteCarloAnimation\/main.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/calculus\/monteCarloAnimation\/main-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/calculus\/monteCarloAnimation\/src\/MonteCarloPlotter.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/calculus\/monteCarloAnimation\/src\/MonteCarloPlotter-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/calculus\/monteCarloAnimation\/src\/ValueRod.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/calculus\/monteCarloAnimation\/src\/ValueRod-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/worlds\/calculus\/newtonMethodPlotter\/index.html" : {
       "cB" : 0,
       "ft" : 8192,
@@ -13802,6 +14371,36 @@
       "mi" : 1,
       "oA" : 1,
       "oAP" : "\/worlds\/calculus\/newtonMethodPlotter\/src\/NewtonsMethodPlotter-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/calculus\/riemannSumAnimation\/index.html" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/calculus\/riemannSumAnimation\/index.html",
+      "oF" : 0
+    },
+    "\/worlds\/calculus\/riemannSumAnimation\/main.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/calculus\/riemannSumAnimation\/main-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/calculus\/riemannSumAnimation\/src\/RiemannSumPlotter.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/calculus\/riemannSumAnimation\/src\/RiemannSumPlotter-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -15822,6 +16421,36 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/worlds\/hyperbolic_soccer\/index.html" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/hyperbolic_soccer\/index.html",
+      "oF" : 0
+    },
+    "\/worlds\/hyperbolic_soccer\/main.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/hyperbolic_soccer\/main-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/hyperbolic_soccer\/src\/TriangleGroup.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/hyperbolic_soccer\/src\/TriangleGroup-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/worlds\/maps\/archimedesMap\/assets\/earth.jpeg" : {
       "ft" : 16384,
       "iS" : 614562,
@@ -16033,6 +16662,192 @@
       "mi" : 1,
       "oA" : 0,
       "oAP" : "\/worlds\/maps\/stereographicMap\/src\/StereographicMap-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/maps\/torus-mcg-custom\/assets\/sweater.jpg" : {
+      "ft" : 16384,
+      "iS" : 2056254,
+      "jF" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/maps\/torus-mcg-custom\/assets\/sweater.jpg",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-none",
+      "q" : 100,
+      "rq" : 75
+    },
+    "\/worlds\/maps\/torus-mcg-custom\/assets\/sweaterBlue.jpg" : {
+      "ft" : 16384,
+      "iS" : 3900055,
+      "jF" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/maps\/torus-mcg-custom\/assets\/sweaterBlue.jpg",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-none",
+      "q" : 100,
+      "rq" : 75
+    },
+    "\/worlds\/maps\/torus-mcg-custom\/assets\/sweaterGreen.jpg" : {
+      "ft" : 16384,
+      "iS" : 1729161,
+      "jF" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/maps\/torus-mcg-custom\/assets\/sweaterGreen.jpg",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-none",
+      "q" : 100,
+      "rq" : 75
+    },
+    "\/worlds\/maps\/torus-mcg-custom\/assets\/sweaterRed.jpg" : {
+      "ft" : 16384,
+      "iS" : 1755463,
+      "jF" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/maps\/torus-mcg-custom\/assets\/sweaterRed.jpg",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-none",
+      "q" : 100,
+      "rq" : 75
+    },
+    "\/worlds\/maps\/torus-mcg-custom\/index.html" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/maps\/torus-mcg-custom\/index.html",
+      "oF" : 0
+    },
+    "\/worlds\/maps\/torus-mcg-custom\/main-min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/maps\/torus-mcg-custom\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/maps\/torus-mcg-custom\/main.js" : {
+      "bF" : 4,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/maps\/torus-mcg-custom\/main-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/maps\/torus-mcg-custom\/src\/TorusMCG.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/maps\/torus-mcg-custom\/src\/TorusMCG-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/maps\/torusMCG\/assets\/sweater.jpg" : {
+      "ft" : 16384,
+      "iS" : 2056254,
+      "jF" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/maps\/torusMCG\/assets\/sweater.jpg",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-none",
+      "q" : 100,
+      "rq" : 75
+    },
+    "\/worlds\/maps\/torusMCG\/assets\/sweaterBlue.jpg" : {
+      "ft" : 16384,
+      "iS" : 3900055,
+      "jF" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/maps\/torusMCG\/assets\/sweaterBlue.jpg",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-none",
+      "q" : 100,
+      "rq" : 75
+    },
+    "\/worlds\/maps\/torusMCG\/assets\/sweaterGreen.jpg" : {
+      "ft" : 16384,
+      "iS" : 1729161,
+      "jF" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/maps\/torusMCG\/assets\/sweaterGreen.jpg",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-none",
+      "q" : 100,
+      "rq" : 75
+    },
+    "\/worlds\/maps\/torusMCG\/assets\/sweaterRed.jpg" : {
+      "ft" : 16384,
+      "iS" : 1755463,
+      "jF" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/maps\/torusMCG\/assets\/sweaterRed.jpg",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-none",
+      "q" : 100,
+      "rq" : 75
+    },
+    "\/worlds\/maps\/torusMCG\/index.html" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/maps\/torusMCG\/index.html",
+      "oF" : 0
+    },
+    "\/worlds\/maps\/torusMCG\/main-min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/maps\/torusMCG\/main-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/maps\/torusMCG\/main.js" : {
+      "bF" : 4,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/maps\/torusMCG\/main-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/maps\/torusMCG\/src\/TorusMCG.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/maps\/torusMCG\/src\/TorusMCG-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -17284,6 +18099,14 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/worlds\/test.html" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/test.html",
+      "oF" : 0
+    },
     "\/worlds\/topology\/boysSurface\/index.html" : {
       "cB" : 0,
       "ft" : 8192,
@@ -17381,6 +18204,47 @@
       "mi" : 1,
       "oA" : 0,
       "oAP" : "\/worlds\/topology\/cuttingTorus\/src\/CuttingTorus-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/topology\/fixedPoint\/index.html" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/worlds\/topology\/fixedPoint\/index.html",
+      "oF" : 0
+    },
+    "\/worlds\/topology\/fixedPoint\/main.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/worlds\/topology\/fixedPoint\/main-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/topology\/fixedPoint\/src\/KleinBottle.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/topology\/fixedPoint\/src\/KleinBottle-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/worlds\/topology\/fixedPoint\/src\/params.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/worlds\/topology\/fixedPoint\/src\/params-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
