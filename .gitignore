@@ -2,3 +2,10 @@
 
 # macOS Files
 .DS_Store
+
+# Node.js
+node_modules/
+package-lock.json
+
+# Build output (Vite bundles)
+**/dist/
