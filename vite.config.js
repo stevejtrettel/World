@@ -5,6 +5,7 @@ export default defineConfig(({ command, mode }) => {
   // Get the demo path from environment variable
   const demoPath = process.env.DEMO_PATH || 'worlds/pde/eigenfunctionsCylinder';
   const demoName = demoPath.split('/').pop();
+  const isRootBuild = process.env.ROOT_BUILD === 'true';
 
   // Convert demo name to valid JS identifier (replace hyphens with underscores)
   const validName = demoName.replace(/-/g, '_');
@@ -17,8 +18,8 @@ export default defineConfig(({ command, mode }) => {
     base: './',
 
     build: {
-      // Output directory
-      outDir: `${demoPath}/dist`,
+      // Output directory: root dist/ for root builds, demo dist/ for individual builds
+      outDir: isRootBuild ? 'dist' : `${demoPath}/dist`,
 
       // Empty the output directory before building
       emptyOutDir: true,

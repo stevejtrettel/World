@@ -27,7 +27,16 @@ The bundled version is completely self-contained and can be archived, deployed, 
 - **math.js**: The math parser library (1.8MB) is copied as a separate file since some demos reference it globally
 
 ### Output Files
-Each build creates a `dist/` folder in the demo directory containing:
+
+**Root build** (`npm run build`) creates:
+```
+dist/
+├── index.html        # Standalone HTML file
+├── main-bundle.js    # Minified bundle of current demo
+└── math.js          # Math parser library (1.8MB)
+```
+
+**Demo-specific build** (`npm run build:demo -- path`) creates:
 ```
 worlds/{category}/{demo}/dist/
 ├── index.html        # Standalone HTML file
@@ -45,7 +54,52 @@ npm install
 
 ## Building Demos
 
-### Build a Single Demo
+### Build from Root index.html
+
+The simplest way to build is to run `npm run build` from the project root. This will:
+1. Read the root `index.html` file
+2. Extract which demo it's currently pointing to
+3. Build that demo into `dist/` at the root
+
+**Usage:**
+
+```bash
+npm run build
+```
+
+**Example output:**
+
+```
+Building demo from root index.html
+Demo: worlds/pde/eigenfunctionsCylinder
+Output will be in: dist/
+
+✓ Bundle created: dist/main-bundle.js
+✓ Copied math.js for standalone version
+✓ Created standalone HTML: dist/index.html
+
+🎉 Root build complete!
+   Demo: worlds/pde/eigenfunctionsCylinder
+   Open dist/index.html to view the bundled demo
+```
+
+The root `dist/` folder will contain:
+```
+dist/
+├── index.html        # Standalone HTML file
+├── main-bundle.js    # Minified bundle of the current demo
+└── math.js          # Math parser library
+```
+
+**Workflow:**
+1. Edit root `index.html` to point to the demo you want to work on
+2. Develop and test normally
+3. Run `npm run build` when ready to create a bundle
+4. The bundled version is in `dist/index.html`
+
+This is perfect for quickly bundling whichever demo you're currently working on!
+
+### Build a Specific Demo
 
 To build any demo, use the `build:demo` script with the demo path:
 

@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "node build-root.js",
     "build:demo": "node build-demo.js",
     "preview": "vite preview"
   },
