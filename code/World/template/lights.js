@@ -18,7 +18,7 @@ direction.addToUI = ()=>{};
 
 const direction2 = new DirectionalLight(0xffffff,1.5);
 direction2.position.set(0,1,1);
-direction2.addToScene = (scene) => scene.add(direction);
+direction2.addToScene = (scene) => scene.add(direction2);
 direction2.setName = ()=>{};
 direction2.tick = ()=>{};
 direction2.addToUI = ()=>{};

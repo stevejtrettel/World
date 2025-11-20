@@ -309,7 +309,7 @@ class KleinBottle{
                 thisObj.surface.update({stripeFreq: value})
             });
         }
-    }f
+    }
 
     tick(time,dTime){
 
